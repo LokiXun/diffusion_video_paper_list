@@ -1,0 +1,18 @@
+# Byte-compiled / optimized / DLL files
+**/__pycache__/
+**/.idea/
+*.py[cod]
+*$py.class
+
+# ignore all the directories for codes and datasets
+/**/
+!/docs/
+
+# User-specific stuff:
+*.pptx
+*.drawio
+*.mp4
+*.drawio.bkp
+*.pt
+*.zip
+*.tar
