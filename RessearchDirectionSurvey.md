@@ -1,12 +1,26 @@
 # Tongji_CV_Group_Journey
 
-> This document works as an index to record the read papers :laughing:
+Rongji Xun	rongji.xun@gmail.com
+
+> This document works as an **index to record the read papers.** And currently working on using generative models(Diffusion models)  to solve Old-films restoration problems. :laughing:
 >
-> - [ ] Github organization account
+> - Use :baby: emoji to denote the **understanding status** for each paper.
 >
->   https://github.com/CityU-AIM-Group
+>   - :baby: Only know the general methods, no details
+>   - :star: understand the purposed methods in paper, but lack understanding for related methods or some code implementation details
+>   - :star2: understand all the details and its code implementation
+>   - :heavy_check_mark: reappear the paper with custom data
 >
-> - [x] GPU comparison [GPU 4090vs V100](https://topcpu.net/gpu-c/GeForce-RTX-4090-vs-Tesla-V100-PCIe-32-GB)
+>   Note that **It's ok not understand the main methods in paper at first read.** Mark it as  :baby: emoji, go for making up for the lacking knowledge, keep reading and **check the paper again to update the emoji when have a deeper understanding** of related methods. :hugs:
+>
+> - Paper Importance extra status
+>
+>   - :statue_of_liberty: SOTA methods
+>   - :moyai: MileStone
+>   - :baseball: baseline methods in the paper
+>   - :dart: Current working direction
+>
+> - GPU comparison website [GPU 4090vs V100](https://topcpu.net/gpu-c/GeForce-RTX-4090-vs-Tesla-V100-PCIe-32-GB) to evaluate whether the GPU resources is adequate to reappear the methods in paper.
 
 
 
@@ -20,10 +34,18 @@
 
 - [ ] Bringing Old Photos Back to Life
 
-- [ ] Bringing Old Films Back to Life :fire: :star:
+- [ ] **Bringing Old Films Back to Life :fire: :star:**
 
   - [x] paper Summary
   - [ ] code
+
+- [ ] [DeepRemaster: Temporal Source-Reference Attention Networks for Comprehensive Video Enhancement](http://iizuka.cs.tsukuba.ac.jp/projects/remastering/en/index.html)
+
+  > **Bringing Old Films Back to Life** 's baseline
+  >
+  > [2019_SIGGRAPH_DeepRemaster-Temporal-Source-Reference-Attention-Networks-for-Comprehensive-Video-Enhancement.pdf](./2019_SIGGRAPH_DeepRemaster-Temporal-Source-Reference-Attention-Networks-for-Comprehensive-Video-Enhancement.pdf)
+
+  
 
 - [ ] **[Stitch it in Time: GAN-Based Facial Editing of Real Videos](https://stitch-time.github.io/)**
 
@@ -59,6 +81,8 @@
 
 - [ ] [2022_WACV_Pik-Fix-Restoring-and-Colorizing-Old-Photos.pdf](./2022_WACV_Pik-Fix-Restoring-and-Colorizing-Old-Photos.pdf)
 
+- [ ] [HistoryNet](https://github.com/BestiVictory/HistoryNet#historynet)
+
 
 
 **Diffusion/GAN Related**
@@ -66,11 +90,14 @@
 - basics
 
   - [ ] StyleGAN V1-2-3
+
   - [ ] VQ-GAN
 
   - [ ] High-Resolution Image Synthesis with Latent Diffusion Models :+1: 里程碑
 
     https://github.com/CompVis/latent-diffusion?utm_source=catalyzex.com
+
+    https://github.com/CompVis/stable-diffusion
 
   - [ ] [2022_Understanding Diffusion Models-A Unified Perspective.pdf](./2022_Understanding Diffusion Models-A Unified Perspective.pdf) :+1:
 
@@ -92,12 +119,21 @@
 - [x] Zero-Shot Image Restoration Using Denoising Diffusion Null-Space Model :+1:
   - [x] paper
   - [ ] code
+  
 - [ ] Palette: Image-to-Image Diffusion Models
-- [ ] Pix2Video 
+
+- [ ] [Drag Your GAN: Interactive Point-based Manipulation on the Generative Image Manifold](https://github.com/XingangPan/DragGAN) :moyai:
+
+- [ ] Pix2Video
+
+- [ ] Self-Supervised Learning with Random-Projection Quantizer for Speech Recognition
+
+  参考 random-projection 操作
 
 - 小波变换
   - [ ] Wavelet Diffusion Models are fast and scalable Image Generators :+1:
   - [ ] [2023_Fourmer-An Efficient Global Modeling Paradigm for Image Restoration.pdf](./2023_Fourmer-An Efficient Global Modeling Paradigm for Image Restoration.pdf)
+  
 - Image2Image Translation
   - [ ] [2023_Zero-shot-Image-to-Image-Translation.pdf](./2023_Zero-shot-Image-to-Image-Translation.pdf)
     [github repo](https://github.com/pix2pixzero/pix2pix-zero)
@@ -138,6 +174,7 @@
 **Segmentation**
 
 - [ ] SAM :star: >> story
+- [ ] Fast Segment Anything https://github.com/CASIA-IVA-Lab/FastSAM
 
 
 **Transformer  & Attention:moyai:**
@@ -254,7 +291,7 @@
   **methods**
 
   > - Datasets
-  > - GPU configuration >> 判断算力是否足够
+  > - GPU configuration
 
   **Unsolved Limitations**
 
@@ -448,7 +485,7 @@ The paper **proposed a new implicit camera model (using implicit neural network)
 # GAN
 
 
-## StyleGAN
+## StyleGAN :baby:
 
 > [StyleGAN_Note.md](./StyleGAN_Note.md)
 
@@ -456,11 +493,7 @@ The paper **proposed a new implicit camera model (using implicit neural network)
 
 ## VQ-GAN :baby:
 
-> [Taming Transformers for High-Resolution Image Synthesis](https://arxiv.org/abs/2012.09841)  [pdf](./2021_CVPR_VQGAN_Taming-Transformers-for-High-Resolution-Image-Synthesis.pdf)
->
-> https://mp.weixin.qq.com/s/iyfUDU93GUNqKtOJDUKjKA
->
-> Stable Diffusion 的 Encoder 使用 VQ-GAN 中的方法训练
+> [2021_CVPR_VQGAN_Taming-Transformers-for-High-Resolution-Image-Synthesis_Note.md](./2021_CVPR_VQGAN_Taming-Transformers-for-High-Resolution-Image-Synthesis_Note.md)
 
 
 
@@ -474,6 +507,24 @@ The paper **proposed a new implicit camera model (using implicit neural network)
 
   FFHQ是一个高质量的人脸数据集，包含1024x1024分辨率的70000张PNG格式高清人脸图像，在年龄、种族和图像背景上丰富多样且差异明显，在人脸属性上也拥有非常多的变化，拥有不同的年龄、性别、种族、肤色、表情、脸型、发型、人脸姿态等，包括普通眼镜、太阳镜、帽子、发饰及围巾等多种人脸周边配件，因此该数据集也是可以用于开发一些人脸属性分类或者人脸语义分割模型的。
   
+
+### Old Films Dataset
+
+> - Youtuber Old films  [10downloader >> Download Youtube Video](https://10downloader.com/en/74)
+>   https://www.britishpathe.com/
+>   https://www.youtube.com/watch?v=hZ1OgQL9_Cw
+>   https://www.youtube.com/watch?v=_qjT1ToUx1Q >> [4k 60fps 修复](https://www.youtube.com/watch?v=hZ1OgQL9_Cw&t=36s)
+>
+> [How Old Movies Are Professionally Restored | Movies Insider](https://www.youtube.com/watch?v=6NzfJJny3Yg)
+> [中国电影修复馆](https://www.cfa.org.cn/cfa/gz/xf/index.html)
+> [Baidu 智感超清服务](https://zhuanlan.zhihu.com/p/302719798)
+
+- `Pinto Ben` 从 6 个 soures 修复
+  - eyelash 
+  - dirt black point
+  - scratches
+
+
 
 
 
@@ -664,7 +715,7 @@ $$
 
 
 
-## Bringing Old Photos Back to Life
+## Bringing Old Photos Back to Life :baby:
 
 > [博客](https://zhuanlan.zhihu.com/p/414309177)
 > [Code](https://github.com/microsoft/Bringing-Old-Photos-Back-to-Life)
@@ -687,141 +738,11 @@ $$
 
 
 
-## Bringing-Old-Films-Back-to-Life
+## Bringing-Old-Films-Back-to-Life :baby:
 
-> [2022_CVPR_Bringing-Old-Films-Back-to-Life.pdf](./2022_CVPR_Bringing-Old-Films-Back-to-Life.pdf)
-> [github repo](https://github.com/raywzy/Bringing-Old-Films-Back-to-Life.git)
->
-> - 4 x 2080Ti >> 44G 显存
+> [2022_CVPR_Bringing-Old-Films-Back-to-Life_Note.md](./2022_CVPR_Bringing-Old-Films-Back-to-Life_Note.md)
 
-**Background**
-
-老电影分辨率过低，存在退化问题（灰尘遮挡、划痕噪声，颜色缺失等问题)。人工修复成本太大，利用自动化方式对老电影进行修复，提升老电影观感质量。
-
-**Contributions**
-
-- unify the entire film restoration tasks with a single framework in which we conduct spatio-temporal **restoration and coloarization**.
-
-  1. **the memorization nature of recurrent modules** benefits the temporal coherency whereas the **long-range modeling capability of transformers** helps the spatial restoration
-  2. 上色：模仿人工方式，对一帧上色，然后 propagated 到其他帧
-
-- bi-directional RNN 累计前后相邻帧的信息，减少 flickering。recurrent module 输出的 hidden_state embedding 表示场景内容
-
-  1. 保持 temporal consistency 前后帧一致，避免 flickering
-  2. 实现 occluded 区域只要在别的帧出现过，能够复原出来
-  3. structured defects (划痕) can be localized 刚出现的地方前后帧差别很大
-
-  - :grey_question: 为啥用 bidirectional：由于 flickering 问题，需要结合长时间的序列分析，因此用 bidirectional 信息
-
-- `Swin Transformer ` 实现不同位置像素的信息交换，提升 restore mixed degradation 的效果，缓解 frame alignment 的问题
-
-
-
-
-
-**Related Work**
-
-- Image restoration
-
-  only focus on a single type of degradation. 无法应对真实场景的多种 degradation 同时出现的情况
-
-- Video Restoration
-
-  > [EF2GVI Video Inpainting](https://github.com/MCG-NKU/E2FGVI)
-
-  1. denoising, deblurring, super-resolution 生成效果有限
-  2. video inpainting 需要指定 mask 的区域，在 old-films 中没有
-
-- Old-film restoration
-
-  - 传统方法去除 **structed artifacts**( scratches, cracks, etc.)：先目标检测，再加 inpainting pipline
-
-    无法处理 photometric degradations (e.g., blurriness and noises)；以来手工特征检测 structed artifacts，没有理解内容
-
-  - DeepRemaster
-
-
-
-**methods**
-
-> RTN 框加，data-simulation, colorization, optimization
-
-![RTN_pipline.jpg](./docs/RTN_pipline.jpg)
-
-**Spatial-temporal Module**
-
-![RTN_temporal-spatial-restoration_module.jpg](./docs/RTN_temporal-spatial-restoration_module.jpg)
-
-- Temporal Recurrent Network
-
-  > :question: convolutional encoder E, W
-  >
-  > 1. F aggregates the states between history and current feature
-  > 2. R further recovers and boosts the hidden representation
-  > 3. 光流怎么得到
-  > 4. 如何重建图像？
-
-  $$
-  st = R↑ ◦ F↑(E(x_t), W(s_{t−1}, f_{t−1→t}))\\
-  yt = D(\hat{st} \frown st) ∈ R^{H×W}  \\\frown means~concatenate, \text{D is a convolution decoder}
-  $$
-
-- Spatial Transformer Restoration
-
-  CNN 的 locality & pattern restoration 无法适用于很多 artifact 的情况。此时提取的光流（前后真对应像素的关系）会存在错误。
-
-- Learnable Guided Mask
-
-  > M 为 shallow network
-
-  1. 检测 artifact 的方式，训练数据难搞，检测效果不好
-  2. 有些 dirt 是透明的，还存在一些信息可以利用
-
-  用一种动态加权方式进性结合
-  $$
-  M = \mathcal{M}(E(x_t)
-  \frown W)
-  $$
-
-- 生成 old-film 数据
-
-  1. Contaminant Blending
-  2. Quality Degradation
-
-  随机对视频帧中使用上面 2 种方式
-
-- Colorization :question:
-
-- Loss
-
-  1. perceptual loss
-  2. Temporal-PatchGAN
-  3. hinge loss
-
-
-
-**Unsolved Limitations & Summary**
-
-- fail to distinguish the contaminant from the frame content
-
-  存在退化被错误识别为场景内容，从而没有得到去除。例如黑色划痕被误识别为场景内的烟雾
-
-- GAN may synthesize inadequate high-frequency details and artifacts
-
-  生成的细节不足，存在噪声
-
-- 对于 barely recognizable 的内容很难重建
-
-
-
-**learn what & how to apply to our task** :star:
-
-- GAN generate pixel
-- SwimTransformer
-
-
-
-
+### DeepRemaster :baseball:
 
 
 
@@ -917,7 +838,7 @@ $$
 
 
 
-## DDNM :statue_of_liberty:
+## DDNM :statue_of_liberty: :star:
 
 > [github page](https://wyhuai.github.io/ddnm.io/)
 > [2022_ICLR_DDNM_Zero-Shot-Image-Restoration-Using-Denoising-Diffusion-Null-Space-Model](./2022_ICLR_DDNM_Zero-Shot-Image-Restoration-Using-Denoising-Diffusion-Null-Space-Model_Note.md)
