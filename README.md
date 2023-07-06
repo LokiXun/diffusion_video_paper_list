@@ -4,7 +4,7 @@ Rongji Xun	rongji.xun@gmail.com
 
 > This document works as an **index to record the read papers.** And currently working on using generative models(Diffusion models)  to solve Old-films restoration problems. :laughing:
 >
-> - Use :baby: emoji to denote the **understanding status** for each paper.
+> - 2022_High-Resolution Image Synthesis with Latent Diffusion ModelsUse :baby: emoji to denote the **understanding status** for each paper.
 >
 >   - :baby: Only know the general methods, only partial details
 >   - :star: understand the purposed methods in paper, but lack understanding for related methods or some code implementation details
@@ -30,15 +30,9 @@ Rongji Xun	rongji.xun@gmail.com
 > https://orpatashnik.github.io/ 看一下这个组的工作 >> StyleCLIP, StyleGAN-NADA
 > [Daniel Cohen-Or Blog](https://danielcohenor.com/publications/)
 
-**Target: Old film restoration**
-
-- [ ] 复现 Bringing Old Films Back to Life
-- [ ] 融合 diffusion
-- [ ] 数据
-
-
-
 **Diffusion in Video** :1st_place_medal:
+
+> https://github.com/showlab/Awesome-Video-Diffusion :+1:
 
 - [x] Bringing Old Photos Back to Life
 
@@ -47,13 +41,14 @@ Rongji Xun	rongji.xun@gmail.com
 - [ ] **Bringing Old Films Back to Life :fire: :star:**
 
   - [x] paper Summary
+
   - [ ] code
 
-- [ ] [DeepRemaster: Temporal Source-Reference Attention Networks for Comprehensive Video Enhancement](http://iizuka.cs.tsukuba.ac.jp/projects/remastering/en/index.html)
+  - [ ] [DeepRemaster: Temporal Source-Reference Attention Networks for Comprehensive Video Enhancement](http://iizuka.cs.tsukuba.ac.jp/projects/remastering/en/index.html)
 
-  > **Bringing Old Films Back to Life** 's baseline
-  >
-  > [2019_SIGGRAPH_DeepRemaster-Temporal-Source-Reference-Attention-Networks-for-Comprehensive-Video-Enhancement.pdf](./2019_SIGGRAPH_DeepRemaster-Temporal-Source-Reference-Attention-Networks-for-Comprehensive-Video-Enhancement.pdf)
+    > **Bringing Old Films Back to Life** 's baseline
+    >
+    > [2019_SIGGRAPH_DeepRemaster-Temporal-Source-Reference-Attention-Networks-for-Comprehensive-Video-Enhancement.pdf](./2019_SIGGRAPH_DeepRemaster-Temporal-Source-Reference-Attention-Networks-for-Comprehensive-Video-Enhancement.pdf)
 
 - [ ] Modernizing Old Photos Using Multiple References via Photorealistic Style Transfer
 
@@ -76,11 +71,15 @@ Rongji Xun	rongji.xun@gmail.com
 
   https://github.com/G-U-N/Pix2Video
 
-- [ ] [2022_ICLR_DDNM_Zero-Shot-Image-Restoration-Using-Denoising-Diffusion-Null-Space-Model](./2022_ICLR_DDNM_Zero-Shot-Image-Restoration-Using-Denoising-Diffusion-Null-Space-Model_Note.md)
+- [x] [2022_ICLR_DDNM_Zero-Shot-Image-Restoration-Using-Denoising-Diffusion-Null-Space-Model](./2022_ICLR_DDNM_Zero-Shot-Image-Restoration-Using-Denoising-Diffusion-Null-Space-Model_Note.md)
 
-- [ ] [2022_WACV_Pik-Fix-Restoring-and-Colorizing-Old-Photos.pdf](./2022_WACV_Pik-Fix-Restoring-and-Colorizing-Old-Photos.pdf)
+  - [ ] code summary
 
 - [ ] [HistoryNet](https://github.com/BestiVictory/HistoryNet#historynet)
+
+- [ ] Align your Latents: High-Resolution Video Synthesis with Latent Diffusion Models
+
+  https://arxiv.org/abs/2304.08818
 
 
 
@@ -122,6 +121,12 @@ Rongji Xun	rongji.xun@gmail.com
   - [ ] code
   
 - [ ] Palette: Image-to-Image Diffusion Models
+
+- [ ] Recurrent Video Restoration Transformer with Guided Deformable Attention (RVRT, NeurlPS2022)
+
+  https://github.com/JingyunLiang/RVRT
+
+- [ ] [2022_WACV_Pik-Fix-Restoring-and-Colorizing-Old-Photos.pdf](./2022_WACV_Pik-Fix-Restoring-and-Colorizing-Old-Photos.pdf)
 
 - [ ] [Drag Your GAN: Interactive Point-based Manipulation on the Generative Image Manifold](https://github.com/XingangPan/DragGAN) :moyai:
 
@@ -285,7 +290,7 @@ Rongji Xun	rongji.xun@gmail.com
 
 
 
-## PaperReadingSuggestion
+## ResearchSuggestion
 
 - 论文笔记
 
@@ -324,6 +329,8 @@ Rongji Xun	rongji.xun@gmail.com
 **diffusion model 用于老电影修复**。不要局限于技术细节，都看一下，只不过要学会某些进行略读
 implicit neural representation 和 Neural Operator 这两个领域可以重点看看，将其应用于我们的 task
 
+> 至少想 2 个创新点，做实验看为什么不 work，分析问题&看文献
+
 - 初期选一篇文章复现一下
   - [ ] BringOldFilmsBackToLife
   - [ ] Diffusion Video Autoencoders
@@ -332,8 +339,55 @@ implicit neural representation 和 Neural Operator 这两个领域可以重点�
   - [ ] ControlNet >> 能否借鉴到 video editing :star:
 - GAN 之前存在的问题，一些思想能否用到 diffusion 中
   - 模式崩塌：多样性很差，只生产几个类别，质量比较好
-  - **Limited Data 看思想**，
+  - **Limited Data 看思想**
   - wavelet diffusion models
+- Rado, 张雷老师组 >> diffusion model in low level
+
+
+
+**NEXT STEP & Current Obstacle: Old film restoration ** :fire:
+
+- [ ] 复现 Bringing Old Films Back to Life （最新SOTA复现就行）
+
+  - [ ] 视频数据
+
+    - [ ] 用论文中的合成数据
+    - [ ] 爬取：优酷，b站，Youtube 视频 
+
+    > **用合成数据先跑**，后续再下
+
+  - [x] 作者先前 2D 图像修复工作如何解决数据问题
+    Bring Old Photos Code
+
+  - [ ] 跑通&理解用到的 baseline
+
+    - [ ] BasicVSR 
+    - [ ] Video Swin
+    - [ ] **DeepRemaster 之前老视频修复 SOTA**
+    - [ ] `DeOldify`: An open-source tool for restoring old films
+
+  - [ ] 探索 video diffusion
+
+    > 没理解 DVA 中 DDIM 部分的代码 :question:
+    >
+    > 看 DDNM,DVA 里面 DDIM 的实现
+    >
+    > **调研除了人脸编辑的 diffusion**
+
+    https://scholar.google.com/scholar?as_ylo=2023&q=diffusion+video&hl=zh-CN&as_sdt=0,5
+
+    
+
+- [ ] 帧数 DAIN (Depth-Aware Video Frame Interpolation)
+
+  https://github.com/baowenbo/DAIN
+
+- [ ] Video Colorization
+
+  https://github.com/zhangmozhe/Deep-Exemplar-based-Video-Colorization
+  [2019_CVPR_Deep-Exemplar-based-Video-Colorization.pdf](./2019_CVPR_Deep-Exemplar-based-Video-Colorization.pdf)
+
+
 
 
 
@@ -532,6 +586,10 @@ The paper **proposed a new implicit camera model (using implicit neural network)
 
 # Diffusion in Video :dart:
 
+- How Diffusion Model used in Video？ :question:
+
+
+
 ## Dataset
 
 - FFHQ(Flickr-Faces-Hight-Quality)
@@ -539,7 +597,14 @@ The paper **proposed a new implicit camera model (using implicit neural network)
   > [FFHQ 介绍博客](https://zhuanlan.zhihu.com/p/353168785)
 
   FFHQ是一个高质量的人脸数据集，包含1024x1024分辨率的70000张PNG格式高清人脸图像，在年龄、种族和图像背景上丰富多样且差异明显，在人脸属性上也拥有非常多的变化，拥有不同的年龄、性别、种族、肤色、表情、脸型、发型、人脸姿态等，包括普通眼镜、太阳镜、帽子、发饰及围巾等多种人脸周边配件，因此该数据集也是可以用于开发一些人脸属性分类或者人脸语义分割模型的。
-  
+
+**Old photos Dataset**
+
+> [老照片修复中心](http://www.lzpxf.com/portal.php)
+> https://www.ancientfaces.com/photo/george-roberts/1328388
+> [old photos textures](https://www.google.com/search?q=old+photo+texture&tbm=isch&ved=2ahUKEwiNn_vEoLbsAhUM5hoKHXBiCUwQ2-cCegQIABAA&oq=old+photo+texture&gs_lcp=CgNpbWcQAzICCAAyAggAMgIIADICCAAyAggAMgIIADICCAAyAggAMgIIAFC3GFiBJmCsLWgAcAB4AIABkgGIAagGkgEDMS42mAEAoAEBqgELZ3dzLXdpei1pbWfAAQE&sclient=img&ei=QhKIX432HIzMa_DEpeAE&bih=875&biw=1920&client=ubuntu&hs=gm2)
+
+
 
 ### Old Films Dataset
 
@@ -551,6 +616,17 @@ The paper **proposed a new implicit camera model (using implicit neural network)
 > [How Old Movies Are Professionally Restored | Movies Insider](https://www.youtube.com/watch?v=6NzfJJny3Yg)
 > [中国电影修复馆](https://www.cfa.org.cn/cfa/gz/xf/index.html)
 > [Baidu 智感超清服务](https://zhuanlan.zhihu.com/p/302719798)
+>
+> - 优酷搜索老电影
+>
+>   [优酷 kux 文件转为 mp4](https://zhuanlan.zhihu.com/p/111764932)
+>
+> - B 站博主
+>
+>   https://www.bilibili.com/video/BV1dT411u7Hu/?spm_id_from=333.788&vd_source=eee3c3d2035e37c90bb007ff46c6e881
+>   https://www.bilibili.com/video/BV1oG41187Rp/?spm_id_from=333.999.0.0&vd_source=eee3c3d2035e37c90bb007ff46c6e881
+>
+>   https://github.com/leiurayer/downkyi b站视频下载工具
 
 - `Pinto Ben` 从 6 个 soures 修复
   - eyelash 
@@ -742,7 +818,7 @@ $$
 
 ## Stable Diffusion :moyai::baby:
 
-> [2022_High-Resolution Image Synthesis with Latent Diffusion Models_Note.md](./2022_High-Resolution Image Synthesis with Latent Diffusion Models_Note.md)
+> [2022_CVPR_High-Resolution Image Synthesis with Latent Diffusion Models_Note.md](./2022_CVPR_High-Resolution Image Synthesis with Latent Diffusion Models_Note.md)
 
 
 
@@ -763,6 +839,10 @@ $$
 ### DeepRemaster :baseball:
 
 
+
+### DeOldify
+
+> https://github.com/jantic/DeOldify
 
 
 
@@ -851,6 +931,12 @@ $$
 - [ ] [StyleGAN-NADA: **CLIP-Guided** Domain Adaptation of Image Generators](https://arxiv.org/abs/2108.00946)
 
 - [ ] [Diffusion Autoencoders](https://github.com/phizaz/diffae) :star:
+
+
+
+## Video LDM
+
+> [2023_CVPR_Align-your-Latents--High-Resolution-Video-Synthesis-with-Latent-Diffusion-Models_Note.md](./2023_CVPR_Align-your-Latents--High-Resolution-Video-Synthesis-with-Latent-Diffusion-Models_Note.md)
 
 
 

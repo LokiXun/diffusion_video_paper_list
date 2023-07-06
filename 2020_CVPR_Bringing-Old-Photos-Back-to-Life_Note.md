@@ -1,6 +1,6 @@
 # Bringing Old Photos Back to Life
 
-> [2020_CVPR_Bringing-Old-Photos-Back-to-Life.pdf ](./2020_CVPR_Bringing-Old-Photos-Back-to-Life.pdf)  [arxiv](https://arxiv.org/abs/2004.09484)
+> [2020_CVPR_Bringing-Old-Photos-Back-to-Life.pdf ](./2020_CVPR_Bringing-Old-Photos-Back-to-Life.pdf)  [arxiv](https://arxiv.org/abs/2004.09484) 有CVPR，TPAMI 版本的pdf，[TPAMI 版本](https://arxiv.org/pdf/2009.07047v1.pdf)的算法原理更多一些
 > [github repo](https://github.com/microsoft/Bringing-Old-Photos-Back-to-Life)
 > [博客参考](https://zhuanlan.zhihu.com/p/414309177)
 
@@ -94,6 +94,8 @@
 
 - 再从 GAN discriminator 角度使得 z_r z_x 接近
 
+  ![Bringing-Old-Photos-Back-to-Life_domain_align_1.png](./docs/Bringing-Old-Photos-Back-to-Life_domain_align_1.png)
+  
   ![Bringing-Old-Photos-Back-to-Life_domain_align_2.png](./docs/Bringing-Old-Photos-Back-to-Life_domain_align_2.png)
 
 
@@ -141,9 +143,12 @@
 - 数据
 
   - training set Pascal VOC
+
   - 在 DIV2K 上合成数据，真实老照片数据 test
 
   - 自己收集了 5718 张老照片但没 release 出来
+
+    
 
   训练时随机 crop 256x256 区域
 
@@ -162,3 +167,111 @@
 ## **Summary:star2:**
 
 > learn what & how to apply to our task
+
+
+
+## Code
+
+- install https://github.com/microsoft/Bringing-Old-Photos-Back-to-Life/issues/248#issuecomment-1344901139
+
+**Train Domain_A**
+
+> Data Preparation `class UnPairOldPhotos_SR(BaseDataset):  ## Synthetic + Real Old`
+
+随机 50% 概率取 Pascal VOC 或真实老照片。对于合成噪声
+
+1. `cv2.GaussianBlur` P=70%
+
+2. 加噪声 `synthesize_gaussian, synthesize_speckle, synthesize_salt_pepper` 转化为 numpy 采样 gaussian
+
+3. 降低分辨率 + 在还原原分辨率
+
+   ```python
+   new_w=random.randint(int(w/2),w)
+   new_h=random.randint(int(h/2),h)
+   img=img.resize((new_w,new_h),Image.BICUBIC)
+   img=img.resize((w,h),Image.NEAREST)  # P=0.5
+   ```
+
+4. JPEG 压缩
+
+   ```python
+   def convertToJpeg(im,quality):
+       with BytesIO() as f:
+           im.save(f, format='JPEG',quality=quality)
+           f.seek(0)
+           return Image.open(f).convert('RGB')
+   ```
+
+- <10% 概率，转为灰度图，再转回 RGB 
+- resize 到 256
+- flip & normalize
+
+```python
+input_dict = {'label': A_tensor, 'inst': is_real_old,  # Union[0,1]
+              'image': A_tensor,
+              'feat': feat_tensor,  # 0
+              'path': path}
+return input_dict
+```
+
+**Domain alignment loss**
+
+`input_dict['label']` 进入 Encoder 获取 hidden tensor, 加上噪声还原 >> 作为 fake 数据给判别器
+
+```python
+hiddens = self.netG.forward(input_concat, 'enc')
+noise = Variable(torch.randn(hiddens.size()).cuda(hiddens.data.get_device()))
+# This is a reduced VAE implementation where we assume the outputs are multivariate Gaussian distribution with mean = hiddens and std_dev = all ones.
+# We follow the the VAE of MUNIT (https://github.com/NVlabs/MUNIT/blob/master/networks.py)
+fake_image = self.netG.forward(hiddens + noise, 'dec')
+```
+
+- KL loss
+
+  ```python
+  hiddens = self.netG.forward(input_concat, 'enc')
+  
+  loss_G_kl = torch.mean(torch.pow(hiddens, 2)) * self.opt.kl
+  ```
+
+  
+
+
+
+> `Global/models/networks.py`
+
+`class Pix2PixHDModel(BaseModel)` 中定义了 Generator，Discriminator
+
+- `self.netG` >> generator
+  `netG = GlobalGenerator_DCDCv2(input_nc, output_nc, ngf, k_size, n_downsample_global, norm_layer, opt=opt)`
+
+  定义 Encoder Decoder >> U-Net 结构，具体参考 TAPAMI 版本pdf Page6
+
+-  `self.netD` >> discriminator
+
+  `netD = MultiscaleDiscriminator(input_nc: 3, opt, ndf: 64, n_layers_D: 3, norm_layer, use_sigmoid, num_D, getIntermFeat)`
+
+  三层 PatchGAN discriminator，每层之间加个 AveragePooling
+
+  ```
+  class NLayerDiscriminator(nn.Module)
+  - Conv2d & LeakyReLU  # side = side / 2
+  - [Conv2d & norm & LeakyReLU] * 2  # 下采样 side = side / 2
+  - [Conv2d & norm & LeakyReLU]  # 不下采样
+  ```
+
+  
+
+  ### NonLocal Block
+
+  > https://github.com/tea1528/Non-Local-NN-Pytorch
+
+  ![https://github.com/tea1528/Non-Local-NN-Pytorch/raw/master/figure/Figure2.jpg](https://github.com/tea1528/Non-Local-NN-Pytorch/raw/master/figure/Figure2.jpg)
+
+  `class NonLocalBlock2D_with_mask_Res(nn.Module)`
+
+  
+
+  
+
