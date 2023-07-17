@@ -1,391 +1,25 @@
-# Tongji_CV_Group_Journey
+# **Tongji_CV_Journey** :gun:
 
-Rongji Xun	rongji.xun@gmail.com
-
-> This document works as an **index to record the read papers.** And currently working on using generative models(Diffusion models)  to solve Old-films restoration problems. :laughing:
+> This document mainly works as an **paper List in categories** :cat:
+> Also, our notes for read papers are linked beside, which could help us recall the main idea in paper more quickly.
 >
-> - 2022_High-Resolution Image Synthesis with Latent Diffusion ModelsUse :baby: emoji to denote the **understanding status** for each paper.
+> :ticket: Note that
 >
->   - :baby: Only know the general methods, only partial details
->   - :star: understand the purposed methods in paper, but lack understanding for related methods or some code implementation details
->   - :star2: understand all the details and its code implementation
->   - :heavy_check_mark: reappear the paper with custom data
+> 1. The paper Information is listed at such format
 >
->   Note that **It's ok not understand the main methods in paper at first read.** Mark it as  :baby: emoji, go for making up for the lacking knowledge, keep reading and **check the paper again to update the emoji when have a deeper understanding** of related methods. :hugs:
+>    ```
+>    "Paper Name" Conference/Journal/Arxiv, year month, MethodsAbbreviation
+>    Authors(optional)
+>    [paper link]() [code link]() [paper website link]()
+>    [the Note link, which we makde summary based on our understanding]()
+>    short discription(optional)
+>    ```
 >
-> - Paper Importance extra status
+> 2. If only the paper website is listed, it denotes the paper link and code link could be found in the website page.
 >
->   - :statue_of_liberty: SOTA methods
->   - :moyai: MileStone
->   - :baseball: baseline methods in the paper
->   - :dart: Current working direction
+> 3. The priority order of papers in each category is based on paper importance(based on our task) and then paper-release time.
 >
-> - GPU comparison website [GPU 4090vs V100](https://topcpu.net/gpu-c/GeForce-RTX-4090-vs-Tesla-V100-PCIe-32-GB) to evaluate whether the GPU resources is adequate to reappear the methods in paper.
-
-
-
-
-## TODO PaperList
-
-> https://orpatashnik.github.io/ 看一下这个组的工作 >> StyleCLIP, StyleGAN-NADA
-> [Daniel Cohen-Or Blog](https://danielcohenor.com/publications/)
-
-**Diffusion in Video** :1st_place_medal:
-
-> https://github.com/showlab/Awesome-Video-Diffusion :+1:
-
-- [x] Bringing Old Photos Back to Life
-
-  - [ ] code
-
-- [ ] **Bringing Old Films Back to Life :fire: :star:**
-
-  - [x] paper Summary
-
-  - [ ] code
-
-  - [ ] [DeepRemaster: Temporal Source-Reference Attention Networks for Comprehensive Video Enhancement](http://iizuka.cs.tsukuba.ac.jp/projects/remastering/en/index.html)
-
-    > **Bringing Old Films Back to Life** 's baseline
-    >
-    > [2019_SIGGRAPH_DeepRemaster-Temporal-Source-Reference-Attention-Networks-for-Comprehensive-Video-Enhancement.pdf](./2019_SIGGRAPH_DeepRemaster-Temporal-Source-Reference-Attention-Networks-for-Comprehensive-Video-Enhancement.pdf)
-
-- [ ] Modernizing Old Photos Using Multiple References via Photorealistic Style Transfer
-
-  https://kaist-viclab.github.io/old-photo-modernization/?utm_source=catalyzex.com
-
-- [ ] **[Stitch it in Time: GAN-Based Facial Editing of Real Videos](https://stitch-time.github.io/)**
-
-  - [x] paper
-  - [ ] code
-  - [ ] [2021_CVPR_StyleCLIP-Text-Driven-Manipulation-of-StyleGAN-Imagery.pdf](./2021_CVPR_StyleCLIP-Text-Driven-Manipulation-of-StyleGAN-Imagery.pdf)
-    [Or Patashnik](https://orpatashnik.github.io/), [Zongze Wu ](https://www.cs.huji.ac.il/~wuzongze/), [Eli Shechtman ](https://research.adobe.com/person/eli-shechtman/), [Daniel Cohen-Or ](https://www.cs.tau.ac.il/~dcor/), [Dani Lischinski](https://www.cs.huji.ac.il/~danix/)
-  - [ ] [2020_CVPR_InterFaceGAN_Interpreting-the-Latent-Space-of-GANs-for-Semantic-Face-Editing.pdf](./2020_CVPR_InterFaceGAN_Interpreting-the-Latent-Space-of-GANs-for-Semantic-Face-Editing.pdf)
-
-- [ ] **Diffusion Video Autoencoders: Toward Temporally Consistent Face Video Editing via Disentangled Video Encoding**
-
-  - [ ] code
-  - [ ] 复现论文，评估算力是否足够
-
-- [ ] [2023_Pix2Video: Video Editing using Image Diffusion >>paper with code](https://paperswithcode.com/paper/pix2video-video-editing-using-image-diffusion)
-
-  https://github.com/G-U-N/Pix2Video
-
-- [x] [2022_ICLR_DDNM_Zero-Shot-Image-Restoration-Using-Denoising-Diffusion-Null-Space-Model](./2022_ICLR_DDNM_Zero-Shot-Image-Restoration-Using-Denoising-Diffusion-Null-Space-Model_Note.md)
-
-  - [ ] code summary
-
-- [ ] [HistoryNet](https://github.com/BestiVictory/HistoryNet#historynet)
-
-- [ ] Align your Latents: High-Resolution Video Synthesis with Latent Diffusion Models
-
-  https://arxiv.org/abs/2304.08818
-
-
-
-**Diffusion/GAN Related**
-
-- basics
-
-  - [ ] StyleGAN V1-2-3
-
-  - [x] VQ-GAN
-
-  - [ ] High-Resolution Image Synthesis with Latent Diffusion Models :+1: 里程碑
-
-    https://github.com/CompVis/latent-diffusion?utm_source=catalyzex.com
-
-    https://github.com/CompVis/stable-diffusion
-
-  - [ ] [2022_Understanding Diffusion Models-A Unified Perspective.pdf](./2022_Understanding Diffusion Models-A Unified Perspective.pdf) :+1:
-
-  - [ ] DDPM
-
-  - [ ] DDIM
-
-  - [ ] IDDPM
-
-  - [ ] DDRM
-
-  - [ ] Score-based
-
-  - [ ] BeatGAN
-
-  - [ ] [VAE 博客](https://zhuanlan.zhihu.com/p/34998569) 提供了一个将概率图跟深度学习结合起来的一个非常棒的案例
-    [code](https://github.com/bojone/vae)
-    
-  - [ ] CycleGAN and pix2pix in PyTorch https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix
-
-- [x] Zero-Shot Image Restoration Using Denoising Diffusion Null-Space Model :+1:
-  - [x] paper
-  - [ ] code
-  
-- [ ] Palette: Image-to-Image Diffusion Models
-
-- [ ] Recurrent Video Restoration Transformer with Guided Deformable Attention (RVRT, NeurlPS2022)
-
-  https://github.com/JingyunLiang/RVRT
-
-- [ ] [2022_WACV_Pik-Fix-Restoring-and-Colorizing-Old-Photos.pdf](./2022_WACV_Pik-Fix-Restoring-and-Colorizing-Old-Photos.pdf)
-
-- [ ] [Drag Your GAN: Interactive Point-based Manipulation on the Generative Image Manifold](https://github.com/XingangPan/DragGAN) :moyai:
-
-- [ ] Pix2Video
-
-- [ ] Self-Supervised Learning with Random-Projection Quantizer for Speech Recognition
-
-  参考 random-projection 操作
-
-- 小波变换
-  - [ ] Wavelet Diffusion Models are fast and scalable Image Generators :+1:
-  - [ ] [2023_Fourmer-An Efficient Global Modeling Paradigm for Image Restoration.pdf](./2023_Fourmer-An Efficient Global Modeling Paradigm for Image Restoration.pdf)
-  
-- Image2Image Translation
-  - [ ] [2023_Zero-shot-Image-to-Image-Translation.pdf](./2023_Zero-shot-Image-to-Image-Translation.pdf)
-    [github repo](https://github.com/pix2pixzero/pix2pix-zero)
-
-- [ ] Locally Hierarchical Auto-Regressive Modeling for Image Generation :+1:
-
-  https://github.com/kakaobrain/hqtransformer
-
-- [ ] JPEG Artifact Correction using Denoising Diffusion Restoration Models
-
-- [ ] Scalable Diffusion Models with Transformers
-
-- [ ] All are Worth Words: A ViT Backbone for Diffusion Models
-
-- [ ] Implicit Diffusion Models for Continuous Super-Resolution
-
-- [ ] LayoutDM: Transformer-based Diffusion Model for Layout Generation
-
-- [ ] Vector Quantized Diffusion Model for Text-to-Image Synthesis
-
-- [ ] Image Super-Resolution via Iterative Refinement
-
-- [ ] Real-World Denoising via Diffusion Model
-
-- [ ] Diffusion in the Dark A Diffusion Model for Low-Light Text Recognition
-
-- [ ] Exploiting Diffusion Prior for Real-World Image Super-Resolution
-
-  https://iceclear.github.io/projects/stablesr/?utm_source=catalyzex.com
-  [2023_preprint_Exploiting-Diffusion-Prior-for-Real-World-Image-Super-Resolution.pdf](./2023_preprint_Exploiting-Diffusion-Prior-for-Real-World-Image-Super-Resolution.pdf)
-
-- [ ] Privacy Leakage of SIFT Features via Deep Generative Model based Image Reconstruction
-
-
-
-> 相关方向：大致理解 abstract + framework；Basics 理解 code
-
-**Segmentation**
-
-- [ ] SAM :star: >> story
-- [ ] Fast Segment Anything https://github.com/CASIA-IVA-Lab/FastSAM >> FPS25
-- [ ] UniAD CVPR23 Best paper
-- [ ] MobileSAM https://mp.weixin.qq.com/s/zTakIRIsWOUBiUr3yn5rhQ
-
-**Transformer  & Attention:moyai:**
-
-- [ ] On the Expressivity Role of LayerNorm in Transformer's Attention  
-  https://github.com/tech-srl/layer_norm_expressivity_role 这个工作可以加深对 transformer 的一些理解 :star:
-
-- [ ] HaloNet padding 方式的注意力
-
-  Scaling Local Self-Attention for Parameter Efficient Visual Backbones
-
-- [ ] **SwimTransformer**
-
-- [ ] SpectFormer: Frequency and Attention is what you need in a Vision Transformer  
-  https://github.com/badripatro/SpectFormers
-
-- [ ] Learning A Sparse Transformer Network for Effective Image Deraining 
-  https://github.com/cschenxiang/DRSformer
-  
-- [ ] FEDformer: Frequency Enhanced Decomposed Transformer for Long-term Series Forecasting :star: 时序数据
-  https://github.com/MAZiqing/FEDformer
-  
-- [ ] Permuted AdaIN: Reducing the Bias Towards Global Statistics in Image Classification
-  https://github.com/onuriel/PermutedAdaIN  这个工作很简单但是对于提升模型鲁棒性很有效，大家都可以看一下
-
-  理解核心的那一小段代码即可
-
-
-
-**MAE**
-
-- [ ] **MAE**
-
-- [ ] Siamese Masked Autoencoders 
-
-  Masked Siamese Networks for Label-Efficient Learning
-  https://github.com/facebookresearch/msn
-
-  MixMask: Revisiting Masking Strategy for Siamese ConvNets
-  https://github.com/LightnessOfBeing/MixMask
-  这几个半监督/自监督的工作很有意思，大家好好看下
-
-- [ ] SimMIM: a Simple Framework for Masked Image Modeling 
-
-- [ ] Hard Patches Mining for Masked Image Modeling https://mp.weixin.qq.com/s/YJFDjcTqtX_hzy-FXt-F6w
-
-- [ ] Masked-Siamese-Networks-for-Label-Efficient-Learning
-
-
-
-**NLP & 多模态**
-
-- [ ] Multimodal Prompting with Missing Modalities for Visual Recognition
-  https://github.com/YiLunLee/Missing_aware_prompts  训练或者测试是多模态非完美情况
-- [ ] Is GPT-4 a Good Data Analyst
-  https://github.com/damo-nlp-sg/gpt4-as-dataanalyst
-
-**对比学习**
-
-- [ ] CCPL: Contrastive Coherence Preserving Loss for Versatile Style Transfer 
-  https://github.com/JarrentWu1031/CCPL
-
-**LDR->HDR**
-
-- [ ] DRHDR: A Dual branch Residual Network for Multi-Bracket High Dynamic Range Imaging
-- [ ] Networks are Slacking Off: Understanding Generalization Problem in Image Deraining
-- [ ] Image-based CLIP-Guided Essence Transfer
-- [ ] Luminance Attentive Networks for HDR Image and Panorama Reconstruction
-  https://github.com/LWT3437/LANet 
-- [ ] Perceptual Attacks of No-Reference Image Quality Models with Human-in-the-Loop
-- [ ] Perception-Oriented Single Image Super-Resolution using Optimal Objective Estimation 
-- 小波变换 >> 无损
-  - A simple but effective and efficient global modeling paradigm for image restoration
-  - 周满
-
-
-
-**NeRF & Implicit Neural Representations**
-
-- [x] [2023_CVPR_Inverting-the-Imaging-Process-by-Learning-an-Implicit-Camera-Model_Note.md](./2023_CVPR_Inverting-the-Imaging-Process-by-Learning-an-Implicit-Camera-Model_Note.md)
-- [ ] Neural Volume Super Resolution
-  https://github.com/princeton-computational-imaging/Neural-Volume-Super-Resolution  NeRF+SR
-- [x] LERF: Language Embedded Radiance Fields 
-  https://github.com/kerrj/lerf  NeRF + 3D CLIP
-- [ ] Implicit Neural Representations for Image Compression
-  https://github.com/YannickStruempler/inr_based_compression 
-- [ ] iNeRF: Inverting Neural Radiance Fields for Pose Estimation 
-- [ ] ViP-NeRF: Visibility Prior for Sparse Input Neural Radiance Fields 
-- [ ] AdaNeRF: Adaptive Sampling for Real-time Rendering of Neural Radiance Fields
-- [ ] 2022_CVPR_Aug-NeRF--Training-Stronger-Neural-Radiance-Fields-with-Triple-Level-Physically-Grounded-Augmentations >> 输入增加扰动
-
-
-
-**Neural Operators**
-
-- [ ] Factorized Fourier Neural Operators
-  https://github.com/alasdairtran/fourierflow
-- [ ] Super-Resolution Neural Operator :grey_question:
-  https://github.com/2y7c3/Super-Resolution-Neural-Operator
-- [ ] Adaptive Fourier Neural Operators: Efficient Token Mixers for Transformers
-  https://github.com/NVlabs/AFNO-transformer
-- [ ] Fourier Neural Operator for Parametric Partial Differential Equations
-  https://github.com/neuraloperator/neuraloperator
-
-
-
-
-
-## ResearchSuggestion
-
-- 论文笔记
-
-  主要看懂方法；总结学到了啥（总结创新点，分析如何能用到自己的任务；提到的典型方法；...）
-
-  **Background**
-
-  **Contributions**
-
-  **Related Work**
-
-  **methods**
-
-  **Unsolved Limitations**
-  
-  **Summary :star2:**
-  
-  > learn what & how to apply to our task
-  
-  
-  
-- 文章阅读建议
-
-  每周 5 篇精读，一篇文章要看多次的，第一次看完不懂没关系，但要记录下来后面再看！**一定要整理 code，进性总结 :star::star:** 
-
-  > https://gaplab.cuhk.edu.cn/cvpapers/#home  这里整理分类了近几年计算机视觉方面重要会议（CVPR，ICCV，ECCV，NeurIPS，ICLR）的文章和代码，大家可以多看看
-  >
-  > https://openaccess.thecvf.com/menu 这是CVF的官网，一些计算机视觉一些重要会议（CVPR，ICCV，WACV）的所有文章附录等材料
-  >
-  > https://www.ecva.net/index.php 这是ECCV的官网，历年的文章附录都有
-  >
-  > 建议这些会议（CVPR，ICCV，ECCV，NeurIPS，ICLR，ICML，AAAI，IJCAI，ACMMM等）的文章以及一些重要期刊（T-PAMI，T-IP，TOG，TVCG，IJCV，T-MM，T-CSVT等）大家多阅读，相同或者相近任务的文章至少全部粗读一遍，然后选择性精读，需要学会使用Google学术和GitHub查询有用资料
-
-
-
-**diffusion model 用于老电影修复**。不要局限于技术细节，都看一下，只不过要学会某些进行略读
-implicit neural representation 和 Neural Operator 这两个领域可以重点看看，将其应用于我们的 task
-
-> 至少想 2 个创新点，做实验看为什么不 work，分析问题&看文献
-
-- 初期选一篇文章复现一下
-  - [ ] BringOldFilmsBackToLife
-  - [ ] Diffusion Video Autoencoders
-- Possible direction
-  - [ ] diffusion 稳定 or 加速训练
-  - [ ] ControlNet >> 能否借鉴到 video editing :star:
-- GAN 之前存在的问题，一些思想能否用到 diffusion 中
-  - 模式崩塌：多样性很差，只生产几个类别，质量比较好
-  - **Limited Data 看思想**
-  - wavelet diffusion models
-- Rado, 张雷老师组 >> diffusion model in low level
-
-
-
-**NEXT STEP & Current Obstacle: Old film restoration ** :fire:
-
-- [ ] 复现 Bringing Old Films Back to Life （最新SOTA复现就行）
-
-  - [ ] 视频数据
-
-    - [ ] 用论文中的合成数据
-    - [ ] 爬取：优酷，b站，Youtube 视频 
-
-    > **用合成数据先跑**，后续再下
-
-  - [x] 作者先前 2D 图像修复工作如何解决数据问题
-    Bring Old Photos Code
-
-  - [ ] 跑通&理解用到的 baseline
-
-    - [ ] BasicVSR 
-    - [ ] Video Swin
-    - [ ] **DeepRemaster 之前老视频修复 SOTA**
-    - [ ] `DeOldify`: An open-source tool for restoring old films
-
-  - [ ] 探索 video diffusion
-
-    > 没理解 DVA 中 DDIM 部分的代码 :question:
-    >
-    > 看 DDNM,DVA 里面 DDIM 的实现
-    >
-    > **调研除了人脸编辑的 diffusion**
-
-    https://scholar.google.com/scholar?as_ylo=2023&q=diffusion+video&hl=zh-CN&as_sdt=0,5
-
-    
-
-- [ ] 帧数 DAIN (Depth-Aware Video Frame Interpolation)
-
-  https://github.com/baowenbo/DAIN
-
-- [ ] Video Colorization
-
-  https://github.com/zhangmozhe/Deep-Exemplar-based-Video-Colorization
-  [2019_CVPR_Deep-Exemplar-based-Video-Colorization.pdf](./2019_CVPR_Deep-Exemplar-based-Video-Colorization.pdf)
+> - [GPU comparison website](https://topcpu.net/gpu-c/GeForce-RTX-4090-vs-Tesla-V100-PCIe-32-GB)
 
 
 
@@ -430,163 +64,631 @@ implicit neural representation 和 Neural Operator 这两个领域可以重点�
   - 几个 proposed module xx
 
   - loss function
-  
+
   > - 期刊：3.4 Methods 写完一般写到 6.5 页。初稿不算 reference 写12-13页，DL 实验部分一般4.5页
   >
   > - 公式
   >
   >   变量斜体，操作/运算符用正体 （Relu）
 
-# GroupMeeting Note
-
-> 6.30
-
-- Inter-Instance Similarity Modeling for Contrastive Learning
-
-  `PatchMix`
-
-  ![image-20230630194037237](C:\Users\Loki\AppData\Roaming\Typora\typora-user-images\image-20230630194037237.png)
-
-- No-Reference Image Quality Assessment via Multibranch Convolutional Neural Networks
-
-- SparseFusion: Distilling View-conditioned Diffusion for 3D Reconstruction
-
-  > Diffusion Model >> distillation
-
-- PixelNeRF
-
-- Luminance Attentive Networks for HDR Image and Panorama Reconstruction
-
-- ExpandNet: A Deep Convolutional Neural Network for High Dynamic Range Expansion from Low Dynamic Range Content
-  https://arxiv.org/abs/1803.02266 :star:
-
-- A New Journey from SDRTV to HDRTV
 
 
 
-# IQA
 
-> [CVPR IQA 博客](https://zhuanlan.zhihu.com/p/154017806)
+## ResearchSuggestion
 
-IQA(image quality assessment) Task target: quantification of human perception of image quality
+- 论文笔记
 
-- Application
+  主要看懂方法；总结学到了啥（总结创新点，分析如何能用到自己的任务；提到的典型方法；...）
 
-  想对某一项视觉任务评估图像能否满足需要，比如针对人脸识别的质量评价，看一幅图像是否应该拒绝还是输入到人脸识别系统中
+  **Key-point**
 
-  - texture classification
-  - texture retrieval （texture similarity）
-  - texture recovery
+  **Contributions**
 
-  对于图像下游任务：denoising, deblurring, super-resolution, compression，能够提升图像质量
+  **Related Work**
 
-- Full Reference, No-reference 
+  **methods**
 
+  **Limitations**
 
+  **Summary :star2:**
 
-## DISTS
-
-> [2020_TPAMI_DISTS_Image-Quality-Assessment-Unifying-Structure-and-Texture-Similarity_Note.md](./2020_TPAMI_DISTS_Image-Quality-Assessment-Unifying-Structure-and-Texture-Similarity_Note.md)
-
-针对有明显纹理的原图，让模型对 JPEG 压缩后、resample 的图像打分（实际上肉眼看上去 JPEG 更加模糊），之前方法对于 JPEG 图像质量评分错误地高于 resample 图。
-
-
-
-## Re-IQA
-
-> [2023_CVPR_Re-IQA-Unsupervised-Learning-for-Image-Quality-Assessment-in-the-Wild.pdf](./2023_CVPR_Re-IQA-Unsupervised-Learning-for-Image-Quality-Assessment-in-the-Wild.pdf)
-
-一种 NR-IQA 算法，使用对比学习的方式，使用 2 个 Res50 去学习 content & image-quality-aware features. 最后加一个 regressor 输出 image quality scores.
-对于 quality feature 一路，模仿 MoCoV2 ，修改了构造正负样本的方式进行训练。
-
-- `Full-reference IQA` 方法 对于 images in the wild 场景，没有 reference 应用受限
-
-  FR-IQA 需要参考图像（undistorted） & distorted 图像，一起才能输出评分。
-
-- high-level content representation using MoCoV2
-
-  2 crops from same image -> similar scores, but not the case for some human viewers.
+  > learn what & how to apply to our task
 
   
 
+- 文章阅读建议
+
+  每周 5 篇精读，一篇文章要看多次的，第一次看完不懂没关系，但要记录下来后面再看！**一定要整理 code，进性总结 :star::star:** 
+
+  > https://gaplab.cuhk.edu.cn/cvpapers/#home  这里整理分类了近几年计算机视觉方面重要会议（CVPR，ICCV，ECCV，NeurIPS，ICLR）的文章和代码，大家可以多看看
+  >
+  > https://openaccess.thecvf.com/menu 这是CVF的官网，一些计算机视觉一些重要会议（CVPR，ICCV，WACV）的所有文章附录等材料
+  >
+  > https://www.ecva.net/index.php 这是ECCV的官网，历年的文章附录都有
+  >
+  > 建议这些会议（CVPR，ICCV，ECCV，NeurIPS，ICLR，ICML，AAAI，IJCAI，ACMMM等）的文章以及一些重要期刊（T-PAMI，T-IP，TOG，TVCG，IJCV，T-MM，T-CSVT等）大家多阅读，相同或者相近任务的文章至少全部粗读一遍，然后选择性精读，需要学会使用Google学术和GitHub查询有用资料
+
+至少想 2 个创新点，做实验看为什么不 work，分析问题&看文献；
+**diffusion model 用于老电影修复**。不要局限于技术细节，都看一下，只不过要学会某些进行略读
+implicit neural representation 和 Neural Operator 这两个领域可以重点看看，将其应用于我们的 task
+
+- 初期选一篇文章复现一下
+  - [ ] BringOldFilmsBackToLife
+  - [ ] Diffusion Video Autoencoders
+- Possible direction
+  - [ ] diffusion 稳定 or 加速训练
+  - [ ] ControlNet >> 能否借鉴到 video editing :star:
+- GAN 之前存在的问题，一些思想能否用到 diffusion 中
+  - 模式崩塌：多样性很差，只生产几个类别，质量比较好
+  - **Limited Data 看思想**
+  - wavelet diffusion models
+- Rado, 张雷老师组 >> diffusion model in low level
+- https://orpatashnik.github.io/ 看一下这个组的工作 >> StyleCLIP, StyleGAN-NADA
+  [Daniel Cohen-Or Blog](https://danielcohenor.com/publications/)
+
+
+
+**NEXT STEP & Current Obstacle: Old film restoration ** :fire:
+
+- [ ] 复现 Bringing Old Films Back to Life （最新SOTA复现就行）
+
+  - [ ] 视频数据
+
+    - [ ] 用论文中的合成数据
+    - [ ] 爬取：优酷，b站，Youtube 视频 
+
+    > **用合成数据先跑**，后续再下
+
+  - [x] 作者先前 2D 图像修复工作如何解决数据问题
+    Bring Old Photos Code
+
+  - [ ] 跑通&理解用到的 baseline
+
+    - [ ] BasicVSR 
+    - [ ] Video Swin
+    - [x] **DeepRemaster 之前老视频修复 SOTA**
+    - [ ] `DeOldify`: An open-source tool for restoring old films
+
+  - [ ] 探索 video diffusion
+
+
+
+
+
+
+# Paper List
+
+## Old films/video restoration :fire:
+
+> :dart: Current Working Direction!
+
+- [ ] "DeOldify" open-sourced toolbox to restore image and video :+1:
+  [code](https://github.com/jantic/DeOldify)
   
+- [ ] "Bringing Old Photos Back to Life" CVPR oral, 2020 Apr :star:
 
+  [paper(CVPR version)](https://arxiv.org/abs/2004.09484) [paper(TPAMI version)](https://arxiv.org/pdf/2009.07047v1.pdf) [code](https://github.com/microsoft/Bringing-Old-Photos-Back-to-Life) [website](http://raywzy.com/Old_Photo/)
 
+  [our Summary Note](./2020_CVPR_Bringing-Old-Photos-Back-to-Life_Note.md)
 
-# NeRF/HDR
+- [ ] "Bringing Old Films Back to Life" CVPR, 2022 Mar :star:
 
-- [What is HDR or LDR image?](https://www.easypano.com/showkb_228.html)
-  **dynamic range** refers to *ratio between the brightest and darkest*（最亮与最暗亮度的比值） parts of the scene. **The Dynamic Range of real-world scenes can be quite high - ratios of 100,000:1** are common in the natural world.
+  [paper](https://arxiv.org/abs/2203.17276) [code](https://github.com/raywzy/Bringing-Old-Films-Back-to-Life) [website](http://raywzy.com/Old_Film/)
 
-  - HDR(High Dynamic Range)
+  [our Summary Note](./2022_CVPR_Bringing-Old-Films-Back-to-Life_Note.md)
 
-    HDR image (image of 32bit/color channel) shows the dynamic range of real world (natural dynamic range is **generally considered to be 100,000:1 （十万比一）**
+- [x] "DeepRemaster: Temporal Source-Reference Attention Networks for Comprehensive Video Enhancement" SIGGRAPH, 2019 Nov
+  [paper](https://arxiv.org/abs/2009.08692) [website](http://iizuka.cs.tsukuba.ac.jp/projects/remastering/en/index.html)
+  [our Note](./2019_SIGGRAPH_DeepRemaster-Temporal-Source-Reference-Attention-Networks-for-Comprehensive-Video-Enhancement_Note.md)
 
-    the **dynamic range human eyes** can identify is around 100,000:1
+  > baseline in "Bringing Old Films Back to Life"  
 
-    So from broad sense （consider the standard display equipment）, image with **dynamic range of higher than 255:1 (8 bit per cooler channel)** is regarded as HDR image.
-
-  - LDR(Low Dynamic Range)
-
-    Dynamic range of JPEG format image won't exceed 255:1, so it is considered as LDR (Low Dynamic Range).
-
-  - [Tone mapping 进化论](https://zhuanlan.zhihu.com/p/21983679)
-
-    对于 HDR Image 如果要显示到 LDR 设备，**需要 tone mapping 的过程，把HDR变成LDR**
-
+- [ ] "DSTT-MARB: Multi-scale Attention Based Spatio-Temporal Transformers for Old Film Restoration" Master Thesis report, 2022 Sep
+  [thesis report](https://ntnuopen.ntnu.no/ntnu-xmlui/bitstream/handle/11250/3023083/no.ntnu:inspera:118516831:64411262.pdf?sequence=1) [local pdf](./2022_master_report_DSTT-MARB--Multi-scale-Attention-Based-Spatio-Temporal-Transformers-for-Old-Film-Restoration.pdf)
   
+  > 硕士论文，里面整合了上面 3 个文章
+  
+- [ ] "VRT: A Video Restoration Transformer" ArXiv, 2022 Jun
+  [paper](https://arxiv.org/abs/2201.12288) [code](https://github.com/JingyunLiang/VRT?utm_source=catalyzex.com)
 
-- camera response function
-  $$
-  P = f(E) \\
-  \text{where E is the image's irradiance, and P is the pixels' value}
-  $$
+- [ ] "Recurrent Video Restoration Transformer with Guided Deformable Attention" NeurlPS, 2022 June
+  [paper](https://arxiv.org/abs/2206.02146) [code](https://github.com/JingyunLiang/RVRT?utm_source=catalyzex.com)
 
-- ghost artifact
+  > VRT 的后续工作‘
 
-  > [***What is ghosting and how do you measure it?*** ](https://mriquestions.com/ghosting.html)
+- [x] "Blind Video Deflickering by Neural Filtering with a Flawed Atlas" CVPR, 2023 Mar :star:
+  [paper](https://arxiv.org/abs/2303.08120) [code](https://github.com/ChenyangLEI/All-In-One-Deflicker?utm_source=catalyzex.com) [website](https://chenyanglei.github.io/deflicker/)
+  [our note](./2023_05_CVPR_Blind-Video-Deflickering-by-Neural-Filtering-with-a-Flawed-Atlas_Note.md)
+  
+  > **用 Nerf 类似的 atlas 处理视频一致性问题**
+  >
+  > 有公布数据  <a name="Blind flickering Dataset"></a> 60 * old_movie, 大多为 350 帧图像; 21* old_cartoon, 大多为 50-100 帧;
+  > 用 [RE:VISION. De:flicker](https://revisionfx.com/products/deflicker/) 去用软件人工修复（存在新手修的质量差的问题）
+  
+- [ ] "RTTLC: Video Colorization with Restored Transformer and Test-time Local" CVPR, 2023 Mar
+  [paper](https://openaccess.thecvf.com/content/CVPR2023W/NTIRE/html/Li_RTTLC_Video_Colorization_With_Restored_Transformer_and_Test-Time_Local_Converter_CVPRW_2023_paper.html)
 
-  ***Ghosting*** is a type of structured noise appearing as repeated versions of the main object (or parts thereof) in the image. They occur because of signal instability between pulse cycle repetitions. Ghosts are usually blurred, smeared, and shifted and are most commonly seen along the phase encode direction. One of the most famous of these is the so-called ***Nyquist N/2 ghost***,
+- [ ] "Exemplar-based Video Colorization with Long-term Spatiotemporal Dependency" Arxiv, 2023 Mar
+  [paper](https://arxiv.org/abs/2303.15081)
 
-- image intensity 表示每个通道的图像的像素灰度值（值的大小）
+- [ ] "BiSTNet: Semantic Image Prior Guided Bidirectional Temporal Feature Fusion for Deep Exemplar-based Video Colorization" ArXiv, 2022 Dec
+  [paper](https://arxiv.org/abs/2212.02268) [website](https://yyang181.github.io/BiSTNet/?utm_source=catalyzex.com)
 
-- [radiance & irradiance](https://blog.csdn.net/u010476094/article/details/44106203)
+- [ ] "Modernizing Old Photos Using Multiple References via Photorealistic Style Transfer" CVPR 2023
+  [paper](https://arxiv.org/abs/2304.04461) [code](https://github.com/KAIST-VICLab/old-photo-modernization) [website](https://kaist-viclab.github.io/old-photo-modernization/?utm_source=catalyzex.com)
+  提供了老照片数据，可以下载
 
-  irradiance 入射光线
+- [ ] "ReBotNet: Fast Real-time Video Enhancement" AeXiv, 2023 Mar
+  [paper](https://arxiv.org/abs/2303.13504) [website](https://jeya-maria-jose.github.io/rebotnet-web/?utm_source=catalyzex.com)
 
-- [White balance](https://www.cambridgeincolour.com/tutorials/white-balance.htm)
+- [ ] "SVCNet: Scribble-based Video Colorization Network with Temporal Aggregation" Arxiv, 2023 Mar
+  [paper](https://arxiv.org/abs/2303.11591) [code](https://github.com/zhaoyuzhi/SVCNet)
 
-  White balance (WB) is the **process of removing unrealistic color casts, so that objects which appear white in person are rendered white in your photo**. Proper camera white balance has to take into account the "color temperature" of a light source, which refers to the relative warmth or coolness of white light. Our eyes are very good at judging what is white under different light sources, but digital cameras often have great difficulty with auto white balance (AWB)
+- [ ] "Self-Prior Guided Pixel Adversarial Networks for Blind Image Inpainting" TAPMI, 2023 June
+  [paper](https://ieeexplore.ieee.org/abstract/document/10147235)
+  
+- [ ] "SB-VQA: A Stack-Based Video Quality Assessment Framework for Video Enhancement" CVPR, 2023 May
+  [paper](https://arxiv.org/abs/2305.08408)
 
-
-
-## Implicit camera model
-
-> [2023_CVPR_Inverting-the-Imaging-Process-by-Learning-an-Implicit-Camera-Model_Note.md](./2023_CVPR_Inverting-the-Imaging-Process-by-Learning-an-Implicit-Camera-Model_Note.md)
-
-Represent the visual signal using implicit coordinate-based neural networks is recent trend in CV. Existing methods directly conider using the whole NN to represent the scene, and **not consider the camera separately.**
-The paper **proposed a new implicit camera model (using implicit neural network)** to represent the physical imaging process. 使用 NeRF 单独模拟相机模型和 scene，实现解耦，增加可调节能力
-
-
-
-# GAN
-
-
-## StyleGAN :baby:
-
-> [StyleGAN_Note.md](./StyleGAN_Note.md)
-
-
-
-## VQ-GAN :baby:
-
-> [2021_CVPR_VQGAN_Taming-Transformers-for-High-Resolution-Image-Synthesis_Note.md](./2021_CVPR_VQGAN_Taming-Transformers-for-High-Resolution-Image-Synthesis_Note.md)
-
+  > mention `old film restoration`
 
 
-# Diffusion in Video :dart:
 
-- How Diffusion Model used in Video？ :question:
+## Diffusion in Video
+
+> https://github.com/showlab/Awesome-Video-Diffusion :+1:
+>https://scholar.google.com/scholar?as_ylo=2023&q=diffusion+video&hl=zh-CN&as_sdt=0,5
+
+- [ ] "Diffusion Video Autoencoders: Toward Temporally Consistent Face Video Editing via Disentangled Video Encoding" CVPR oral, 2023 Dec, DVA
+  [paper](https://arxiv.org/abs/2212.02802) [code](https://github.com/man805/Diffusion-Video-Autoencoders)
+  [our note](./2023_CVPR_Diffusion-Video-Autoencoders--Toward-Temporally-Consistent-Face-Video-Editing-via-Disentangled-Video-Encoding_Note.md)
+
+- [ ] "Align your Latents: High-Resolution Video Synthesis with Latent Diffusion Models" arxiv, 2023 Apr, **VideoLDM** :star:
+  [paper](https://arxiv.org/abs/2304.08818) [website](https://research.nvidia.com/labs/toronto-ai/VideoLDM/) [code: unofficial implementation](https://github.com/srpkdyy/VideoLDM.git)
+  [our note](./2023_CVPR_Align-your-Latents--High-Resolution-Video-Synthesis-with-Latent-Diffusion-Models_Note.md)
+
+  > diffusion 用于 text2video，用预训练的 stable-diffusion，对 U-net 加 temporal layer 实现时序一致性
+
+- [ ] "VideoComposer: Compositional Video Synthesis with Motion Controllability"
+  [![Star](https://camo.githubusercontent.com/f3e411ac406a8793396b60a88e445f2b46ab95fc46d0d0376607ea93e1fac6b9/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f73746172732f64616d6f2d76696c61622f766964656f636f6d706f7365722e7376673f7374796c653d736f6369616c266c6162656c3d53746172)](https://github.com/damo-vilab/videocomposer) [![arXiv](https://camo.githubusercontent.com/0835af0e1376c6ea0c5c19fc50d0824d82eec71980e055575cb87b55a74f8b39/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f61725869762d6233316231622e737667)](https://arxiv.org/abs/2306.02018) [![Website](https://camo.githubusercontent.com/3e5ac86a01b8da4c1744c6b481736db4f759253d7b2bd1c6ee2bf1882146717f/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f576562736974652d396366)](https://videocomposer.github.io/)
+  [our note](./2023_06_VideoComposer--Compositional-Video-Synthesis-with-Motion-Controllability_Note.md)
+
+  > Video LDM 上加入各种样式的 condition 实现可控视频生成
+
+- [ ] [2023_Pix2Video: Video Editing using Image Diffusion >>paper with code](https://paperswithcode.com/paper/pix2video-video-editing-using-image-diffusion)
+
+- [x] [2022_ICLR_DDNM_Zero-Shot-Image-Restoration-Using-Denoising-Diffusion-Null-Space-Model](./2022_ICLR_DDNM_Zero-Shot-Image-Restoration-Using-Denoising-Diffusion-Null-Space-Model_Note.md)
+
+- [ ] [HistoryNet](https://github.com/BestiVictory/HistoryNet#historynet)
+
+- [x] Align your Latents: High-Resolution Video Synthesis with Latent Diffusion Models
+
+  https://arxiv.org/abs/2304.08818
+
+- [x] VideoComposer
+
+  https://github.com/damo-vilab/videocomposer
+
+- [ ] Dreambooth
+
+  https://github.com/zanilzanzan/DreamBooth
+
+- [ ] LDMVFI: Video Frame Interpolation with Latent Diffusion Models
+  https://arxiv.org/abs/2303.09508
+
+- [ ] [Make-Your-Video: Customized Video Generation Using Textual and Structural Guidance](./2023_June_Make-Your-Video--Customized-Video-Generation-Using-Textual-and-Structural-Guidance.pdf)
+
+
+
+## Editing
+
+- [ ] "Layered Neural Atlases for Consistent Video Editing" SIGGRAPH, 2021 Sep
+  [paper](https://arxiv.org/abs/2109.11418) [website](https://layered-neural-atlases.github.io/)
+- [ ] "Stitch it in Time: GAN-Based Facial Editing of Real Videos" SIGGRAPH, 2019 Jan, STIT
+  [paper](https://arxiv.org/abs/2201.08361) [code](https://github.com/rotemtzaban/STIT) [website](https://stitch-time.github.io/)
+  [our note](./2022_SIGGRAPH_STIT_Stitch-it-in-Time--GAN-Based-Facial-Editing-of-Real-Videos_Note.md)
+
+
+
+## Denoising
+
+> [Awesome-Deblurring](https://github.com/subeeshvasu/Awesome-Deblurring)
+
+- [ ] Learning Task-Oriented Flows to Mutually Guide Feature Alignment in Synthesized and Real Video Denoising
+  [paper](https://arxiv.org/pdf/2208.11803v3.pdf)
+
+- [ ] Recurrent Video Restoration Transformer with Guided Deformable Attention (RVRT, NeurlPS2022)
+
+  https://paperswithcode.com/paper/recurrent-video-restoration-transformer-with Previous SOTA :moyai:
+
+- [ ] Real-time Controllable Denoising for Image and Video
+  https://paperswithcode.com/paper/real-time-controllable-denoising-for-image
+  
+- [x] "Low-Dose CT with a Residual Encoder-Decoder Convolutional Neural Network (RED-CNN)" 
+  
+  [paper](https://arxiv.org/abs/1702.00288) [code](https://github.com/SSinyu/RED-CNN/tree/master)
+  [local pdf](./2017_TMI_RED-CNN_Low-Dose-CT-with-a-Residual-Encoder-Decoder-Convolutional-Neural-Network.pdf)
+  
+  > 医学 CT 去噪（噪声 GT 对），模型结构很简单
+  
+- [x] "Let Segment Anything Help Image Dehaze" Arxiv, 2023 Jun
+
+  [paper](https://arxiv.org/abs/2306.15870)
+  [our note](./2023_06_Let-Segment-Anything-Help-Image-Dehaze_Note.md)
+
+  > 将 SAM 分割结果作为通道扩展到 U-net 模块中，进行去雾
+
+ 
+
+## **Colorization**
+
+> https://github.com/MarkMoHR/Awesome-Image-Colorization :star: 
+
+- [ ] Interactive Deep Colorization
+
+  https://github.com/junyanz/interactive-deep-colorization
+
+- [ ] Improved Diffusion-based Image Colorization via Piggybacked Models  *Apr 2023*
+
+  https://piggyback-color.github.io/
+  
+- [ ] Video Colorization with Pre-trained Text-to-Image Diffusion Models‘
+
+  https://colordiffuser.github.io/
+  
+- [ ] "Deep Exemplar-based Video Colorization" CVPR, 2019 Jun
+  [paper](https://arxiv.org/abs/1906.09909) [code](https://github.com/zhangmozhe/Deep-Exemplar-based-Video-Colorization)
+  [local pdf](./2019_CVPR_Deep-Exemplar-based-Video-Colorization.pdf)
+
+
+
+## Enhancement and Restoration :scissors:
+
+- [ ] "Depth-Aware Video Frame Interpolation" CVPR, 2019 Apr, **DAIN**
+  [paper](https://arxiv.org/abs/1904.00830) [code](https://github.com/baowenbo/DAIN)
+- [ ] "ESRGAN: Enhanced Super-Resolution Generative Adversarial Networks" ECCV, 2018 Sep, **ESRGAN(Enhanced SRGAN)**
+  [paper](https://arxiv.org/abs/1809.00219) [code](https://github.com/xinntao/ESRGAN)
+- [ ] "Real-ESRGAN: Training Real-World Blind Super-Resolution with Pure Synthetic Data" ICCV, 2021 Aug
+  [paper](https://arxiv.org/abs/2107.10833) [code](https://github.com/xinntao/Real-ESRGAN)
+- [ ] BasicSR (**Basic** **S**uper **R**estoration) is an open-source **image and video restoration** toolbox
+  [github repo](https://github.com/XPixelGroup/BasicSR)
+
+
+
+
+
+## **Diffusion/GAN related**
+
+- [ ] "A Style-Based Generator Architecture for Generative Adversarial Networks" CVPR, 2019 Dec, **StyleGAN**
+  [paper](https://arxiv.org/abs/1812.04948) [code](https://nvlabs.github.io/stylegan2/versions.html)
+  [our note](./StyleGAN_Note.md)
+
+- [x] "Zero-Shot Image Restoration Using Denoising Diffusion Null-Space Model" ICLR Notable-Top-25%, 2022 Dec, **DDNM** :star:
+  [paper](https://wyhuai.github.io/ddnm.io/) [website](https://wyhuai.github.io/ddnm.io/)
+  [our note](./2022_ICLR_DDNM_Zero-Shot-Image-Restoration-Using-Denoising-Diffusion-Null-Space-Model_Note.md)
+
+  > 将图像修复任务的数学模型，转换到 Range-Null space 分解，对于分解的其中一项替换为 Diffusion 的 noise 实现修复操作，融入 diffusion 的方式值得借鉴。
+
+- [ ] "Palette: Image-to-Image Diffusion Models" SIGGRAPH, 2022 Nov
+  [paper](https://arxiv.org/abs/2111.05826) [website](https://iterative-refinement.github.io/palette/) [code: unofficial implementation](https://github.com/Janspiry/Palette-Image-to-Image-Diffusion-Models)
+  [our note](./2022_SIGGRAPH_Palette-Image-to-Image-Diffusion-Models_Note.md)
+
+- [x] "Taming Transformers for High-Resolution Image Synthesis" CVPR, 2020 Dec, **VQ-GAN** :star:
+
+  [paper](https://arxiv.org/abs/2012.09841) [website](https://compvis.github.io/taming-transformers/)
+  [our note](./2021_CVPR_VQGAN_Taming-Transformers-for-High-Resolution-Image-Synthesis_Note.md)
+
+- [ ] "High-Resolution Image Synthesis with Latent Diffusion Models" CVPR, 2022 Dec, **StableDiffusion**
+  [paper](https://arxiv.org/abs/2112.10752) [github](https://github.com/CompVis/stable-diffusion) ![GitHub Repo stars](https://img.shields.io/github/stars/CompVis/stable-diffusion?style=social)
+  [our note](./2022_CVPR_High-Resolution Image Synthesis with Latent Diffusion Models_Note.md)
+
+- [ ] [2022_Understanding Diffusion Models-A Unified Perspective.pdf](./2022_Understanding Diffusion Models-A Unified Perspective.pdf) :+1:
+
+- [ ] DDPM
+
+- [ ] DDIM
+
+- [ ] IDDPM
+
+- [ ] DDRM
+
+- [ ] Score-based
+
+- [ ] BeatGAN
+
+  https://github.com/openai/guided-diffusion
+
+- [ ] [VAE 博客](https://zhuanlan.zhihu.com/p/34998569) 提供了一个将概率图跟深度学习结合起来的一个非常棒的案例
+  [code](https://github.com/bojone/vae)
+
+- [ ] CycleGAN and pix2pix in PyTorch https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix
+
+- [x] Zero-Shot Image Restoration Using Denoising Diffusion Null-Space Model :+1:
+  - [x] paper
+  - [ ] code
+
+- [ ] Palette: Image-to-Image Diffusion Models
+
+- [ ] [2021_CVPR_StyleCLIP-Text-Driven-Manipulation-of-StyleGAN-Imagery.pdf](./2021_CVPR_StyleCLIP-Text-Driven-Manipulation-of-StyleGAN-Imagery.pdf)
+  [Or Patashnik](https://orpatashnik.github.io/), [Zongze Wu ](https://www.cs.huji.ac.il/~wuzongze/), [Eli Shechtman ](https://research.adobe.com/person/eli-shechtman/), [Daniel Cohen-Or ](https://www.cs.tau.ac.il/~dcor/), [Dani Lischinski](https://www.cs.huji.ac.il/~danix/)
+
+- [ ] [2020_CVPR_InterFaceGAN_Interpreting-the-Latent-Space-of-GANs-for-Semantic-Face-Editing.pdf](./2020_CVPR_InterFaceGAN_Interpreting-the-Latent-Space-of-GANs-for-Semantic-Face-Editing.pdf)
+
+- [ ] [2022_WACV_Pik-Fix-Restoring-and-Colorizing-Old-Photos.pdf](./2022_WACV_Pik-Fix-Restoring-and-Colorizing-Old-Photos.pdf)
+
+- [ ] [Drag Your GAN: Interactive Point-based Manipulation on the Generative Image Manifold](https://github.com/XingangPan/DragGAN) :moyai:
+
+  - [ ] DragDiffusion: Harnessing Diffusion Models for Interactive Point-based Image Editing :star:
+
+- [ ] Pix2Video
+
+- [ ] Self-Supervised Learning with Random-Projection Quantizer for Speech Recognition
+
+  参考 random-projection 操作
+
+- 小波变换
+  - [ ] Wavelet Diffusion Models are fast and scalable Image Generators :+1:
+  - [ ] [2023_Fourmer-An Efficient Global Modeling Paradigm for Image Restoration.pdf](./2023_Fourmer-An Efficient Global Modeling Paradigm for Image Restoration.pdf)
+
+- Image2Image Translation
+  - [ ] [2023_Zero-shot-Image-to-Image-Translation.pdf](./2023_Zero-shot-Image-to-Image-Translation.pdf)
+    [github repo](https://github.com/pix2pixzero/pix2pix-zero)
+
+- [ ] Locally Hierarchical Auto-Regressive Modeling for Image Generation :+1:
+
+  https://github.com/kakaobrain/hqtransformer
+
+- [ ] JPEG Artifact Correction using Denoising Diffusion Restoration Models
+
+- [ ] Scalable Diffusion Models with Transformers
+
+- [ ] All are Worth Words: A ViT Backbone for Diffusion Models
+
+- [ ] Implicit Diffusion Models for Continuous Super-Resolution
+
+- [ ] LayoutDM: Transformer-based Diffusion Model for Layout Generation
+
+- [ ] Vector Quantized Diffusion Model for Text-to-Image Synthesis
+
+- [ ] Image Super-Resolution via Iterative Refinement
+
+- [ ] Real-World Denoising via Diffusion Model
+
+- [ ] Diffusion in the Dark A Diffusion Model for Low-Light Text Recognition
+
+- [ ] Exploiting Diffusion Prior for Real-World Image Super-Resolution
+
+  https://iceclear.github.io/projects/stablesr/?utm_source=catalyzex.com
+  [2023_preprint_Exploiting-Diffusion-Prior-for-Real-World-Image-Super-Resolution.pdf](./2023_preprint_Exploiting-Diffusion-Prior-for-Real-World-Image-Super-Resolution.pdf)
+
+- [ ] Privacy Leakage of SIFT Features via Deep Generative Model based Image Reconstruction
+
+- [ ] DreamDiffusion https://mp.weixin.qq.com/s/RDXINIvJvU_6FMoiX42bKg
+
+- [ ] T2I-Adapter: Learning Adapters to Dig out More Controllable Ability for Text-to-Image Diffusion Models
+  [paper](https://arxiv.org/abs/2302.08453) [code](https://github.com/TencentARC/T2I-Adapter)
+  可控生成
+
+- [ ] SWAGAN: A Style-based Wavelet-driven Generative Model  23.7.14
+
+- [ ] Shifted Diffusion for Text-to-image generation 23.7.15
+
+- [ ] [Generative image inpainting with contextual attention](http://openaccess.thecvf.com/content_cvpr_2018/html/Yu_Generative_Image_Inpainting_CVPR_2018_paper.html) :star:
+
+  类似 non-local attention  
+  
+- [ ] "A Unified Conditional Framework for Diffusion-based Image Restoration" 23.7.16
+  [paper](https://arxiv.org/abs/2305.20049) [code](https://github.com/zhangyi-3/UCDIR) [website](https://zhangyi-3.github.io/project/UCDIR/)
+
+
+
+
+
+## **Segmentation**
+
+> [paper-list](https://github.com/liliu-avril/Awesome-Segment-Anything)
+
+- [ ] SAM
+  [paper](https://arxiv.org/abs/2304.02643) [code](https://github.com/facebookresearch/segment-anything)
+  [Note](./2023_04_preprint_SAM_Segment-Anything_Note.md)
+
+- [ ] Fast Segment Anything https://github.com/CASIA-IVA-Lab/FastSAM >> FPS25
+
+- [x] UniAD CVPR23 Best paper
+
+- [ ] MobileSAM https://mp.weixin.qq.com/s/zTakIRIsWOUBiUr3yn5rhQ
+
+- [ ] Video SAM
+
+  https://mp.weixin.qq.com/s/hyf_DnEdbUTh8VpeP0Mq-w
+  
+- [ ] [2023_June_Let-Segment-Anything-Help-Image-Dehaze.pdf](./2023_June_Let-Segment-Anything-Help-Image-Dehaze.pdf)
+  https://arxiv.org/pdf/2306.15870.pdf
+
+**Transformer  & Attention:moyai:**
+
+- [ ] On the Expressivity Role of LayerNorm in Transformer's Attention  
+  https://github.com/tech-srl/layer_norm_expressivity_role 这个工作可以加深对 transformer 的一些理解 :star:
+
+- [ ] HaloNet padding 方式的注意力
+
+  Scaling Local Self-Attention for Parameter Efficient Visual Backbones
+
+- [ ] **SwimTransformer**
+
+- [ ] SpectFormer: Frequency and Attention is what you need in a Vision Transformer  
+  https://github.com/badripatro/SpectFormers
+
+- [ ] Learning A Sparse Transformer Network for Effective Image Deraining 
+  https://github.com/cschenxiang/DRSformer
+  
+- [ ] FEDformer: Frequency Enhanced Decomposed Transformer for Long-term Series Forecasting :star: 时序数据
+  https://github.com/MAZiqing/FEDformer
+  
+- [ ] Permuted AdaIN: Reducing the Bias Towards Global Statistics in Image Classification
+  https://github.com/onuriel/PermutedAdaIN  这个工作很简单但是对于提升模型鲁棒性很有效，大家都可以看一下
+
+  理解核心的那一小段代码即可
+  
+- [ ] [A ConvNet for the 2020s](https://arxiv.org/abs/2201.03545)
+
+
+
+**MAE**
+
+- [ ] **MAE**
+
+- [ ] Siamese Masked Autoencoders 
+
+  Masked Siamese Networks for Label-Efficient Learning
+  https://github.com/facebookresearch/msn
+
+  MixMask: Revisiting Masking Strategy for Siamese ConvNets
+  https://github.com/LightnessOfBeing/MixMask
+  这几个半监督/自监督的工作很有意思，大家好好看下
+
+- [ ] SimMIM: a Simple Framework for Masked Image Modeling 
+
+- [ ] Hard Patches Mining for Masked Image Modeling https://mp.weixin.qq.com/s/YJFDjcTqtX_hzy-FXt-F6w
+
+- [ ] Masked-Siamese-Networks-for-Label-Efficient-Learning
+
+
+
+**NLP & 多模态**
+
+- [ ] Multimodal Prompting with Missing Modalities for Visual Recognition
+  https://github.com/YiLunLee/Missing_aware_prompts  训练或者测试是多模态非完美情况
+- [ ] Is GPT-4 a Good Data Analyst
+  https://github.com/damo-nlp-sg/gpt4-as-dataanalyst
+
+**对比学习**
+
+- [ ] CCPL: Contrastive Coherence Preserving Loss for Versatile Style Transfer 
+  https://github.com/JarrentWu1031/CCPL
+
+## **HDR**
+
+- [ ] "Inverting the Imaging Process by Learning an Implicit Camera Model" CVPR, 2023, Apr
+  [paper](https://arxiv.org/abs/2304.12748) [website](https://xhuangcv.github.io/neucam/)
+  [our note](./2023_CVPR_Inverting-the-Imaging-Process-by-Learning-an-Implicit-Camera-Model_Note.md)
+
+  > Represent the visual signal using implicit coordinate-based neural networks is recent trend in CV. Existing methods directly conider using the whole NN to represent the scene, and **not consider the camera separately.**
+  > The paper **proposed a new implicit camera model (using implicit neural network)** to represent the physical imaging process. 使用 NeRF 单独模拟相机模型和 scene，实现解耦，增加可调节能力
+
+- [ ] "BokehMe: When Neural Rendering Meets Classical Rendering" CVPR oral, 2022 Jun
+  [paper](https://arxiv.org/abs/2206.12614v1) [website](https://juewenpeng.github.io/BokehMe/)
+  
+  > 对图像实现**可控的**模糊，调整焦距，光圈等效果。发布了数据集
+  
+- [ ] "DC2: Dual-Camera Defocus Control by Learning to Refocus" CVPR, 2023 Apr
+  [website](https://defocus-control.github.io/)
+  
+  > **image refocus** requires deblurring and blurring different regions of the image at the same time, that means that image refocus is at least as hard as DoF Control
+  
+- [ ] DRHDR: A Dual branch Residual Network for Multi-Bracket High Dynamic Range Imaging
+
+- [ ] Networks are Slacking Off: Understanding Generalization Problem in Image Deraining
+
+- [ ] Image-based CLIP-Guided Essence Transfer
+
+- [ ] Luminance Attentive Networks for HDR Image and Panorama Reconstruction
+  https://github.com/LWT3437/LANet 
+  
+- [ ] Perceptual Attacks of No-Reference Image Quality Models with Human-in-the-Loop
+
+- [ ] Perception-Oriented Single Image Super-Resolution using Optimal Objective Estimation 
+
+- 小波变换 >> 无损
+  - A simple but effective and efficient global modeling paradigm for image restoration
+  - 周满
+
+
+
+## NeRF
+
+- [x] [2023_CVPR_Inverting-the-Imaging-Process-by-Learning-an-Implicit-Camera-Model_Note.md](./2023_CVPR_Inverting-the-Imaging-Process-by-Learning-an-Implicit-Camera-Model_Note.md)
+- [ ] Neural Volume Super Resolution
+  https://github.com/princeton-computational-imaging/Neural-Volume-Super-Resolution  NeRF+SR
+- [x] LERF: Language Embedded Radiance Fields 
+  https://github.com/kerrj/lerf  NeRF + 3D CLIP
+- [ ] Implicit Neural Representations for Image Compression
+  https://github.com/YannickStruempler/inr_based_compression 
+- [ ] iNeRF: Inverting Neural Radiance Fields for Pose Estimation 
+- [ ] ViP-NeRF: Visibility Prior for Sparse Input Neural Radiance Fields 
+- [ ] AdaNeRF: Adaptive Sampling for Real-time Rendering of Neural Radiance Fields
+- [ ] 2022_CVPR_Aug-NeRF--Training-Stronger-Neural-Radiance-Fields-with-Triple-Level-Physically-Grounded-Augmentations >> 输入增加扰动
+
+
+
+## **Neural Operators**
+
+- [ ] Factorized Fourier Neural Operators
+  https://github.com/alasdairtran/fourierflow
+- [ ] Super-Resolution Neural Operator
+  https://github.com/2y7c3/Super-Resolution-Neural-Operator
+- [ ] Adaptive Fourier Neural Operators: Efficient Token Mixers for Transformers
+  https://github.com/NVlabs/AFNO-transformer
+- [ ] Fourier Neural Operator for Parametric Partial Differential Equations
+  https://github.com/neuraloperator/neuraloperator
+
+
+
+
+
+
+
+## IQA
+
+> :grey_question: what is IQA [CVPR IQA 博客](https://zhuanlan.zhihu.com/p/154017806)
+> IQA(image quality assessment) Task target: quantification of human perception of image quality
+>
+> - Application
+>   想对某一项视觉任务评估图像能否满足需要，比如针对人脸识别的质量评价，看一幅图像是否应该拒绝还是输入到人脸识别系统中；texture classification；texture retrieval （texture similarity）；texture recovery
+> - 对于图像下游任务：denoising, deblurring, super-resolution, compression，能够提升图像质
+> - Full Reference, No-reference 
+
+- [x] "Image Quality Assessment: Unifying Structure and Texture Similarity" TPAMI, 2020 Dec, DISTS
+  [paper](https://ieeexplore.ieee.org/abstract/document/9298952)
+  [our note](./2020_TPAMI_DISTS_Image-Quality-Assessment-Unifying-Structure-and-Texture-Similarity_Note.md)
+
+  > 针对有明显纹理的原图，让模型对 JPEG 压缩后、resample 的图像打分（实际上肉眼看上去 JPEG 更加模糊），之前方法对于 JPEG 图像质量评分错误地高于 resample 图。
+
+- [x] "Re-IQA: Unsupervised Learning for Image Quality Assessment in the Wild" CVPR, 2023 Apr
+  [paper]()
+  [our noted pdf](./2023_CVPR_Re-IQA-Unsupervised-Learning-for-Image-Quality-Assessment-in-the-Wild.pdf)
+
+  > 一种 NR-IQA 算法，使用对比学习的方式，使用 2 个 Res50 去学习 content & image-quality-aware features. 最后加一个 regressor 输出 image quality scores.
+  > 对于 quality feature 一路，模仿 MoCoV2 ，修改了构造正负样本的方式进行训练。
+  >
+  > - `Full-reference IQA` 方法 对于 images in the wild 场景，没有 reference 应用受限
+  >
+  >   FR-IQA 需要参考图像（undistorted） & distorted 图像，一起才能输出评分。
+  >
+  > - high-level content representation using MoCoV2
+  >
+  >   2 crops from same image -> similar scores, but not the case for some human viewers.
+
+
+
+
+
+
+
+# Diffusion Video Restoration Progress :dart:
+
+- 内容一致性
+
+  - DiffLL 训练逐步采样优化
+
+    cf: 一步去噪
+
+    "Low-Light Image Enhancement with Wavelet-based Diffusion Models" 
+    [paper](https://arxiv.org/abs/2306.00306) 
+
+  - SR3 具有色偏，Dydiff 全局矫正来修复
+
 
 
 
@@ -597,8 +699,16 @@ The paper **proposed a new implicit camera model (using implicit neural network)
   > [FFHQ 介绍博客](https://zhuanlan.zhihu.com/p/353168785)
 
   FFHQ是一个高质量的人脸数据集，包含1024x1024分辨率的70000张PNG格式高清人脸图像，在年龄、种族和图像背景上丰富多样且差异明显，在人脸属性上也拥有非常多的变化，拥有不同的年龄、性别、种族、肤色、表情、脸型、发型、人脸姿态等，包括普通眼镜、太阳镜、帽子、发饰及围巾等多种人脸周边配件，因此该数据集也是可以用于开发一些人脸属性分类或者人脸语义分割模型的。
+  
+- Blind Video Deflickering by Neural Filtering with a Flawed Atlas" 提供构造的 flickering 数据  （<a href="#Blind flickering Dataset">Link to paper info</a>）
 
-**Old photos Dataset**
+  - 60 * old_movie，存储为 `%05d.jpg` 大多为 350 帧图像，若 fps=25，约为 10-14s的视频。
+  - 21* old_cartoon，图像格式存储，大多为 50-100 帧，约为 1 - 4s 视频
+
+
+
+
+### **Old photos Dataset**
 
 > [老照片修复中心](http://www.lzpxf.com/portal.php)
 > https://www.ancientfaces.com/photo/george-roberts/1328388
@@ -608,30 +718,40 @@ The paper **proposed a new implicit camera model (using implicit neural network)
 
 ### Old Films Dataset
 
-> - Youtuber Old films  [10downloader >> Download Youtube Video](https://10downloader.com/en/74)
->   https://www.britishpathe.com/
->   https://www.youtube.com/watch?v=hZ1OgQL9_Cw
->   https://www.youtube.com/watch?v=_qjT1ToUx1Q >> [4k 60fps 修复](https://www.youtube.com/watch?v=hZ1OgQL9_Cw&t=36s)
+> old movie, old cartoon 都可以！
 >
+> [10downloader tools to Download Youtube Video](https://10downloader.com/en/74)
 > [How Old Movies Are Professionally Restored | Movies Insider](https://www.youtube.com/watch?v=6NzfJJny3Yg)
 > [中国电影修复馆](https://www.cfa.org.cn/cfa/gz/xf/index.html)
 > [Baidu 智感超清服务](https://zhuanlan.zhihu.com/p/302719798)
->
-> - 优酷搜索老电影
->
->   [优酷 kux 文件转为 mp4](https://zhuanlan.zhihu.com/p/111764932)
->
-> - B 站博主
->
->   https://www.bilibili.com/video/BV1dT411u7Hu/?spm_id_from=333.788&vd_source=eee3c3d2035e37c90bb007ff46c6e881
->   https://www.bilibili.com/video/BV1oG41187Rp/?spm_id_from=333.999.0.0&vd_source=eee3c3d2035e37c90bb007ff46c6e881
->
->   https://github.com/leiurayer/downkyi b站视频下载工具
 
-- `Pinto Ben` 从 6 个 soures 修复
-  - eyelash 
-  - dirt black point
-  - scratches
+- Commercial Old films 
+  https://www.britishpathe.com/ 老电影商店 75英镑下载一个。。
+
+- Youtube [Denis Shiryaev](https://www.youtube.com/@DenisShiryaev) Youtuber permit other to use the video for research in his video comment. 有给出 source video Youtube url
+
+  [[4k, 60 fps] A Trip Through New York City in 1911](https://www.youtube.com/watch?v=hZ1OgQL9_Cw&t=12s) already restore by several algorithms :warning:
+  [[4k, 60 fps] San Francisco, a Trip down Market Street, April 14, 1906](https://www.youtube.com/watch?v=VO_1AdYRGW8) >> tell what methods used to restore
+
+- Youtube [guy jones](https://www.youtube.com/@guy_jones)
+  [1902c - Crowd Ice Skating in Montreal (stabilized w/ added sound)](https://www.youtube.com/watch?v=_qjT1ToUx1Q)
+
+- Youtube Old cartoon
+
+  [A Day at the Zoo (1939)](https://www.youtube.com/watch?v=RtblQQvT2Nk&list=PL-F4vmhdMdiXIXZEDNQ3UFLXmQqjHguBA)
+
+- 优酷搜索老电影
+
+  [优酷 kux 文件转为 mp4](https://zhuanlan.zhihu.com/p/111764932)
+
+- B 站博主
+
+  https://www.bilibili.com/video/BV1dT411u7Hu/?spm_id_from=333.788&vd_source=eee3c3d2035e37c90bb007ff46c6e881
+  https://www.bilibili.com/video/BV1oG41187Rp/?spm_id_from=333.999.0.0&vd_source=eee3c3d2035e37c90bb007ff46c6e881
+
+  https://github.com/leiurayer/downkyi b站视频下载工具
+
+
 
 
 
@@ -641,7 +761,9 @@ The paper **proposed a new implicit camera model (using implicit neural network)
 
 - PSNR
 
-  目前一般重建指标 3/40 左右
+  `skimage\metrics\simple_metrics.py`
+
+  
 
 - SSIM
 
@@ -816,159 +938,9 @@ $$
 
 
 
-## Stable Diffusion :moyai::baby:
+# package
 
-> [2022_CVPR_High-Resolution Image Synthesis with Latent Diffusion Models_Note.md](./2022_CVPR_High-Resolution Image Synthesis with Latent Diffusion Models_Note.md)
+## diffusers
 
-
-
-
-
-## Bringing Old Photos Back to Life
-
-> [2020_CVPR_Bringing-Old-Photos-Back-to-Life_Note.md](./2020_CVPR_Bringing-Old-Photos-Back-to-Life_Note.md)
-
-
-
-
-
-## Bringing-Old-Films-Back-to-Life :baby:
-
-> [2022_CVPR_Bringing-Old-Films-Back-to-Life_Note.md](./2022_CVPR_Bringing-Old-Films-Back-to-Life_Note.md)
-
-### DeepRemaster :baseball:
-
-
-
-### DeOldify
-
-> https://github.com/jantic/DeOldify
-
-
-
-
-
-## STIT :star:
-
-<video src="https://user-images.githubusercontent.com/24721699/153860260-a431379e-ebab-4777-844d-4900a448cf85.mp4" ></video>
-
-> [official blog & code](https://stitch-time.github.io/)
-> [2022_SIGGRAPH_STIT_Stitch-it-in-Time--GAN-Based-Facial-Editing-of-Real-Videos](./2022_SIGGRAPH_STIT_Stitch-it-in-Time--GAN-Based-Facial-Editing-of-Real-Videos_Note.md)
-> [GROUP: Daniel Cohen-Or](https://danielcohenor.com/)
-
-
-
-**Background**
-
-**StyleGAN and several insightful tweaks** to the to the frame-by-frame inversion and editing pipeline to obtain a method that produces temporally consistent high quality edited videos, and yes, that includes CLIP-guided editing
-
-**Contributions**
-
-- stitching editing methods 优化 edited image 的边界
-- e4e+ PTI 缓解 PTI distortion-editability trade-off
-- 2 metrics: TL-ID, TG-ID
-
-**Related Work/Details To Read** 
-
-- Face alignment
-
-  - [ ] StyleVideoGAN
-
-- Inversion
-
-  - [ ] PTI
-  - [ ] e4e
-
-- Editing :question:
-
-  - [ ] [2021_CVPR_StyleCLIP-Text-Driven-Manipulation-of-StyleGAN-Imagery.pdf](./2021_CVPR_StyleCLIP-Text-Driven-Manipulation-of-StyleGAN-Imagery.pdf)
-    [Or Patashnik](https://orpatashnik.github.io/), [Zongze Wu ](https://www.cs.huji.ac.il/~wuzongze/), [Eli Shechtman ](https://research.adobe.com/person/eli-shechtman/), [Daniel Cohen-Or ](https://www.cs.tau.ac.il/~dcor/), [Dani Lischinski](https://www.cs.huji.ac.il/~danix/)
-    
-  - [ ] [2020_CVPR_InterFaceGAN_Interpreting-the-Latent-Space-of-GANs-for-Semantic-Face-Editing.pdf](./2020_CVPR_InterFaceGAN_Interpreting-the-Latent-Space-of-GANs-for-Semantic-Face-Editing.pdf)
-
-- Stitching Tuning
-
-  - [ ] latent-Transformer :star:
-    [2021_ICCV_A-Latent-Transformer-for-Disentangled-Face-Editing-in-Images-and-Videos.pdf](./2021_ICCV_A-Latent-Transformer-for-Disentangled-Face-Editing-in-Images-and-Videos.pdf)
-  - [ ] BiSeNetV2
-
-**methods**
-
-![STIT_pipeline.jpg](./docs/STIT_pipeline.jpg)
-
-**summary**
-
-- Learn the general pipline of face video editing
-- StyleGAN, PTI, E4E, Latent-transformer Previous GAN-related video-editing methods
-- metrics: TL(Local)-ID, TL(Local)-ID
-- how to design the loss to achieve target & show generated result in images as experiment result
-
-**Limitations**
-
-- The biggest one is speed. Unfortunately, the method does not work in realtime, which would be perfect for real world applications. Alas, a single 5 sec video takes 1.5 hours per edit
-- Hair sometimes gets cropped incorrectly 
-- lose details after edited, little bit cartoon-like
-
-
-
-
-
-
-
-## Diffusion Video Autoencoders :baby:
-
-> [2023_CVPR_Diffusion-Video-Autoencoders--Toward-Temporally-Consistent-Face-Video-Editing-via-Disentangled-Video-Encoding_Note.md](./2023_CVPR_Diffusion-Video-Autoencoders--Toward-Temporally-Consistent-Face-Video-Editing-via-Disentangled-Video-Encoding_Note.md)
-> A CVPR 2022 (ORAL) paper
-
-**Related Work/Details To Read** 
-
-- [ ] [pytorch Facial Landmarks code](https://github.com/cunjian/pytorch_face_landmark) >> 面部关键点特征
-
-- [ ] [Progressive Growing of GANs for Improved Quality, Stability, and Variation](https://arxiv.org/abs/1710.10196)
-
-  https://github.com/tkarras/progressive_growing_of_gans.git
-
-- [ ] [StyleGAN-NADA: **CLIP-Guided** Domain Adaptation of Image Generators](https://arxiv.org/abs/2108.00946)
-
-- [ ] [Diffusion Autoencoders](https://github.com/phizaz/diffae) :star:
-
-
-
-## Video LDM
-
-> [2023_CVPR_Align-your-Latents--High-Resolution-Video-Synthesis-with-Latent-Diffusion-Models_Note.md](./2023_CVPR_Align-your-Latents--High-Resolution-Video-Synthesis-with-Latent-Diffusion-Models_Note.md)
-
-
-
-
-
-## DDNM :statue_of_liberty: :star:
-
-> [github page](https://wyhuai.github.io/ddnm.io/)
-> [2022_ICLR_DDNM_Zero-Shot-Image-Restoration-Using-Denoising-Diffusion-Null-Space-Model](./2022_ICLR_DDNM_Zero-Shot-Image-Restoration-Using-Denoising-Diffusion-Null-Space-Model_Note.md)
-
-**Related Work/Details To Read** 
-
-- score-based model
-  - [ ] Score-Based Generative Modeling through Stochastic Differential Equations
-  - [ ] [Generative Modeling by Estimating Gradients of the Data Distribution](https://arxiv.org/abs/1907.05600)
-- DDIM
-  - [ ] [2020_ICLR_DDIM_Denoising-Diffusion-Implicit-Models.pdf](./2020_ICLR_DDIM_Denoising-Diffusion-Implicit-Models.pdf)
-- [ ] Repaint >> TimeTravel
-- [ ] https://github.com/wyhuai/RND >> NullSpace
-- [ ] https://github.com/bahjat-kawar/ddrm >> DDRM
-
-
-
-
-
-## Palette :statue_of_liberty:
-
-> [**Colorization Task Benchmarks**](https://paperswithcode.com/task/colorization) [paper with code](https://paperswithcode.com/paper/palette-image-to-image-diffusion-models-1)
-> [2022_SIGGRAPH_Palette-Image-to-Image-Diffusion-Models.pdf](./2022_SIGGRAPH_Palette-Image-to-Image-Diffusion-Models.pdf)
-> [2022_SIGGRAPH_Palette-Image-to-Image-Diffusion-Models](./2022_SIGGRAPH_Palette-Image-to-Image-Diffusion-Models_Note.md)
-
-develops a unified framework for image-to-image translation based on conditional diffusion models and evaluates this framework on four challenging image-to-image translation tasks, namely colorization, inpainting, uncropping, and JPEG restoration. 
-
-
+> [**Hugging Face** documentation](https://huggingface.co/docs/diffusers/main/en/tutorials/tutorial_overview)
 

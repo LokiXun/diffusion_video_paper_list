@@ -19,7 +19,7 @@ face video editing (edit hair color, gender, wearing glasses, etc.) bearing the 
 
 
 
-**Related Work**
+## **Related Work**
 
 > - Diffusion Autoencoder
 
@@ -30,6 +30,16 @@ face video editing (edit hair color, gender, wearing glasses, etc.) bearing the 
 - video temporal consistency :question:
 
   对 latent trajectory or features 进性平滑，但无法保证一致性。是因为其隐式地改变了 motion feature
+
+- [ ] [pytorch Facial Landmarks code](https://github.com/cunjian/pytorch_face_landmark) >> 面部关键点特征
+
+- [ ] [Progressive Growing of GANs for Improved Quality, Stability, and Variation](https://arxiv.org/abs/1710.10196)
+
+  https://github.com/tkarras/progressive_growing_of_gans.git
+
+- [ ] [StyleGAN-NADA: **CLIP-Guided** Domain Adaptation of Image Generators](https://arxiv.org/abs/2108.00946)
+
+- [ ] [Diffusion Autoencoders](https://github.com/phizaz/diffae) :star:
 
 
 

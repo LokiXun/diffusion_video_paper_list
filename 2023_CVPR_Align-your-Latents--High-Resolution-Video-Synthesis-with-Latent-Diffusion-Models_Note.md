@@ -1,14 +1,13 @@
 # Video LDM
 
-> paper: [arxiv ](https://arxiv.org/abs/2304.08818) **Submitted on 18 Apr 2023**
+> paper: [arxiv ](https://arxiv.org/abs/2304.08818) Apr 2023
 > official blog: https://research.nvidia.com/labs/toronto-ai/VideoLDM/
 > [unofficial implementation](https://github.com/srpkdyy/VideoLDM.git)
 > [2023_CVPR_Align-your-Latents--High-Resolution-Video-Synthesis-with-Latent-Diffusion-Models.pdf](./2023_CVPR_Align-your-Latents--High-Resolution-Video-Synthesis-with-Latent-Diffusion-Models.pdf)
 >
-> - Andreas Blattmann
->   Stable Diffusion 作者
+> - Andreas Blattmann >> Stable Diffusion 作者
 
-**Key-point**
+## **Key-point**
 
 - 视频生成任务
 - 应用场景
@@ -21,7 +20,7 @@
 >
 > tips: 此任务需要大量计算资源（A100 80G显存 **11B 参数**）。
 
-- 方法分为简述
+- 方法简述
 
   - 短视频序列生成
 
@@ -42,11 +41,15 @@
 
 **Contributions**
 
-- 高效的 diffusion 视频生成方法，用 pretrained LDM & temporary layer
+- 将 pretrained Stable Diffusion text2image LDM 改进用于 Video LDM
+
+- 高效的 Video LDM 训练方式，实现 high-resolution, long-term consistent 生成
 
   实现 text2video model，SOTA 视频生成效果
 
-- 结合时间域 finetune SR LDM
+- temporally fine-tune **super resolution DMs**
+
+- 构造了一个 temporal layers 可用于不同 Image LDM 结构
 
 
 
@@ -54,21 +57,27 @@
 
 > - ref 29 [Cascaded Diffusion Models for High Fidelity Image Generation](https://arxiv.org/abs/2106.15282)
 >
->   pixel-space DM
+>   pixel-space upsampler DM
 >
 > - ref65  High-resolution image synthesis with latent diffusion models.
 >
 >    LDM upsampler
+>    
+> - DDIM sampler
 >
 > 这两个模型在文章中多次提及 :walking:
 
-### LDM
+### LDMs
 
-Compared with pixel-space DMs, LDM use a compression model to map the image to latent space, which **lower complexity(smaller memory cost, parameters count)**
+Compared with pixel-space DMs, LDM use a compression model to map the image to **latent space, which lower complexity(smaller memory cost,** parameters count)**
 
-### CascadedDM
+### Cascaded DM
 
-TODO
+[Cascaded Diffusion Models for High Fidelity Image Generation](https://arxiv.org/abs/2106.15282)
+
+### LVG
+
+> [[2206.03429\] Generating Long Videos of Dynamic Scenes](https://arxiv.org/abs/2206.03429) baseline
 
 
 
@@ -80,9 +89,11 @@ TODO
 > - :question: 对于训练数据有 GT x 视频帧输入，对于只有 text 的推理怎么处理？
 > - :question: conditioned on text？
 
-`Section 3` describe how we video fine-tune pre-trained image LDMs (and DM upsamplers) for high-resolution video synthesis. 
+`Section 3` describe how we video **fine-tune pre-trained image LDMs (and DM upsamplers) for high-resolution video synthesis.**  **turn pre-trained image diffusion models into temporally consistent video generators.**
 
-**turn pre-trained image diffusion models into temporally consistent video generators.**
+![VideoLDM_temporal_finetune.png](./docs/VideoLDM_temporal_finetune.png)
+
+直接用 stable diffusion 一帧帧生成 batch frames, 生成的结果互不相关。引出文章里面的 temporal finetune.
 
 <video src="https://research.nvidia.com/labs/toronto-ai/VideoLDM/assets/figures/video_ldm_animation.mp4" ></video>
 
@@ -90,19 +101,19 @@ Initially, different samples of a batch synthesized by the model are independent
 
 
 
-**VideoLDM 生成视频整体流程**
+### pipline
 
 ![VideoLDM_structure.png](./docs/VideoLDM_structure.png)
 
 1. 首先生成离散的关键帧；
-2. 插值模型，在关键帧之间进行时序插值，以实现较高的帧率；
+2. 用 interpolation LDM 进行插值，在关键帧之间进行时序插值，以实现较高的帧率；
    （以上三步均基于LDM模型，且它们共享相同的image backbone，分别进行微调）
-3. 将潜向量解码到像素空间
-4. （可选）使用视频上采样DM得到更高的分辨率
+3. Decode 将潜向量解码到像素空间
+4. （可选）再用一个 LDM ，用视频上采样 DM 得到更高的分辨率
 
 
 
-### Latent Image 2 video generators
+- 改进 temporal layer in U-net block
 
 ![VideoLDM_temporal_layers.png](./docs/VideoLDM_temporal_layers.png)
 
@@ -116,7 +127,7 @@ Initially, different samples of a batch synthesized by the model are independent
 
 
 
-### **video fine-tuning of decoder.**
+### **temporal fine-tuning of decoder**
 
 > 如何训练 Decoder 实现生成的 frames 在时间上对齐。整体框架中最后映射到 pixel-space 的 Decoder 模块
 
@@ -126,15 +137,39 @@ Initially, different samples of a batch synthesized by the model are independent
 
 前面框架对短视频有效，对长序列（几分钟的视频）有限。作者把模型当作 prediction model，修改 objective 来增加模型对于长序列的生成效果。
 
-- T 帧的序列，让模型先生成开头的 S 帧。对 (T-S) -> T 帧加上 mask 让模型预测
+> **masking-conditioning mechanism**
 
-![VideoLDM_long_term_generation_mask.png](./docs/VideoLDM_long_term_generation_mask.png)
+- **训练新的 Interpolation LDM >> prediction model**
+
+  T 帧的序列，让模型先生成开头的 S 帧。对 (T-S) -> T 帧加上 mask 让模型预测。**用 mask 和 masked encoded frames (frame先用 image LDM encode, 乘上 mask) 作为 conditioning**
+
+  ![VideoLDM_long_term_generation_mask.png](./docs/VideoLDM_long_term_generation_mask.png)
+
+- **inference for generating long videos**
+
+  > 参考 Appendix Page21 Video Generation details
+
+  1. 先生成初始视频帧 8s15帧 >> 1.875fps
+
+     first generate a single frame using the image LDM, then we run the **prediction model, conditioning on the single frame**, to generate a sequence of **key frames**.
+
+  2. extend video frames
+
+     分两步**run the prediction model condition on two context frames** to encode movement 实现 FPS: 1.875->7.5->30 **四倍生成**
+
+- stabilize sampling >> classifier-free diffusion
+
+  
+
+
 
 ###  High Frame Rates
 
  interpolate between given key frames. **predict three frames between two given key frames,** thereby training a T → 4T interpolation model
 
 使用 mask 的 conditioning 方式和 [Section Long-Term Generation](#Long-Term Generation) 中一样
+
+![VideoLDM_structure.png](./docs/VideoLDM_structure.png)
 
 
 
@@ -179,19 +214,37 @@ For text-to-video, we demonstrate synthesis of short videos of several seconds
 
 - metrics
 
-  FVD 越低越好
-
-  https://github.com/google-research/google-research/tree/master/frechet_video_distance
-
-  ![https://github.com/google-research/google-research/raw/master/frechet_video_distance/fvd_bair.png](https://github.com/google-research/google-research/raw/master/frechet_video_distance/fvd_bair.png)
+  - FVD 越低越好
+    https://github.com/google-research/google-research/tree/master/frechet_video_distance
+  
+    从预训练的 I3D 提取特征
+  
+    ![https://github.com/google-research/google-research/raw/master/frechet_video_distance/fvd_bair.png](https://github.com/google-research/google-research/raw/master/frechet_video_distance/fvd_bair.png)
+  
+  - FID
+  
+    从 2048 个生成的视频中，随机抽 10k 帧 >> pretrained Inception Model
+  
+  - Human evaluation
+  
+  - Inception
+  
+    用在 UCF101 数据集上训练得到的 C3D
+  
+  - CLIP-SIM
+  
+    average CLIP socres of 47840 frames
 
 > [Paper Experiment part](file:///C:/Users/Loki/workspace/LearningJourney_Notes/Tongji_CV_group/2023_CVPR_Align-your-Latents--High-Resolution-Video-Synthesis-with-Latent-Diffusion-Models.pdf#Page6) table result check here
 
 
 
-**Unsolved Limitations**
+**Limitations**
 
-**Summary :star2:**
+- 生成的真实性不好
+- 11Billion 参数
+
+## **Summary :star2:**
 
 > learn what & how to apply to our task
 

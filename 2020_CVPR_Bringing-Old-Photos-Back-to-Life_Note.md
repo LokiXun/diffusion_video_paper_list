@@ -1,8 +1,10 @@
 # Bringing Old Photos Back to Life
 
-> [2020_CVPR_Bringing-Old-Photos-Back-to-Life.pdf ](./2020_CVPR_Bringing-Old-Photos-Back-to-Life.pdf)  [arxiv](https://arxiv.org/abs/2004.09484) 有CVPR，TPAMI 版本的pdf，[TPAMI 版本](https://arxiv.org/pdf/2009.07047v1.pdf)的算法原理更多一些
-> [github repo](https://github.com/microsoft/Bringing-Old-Photos-Back-to-Life)
+> [paper(CVPR version)](https://arxiv.org/abs/2004.09484) [paper(TPAMI version) ](https://arxiv.org/pdf/2009.07047v1.pdf)TPAMI 版本的算法原理更多一些
+> [code](https://github.com/microsoft/Bringing-Old-Photos-Back-to-Life) [website](http://raywzy.com/Old_Photo/)
 > [博客参考](https://zhuanlan.zhihu.com/p/414309177)
+
+![Bringing-Old-Photos-Back-to-Life_model_structure_1.png](./docs/Bringing-Old-Photos-Back-to-Life_model_structure_1.png)
 
 ## **Background**
 
@@ -11,7 +13,13 @@
 **老照片修复**相比于 image restoration 任务更加复杂，可以简单归纳为一下两点：
 
 1. 没有  degradation model 来模拟老照片的瑕疵 （无法简单地模仿老照片的瑕疵，数据少）
-2. 老照片为 一些列 degradations 的组合，需要不同的方法去修复。并且老照片瑕疵可以归纳为 **unstructured defects** (墨水，褪色)；**structured defects** (划痕)
+2. 老照片为 一些列 degradations 的组合，需要不同的方法去修复。
+
+- 老照片瑕疵可以归纳为
+  - **unstructured defects** 
+    墨水，褪色 film grain and color fading, should be restored by utilizing the pixels in the neighbor
+  - **structured defects** 
+    划痕，scratches, dust spots, etc.
 
 并且老照片数据，**有对应的修复结果（clean image Ground Truth）的数据很少**  ，影响训练。以往的工作大多使用干净图像，对老照片进行合成来造数据，但会存在 **domain gap 的问题（造的数据和真实老照片差距很大）**：
 
@@ -32,7 +40,7 @@
 **Contributions**
 
 - 映射到 latent space，使用合成图训练。降低 domain gap，避免使用老照片 GT （数据很少）进行训练
-- 支持多种 degradation 混合的情况，能有效去除。
+- 在 Latent space 进行修复，mapping 修复网络支持多种 degradation 混合的情况。
 
 
 
@@ -92,6 +100,10 @@
 
 ### Domain alignment
 
+希望老照片和合成图的 latent code 接近，之后老照片 latent code 才能够合理地用合成图的映射进行修复。
+
+- KL 散度损失，将 latent code 分布接近高斯分布，限制向量元素的范围，实现更接近。
+
 - 再从 GAN discriminator 角度使得 z_r z_x 接近
 
   ![Bringing-Old-Photos-Back-to-Life_domain_align_1.png](./docs/Bringing-Old-Photos-Back-to-Life_domain_align_1.png)
@@ -102,7 +114,19 @@
 
 ### Restoration through latent mapping
 
-在 latent space 通过映射的方式实现修复。老照片的退化有比较复杂，需要利用更大范围的信息进行填充以保证全局图像结构的一致性。因此作者**提出了一个全局分支，该分支包含一个partial nonlocal block和两个残差块**，如下图所示
+通过 latent Mapping Network $T$ 在 latent space 中将合成图 $z_x$ 修复为原图 $z_y$
+
+1.  优化 mapping 结果 `T(z_x)` 与 `z_y` L1 距离
+2. LSGAN >> 使得 latent code 恢复出的图更真实
+3. perceptual loss
+
+![Bringing-Old-Photos-Back-to-Life_mapping_1.png](./docs/Bringing-Old-Photos-Back-to-Life_mapping_1.png)
+
+
+
+### multiple-degradation
+
+Mapping 网络在 latent space 通过映射的方式实现修复，但老照片的退化有比较复杂。上面的 mapping 只考虑了 local feature，对于 structured defects 需要利用更大范围的信息进行填充以保证全局图像结构的一致性。因此作者**提出了一个全局分支，该分支包含一个 partial nonlocal block 和两个残差块，对 Mapping 模块加上约束**，如下图所示
 
 ![Bringing-Old-Photos-Back-to-Life_mapping.png](./docs/Bringing-Old-Photos-Back-to-Life_mapping.png)
 
@@ -110,25 +134,19 @@
 
   在 ECCV2018 提出的 nonlocal block 改造而来：借用完好区域（源区域）的信息来修补损坏的区域（目标区域）。
 
-  - $S_{i,j}$ 表示中间层输入的 Feature Map $F$ 中**完好区域元素** i, j 的亲和度。文章中用 U-net 去分割出裂痕等 mask
+  - $S_{i,j}$ 表示中间层输入的 Feature Map $F$ 中**完好区域元素** i, j 的亲和度。
 
+    文章中用 U-net 去分割出裂痕等 mask （$m_i$ ：1 represents the defect regions to be inpainted and 0 represents the intact regions）
+    
+    > U-net mask 分割
+    >
+    > 作者自己标注了 783 张有划痕的老照片，去 finetune U-net(现在合成的瑕疵上训)
+    
     **最后模块输出 O 理解：对于受损元素 i，用亲和的完好区域 j 元素来加权修复** :star:
 
   ![Bringing-Old-Photos-Back-to-Life_mapping_nonlocal.png](./docs/Bringing-Old-Photos-Back-to-Life_mapping_nonlocal.png)
 
-- U-net mask 分割
-
-  作者自己标注了 783 张有划痕的老照片，去 finetune U-net(现在合成的瑕疵上训)
-
-
-
-> 优化
-
-1. 优化 mapping 结果 `T(z_x)` 与 `z_y` 距离
-2. LSGAN >> realism
-3. perceptual loss
-
-![Bringing-Old-Photos-Back-to-Life_mapping_1.png](./docs/Bringing-Old-Photos-Back-to-Life_mapping_1.png)
+  
 
 - 融合一下全局操作修复 inpainting，局部操作修复原本就完好的区域
 
@@ -148,25 +166,42 @@
 
   - 自己收集了 5718 张老照片但没 release 出来
 
-    
-
+  
   训练时随机 crop 256x256 区域
-
-- 量化比较
+  
+- [DIV2K 数值量化比较](./2020_CVPR_Bringing-Old-Photos-Back-to-Life.pdf#page=7)
 
   PSNR，SSIM，FID
 
-- 效果比较
+- Qualitative comparison 修复图像效果
 
   由于无GT，直接看图
 
 - User study >> 找人看，几个方法的结果排名
 
+### ablation study
 
+- latent space 距离
+  - BRISQUE 评估修复结果图像质量
+  - Wasserstein : 合成图和老照片 latent space 距离
+
+- inpainting
+
+- limitations 对于复杂的退化修复不了
+
+  ![Bring_Old_photo_test2_compare.png](./docs/Bring_Old_photo_test2_compare.png)
+
+  
 
 ## **Summary:star2:**
 
 > learn what & how to apply to our task
+
+- 老照片缺失 GT 的问题**（降低 domain gap）**
+
+  造一个类似的假数据，映射到 latent sapce 通过 KL 散度，GAN 实现 latent code 接近 
+
+  
 
 
 
