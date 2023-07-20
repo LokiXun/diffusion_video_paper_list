@@ -3,6 +3,7 @@
 > [paper(CVPR version)](https://arxiv.org/abs/2004.09484) [paper(TPAMI version) ](https://arxiv.org/pdf/2009.07047v1.pdf)TPAMI 版本的算法原理更多一些
 > [code](https://github.com/microsoft/Bringing-Old-Photos-Back-to-Life) [website](http://raywzy.com/Old_Photo/)
 > [博客参考](https://zhuanlan.zhihu.com/p/414309177)
+> [local pdf(TPAMI_version)](./2020_CVPR_Bringing-Old-Photos-Back-to-Life_TPAMI_version.pdf)
 
 ![Bringing-Old-Photos-Back-to-Life_model_structure_1.png](./docs/Bringing-Old-Photos-Back-to-Life_model_structure_1.png)
 
@@ -158,17 +159,6 @@ Mapping 网络在 latent space 通过映射的方式实现修复，但老照片�
 
 ## **Experiment**
 
-- 数据
-
-  - training set Pascal VOC
-
-  - 在 DIV2K 上合成数据，真实老照片数据 test
-
-  - 自己收集了 5718 张老照片但没 release 出来
-
-  
-  训练时随机 crop 256x256 区域
-  
 - [DIV2K 数值量化比较](./2020_CVPR_Bringing-Old-Photos-Back-to-Life.pdf#page=7)
 
   PSNR，SSIM，FID
@@ -191,7 +181,37 @@ Mapping 网络在 latent space 通过映射的方式实现修复，但老照片�
 
   ![Bring_Old_photo_test2_compare.png](./docs/Bring_Old_photo_test2_compare.png)
 
-  
+
+
+
+### Dataset
+
+> TAPMI version paper, `Section 4.2 Data Generation`
+>
+> - Ancient Face 找真实老照片
+> - Pascal VOC，DIV2K  数据去合成；人脸优化用 FFHQ 数据
+> - 退化模板没 release ？按 Deepremaster 同样方式按关键字去 google
+
+For fair comparison, we train all the methods with the same **training dataset (Pascal VOC) and test them on the corrupted images synthesized from DIV2K dataset [64] and the test set of our old photo dataset.**
+
+- **synthesize old photos** using images from the **Pascal VOC dataset**
+  训练时随机 crop 256x256 区域
+
+- **collect 5718 old photos**
+
+  真实照片没 release 但论文里面的老照片有 `ancientFaces` 网站的水印，可以去上面找数据
+
+- face enhancement network, we use 50,000 aligned HQ face images from **FFHQ**
+
+- **Unstructured Degradation**
+
+  用 Gaussian white noise, blur 等 DA 方式随机对数据处理
+
+- **Structured** 退化模板
+
+  collect 62 scratch texture images and 55 paper texture image
+
+
 
 ## **Summary:star2:**
 
@@ -201,7 +221,6 @@ Mapping 网络在 latent space 通过映射的方式实现修复，但老照片�
 
   造一个类似的假数据，映射到 latent sapce 通过 KL 散度，GAN 实现 latent code 接近 
 
-  
 
 
 

@@ -108,7 +108,15 @@ Training is done using batches of videos with 5 sequential frames each & [0, 6] 
 
   其余 reference 从剩下视频中随机取
 
-### 退化视频合成
+
+
+## Dataset :star:
+
+The list of video URLs used for training the model is available [here](http://iizuka.cs.tsukuba.ac.jp/projects/remastering/data/video_urls.zip) (unfortunately several links are no longer available).
+
+The noise data used for simulating old film degradation is available [here (898MB)](http://iizuka.cs.tsukuba.ac.jp/projects/remastering/data/noise_data.zip).
+
+作者从 Youtube-8M dataset 数据集，筛选了一些合适用于后续合成的视频，共 1569 个youtube 视频，给出了视频 url。作者后续抽帧抽出来 1 kw 帧用于训练。老视频合成方式：
 
 - 用 Table3 里面的退化随机进行处理
 
@@ -117,6 +125,12 @@ Training is done using batches of videos with 5 sequential frames each & [0, 6] 
   网上搜索 `film noise` 获取退化模板，当作随机的可加性噪声 
 
 the noise data is randomly added to the input greyscale video, independently for each frame
+
+
+
+
+
+
 
 ## Experiment
 

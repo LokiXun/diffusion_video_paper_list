@@ -1,13 +1,14 @@
 # Bringing-Old-Films-Back-to-Life
 
-> [2022_CVPR_Bringing-Old-Films-Back-to-Life.pdf](./2022_CVPR_Bringing-Old-Films-Back-to-Life.pdf)
-> [github repo](https://github.com/raywzy/Bringing-Old-Films-Back-to-Life.git)
->
-> - 4 x 2080Ti >> 44G 显存
+> "Bringing Old Films Back to Life" CVPR, 2022 Mar :star:
+> [paper](https://arxiv.org/abs/2203.17276) [code](https://github.com/raywzy/Bringing-Old-Films-Back-to-Life) [website](http://raywzy.com/Old_Film/)
+> [lcoal paper pdf](./2022_CVPR_Bringing-Old-Films-Back-to-Life.pdf)
 
-**Background**
+## **Keypoint**
 
 老电影分辨率过低，存在退化问题（灰尘遮挡、划痕噪声，颜色缺失等问题)。人工修复成本太大，利用自动化方式对老电影进行修复，提升老电影观感质量。
+
+
 
 **Contributions**
 
@@ -30,7 +31,7 @@
 
 
 
-**Related Work**
+## **Related Work**
 
 - Image restoration
 
@@ -43,13 +44,44 @@
   1. denoising, deblurring, super-resolution 生成效果有限
   2. video inpainting 需要指定 mask 的区域，在 old-films 中没有
 
-- Old-film restoration
 
-  - 传统方法去除 **structed artifacts**( scratches, cracks, etc.)：先目标检测，再加 inpainting pipline
+**Old-film restoration**
 
-    无法处理 photometric degradations (e.g., blurriness and noises)；以来手工特征检测 structed artifacts，没有理解内容
+- 传统方法去除 **structed artifacts**( scratches, cracks, etc.)：先目标检测，再加 inpainting pipline
 
-  - DeepRemaster
+  无法处理 photometric degradations (e.g., blurriness and noises)；以来手工特征检测 structed artifacts，没有理解内容
+
+- 修复 baseline
+
+  - Deepremaster
+
+  - Bring-Old-photos & temporal smoothing
+
+    > "Learning blind video temporal consistency" ECCV, 2018 Aug
+    > [paper](https://arxiv.org/abs/1808.00449)
+
+  - BasicVSR
+
+    > "BasicVSR: The Search for Essential Components in Video Super-Resolution and Beyond" CVPR, 2020 Dec
+    >
+    > [paper](https://arxiv.org/abs/2012.02181) [code](https://github.com/ckkelvinchan/BasicVSR-IconVSR) [website](https://ckkelvinchan.github.io/projects/BasicVSR/) [blog explanation](https://zhuanlan.zhihu.com/p/364872992)
+
+  - Video Swim
+
+    > "Video Swin Transformer" CVPR, 2021 Jun
+    > [paper](https://arxiv.org/abs/2106.13230) [code](https://github.com/SwinTransformer/Video-Swin-Transformer?utm_source=catalyzex.com)
+
+- 上色 Baseline
+
+  - DeepExemplar
+
+    > "Deep Exemplar-based Video Colorization" CVPR, 2019 Jun
+    > [paper](https://arxiv.org/abs/1906.09909) [code](https://github.com/zhangmozhe/Deep-Exemplar-based-Video-Colorization)
+    > [local pdf](./2019_07_CVPR_Deep-Exemplar-based-Video-Colorization.pdf) [note](./2019_07_CVPR_Deep-Exemplar-based-Video-Colorization_Note.md)
+
+- Flow estimation
+
+  - RAFT
 
 
 
@@ -57,11 +89,11 @@
 
 > RTN 框加，data-simulation, colorization, optimization
 
-![RTN_pipline.jpg](C:\Users\Loki\workspace\LearningJourney_Notes\Tongji_CV_group\docs\RTN_pipline.jpg)
+![RTN_pipline.jpg](.\docs\RTN_pipline.jpg)
 
 **Spatial-temporal Module**
 
-![RTN_temporal-spatial-restoration_module.jpg](C:\Users\Loki\workspace\LearningJourney_Notes\Tongji_CV_group\docs\RTN_temporal-spatial-restoration_module.jpg)
+![RTN_temporal-spatial-restoration_module.jpg](./docs\RTN_temporal-spatial-restoration_module.jpg)
 
 - Temporal Recurrent Network
 
@@ -111,7 +143,59 @@
 
 
 
-**Unsolved Limitations**
+
+
+## **Experiment**
+
+> 4 x 2080Ti >> 44G 显存
+
+**Detailed Exp**
+
+- 合成数据集上的效果，比较 PSNR，SSIM
+  DAVIS dataset & degradation model(See [Dataset](#Dataset))
+  blending random degradations with clean frames of DAVIS [34] dataset
+
+- 真实老电影上的效果（作者收集的 63个老电影）比较 NIQE, BRISQUE && 看图
+
+- 上色效果
+
+  gray version of the subset of REDS 
+
+  predict the colors of the first 50 frames by taking the 100th frame as the colorization reference 因为对比的是 example-based 上色方法
+
+**Ablation Study**
+
+用别的去替换 Temporal Bi-directional RNN， Learnable Guided Mask，Spatial Transformer 看效果
+
+
+
+### Dataset
+
+**During optimization**, we randomly crop 256 patches from **REDS [33] dataset** and **apply the proposed video degradation model on the fly**
+collect 63 old films from the internet for evaluation
+
+#### Degradation
+
+- Contaminant Blending
+
+  **collect 1k+ texture templates** from the Internet, which are further augmented with random rotation, local cropping, contrast change, and morphological operations. Then we **use addition, subtract and multiply blending modes** with various levels of opacity∈ [0.6, 1.0] to combine the scratch textures with the natural frames.
+
+- blurring, noise and unsharpness
+
+  - Gaussian noise and speckle noise with σ ∈ [5, 50]
+  -  Isotropic and anisotropic Gaussian blur kernels
+  - Random *downsampling and upsampling* with different interpolation methods
+  - *JPEG compression* whose level is in the range of [40, 100].
+  - *Random color jitter* through adjusting the brightness∈ [0.8, 1.2] and contrast∈ [0.9, 1.0].
+
+**inject these defects randomly,** one observation of old films. **first define a set of template parameters for each video.** Then we further apply predefined parameters with slight perturbations on consecutive temporal frames to achieve more realistic rendering
+随机将上述 DA 映射到随机的帧上，相邻帧之间用相同的 DA 组合 & 扰动
+
+
+
+
+
+**Limitations**
 
 - fail to distinguish the contaminant from the frame content
 
@@ -125,7 +209,9 @@
 
 
 
-**Summary(learn what & how to apply to our task) :star2:**
+## **Summary :star2:**
+
+> learn what & how to apply to our task
 
 - GAN generate pixel
 - SwimTransformer
