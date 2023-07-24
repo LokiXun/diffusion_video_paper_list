@@ -53,6 +53,26 @@ they propose a data generation scheme to **train the network in a self-supervise
 
 
 
+**Contributions**
+
+## **Related Work**
+
+- PST(photo realistic style transfer)
+
+- AdaIN :question:
+
+  AdaIN computes the style code (channel-wise mean and standard deviation) and uses it to align the mean and std of the target image. 
+
+- SIT, SVT ??
+
+
+
+## methods
+
+
+
+## Experiment
+
 ### Dataset
 
 - 韩国 3 个博物馆收集到的文物照片，拍摄样式老旧，但没有明显的划痕
@@ -71,30 +91,10 @@ they propose a data generation scheme to **train the network in a self-supervise
 
   
 
-
-
-**Contributions**
-
-## **Related Work**
-
-- PST(photo realistic style transfer)
-
-- AdaIN :question:
-
-  AdaIN computes the style code (channel-wise mean and standard deviation) and uses it to align the mean and std of the target image. 
-
-- SIT, SVT ??
-
-
-
-## **methods**
-
 **Limitations**
 
 
 
-
-
-**Summary :star2:**
+## Summary :star2:
 
 > learn what & how to apply to our task

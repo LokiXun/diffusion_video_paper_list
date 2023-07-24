@@ -1,4 +1,4 @@
-# Tongji_CV_Journey :gun:
+# **Tongji_CV_Journey** :gun:
 
 > This document mainly works as an **paper List in categories** :cat:
 > Also, our notes for read papers are linked beside, which could help us recall the main idea in paper more quickly.
@@ -19,7 +19,11 @@
 >
 > 3. The priority order of papers in each category is based on paper importance(based on our task) and then paper-release time.
 >
+> 3. If the paper not release the code and neither have the unofficial implementation, we denotes :warning: besides to keep us track the code release.
+>
 > - [GPU comparison website](https://topcpu.net/gpu-c/GeForce-RTX-4090-vs-Tesla-V100-PCIe-32-GB)
+> - [CCF Rec. Conference Deadlines](https://ccfddl.github.io/)
+> - [get stamp for github stars](https://shields.io/)
 
 
 
@@ -45,11 +49,12 @@
 
 - [ ] "Pik-Fix: Restoring and Colorizing Old Photo" WACV, 2023
   [paper](https://arxiv.org/abs/2205.01902) [code](https://github.com/DerrickXuNu/Pik-Fix)
-
-  > 有数据集，发邮件回复下载 url >> Runsheng Xu
+  [paper local pdf](./2022_05_WACV_Pik-Fix-Restoring-and-Colorizing-Old-Photos.pdf)
+  
+  > 有数据集，发邮件回复下载 [GoogleDrive](https://drive.google.com/drive/folders/1y5wHw3tzRwYI6vHYw0qoVDKVPghwt9S-?usp=share_link) >> Runsheng Xu
   >
   > RealOld 200个老照片，**有 Expert 修复过的 GT！**
-
+  
 - [x] "Modernizing Old Photos Using Multiple References via Photorealistic Style Transfer" CVPR, 2023 Apr, **MROPM**
   [paper](https://arxiv.org/abs/2304.04461) [code](https://github.com/KAIST-VICLab/old-photo-modernization) [website](https://kaist-viclab.github.io/old-photo-modernization/?utm_source=catalyzex.com)
   [note](./2023_04_CVPR_Modernizing-Old-Photos-Using-Multiple-References-via-Photorealistic-Style-Transfer_Note.md)
@@ -76,14 +81,15 @@
 
   > strong baseline in multi papers :+1:
   
-- [ ] "Bringing Old Films Back to Life" CVPR, 2022 Mar :star:
+- [x] "Bringing Old Films Back to Life" CVPR, 2022 Mar :star:
   [paper](https://arxiv.org/abs/2203.17276) [code](https://github.com/raywzy/Bringing-Old-Films-Back-to-Life) [website](http://raywzy.com/Old_Film/)
   [Note](./2022_CVPR_Bringing-Old-Films-Back-to-Life_Note.md)
 
   > crop **256 patches from REDS dataset** and apply the proposed **video degradation model（DA & noise template）** on the fly
   >
   > REDS `sharp data`: train 240 video and each has 100 Frame
-
+  > collect 63 old films from the internet for evaluation
+  
 - [x] "DeepRemaster: Temporal Source-Reference Attention Networks for Comprehensive Video Enhancement" SIGGRAPH, 2019 Nov
   [paper](https://arxiv.org/abs/2009.08692) [website](http://iizuka.cs.tsukuba.ac.jp/projects/remastering/en/index.html)
   [Note](./2019_SIGGRAPH_DeepRemaster-Temporal-Source-Reference-Attention-Networks-for-Comprehensive-Video-Enhancement_Note.md)
@@ -95,6 +101,16 @@
 
   > 硕士论文，里面整合了上面 3 个文章
 
+- [x] "Stable Remaster: Bridging the Gap Between Old Content and New Displays" Arxiv, 2023 Jun  :star:
+  [paper](https://arxiv.org/abs/2306.06803) [code](https://github.com/naston/StableRemaster)
+  [note](./2023_06_Arxiv_Stable-Remaster-Bridging-the-Gap-Between-Old-Content-and-New-Displays_Note.md)
+  
+  > 针对视频 aspect ratio 调整，对画面两边 black bar 背景区域用其他帧的背景补充。用 image-stitching 方法，对于缺失区域的小图像用 pretrained  Stable-diffusion 生成（`diffusers.StableDiffusionInpaintPipeline` API 可以传入`prompt="animated background"`，和 mask）
+  >
+  > 类似实验报告，**可以学习下 pipline 各个模块API**，例如: image-stitching(cv2), torchvision 用 MaskRCNN 做前景分割，`diffusers.StableDiffusionInpaintPipeline` 
+  
+  
+  
 - [ ] "VRT: A Video Restoration Transformer" ArXiv, 2022 Jun, **VRT**
   [paper](https://arxiv.org/abs/2201.12288) [code](https://github.com/JingyunLiang/VRT?utm_source=catalyzex.com)
 
@@ -191,10 +207,29 @@
 
 - [ ] "Make-Your-Video: Customized Video Generation Using Textual and Structural Guidance" Arxiv, 2023 Jun :s
   [paper](https://arxiv.org/abs/2306.00943) [website](https://doubiiu.github.io/projects/Make-Your-Video/?utm_source=catalyzex.com)
+  
+- [ ] "Imagen Video: High Definition Video Generation with Diffusion Models" Arxiv, 2022 Oct :star: 
+  [paper](https://arxiv.org/abs/2210.02303)
+  
+- [ ] "Tune-A-Video: One-Shot Tuning of Image Diffusion Models for Text-to-Video Generation" Arxiv, 2022 Dec,
+  [paper](https://arxiv.org/abs/2212.11565)
+
+  > consistency between origin and generation
+
+- [ ] "Zero-Shot Video Editing Using Off-The-Shelf Image Diffusion Models" Arxiv, 2023 Mar, vid2vid-zero :star:
+  [paper](https://arxiv.org/abs/2303.17599) [code](https://github.com/baaivision/vid2vid-zero?utm_source=catalyzex.com)
+
+  > video editing
+  >
+  > diffusers package :star:
 
 
 
 ## **Diffusion/GAN related**
+
+> paper List repo
+> [Awesome-Diffusion-Models](https://github.com/diff-usion/Awesome-Diffusion-Models) contains introductory lectures for canonical papers! :man_teacher:
+> [awesome-diffusion-low-level-vision](https://github.com/yulunzhang/awesome-diffusion-low-level-vision)
 
 - [ ] "A Style-Based Generator Architecture for Generative Adversarial Networks" CVPR, 2019 Dec, **StyleGAN**
   [paper](https://arxiv.org/abs/1812.04948) [code](https://nvlabs.github.io/stylegan2/versions.html)
@@ -206,40 +241,49 @@
   [our note](./2021_CVPR_VQGAN_Taming-Transformers-for-High-Resolution-Image-Synthesis_Note.md)
 
 - [ ] "Denoising Diffusion Probabilistic Models" NeurIPS, 2020 Dec, **DDPM** :statue_of_liberty:
-
   [paper](https://arxiv.org/abs/2006.11239)
-
+  
 - [x] "High-Resolution Image Synthesis with Latent Diffusion Models" CVPR, 2022 Dec, **StableDiffusion** :statue_of_liberty:
   [paper](https://arxiv.org/abs/2112.10752) [github](https://github.com/CompVis/stable-diffusion) ![GitHub Repo stars](https://img.shields.io/github/stars/CompVis/stable-diffusion?style=social)
   [our note](./2022_CVPR_High-Resolution Image Synthesis with Latent Diffusion Models_Note.md)
 
+- [ ] "CogView: Mastering Text-to-Image Generation via Transformers" NeurIPS, 2021 May, **GLID**
+  [paper](https://arxiv.org/abs/2105.13290) [code](https://github.com/THUDM/CogView) ![](https://img.shields.io/github/stars/THUDM/CogView?style=social)
+  
+  > text2Image
+  
 - [ ] "Palette: Image-to-Image Diffusion Models" SIGGRAPH, 2022 Nov
   [paper](https://arxiv.org/abs/2111.05826) [website](https://iterative-refinement.github.io/palette/) [code: unofficial implementation](https://github.com/Janspiry/Palette-Image-to-Image-Diffusion-Models)
   [our note](./2022_SIGGRAPH_Palette-Image-to-Image-Diffusion-Models_Note.md)
 
 - [ ] "Diffusion Models Beat GANs on Image Synthesis" NeurIPS, 2021 May :statue_of_liberty:
-
   [paper](https://arxiv.org/abs/2105.05233) [code](https://github.com/openai/guided-diffusion?utm_source=catalyzex.com)
-
+  
+  > classifier guidance
+  
 - [ ] "Diffusion Models Beat GANs on Image Classification" Arxiv, 2023 Jul
 
   [paper](https://arxiv.org/abs/2307.08702)
 
-- [x] "Zero-Shot Image Restoration Using Denoising Diffusion Null-Space Model" ICLR Notable-Top-25%, 2022 Dec, **DDNM** :+1:
-  [paper](https://wyhuai.github.io/ddnm.io/) [website](https://wyhuai.github.io/ddnm.io/)
-  [our note](./2022_ICLR_DDNM_Zero-Shot-Image-Restoration-Using-Denoising-Diffusion-Null-Space-Model_Note.md)
+- [ ] "Understanding Diffusion Models: A Unified Perspective" Arxiv, 2022 Aug :+1:
+  [paper](https://arxiv.org/abs/2208.11970) [paper local pdf](./2022_Understanding Diffusion Models-A Unified Perspective.pdf)
 
-  > 将图像修复任务的数学模型，转换到 Range-Null space 分解，对于分解的其中一项替换为 Diffusion 的 noise 实现修复操作，融入 diffusion 的方式值得借鉴。
+  > survey
 
-- [ ] [2022_Understanding Diffusion Models-A Unified Perspective.pdf](./2022_Understanding Diffusion Models-A Unified Perspective.pdf) :+1:
+- [ ] "Denoising Diffusion Implicit Models",  Arxiv, 2020 Oct, **DDIM**
+  [paper](https://arxiv.org/abs/2010.02502) [code](https://github.com/ermongroup/ddim)
 
-- [ ] DDIM
+  > DDIM inversion
+
+- [ ] "Null-text Inversion for Editing Real Images using Guided Diffusion Models" CVPR, 2022 Nov
+  [paper](https://arxiv.org/abs/2211.09794) [website](https://null-text-inversion.github.io/) [code ](https://github.com/google/prompt-to-prompt/#null-text-inversion-for-editing-real-images)Google github repo for null-text inversion :star:
+
+  > Null-text Inversion
 
 - [ ] IDDPM
 
-- [ ] DDRM
-
-- [ ] Score-based
+- [ ] "Score-Based Generative Modeling through Stochastic Differential Equations" Arxiv, 2020 Nov, Score-based
+  [paper](https://arxiv.org/abs/2011.13456)
 
 - [ ] [VAE 博客](https://zhuanlan.zhihu.com/p/34998569) 提供了一个将概率图跟深度学习结合起来的一个非常棒的案例
   [code](https://github.com/bojone/vae)
@@ -250,33 +294,13 @@
 
 - [ ] [2020_CVPR_InterFaceGAN_Interpreting-the-Latent-Space-of-GANs-for-Semantic-Face-Editing.pdf](./2020_CVPR_InterFaceGAN_Interpreting-the-Latent-Space-of-GANs-for-Semantic-Face-Editing.pdf)
 
-- [ ] [2022_WACV_Pik-Fix-Restoring-and-Colorizing-Old-Photos.pdf](./2022_WACV_Pik-Fix-Restoring-and-Colorizing-Old-Photos.pdf)
-
-- [ ] [Drag Your GAN: Interactive Point-based Manipulation on the Generative Image Manifold](https://github.com/XingangPan/DragGAN) :moyai:
-
-- [ ] "DragDiffusion: Harnessing Diffusion Models for Interactive Point-based Image Editing" 2023 Jul
-
-  [paper](https://arxiv.org/abs/2306.14435)
-
 - [ ] Self-Supervised Learning with Random-Projection Quantizer for Speech Recognition
 
   > 参考 random-projection 操作
 
-- [ ] Wavelet Diffusion Models are fast and scalable Image Generators :+1:
-
-- [ ] [2023_Fourmer-An Efficient Global Modeling Paradigm for Image Restoration.pdf](./2023_Fourmer-An Efficient Global Modeling Paradigm for Image Restoration.pdf)
-
-  > 小波变换
-
-- [ ] "Zero-shot Image-to-Image Translation" Arxiv, 2023 Feb, **Pix2Pix** 
-  [code](https://github.com/pix2pixzero/pix2pix-zero)
-  [local pdf](./2023_Zero-shot-Image-to-Image-Translation.pdf)
-
 - [ ] Locally Hierarchical Auto-Regressive Modeling for Image Generation :+1:
 
   https://github.com/kakaobrain/hqtransformer
-
-- [ ] JPEG Artifact Correction using Denoising Diffusion Restoration Models
 
 - [ ] Scalable Diffusion Models with Transformers
 
@@ -294,18 +318,10 @@
 
 - [ ] Diffusion in the Dark A Diffusion Model for Low-Light Text Recognition
 
-- [ ] "Exploiting Diffusion Prior for Real-World Image Super-Resolution"
-  [paper](https://arxiv.org/abs/2305.07015) [website](https://iceclear.github.io/projects/stablesr/?utm_source=catalyzex.com)
-  [2023_preprint_Exploiting-Diffusion-Prior-for-Real-World-Image-Super-Resolution.pdf](./2023_preprint_Exploiting-Diffusion-Prior-for-Real-World-Image-Super-Resolution.pdf)
-
 - [ ] Privacy Leakage of SIFT Features via Deep Generative Model based Image Reconstruction
 
-- [ ] DreamDiffusion https://mp.weixin.qq.com/s/RDXINIvJvU_6FMoiX42bKg
-
-- [ ] T2I-Adapter: Learning Adapters to Dig out More Controllable Ability for Text-to-Image Diffusion Models
-  [paper](https://arxiv.org/abs/2302.08453) [code](https://github.com/TencentARC/T2I-Adapter)
-
-  > 可控生成
+- [ ] "DreamDiffusion: Generating High-Quality Images from Brain EEG Signals" Arxiv, 2023 Jun, DreamDiffusion
+  [paper](https://arxiv.org/abs/2306.16934) [code](https://github.com/bbaaii/DreamDiffusion) [blog](https://mp.weixin.qq.com/s/RDXINIvJvU_6FMoiX42bKg)
 
 - [ ] SWAGAN: A Style-based Wavelet-driven Generative Model  23.7.14
 
@@ -315,16 +331,84 @@
 
   类似 non-local attention  
 
+
+
+### Image restoration
+
+- [ ] "JPEG Artifact Correction using Denoising Diffusion Restoration Models" Arxiv, 2022 Sep, **DDRM**
+  [paper](https://arxiv.org/abs/2209.11888) [code](https://github.com/bahjat-kawar/ddrm-jpeg)
+  
+- [x] "Zero-Shot Image Restoration Using Denoising Diffusion Null-Space Model" ICLR(Notable-Top-25%), 2022 Dec, **DDNM** :+1:
+  [paper](https://wyhuai.github.io/ddnm.io/) [website](https://wyhuai.github.io/ddnm.io/)
+  [our note](./2022_ICLR_DDNM_Zero-Shot-Image-Restoration-Using-Denoising-Diffusion-Null-Space-Model_Note.md)
+
+  > 将图像修复任务的数学模型，转换到 Range-Null space 分解，对于分解的其中一项替换为 Diffusion 的 noise 实现修复操作，融入 diffusion 的方式值得借鉴。
+
+- [ ] "DiffIR: Efficient Diffusion Model for Image Restoration" ICCV, 2023 Mar
+  [paper](https://arxiv.org/abs/2303.09472) 
+
 - [ ] "A Unified Conditional Framework for Diffusion-based Image Restoration" 23.7.16
   [paper](https://arxiv.org/abs/2305.20049) [code](https://github.com/zhangyi-3/UCDIR) [website](https://zhangyi-3.github.io/project/UCDIR/)
 
 
 
+### Wavelet
+
+- [ ] "Fourmer: An Efficient Global Modeling Paradigm for Image Restoration" PMLR, 2023 Jun
+  [paper](https://proceedings.mlr.press/v202/zhou23f.html)
+  [paper local pdf](./2023_Fourmer-An Efficient Global Modeling Paradigm for Image Restoration.pdf)
+- [ ] "Wavelet Diffusion Models are fast and scalable Image Generators" CVPR, 2022 Nov
+  [paper](https://arxiv.org/abs/2211.16152) [code](https://github.com/VinAIResearch/WaveDiff?utm_source=catalyzex.com)
 
 
 
+### Image Control Edit
 
-## Enhancement and Restoration :droplet:
+- [ ] "Adding Conditional Control to Text-to-Image Diffusion Models" Arxiv, 2023 Feb, **ControlNet** :statue_of_liberty:
+  [paper](https://arxiv.org/abs/2302.05543) [code](https://github.com/lllyasviel/ControlNet)
+
+- [ ] "Zero-shot Image-to-Image Translation" Arxiv, 2023 Feb, **pix2pix-zero** 
+  [paper](https://arxiv.org/abs/2302.03027) [code](https://github.com/pix2pixzero/pix2pix-zero)
+  [local pdf](./2023_Zero-shot-Image-to-Image-Translation.pdf)
+  
+- [ ] "Drag Your GAN: Interactive Point-based Manipulation on the Generative Image Manifold" SIGGRAPH, 2023 May, **DragGAN** :statue_of_liberty:
+  [paper](https://arxiv.org/abs/2305.10973) [code](https://github.com/XingangPan/DragGAN) [website](https://vcai.mpi-inf.mpg.de/projects/DragGAN/)
+
+- [ ] "DragDiffusion: Harnessing Diffusion Models for Interactive Point-based Image Editing" Arxiv, 2023 Jun :star:
+  [paper](https://arxiv.org/abs/2306.14435) [website](https://yujun-shi.github.io/projects/dragdiffusion.html) [code](https://github.com/Yujun-Shi/DragDiffusion)
+
+- [ ] "AnyDoor: Zero-shot Object-level Image Customization" Arxiv, 2023 Jul :warning:
+  [paper](https://arxiv.org/abs/2307.09481) [website](https://damo-vilab.github.io/AnyDoor-Page/?utm_source=catalyzex.com)
+
+  > Diffusion 做 Object Moving, Object Swapping (23.7.21 Ni recommend)
+  >
+  > 可以用到老照片上增加可编辑性
+  
+- [ ] "DragonDiffusion: Enabling Drag-style Manipulation on Diffusion Models" Arxiv, 2023 Jul :star:
+  Chong Mou1 Xintao Wang2 Jiechong Song1 Ying Shan2 Jian Zhang†1
+  [paper](https://arxiv.org/abs/2307.02421) [website](https://mc-e.github.io/project/DragonDiffusion/) [Blog explanation](https://www.zhihu.com/question/612852389/answer/3125192805?s_r=0&utm_campaign=shareopn&utm_medium=social&utm_oi=973429178926792704&utm_psn=1665158692570902528&utm_source=wechat_session)
+  [note](./2023_07_Arxiv_DragonDiffusion--Enabling-Drag-style-Manipulation-on-Diffusion-Models_Note.md)
+
+- [ ] "T2I-Adapter: Learning Adapters to Dig out More Controllable Ability for Text-to-Image Diffusion Models" Arxiv, 2023 :star:
+  [paper](https://arxiv.org/abs/2302.08453) [code](https://github.com/TencentARC/T2I-Adapter) ![](https://img.shields.io/github/stars/TencentARC/T2I-Adapter?style=social)
+
+  > Zhang jian 老师组，对扩散模型生成内容进行精准控制。**已经用于 Stability Al 的涂鸦生图工具 **[Stable Doodle](**https://stability.ai/blog/clipdrop-launches-stable-doodle)
+
+
+
+### Image SR
+
+- [ ] "SRDiff: Single image super-resolution with diffusion probabilistic models" Neurocomputing, 2021 Apr
+  [paper](https://arxiv.org/abs/2104.14951) [code](https://github.com/LeiaLi/SRDiff)
+- [ ] "Implicit Diffusion Models for Continuous Super-Resolution" CVPR, 2023 Mar
+  [paper](https://arxiv.org/abs/2303.16491) [code](https://github.com/Ree1s/IDM?utm_source=catalyzex.com)
+- [ ] "Exploiting Diffusion Prior for Real-World Image Super-Resolution" Arxiv, 2023 Mar, **Stable-SR**
+  [paper](https://arxiv.org/abs/2305.07015) [code](https://github.com/IceClear/StableSR) [website](https://iceclear.github.io/projects/stablesr/?utm_source=catalyzex.com) :star:
+  [paper local pdf](./2023_preprint_Exploiting-Diffusion-Prior-for-Real-World-Image-Super-Resolution.pdf)
+
+
+
+## Video Restoration :droplet:
 
 - [x] "ReBotNet: Fast Real-time Video Enhancement" AeXiv, 2023 Mar 
   [paper](https://arxiv.org/abs/2303.13504) [website](https://jeya-maria-jose.github.io/rebotnet-web/?utm_source=catalyzex.com)
@@ -357,7 +441,7 @@
 
 
 
-## Editing
+## Video Editing
 
 - [ ] "Layered Neural Atlases for Consistent Video Editing" SIGGRAPH, 2021 Sep
   [paper](https://arxiv.org/abs/2109.11418) [website](https://layered-neural-atlases.github.io/)
@@ -898,31 +982,31 @@ Main stream: Old video restoration!
 
 **The Dataset that used in `old video restoration` related paper**
 
-- `Time-Travel Rephotography` 修复林肯黑白图-> 彩色图，无监督！！
-
 - `Deepremaster` :+1:
-  
+
   作者从 Youtube-8M dataset 数据集，筛选了一些合适用于合成的视频，**共 1569 个youtube 视频，给出了视频 url 和退化模板**（网上按 `film noise` 关键字搜索 ）。
-  
+
   按 DA 方式对视频帧进行退化
-  
-  
-  
-- "Blind flickering" paper 
+
+- "Bringing Old Films Back to Life" CVPR, 2022 Mar 
+
+  crop **256 patches from REDS dataset** and apply the proposed **video degradation model（DA & noise template）** on the fly
+
+  REDS `sharp data`: train 240 video and each has 100 Frame
+
+- "Blind flickering" 
   提供自己构造的 flickering 数据  （<a href="#Blind flickering Dataset">Link to paper info</a>）
 
-  - 真实数据
+  - 真实数据 evaluation
 
     60 * old_movie clip，存储为 `%05d.jpg` 大多为 350 帧图像，若 fps=25，约为 10-14s的视频。
 
     21* old_cartoon clip，图像格式存储，大多为 50-100 帧，约为 1 - 4s 视频
 
-  - 合成数据
+  - 合成数据 train
 
     用软件自己修复的视频
 
-  
-  
 - "DSTT-MARB: Multi-scale Attention Based Spatio-Temporal Transformers for Old Film Restoration" Master Thesis
 
   > 没看文章里面有 release 数据的 url
@@ -933,7 +1017,9 @@ Main stream: Old video restoration!
   - noise 模板预处理：几个模板融合起来
   - Noise-level：原图和 noise 模板，使用图形学 Grain-merge 等方法融合
   - frame-level >> pdf Page 51
+
   
+
 - "RTTLC: Video Colorization with Restored Transformer and Test-time Local" CVPR, 2023 Mar
 
   [LDV Dataset](https://github.com/RenYang-home/LDV_dataset) contains 240 high-quality videos and exhibits a high degree of diversity. Specifically, we select 200 color videos with a resolution of 960×536 as the training set. The validation set contains 15 videos
