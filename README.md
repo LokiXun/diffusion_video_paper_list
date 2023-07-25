@@ -1,4 +1,4 @@
-# **Tongji_CV_Journey** :gun:
+# **Diffusion_Journey** :gun:
 
 > This document mainly works as an **paper List in categories** :cat:
 > Also, our notes for read papers are linked beside, which could help us recall the main idea in paper more quickly.
@@ -67,7 +67,6 @@
   [paper](https://ieeexplore.ieee.org/abstract/document/10147235)
   
 - [ ] "Focusing on Persons: Colorizing Old Images Learning from Modern Historical Movies" 2021 Aug, **HistoryNet**
-
   [paper](https://arxiv.org/abs/2108.06515) [code](https://github.com/BestiVictory/HistoryNet#historynet)
 
 
@@ -108,8 +107,6 @@
   > 针对视频 aspect ratio 调整，对画面两边 black bar 背景区域用其他帧的背景补充。用 image-stitching 方法，对于缺失区域的小图像用 pretrained  Stable-diffusion 生成（`diffusers.StableDiffusionInpaintPipeline` API 可以传入`prompt="animated background"`，和 mask）
   >
   > 类似实验报告，**可以学习下 pipline 各个模块API**，例如: image-stitching(cv2), torchvision 用 MaskRCNN 做前景分割，`diffusers.StableDiffusionInpaintPipeline` 
-  
-  
   
 - [ ] "VRT: A Video Restoration Transformer" ArXiv, 2022 Jun, **VRT**
   [paper](https://arxiv.org/abs/2201.12288) [code](https://github.com/JingyunLiang/VRT?utm_source=catalyzex.com)
@@ -176,17 +173,51 @@
 > [Awesome Video Diffusion](https://github.com/showlab/Awesome-Video-Diffusion) :+1:
 > https://scholar.google.com/scholar?as_ylo=2023&q=diffusion+video&hl=zh-CN&as_sdt=0,5
 
-- [x] "Diffusion Video Autoencoders: Toward Temporally Consistent Face Video Editing via Disentangled Video Encoding" CVPR oral, 2023 Dec, **DVA**
+- [ ] "Imagen Video: High Definition Video Generation with Diffusion Models" Arxiv, 2022 Oct :star: 
+  [paper](https://arxiv.org/abs/2210.02303)
+
+- [x] "Diffusion Video Autoencoders: Toward Temporally Consistent Face Video Editing via Disentangled Video Encoding" CVPR oral, 2022 Dec, **DVA**
   [paper](https://arxiv.org/abs/2212.02802) [code](https://github.com/man805/Diffusion-Video-Autoencoders)
   [note](./2023_CVPR_Diffusion-Video-Autoencoders--Toward-Temporally-Consistent-Face-Video-Editing-via-Disentangled-Video-Encoding_Note.md)
 
   > 人脸编辑
-  
+
+- [ ] "Tune-A-Video: One-Shot Tuning of Image Diffusion Models for Text-to-Video Generation" Arxiv, 2022 Dec,
+  [paper](https://arxiv.org/abs/2212.11565)
+
+  > consistency between origin and generation
+
+- [ ] "Structure and Content-Guided Video Synthesis with Diffusion Models" Arxiv, 2023 Feb, **Gen-1** :fire:
+  Runway Research
+  [paper](https://arxiv.org/abs/2302.03011) [website](https://research.runwayml.com/gen2)
+
+  > video2video, using multi-modality (text, image) as input
+  >
+  > **Gen-2** create 4s video based on text prompt / image
+
+- [ ] "LDMVFI: Video Frame Interpolation with Latent Diffusion Models" Arxiv, 2023 Mar
+  [paper](https://arxiv.org/abs/2303.09508)
+
+  > video restoration
+
+- [ ] "Pix2Video: Video Editing using Image Diffusion" ICCV, 2023 Mar
+  [paper](https://arxiv.org/abs/2303.12688) [code](https://github.com/G-U-N/Pix2Video.pytorch)
+
+- [ ] "Zero-Shot Video Editing Using Off-The-Shelf Image Diffusion Models" Arxiv, 2023 Mar, vid2vid-zero :star:
+  [paper](https://arxiv.org/abs/2303.17599) [code](https://github.com/baaivision/vid2vid-zero?utm_source=catalyzex.com) 
+  [note](./2023_03_Arxiv_ Zero-shot-video-editing-using-off-the-shelf-image diffusion-models_Note.md)
+
+  > - Video editing with off-the-shelf image diffusion models.
+  > - No training on any video.
+
 - [x] "Align your Latents: High-Resolution Video Synthesis with Latent Diffusion Models" CVPR, 2023 Apr, **VideoLDM** :star:
   [paper](https://arxiv.org/abs/2304.08818) [website](https://research.nvidia.com/labs/toronto-ai/VideoLDM/) [code: unofficial implementation](https://github.com/srpkdyy/VideoLDM.git)
   [note](./2023_04_CVPR_Align-your-Latents--High-Resolution-Video-Synthesis-with-Latent-Diffusion-Models_Note.md)
 
   > diffusion 用于 text2video 生成，用预训练的 stable-diffusion，对 U-net 加 temporal layer 实现时序一致性
+
+- [ ] "Gen-L-Video: Multi-Text to Long Video Generation via Temporal Co-Denoising" Arxiv, 2023 May
+  [paper](https://arxiv.org/abs/2305.18264) [code](https://github.com/G-U-N/Gen-L-Video?utm_source=catalyzex.com)
 
 - [x] "VideoComposer: Compositional Video Synthesis with Motion Controllability" Arxiv, 2023 Jun, **VideoComposer**
   [![Star](https://camo.githubusercontent.com/f3e411ac406a8793396b60a88e445f2b46ab95fc46d0d0376607ea93e1fac6b9/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f73746172732f64616d6f2d76696c61622f766964656f636f6d706f7365722e7376673f7374796c653d736f6369616c266c6162656c3d53746172)](https://github.com/damo-vilab/videocomposer) [![arXiv](https://camo.githubusercontent.com/0835af0e1376c6ea0c5c19fc50d0824d82eec71980e055575cb87b55a74f8b39/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f61725869762d6233316231622e737667)](https://arxiv.org/abs/2306.02018) [![Website](https://camo.githubusercontent.com/3e5ac86a01b8da4c1744c6b481736db4f759253d7b2bd1c6ee2bf1882146717f/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f576562736974652d396366)](https://videocomposer.github.io/)
@@ -194,34 +225,10 @@
 
   > Video LDM 上加入各种样式的 condition 实现可控视频生成
 
-- [ ] "LDMVFI: Video Frame Interpolation with Latent Diffusion Models" Arxiv, 2023 Mar
-  [paper](https://arxiv.org/abs/2303.09508)
-  
-  > video restoration
-  
-- [ ] "Pix2Video: Video Editing using Image Diffusion" ICCV, 2023
-  [paper](https://arxiv.org/pdf/2303.12688v1.pdf) [code](https://github.com/G-U-N/Pix2Video.pytorch)
-
-- [ ] "DreamBooth: Fine Tuning Text-to-Image Diffusion Models for Subject-Driven Generation" CVPR, 2022 Aug
-  [paper](https://arxiv.org/abs/2208.12242) [code](https://github.com/zanilzanzan/DreamBooth)
-
-- [ ] "Make-Your-Video: Customized Video Generation Using Textual and Structural Guidance" Arxiv, 2023 Jun :s
+- [ ] "Make-Your-Video: Customized Video Generation Using Textual and Structural Guidance" Arxiv, 2023 Jun :statue_of_liberty:
   [paper](https://arxiv.org/abs/2306.00943) [website](https://doubiiu.github.io/projects/Make-Your-Video/?utm_source=catalyzex.com)
-  
-- [ ] "Imagen Video: High Definition Video Generation with Diffusion Models" Arxiv, 2022 Oct :star: 
-  [paper](https://arxiv.org/abs/2210.02303)
-  
-- [ ] "Tune-A-Video: One-Shot Tuning of Image Diffusion Models for Text-to-Video Generation" Arxiv, 2022 Dec,
-  [paper](https://arxiv.org/abs/2212.11565)
 
-  > consistency between origin and generation
 
-- [ ] "Zero-Shot Video Editing Using Off-The-Shelf Image Diffusion Models" Arxiv, 2023 Mar, vid2vid-zero :star:
-  [paper](https://arxiv.org/abs/2303.17599) [code](https://github.com/baaivision/vid2vid-zero?utm_source=catalyzex.com)
-
-  > video editing
-  >
-  > diffusers package :star:
 
 
 
@@ -230,6 +237,7 @@
 > paper List repo
 > [Awesome-Diffusion-Models](https://github.com/diff-usion/Awesome-Diffusion-Models) contains introductory lectures for canonical papers! :man_teacher:
 > [awesome-diffusion-low-level-vision](https://github.com/yulunzhang/awesome-diffusion-low-level-vision)
+> [image-to-image-papers](https://github.com/lzhbrian/image-to-image-papers)
 
 - [ ] "A Style-Based Generator Architecture for Generative Adversarial Networks" CVPR, 2019 Dec, **StyleGAN**
   [paper](https://arxiv.org/abs/1812.04948) [code](https://nvlabs.github.io/stylegan2/versions.html)
@@ -252,10 +260,6 @@
   
   > text2Image
   
-- [ ] "Palette: Image-to-Image Diffusion Models" SIGGRAPH, 2022 Nov
-  [paper](https://arxiv.org/abs/2111.05826) [website](https://iterative-refinement.github.io/palette/) [code: unofficial implementation](https://github.com/Janspiry/Palette-Image-to-Image-Diffusion-Models)
-  [our note](./2022_SIGGRAPH_Palette-Image-to-Image-Diffusion-Models_Note.md)
-
 - [ ] "Diffusion Models Beat GANs on Image Synthesis" NeurIPS, 2021 May :statue_of_liberty:
   [paper](https://arxiv.org/abs/2105.05233) [code](https://github.com/openai/guided-diffusion?utm_source=catalyzex.com)
   
@@ -338,6 +342,10 @@
 - [ ] "JPEG Artifact Correction using Denoising Diffusion Restoration Models" Arxiv, 2022 Sep, **DDRM**
   [paper](https://arxiv.org/abs/2209.11888) [code](https://github.com/bahjat-kawar/ddrm-jpeg)
   
+- [ ] "Palette: Image-to-Image Diffusion Models" SIGGRAPH, 2022 Nov
+  [paper](https://arxiv.org/abs/2111.05826) [website](https://iterative-refinement.github.io/palette/) [code: unofficial implementation](https://github.com/Janspiry/Palette-Image-to-Image-Diffusion-Models)
+  [our note](./2022_SIGGRAPH_Palette-Image-to-Image-Diffusion-Models_Note.md)
+  
 - [x] "Zero-Shot Image Restoration Using Denoising Diffusion Null-Space Model" ICLR(Notable-Top-25%), 2022 Dec, **DDNM** :+1:
   [paper](https://wyhuai.github.io/ddnm.io/) [website](https://wyhuai.github.io/ddnm.io/)
   [our note](./2022_ICLR_DDNM_Zero-Shot-Image-Restoration-Using-Denoising-Diffusion-Null-Space-Model_Note.md)
@@ -347,8 +355,11 @@
 - [ ] "DiffIR: Efficient Diffusion Model for Image Restoration" ICCV, 2023 Mar
   [paper](https://arxiv.org/abs/2303.09472) 
 
-- [ ] "A Unified Conditional Framework for Diffusion-based Image Restoration" 23.7.16
-  [paper](https://arxiv.org/abs/2305.20049) [code](https://github.com/zhangyi-3/UCDIR) [website](https://zhangyi-3.github.io/project/UCDIR/)
+- [ ] "A Unified Conditional Framework for Diffusion-based Image Restoration" 
+  [paper](https://arxiv.org/abs/2305.20049) [code](https://github.com/zhangyi-3/UCDIR) [website](https://zhangyi-3.github.io/project/UCDIR/) 23.7.16
+  
+- [ ] "EdgeConnect: Generative Image Inpainting with Adversarial Edge Learning" Arxiv, 2019 Jan
+  [paper](https://arxiv.org/abs/1901.00212) [code](https://github.com/knazeri/edge-connect) [blog explanation](https://zhuanlan.zhihu.com/p/54107962)
 
 
 
@@ -364,6 +375,24 @@
 
 ### Image Control Edit
 
+- [ ] "DreamBooth: Fine Tuning Text-to-Image Diffusion Models for Subject-Driven Generation" CVPR, 2022 Aug :star:
+  [paper](https://arxiv.org/abs/2208.12242) [code](https://github.com/zanilzanzan/DreamBooth)
+
+  > good fidelity in **details consistency** between generation and reference images! 生成结果保留了参考照片主体部分
+  
+- [ ] "Prompt-to-Prompt Image Editing with Cross Attention Control" Arxiv, 2022 Aug :star:
+  [paper](https://arxiv.org/abs/2208.01626) [code](https://github.com/google/prompt-to-prompt?utm_source=catalyzex.com) [blog_explanation](https://mp.weixin.qq.com/s/xLzGwjPL3KTmsj-o_7zuzQ)
+
+  > specific object editing by replacing the correspondence be
+  
+- [ ] "Sketch-Guided Text-to-Image Diffusion Models" Arxiv, 2022 Nov :warning:
+  [paper](https://arxiv.org/abs/2211.13752) [website](https://sketch-guided-diffusion.github.io/?utm_source=catalyzex.com) [code:unofficial](https://github.com/ogkalu2/Sketch-Guided-Stable-Diffusion)
+
+  > perform a spatial guidance with gradients of a small model (we call it Latent Edge Predictor) that operates on intermediate DDPM activations.
+  >
+  > - Latent Edge Predictor >> see [methods image](https://sketch-guided-diffusion.github.io/files/scheme_train.jpg)
+  >   which is a per-pixel MLP, is trained to map each pixel in the concatenated features to the corresponding pixel in the encoded edge map.
+  
 - [ ] "Adding Conditional Control to Text-to-Image Diffusion Models" Arxiv, 2023 Feb, **ControlNet** :statue_of_liberty:
   [paper](https://arxiv.org/abs/2302.05543) [code](https://github.com/lllyasviel/ControlNet)
 
@@ -377,6 +406,9 @@
 - [ ] "DragDiffusion: Harnessing Diffusion Models for Interactive Point-based Image Editing" Arxiv, 2023 Jun :star:
   [paper](https://arxiv.org/abs/2306.14435) [website](https://yujun-shi.github.io/projects/dragdiffusion.html) [code](https://github.com/Yujun-Shi/DragDiffusion)
 
+- [ ] "Diffusion Self-Guidance for Controllable Image Generation" Arxiv, 2023 Jun
+  [paper](https://arxiv.org/abs/2306.00986) [code](https://dave.ml/selfguidance/)
+
 - [ ] "AnyDoor: Zero-shot Object-level Image Customization" Arxiv, 2023 Jul :warning:
   [paper](https://arxiv.org/abs/2307.09481) [website](https://damo-vilab.github.io/AnyDoor-Page/?utm_source=catalyzex.com)
 
@@ -384,11 +416,14 @@
   >
   > 可以用到老照片上增加可编辑性
   
-- [ ] "DragonDiffusion: Enabling Drag-style Manipulation on Diffusion Models" Arxiv, 2023 Jul :star:
+- [x] "DragonDiffusion: Enabling Drag-style Manipulation on Diffusion Models" Arxiv, 2023 Jul :star: :warning:
   Chong Mou1 Xintao Wang2 Jiechong Song1 Ying Shan2 Jian Zhang†1
-  [paper](https://arxiv.org/abs/2307.02421) [website](https://mc-e.github.io/project/DragonDiffusion/) [Blog explanation](https://www.zhihu.com/question/612852389/answer/3125192805?s_r=0&utm_campaign=shareopn&utm_medium=social&utm_oi=973429178926792704&utm_psn=1665158692570902528&utm_source=wechat_session)
+  [paper](https://arxiv.org/abs/2307.02421) [website](https://mc-e.github.io/project/DragonDiffusion/) [Blog explanation](https://www.zhihu.com/question/612852389/answer/3125192805?s_r=0&utm_campaign=shareopn&utm_medium=social&utm_oi=973429178926792704&utm_psn=1665158692570902528&utm_source=wechat_session) 
   [note](./2023_07_Arxiv_DragonDiffusion--Enabling-Drag-style-Manipulation-on-Diffusion-Models_Note.md)
 
+  > **多个分支 U-net 针对重建 or 编辑根据 loss 区分**，U-net decoder Transformer  **重建分支的 KV 替换到编辑分支的 KV 增加 consistency. （类似 UniAD 多个 Transformer 共享 KV）** 
+  > 这样多个分支同步 denoise，U-net decoder 的特征有对应关系，实验发现用 U-net decoder layer2,3 特征的效果最好
+  
 - [ ] "T2I-Adapter: Learning Adapters to Dig out More Controllable Ability for Text-to-Image Diffusion Models" Arxiv, 2023 :star:
   [paper](https://arxiv.org/abs/2302.08453) [code](https://github.com/TencentARC/T2I-Adapter) ![](https://img.shields.io/github/stars/TencentARC/T2I-Adapter?style=social)
 
@@ -443,11 +478,16 @@
 
 ## Video Editing
 
-- [ ] "Layered Neural Atlases for Consistent Video Editing" SIGGRAPH, 2021 Sep
+- [ ] "Layered Neural Atlases for Consistent Video Editing" SIGGRAPH, 2021 Sep :statue_of_liberty:
   [paper](https://arxiv.org/abs/2109.11418) [website](https://layered-neural-atlases.github.io/)
+  
+  > Nerf representation for video
+  > "Blind Video Deflickering by Neural Filtering with a Flawed Atlas" video deblurin
+  
 - [x] "Stitch it in Time: GAN-Based Facial Editing of Real Videos" SIGGRAPH, 2019 Jan, STIT
   [paper](https://arxiv.org/abs/2201.08361) [code](https://github.com/rotemtzaban/STIT) [website](https://stitch-time.github.io/)
   [our note](./2022_SIGGRAPH_STIT_Stitch-it-in-Time--GAN-Based-Facial-Editing-of-Real-Videos_Note.md)
+  
 - [ ] "Pix2Video: Video Editing using Image Diffusion" 2023 Mar
   [paper](https://arxiv.org/abs/2303.12688) [code]()
 
@@ -817,17 +857,7 @@
 
 # Current Progress :dart:
 
-Main stream: Old video restoration!
 
-## TODO :blue_book:
-
-- [ ] 调研 old films 修复的 SOTA 论文	7.17
-- [ ] 调研现有 old films 数据集
-
-- Paper reading question
-  - :question: AdaIN 原理
-
-- [ ] :question: Diffusion 如何用到 video restoration?
 
 
 
@@ -837,11 +867,11 @@ Main stream: Old video restoration!
 >
 >   *youtube-dl* is a command-line program to download videos from YouTube.com
 
-- FFHQ(Flickr-Faces-Hight-Quality) **(人脸图像恢复)**
+- FFHQ(Flickr-Faces-Hight-Quality) 
 
   > [FFHQ 介绍博客](https://zhuanlan.zhihu.com/p/353168785)
 
-  FFHQ是一个高质量的人脸数据集，包含1024x1024分辨率的70000张PNG格式高清人脸图像，在年龄、种族和图像背景上丰富多样且差异明显，在人脸属性上也拥有非常多的变化，拥有不同的年龄、性别、种族、肤色、表情、脸型、发型、人脸姿态等，包括普通眼镜、太阳镜、帽子、发饰及围巾等多种人脸周边配件，因此该数据集也是可以用于开发一些人脸属性分类或者人脸语义分割模型的。
+  FFHQ是一个高质量的人脸数据集，包含1024x1024分辨率的70000张PNG格式高清人脸图像，在年龄、种族和图像背景上丰富多样且差异明显，在人脸属性上也拥有非常多的变化，拥有不同的年龄、性别、种族、肤色、表情、脸型、发型、人脸姿态等，包括普通眼镜、太阳镜、帽子、发饰及围巾等多种人脸周边配件，因此该数据集也是可以用于开发一些人脸属性分类或者人脸语义分割模型的。**(人脸图像恢复)**
   
 - [YouTube-VIS](https://youtube-vos.org/dataset/vis/)
 
@@ -967,6 +997,8 @@ Main stream: Old video restoration!
 
   [A Day at the Zoo (1939)](https://www.youtube.com/watch?v=RtblQQvT2Nk&list=PL-F4vmhdMdiXIXZEDNQ3UFLXmQqjHguBA)
 
+- [Youtube GHWTVideos](https://www.youtube.com/@GHWTVideos/videos)
+
 - 优酷搜索老电影
 
   [优酷 kux 文件转为 mp4](https://zhuanlan.zhihu.com/p/111764932)
@@ -1038,8 +1070,17 @@ Main stream: Old video restoration!
 >
 > - [What is VHS?](https://en.wikipedia.org/wiki/VHS)
 >   VHS(Video Home System) is a [standard](https://en.wikipedia.org/wiki/Technical_standard) for consumer-level [analog](https://en.wikipedia.org/wiki/Analog_recording) [video recording](https://en.wikipedia.org/wiki/Video_recording) on tape [cassettes](https://en.wikipedia.org/wiki/Videocassette) invented in **1976 by the [Victor Company of Japan](https://en.wikipedia.org/wiki/Victor_Company_of_Japan)** and was the competitor to the ill-fated [Sony Betamax](https://en.wikipedia.org/wiki/Sony_Betamax) system.
+>   
 > - 没有 GT 但有相似的？
+>
 > - [How the 90s VHS look works](https://www.youtube.com/watch?v=h6RRNNztN5o)
+>
+> - [How to Convert Your Old VHS Tapes to DVD with honestech VHS to DVD 4.0 Deluxe](https://huggingface.co/spaces/exolitga/open-reverse-proxy/blob/main/datasets/Honestech%20Vhs%20To%20Dvd%204.0%20Deluxe%20Keygen.md)
+>
+> - [如何合成 old VHS video](https://www.reddit.com/r/VHS/comments/157r1sl/i_tried_to_make_a_realistic_effect_of_a_bad/)
+>   [vaporwave](https://github.com/itorr/vaporwave) 通过抽象虚拟信号影像展现过程中的各种可能性、实现了九十年代影像风格的重现。
+>
+>   [IOS app](https://techcrunch.com/2015/08/19/this-app-shoots-vhs-quality-video-that-bob-saget-would-be-proud-of/)
 
 - [x] accept file transfer
 
