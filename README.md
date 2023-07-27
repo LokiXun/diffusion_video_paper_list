@@ -195,11 +195,12 @@
   >
   > **Gen-2** create 4s video based on text prompt / image
 
-- [ ] "LDMVFI: Video Frame Interpolation with Latent Diffusion Models" Arxiv, 2023 Mar
-  [paper](https://arxiv.org/abs/2303.09508)
-
-  > video restoration
-
+- [x] "LDMVFI: Video Frame Interpolation with Latent Diffusion Models" Arxiv, 2023 Mar :+1:
+  [paper](https://arxiv.org/abs/2303.09508) [code](https://github.com/danier97/LDMVFI)
+  [note](./2023_05_Arxiv_LDMVFI--Video-Frame-Interpolation-with-Latent-Diffusion-Models_Note.md)
+  
+  > video Interpolation
+  
 - [ ] "Pix2Video: Video Editing using Image Diffusion" ICCV, 2023 Mar
   [paper](https://arxiv.org/abs/2303.12688) [code](https://github.com/G-U-N/Pix2Video.pytorch)
 
@@ -210,7 +211,7 @@
   > - Video editing with off-the-shelf image diffusion models.
   > - No training on any video.
 
-- [x] "Align your Latents: High-Resolution Video Synthesis with Latent Diffusion Models" CVPR, 2023 Apr, **VideoLDM** :star:
+- [x] "Align your Latents: High-Resolution Video Synthesis with Latent Diffusion Models" CVPR, 2023 Apr, **VideoLDM** :star: :warning:
   [paper](https://arxiv.org/abs/2304.08818) [website](https://research.nvidia.com/labs/toronto-ai/VideoLDM/) [code: unofficial implementation](https://github.com/srpkdyy/VideoLDM.git)
   [note](./2023_04_CVPR_Align-your-Latents--High-Resolution-Video-Synthesis-with-Latent-Diffusion-Models_Note.md)
 
@@ -339,10 +340,24 @@
 
 ### Image restoration
 
-- [ ] "JPEG Artifact Correction using Denoising Diffusion Restoration Models" Arxiv, 2022 Sep, **DDRM**
+- [ ] "EdgeConnect: Generative Image Inpainting with Adversarial Edge Learning" Arxiv, 2019 Jan
+  [paper](https://arxiv.org/abs/1901.00212) [code](https://github.com/knazeri/edge-connect) [blog explanation](https://zhuanlan.zhihu.com/p/54107962)
+  
+- [ ] "Image Super-Resolution via Iterative Refinement" TPAMI, 2021 Apr, **SR3**
+  [paper](https://arxiv.org/abs/2104.07636) [code](https://github.com/Janspiry/Image-Super-Resolution-via-Iterative-Refinement)
+  
+  > SR
+  
+- [ ] "Denoising Diffusion Restoration Models" ICLRW, 2022 Jan, **DDRM**
+  [paper](https://arxiv.org/abs/2201.11793) [code](https://github.com/bahjat-kawar/ddrm) [website](https://ddrm-ml.github.io/)
+  
+- [ ] "RePaint: Inpainting using Denoising Diffusion Probabilistic Models" CVPR, 2022 Jan, **RePaint**
+  [paper](https://arxiv.org/abs/2201.09865) [code](https://github.com/andreas128/RePaint)
+  
+- [ ] "JPEG Artifact Correction using Denoising Diffusion Restoration Models" Arxiv, 2022 Sep, **DDRM-jpeg**
   [paper](https://arxiv.org/abs/2209.11888) [code](https://github.com/bahjat-kawar/ddrm-jpeg)
   
-- [ ] "Palette: Image-to-Image Diffusion Models" SIGGRAPH, 2022 Nov
+- [ ] "Palette: Image-to-Image Diffusion Models" SIGGRAPH, 2022 Nov :warning:
   [paper](https://arxiv.org/abs/2111.05826) [website](https://iterative-refinement.github.io/palette/) [code: unofficial implementation](https://github.com/Janspiry/Palette-Image-to-Image-Diffusion-Models)
   [our note](./2022_SIGGRAPH_Palette-Image-to-Image-Diffusion-Models_Note.md)
   
@@ -353,13 +368,10 @@
   > 将图像修复任务的数学模型，转换到 Range-Null space 分解，对于分解的其中一项替换为 Diffusion 的 noise 实现修复操作，融入 diffusion 的方式值得借鉴。
 
 - [ ] "DiffIR: Efficient Diffusion Model for Image Restoration" ICCV, 2023 Mar
-  [paper](https://arxiv.org/abs/2303.09472) 
+  [paper](https://arxiv.org/abs/2303.09472) [code](https://github.com/Zj-BinXia/DiffIR)
 
-- [ ] "A Unified Conditional Framework for Diffusion-based Image Restoration" 
-  [paper](https://arxiv.org/abs/2305.20049) [code](https://github.com/zhangyi-3/UCDIR) [website](https://zhangyi-3.github.io/project/UCDIR/) 23.7.16
-  
-- [ ] "EdgeConnect: Generative Image Inpainting with Adversarial Edge Learning" Arxiv, 2019 Jan
-  [paper](https://arxiv.org/abs/1901.00212) [code](https://github.com/knazeri/edge-connect) [blog explanation](https://zhuanlan.zhihu.com/p/54107962)
+- [ ] "A Unified Conditional Framework for Diffusion-based Image Restoration" Arxiv, 2023 May :warning:
+  [paper](https://arxiv.org/abs/2305.20049) [code](https://github.com/zhangyi-3/UCDIR) [website](https://zhangyi-3.github.io/project/UCDIR/)
 
 
 
@@ -378,7 +390,7 @@
 - [ ] "DreamBooth: Fine Tuning Text-to-Image Diffusion Models for Subject-Driven Generation" CVPR, 2022 Aug :star:
   [paper](https://arxiv.org/abs/2208.12242) [code](https://github.com/zanilzanzan/DreamBooth)
 
-  > good fidelity in **details consistency** between generation and reference images! 生成结果保留了参考照片主体部分
+  > [DreamBooth](https://dreambooth.github.io/) is a method to personalize text-to-image models like Stable Diffusion given just a few images (3~5 images) of a subject. && 生成结果保留了参考照片的主体部分
   
 - [ ] "Prompt-to-Prompt Image Editing with Cross Attention Control" Arxiv, 2022 Aug :star:
   [paper](https://arxiv.org/abs/2208.01626) [code](https://github.com/google/prompt-to-prompt?utm_source=catalyzex.com) [blog_explanation](https://mp.weixin.qq.com/s/xLzGwjPL3KTmsj-o_7zuzQ)
@@ -560,9 +572,9 @@
 
 
 
-## **Segmentation**
+## **Segmentation & Attention**
 
-> [paper-list](https://github.com/liliu-avril/Awesome-Segment-Anything)
+> [paper-list: Awesome-Segment-Anything](https://github.com/liliu-avril/Awesome-Segment-Anything)
 
 - [ ] SAM
   [paper](https://arxiv.org/abs/2304.02643) [code](https://github.com/facebookresearch/segment-anything)
@@ -580,7 +592,7 @@
 
 
 
-**Transformer  & Attention:moyai:**
+**Transformer & Attention:moyai:**
 
 - [ ] On the Expressivity Role of LayerNorm in Transformer's Attention  
   https://github.com/tech-srl/layer_norm_expressivity_role 这个工作可以加深对 transformer 的一些理解 :star:
@@ -606,6 +618,9 @@
   理解核心的那一小段代码即可
 
 - [ ] [A ConvNet for the 2020s](https://arxiv.org/abs/2201.03545)
+
+- [ ] "Top-Down Visual Attention from Analysis by Synthesis" CVPR, 2023 Mar, **AbSViT**
+  [paper](https://arxiv.org/abs/2303.13043) [code](https://github.com/bfshi/AbSViT) [website](https://sites.google.com/view/absvit)
 
 
 
@@ -641,6 +656,8 @@
 
 - [ ] CCPL: Contrastive Coherence Preserving Loss for Versatile Style Transfer 
   https://github.com/JarrentWu1031/CCPL
+
+
 
 ## **HDR**
 
