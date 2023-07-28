@@ -165,6 +165,10 @@
   [paper](https://arxiv.org/abs/2303.11591) [code](https://github.com/zhaoyuzhi/SVCNet)
   
   > use [ImageNet](https://image-net.org/index.php), [DAVIS](https://davischallenge.org/), and [Videvo](https://github.com/phoenix104104/fast_blind_video_consistency) datasets as our training set. all the used data could be downloaded on paper's github repo.
+  
+- [ ] "AddCR: a data-driven cartoon remastering" Arxiv, 2023 Jul
+  [paper](https://link.springer.com/article/10.1007/s00371-023-02962-3) [code](https://github.com/Ssakura-go/AddCR/tree/master)
+  [note](./2023_06_TheVisualComputer_AddCR--a-data-driven-cartoon-remastering_Note.md)
 
 
 
@@ -199,7 +203,7 @@
   [paper](https://arxiv.org/abs/2303.09508) [code](https://github.com/danier97/LDMVFI)
   [note](./2023_05_Arxiv_LDMVFI--Video-Frame-Interpolation-with-Latent-Diffusion-Models_Note.md)
   
-  > video Interpolation
+  > video Interpolation, first diffusion used in
   
 - [ ] "Pix2Video: Video Editing using Image Diffusion" ICCV, 2023 Mar
   [paper](https://arxiv.org/abs/2303.12688) [code](https://github.com/G-U-N/Pix2Video.pytorch)
@@ -210,7 +214,9 @@
 
   > - Video editing with off-the-shelf image diffusion models.
   > - No training on any video.
-
+  >
+  > **cost lots of GPU memory**, video with 1s 8fps>>24G,10s 30fps 48G++
+  
 - [x] "Align your Latents: High-Resolution Video Synthesis with Latent Diffusion Models" CVPR, 2023 Apr, **VideoLDM** :star: :warning:
   [paper](https://arxiv.org/abs/2304.08818) [website](https://research.nvidia.com/labs/toronto-ai/VideoLDM/) [code: unofficial implementation](https://github.com/srpkdyy/VideoLDM.git)
   [note](./2023_04_CVPR_Align-your-Latents--High-Resolution-Video-Synthesis-with-Latent-Diffusion-Models_Note.md)
@@ -335,11 +341,16 @@
 - [ ] [Generative image inpainting with contextual attention](http://openaccess.thecvf.com/content_cvpr_2018/html/Yu_Generative_Image_Inpainting_CVPR_2018_paper.html) :star:
 
   类似 non-local attention  
+  
+  
 
 
 
 ### Image restoration
 
+- [ ] "Deep Exemplar-based Colorization" SIGGRAPH, 2018 Jul :statue_of_liberty:
+  [paper](https://arxiv.org/abs/1807.06587) [code](https://github.com/msracver/Deep-Exemplar-based-Colorization)
+  
 - [ ] "EdgeConnect: Generative Image Inpainting with Adversarial Edge Learning" Arxiv, 2019 Jan
   [paper](https://arxiv.org/abs/1901.00212) [code](https://github.com/knazeri/edge-connect) [blog explanation](https://zhuanlan.zhihu.com/p/54107962)
   
@@ -347,6 +358,12 @@
   [paper](https://arxiv.org/abs/2104.07636) [code](https://github.com/Janspiry/Image-Super-Resolution-via-Iterative-Refinement)
   
   > SR
+  
+- [ ] "Palette: Image-to-Image Diffusion Models" SIGGRAPH, 2021 Nov :warning:
+  [paper](https://arxiv.org/abs/2111.05826) [website](https://iterative-refinement.github.io/palette/) [code: unofficial implementation](https://github.com/Janspiry/Palette-Image-to-Image-Diffusion-Models)
+  [our note](./2022_SIGGRAPH_Palette-Image-to-Image-Diffusion-Models_Note.md)
+  
+  > 1st diffusion in image restoration
   
 - [ ] "Denoising Diffusion Restoration Models" ICLRW, 2022 Jan, **DDRM**
   [paper](https://arxiv.org/abs/2201.11793) [code](https://github.com/bahjat-kawar/ddrm) [website](https://ddrm-ml.github.io/)
@@ -357,12 +374,8 @@
 - [ ] "JPEG Artifact Correction using Denoising Diffusion Restoration Models" Arxiv, 2022 Sep, **DDRM-jpeg**
   [paper](https://arxiv.org/abs/2209.11888) [code](https://github.com/bahjat-kawar/ddrm-jpeg)
   
-- [ ] "Palette: Image-to-Image Diffusion Models" SIGGRAPH, 2022 Nov :warning:
-  [paper](https://arxiv.org/abs/2111.05826) [website](https://iterative-refinement.github.io/palette/) [code: unofficial implementation](https://github.com/Janspiry/Palette-Image-to-Image-Diffusion-Models)
-  [our note](./2022_SIGGRAPH_Palette-Image-to-Image-Diffusion-Models_Note.md)
-  
 - [x] "Zero-Shot Image Restoration Using Denoising Diffusion Null-Space Model" ICLR(Notable-Top-25%), 2022 Dec, **DDNM** :+1:
-  [paper](https://wyhuai.github.io/ddnm.io/) [website](https://wyhuai.github.io/ddnm.io/)
+  [paper](https://wyhuai.github.io/ddnm.io/) [website](https://wyhuai.github.io/ddnm.io/) [code](https://github.com/wyhuai/DDNM.git)
   [our note](./2022_ICLR_DDNM_Zero-Shot-Image-Restoration-Using-Denoising-Diffusion-Null-Space-Model_Note.md)
 
   > 将图像修复任务的数学模型，转换到 Range-Null space 分解，对于分解的其中一项替换为 Diffusion 的 noise 实现修复操作，融入 diffusion 的方式值得借鉴。
@@ -372,6 +385,27 @@
 
 - [ ] "A Unified Conditional Framework for Diffusion-based Image Restoration" Arxiv, 2023 May :warning:
   [paper](https://arxiv.org/abs/2305.20049) [code](https://github.com/zhangyi-3/UCDIR) [website](https://zhangyi-3.github.io/project/UCDIR/)
+  
+- [ ] "Image Restoration with Mean-Reverting Stochastic Differential Equations" ICML, 2023 Jan
+  [Ziwei Luo](https://algolzw.github.io/), [Fredrik K. Gustafsson](https://www.fregu856.com/), [Zheng Zhao](https://zz.zabemon.com/), [Jens Sjölund](https://jsjol.github.io/), [Thomas B. Schön](https://user.it.uu.se/~thosc112/index.html)
+  [paper](https://arxiv.org/abs/2301.11699) [code](https://github.com/Algolzw/image-restoration-sde) [website](https://algolzw.github.io/ir-sde/index.html?utm_source=catalyzex.com)
+
+  > 从高质量图像，加噪声到低质量图像，而不是到纯高斯噪声 》》加速
+
+- [ ] "Refusion: Enabling Large-Size Realistic Image Restoration With Latent-Space Diffusion Models"
+  [code](https://github.com/Algolzw/image-restoration-sde?utm_source=catalyzex.com)
+
+  > AdaIN 
+  >
+  > 比赛 trick
+  >
+  > - 去噪步数
+  > - patch >> 越大越好
+  >   - crop 大patch 再下采样 >> 让patch有全局性
+
+- [ ] [ResShift: Efficient Diffusion Model for Image Super-resolution by Residual Shifting](https://arxiv.org/abs/2307.12348)
+
+  > 
 
 
 
@@ -387,6 +421,11 @@
 
 ### Image Control Edit
 
+- [x] "Arbitrary Style Transfer in Real-time with Adaptive Instance Normalization" ICCV, 2017 Mar, **AdaIN** :statue_of_liberty:
+  [blog](**[pytorch-AdaIN](https://github.com/naoto0804/pytorch-AdaIN)**) [code:pytorch-AdaIN](https://github.com/naoto0804/pytorch-AdaIN)
+
+  > 风格迁移，Instance normalization 公式 $IN(x) = \gamma *(\frac{x-\mu(x)}{\sigma(x)}) + \beta$ 修改，用 style-image 的均值、方差替换 $\gamma,\beta$
+  
 - [ ] "DreamBooth: Fine Tuning Text-to-Image Diffusion Models for Subject-Driven Generation" CVPR, 2022 Aug :star:
   [paper](https://arxiv.org/abs/2208.12242) [code](https://github.com/zanilzanzan/DreamBooth)
 
@@ -445,6 +484,8 @@
 
 ### Image SR
 
+- [ ] "Image Super-Resolution Using Very Deep Residual Channel Attention Networks" ECCV, 2018 Jul, **RCAN** :statue_of_liberty:
+  [paper](https://arxiv.org/abs/1807.02758)
 - [ ] "SRDiff: Single image super-resolution with diffusion probabilistic models" Neurocomputing, 2021 Apr
   [paper](https://arxiv.org/abs/2104.14951) [code](https://github.com/LeiaLi/SRDiff)
 - [ ] "Implicit Diffusion Models for Continuous Super-Resolution" CVPR, 2023 Mar
@@ -457,6 +498,11 @@
 
 ## Video Restoration :droplet:
 
+- [ ] "waifu2x " a tool for Image Super-Resolution for Anime-style art using Deep CNN.
+  [code](https://github.com/nagadomi/waifu2x)
+
+---
+
 - [x] "ReBotNet: Fast Real-time Video Enhancement" AeXiv, 2023 Mar 
   [paper](https://arxiv.org/abs/2303.13504) [website](https://jeya-maria-jose.github.io/rebotnet-web/?utm_source=catalyzex.com)
   [note](./2023_03_Arxiv_ReBotNet--Fast-Real-time-Video-Enhancement_Note.md)
@@ -468,12 +514,14 @@
 - [ ] "Depth-Aware Video Frame Interpolation" CVPR, 2019 Apr, **DAIN**
   [paper](https://arxiv.org/abs/1904.00830) [code](https://github.com/baowenbo/DAIN)
 
-- [ ] "ESRGAN: Enhanced Super-Resolution Generative Adversarial Networks" ECCV, 2018 Sep, **ESRGAN(Enhanced SRGAN)**
+- [ ] "ESRGAN: Enhanced Super-Resolution Generative Adversarial Networks" ECCV, 2018 Sep, **ESRGAN(Enhanced SRGAN)** :star:
   [paper](https://arxiv.org/abs/1809.00219) [code](https://github.com/xinntao/ESRGAN)
 
 - [ ] "Real-ESRGAN: Training Real-World Blind Super-Resolution with Pure Synthetic Data" ICCV, 2021 Aug
   [paper](https://arxiv.org/abs/2107.10833) [code](https://github.com/xinntao/Real-ESRGAN)
 
+  > **General Image/Video Restoration(SR）**.
+  
 - [ ] BasicSR (**Basic** **S**uper **R**estoration) is an open-source **image and video restoration** toolbox
   [github repo](https://github.com/XPixelGroup/BasicSR)
 
@@ -481,10 +529,6 @@
   [paper](https://arxiv.org/abs/2305.08408)
 
   > mention `old film restoration`
-
-- [ ] "Towards Interpretable Video Super-Resolution via Alternating Optimization" ECCV, 2022 Jul
-
-  [paper](https://arxiv.org/abs/2207.10765)
 
 
 
@@ -502,6 +546,14 @@
   
 - [ ] "Pix2Video: Video Editing using Image Diffusion" 2023 Mar
   [paper](https://arxiv.org/abs/2303.12688) [code]()
+  
+- [ ] "TokenFlow: Consistent Diffusion Features for Consistent Video Editing" Arxiv, 2023 Jul :star:
+  [paper](https://arxiv.org/abs/2207.10765) [website](https://diffusion-tokenflow.github.io/?utm_source=catalyzex.com)
+
+  > generated video is temporal consistent, 效果很不错
+
+- [ ] "Style-A-Video: Agile Diffusion for Arbitrary Text-based Video Style Transfer" Arxiv, 2023 Jul
+  [code](https://github.com/haha-lisa/Style-A-Video?utm_source=catalyzex.com)
 
 
 
@@ -661,6 +713,9 @@
 
 ## **HDR**
 
+- [ ] "Toward Fast, Flexible, and Robust Low-Light Image Enhancement" CVPR(oral), 2022 Apr, **SCI**
+  [paper](https://arxiv.org/abs/2204.10137) [code](https://github.com/vis-opt-group/SCI)
+  
 - [ ] "Inverting the Imaging Process by Learning an Implicit Camera Model" CVPR, 2023, Apr
   [paper](https://arxiv.org/abs/2304.12748) [website](https://xhuangcv.github.io/neucam/)
   [our note](./2023_CVPR_Inverting-the-Imaging-Process-by-Learning-an-Implicit-Camera-Model_Note.md)
@@ -824,6 +879,8 @@
 
   **Experiment**
 
+  > ablation study 看那个模块有效，总结一下
+
   **Limitations**
 
   **Summary :star2:**
@@ -843,6 +900,8 @@
   > https://www.ecva.net/index.php 这是ECCV的官网，历年的文章附录都有
   >
   > 建议这些会议（CVPR，ICCV，ECCV，NeurIPS，ICLR，ICML，AAAI，IJCAI，ACMMM等）的文章以及一些重要期刊（T-PAMI，T-IP，TOG，TVCG，IJCV，T-MM，T-CSVT等）大家多阅读，相同或者相近任务的文章至少全部粗读一遍，然后选择性精读，需要学会使用Google学术和GitHub查询有用资料
+  
+- 复现方法时，检查正确性：先看数据输入是否正确（dataloader，learning-rate, batchsize不要是1），再去看框架
 
 1. 至少想 2 个创新点，做实验看为什么不 work，分析问题&看文献；
 
@@ -1159,9 +1218,41 @@
 
   
 
-## Loss
+## Loss & Trick
 
 - Contextual Loss >> See  [note](./2019_07_CVPR_Deep-Exemplar-based-Video-Colorization_Note.md) in "Deep Exemplar-based Video Colorization" CVPR, 2019 Jun
+
+- AdaIN(Adaptive Instance Normalization) 风格迁移
+  ![](https://pic1.zhimg.com/80/v2-1da96ccec0f65c1fa08d9b08e73fd144_1440w.webp)
+
+  ```python
+  def calc_mean_std(feat, eps=1e-5):
+      # eps is a small value added to the variance to avoid divide-by-zero.
+      size = feat.size()
+      assert (len(size) == 4)
+      N, C = size[:2]
+      feat_var = feat.view(N, C, -1).var(dim=2) + eps
+      feat_std = feat_var.sqrt().view(N, C, 1, 1)
+      feat_mean = feat.view(N, C, -1).mean(dim=2).view(N, C, 1, 1)
+      return feat_mean, feat_std
+  
+  def adaptive_instance_normalization(content_feat, style_feat):
+      """
+      content_feat, style_feat are pretrained VGG's output
+      """
+      assert (content_feat.size()[:2] == style_feat.size()[:2])
+      size = content_feat.size()
+      style_mean, style_std = calc_mean_std(style_feat)
+      content_mean, content_std = calc_mean_std(content_feat)
+  
+      normalized_feat = (content_feat - content_mean.expand(
+          size)) / content_std.expand(size)
+      return normalized_feat * style_std.expand(size) + style_mean.expand(size)
+  ```
+
+  
+
+
 
 
 
