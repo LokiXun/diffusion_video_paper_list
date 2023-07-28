@@ -2,7 +2,6 @@
 
 > "ReBotNet: Fast Real-time Video Enhancement" AeXiv, 2023 Mar 
 > [paper](https://arxiv.org/abs/2303.13504) [website](https://jeya-maria-jose.github.io/rebotnet-web/?utm_source=catalyzex.com)
-> [note](./2023_03_Arxiv_ReBotNet--Fast-Real-time-Video-Enhancement_Note.md)
 > [paper local pdf](./2023_03_Arxiv_ReBotNet--Fast-Real-time-Video-Enhancement.pdf)
 
 ## **Key-point**
@@ -77,17 +76,22 @@ ReBotNet 方法，输入当前帧&上一帧的预测，处理部分分为 3 个�
 
 两个 Token 输出均为 NxC 大小（若不一致用 max-pool ）
 
-- Branch 1 - Tubelet tokens
+**Branch 1 - Tubelet tokens**
 
-  **提取 spatial-temporal 特征（含有 spatial 信息 & temporal 信息）**：输入当前帧 & 上一帧的预测结果，按通道 concat 输入到 ConvNext 模块
+**提取 spatial-temporal 特征（含有 spatial 信息 & temporal 信息）**：输入当前帧 & 上一帧的预测结果，按通道 concat 输入到 ConvNext 模块
 
-  > 用 ConvNext & MLP-mixer
+> 用 ConvNext & MLP-mixer
+>
+> - Depth-wise Conv
+>   [参考](https://keras.io/api/layers/convolution_layers/depthwise_convolution2d/#:~:text=Depthwise%202D%20convolution.%20Depthwise%20convolution%20is%20a%20type,following%20steps%3A%20Split%20the%20input%20into%20individual%20channels.)
 
-- Branch 2 - Image tokens
 
-  **增强 temporal consistency 特征**：对上一帧的输出（认为融合了之前的信息实现时间一致性）和 当前帧，分别对单帧提取空间特征，用于后续确保一致性（类似 ViT 打成 patch，过 Linear 提取特征）
 
-  > :question: 上一阵的 Vit 特征，和当前帧的特征咋合起来？图中似乎是 concat？
+**Branch 2 - Image tokens**
+
+**增强 temporal consistency 特征**：对上一帧的输出（认为融合了之前的信息实现时间一致性）和 当前帧，分别对单帧提取空间特征，用于**进一步确保一致性**（类似 ViT 打成 patch，过 Linear 提取特征）
+
+> :question: 上一阵的 Vit 特征，和当前帧的特征咋合起来？图中似乎是 concat？
 
 
 
@@ -113,10 +117,13 @@ ReBotNet 方法，输入当前帧&上一帧的预测，处理部分分为 3 个�
 
 - The training is parallelized across **8 NVIDIA A100 GPUs**, with each GPU processing a single video. The model is trained for 500,000 iterations
 
+  train all these methods on the new datasets PortraitVideo and FullVideo
+
 - Loss function: 为了公平比较都用 `Charbonnier Loss` 
 
   > "A General and Adaptive Robust Loss Function" CVPR 2019 :question:
   > [code](https://github.com/jonbarron/robust_loss_pytorch?utm_source=catalyzex.com)
+  > [blog](https://blog.csdn.net/qq_43665602/article/details/127041832) 修改了 L1 loss 不可导，加了个常数
 
 
 
