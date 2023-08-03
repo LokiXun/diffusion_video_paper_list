@@ -234,6 +234,13 @@
 
 - [ ] "Make-Your-Video: Customized Video Generation Using Textual and Structural Guidance" Arxiv, 2023 Jun :statue_of_liberty:
   [paper](https://arxiv.org/abs/2306.00943) [website](https://doubiiu.github.io/projects/Make-Your-Video/?utm_source=catalyzex.com)
+  
+- [ ] "Representing Volumetric Videos as Dynamic MLP Maps" CVPR, 2023 Apr
+  Sida Peng∗ Yunzhi Yan∗ Qing Shuai Hujun Bao Xiaowei Zhou†
+  [paper](https://arxiv.org/abs/2304.06717) [code](https://github.com/zju3dv/mlp_maps) [website](https://zju3dv.github.io/mlp_maps/) [author blog explanation](https://zhuanlan.zhihu.com/p/622214784)
+  [note](./2023_04_CVPR_Representing-Volumetric-Videos-as-Dynamic-MLP-Maps_Note.md)
+  
+  > Neural Volumes，用一组小型MLP网络表示体积视频
 
 
 
@@ -245,6 +252,8 @@
 > [Awesome-Diffusion-Models](https://github.com/diff-usion/Awesome-Diffusion-Models) contains introductory lectures for canonical papers! :man_teacher:
 > [awesome-diffusion-low-level-vision](https://github.com/yulunzhang/awesome-diffusion-low-level-vision)
 > [image-to-image-papers](https://github.com/lzhbrian/image-to-image-papers)
+
+### milestone
 
 - [ ] "A Style-Based Generator Architecture for Generative Adversarial Networks" CVPR, 2019 Dec, **StyleGAN**
   [paper](https://arxiv.org/abs/1812.04948) [code](https://nvlabs.github.io/stylegan2/versions.html)
@@ -291,10 +300,10 @@
 
   > Null-text Inversion
 
-- [ ] IDDPM
-
-- [ ] "Score-Based Generative Modeling through Stochastic Differential Equations" Arxiv, 2020 Nov, Score-based
+- [ ] "Score-Based Generative Modeling through Stochastic Differential Equations" Arxiv, 2020 Nov, **Score-based** :statue_of_liberty:
   [paper](https://arxiv.org/abs/2011.13456)
+
+- [ ] IDDPM
 
 - [ ] [VAE 博客](https://zhuanlan.zhihu.com/p/34998569) 提供了一个将概率图跟深度学习结合起来的一个非常棒的案例
   [code](https://github.com/bojone/vae)
@@ -304,45 +313,6 @@
 - [ ] [2021_CVPR_StyleCLIP-Text-Driven-Manipulation-of-StyleGAN-Imagery.pdf](./2021_CVPR_StyleCLIP-Text-Driven-Manipulation-of-StyleGAN-Imagery.pdf)
 
 - [ ] [2020_CVPR_InterFaceGAN_Interpreting-the-Latent-Space-of-GANs-for-Semantic-Face-Editing.pdf](./2020_CVPR_InterFaceGAN_Interpreting-the-Latent-Space-of-GANs-for-Semantic-Face-Editing.pdf)
-
-- [ ] Self-Supervised Learning with Random-Projection Quantizer for Speech Recognition
-
-  > 参考 random-projection 操作
-
-- [ ] Locally Hierarchical Auto-Regressive Modeling for Image Generation :+1:
-
-  https://github.com/kakaobrain/hqtransformer
-
-- [ ] Scalable Diffusion Models with Transformers
-
-- [ ] All are Worth Words: A ViT Backbone for Diffusion Models
-
-- [ ] Implicit Diffusion Models for Continuous Super-Resolution
-
-- [ ] LayoutDM: Transformer-based Diffusion Model for Layout Generation
-
-- [ ] Vector Quantized Diffusion Model for Text-to-Image Synthesis
-
-- [ ] Image Super-Resolution via Iterative Refinement
-
-- [ ] Real-World Denoising via Diffusion Model
-
-- [ ] Diffusion in the Dark A Diffusion Model for Low-Light Text Recognition
-
-- [ ] Privacy Leakage of SIFT Features via Deep Generative Model based Image Reconstruction
-
-- [ ] "DreamDiffusion: Generating High-Quality Images from Brain EEG Signals" Arxiv, 2023 Jun, DreamDiffusion
-  [paper](https://arxiv.org/abs/2306.16934) [code](https://github.com/bbaaii/DreamDiffusion) [blog](https://mp.weixin.qq.com/s/RDXINIvJvU_6FMoiX42bKg)
-
-- [ ] SWAGAN: A Style-based Wavelet-driven Generative Model  23.7.14
-
-- [ ] Shifted Diffusion for Text-to-image generation 23.7.15
-
-- [ ] [Generative image inpainting with contextual attention](http://openaccess.thecvf.com/content_cvpr_2018/html/Yu_Generative_Image_Inpainting_CVPR_2018_paper.html) :star:
-
-  类似 non-local attention  
-  
-  
 
 
 
@@ -386,26 +356,23 @@
 - [ ] "A Unified Conditional Framework for Diffusion-based Image Restoration" Arxiv, 2023 May :warning:
   [paper](https://arxiv.org/abs/2305.20049) [code](https://github.com/zhangyi-3/UCDIR) [website](https://zhangyi-3.github.io/project/UCDIR/)
   
-- [ ] "Image Restoration with Mean-Reverting Stochastic Differential Equations" ICML, 2023 Jan
+- [ ] "Image Restoration with Mean-Reverting Stochastic Differential Equations" ICML, 2023 Jan :star:
   [Ziwei Luo](https://algolzw.github.io/), [Fredrik K. Gustafsson](https://www.fregu856.com/), [Zheng Zhao](https://zz.zabemon.com/), [Jens Sjölund](https://jsjol.github.io/), [Thomas B. Schön](https://user.it.uu.se/~thosc112/index.html)
   [paper](https://arxiv.org/abs/2301.11699) [code](https://github.com/Algolzw/image-restoration-sde) [website](https://algolzw.github.io/ir-sde/index.html?utm_source=catalyzex.com)
-
+  [note](。/2023_01_ICML_Image-Restoration-with-Mean-Reverting-Stochastic-Differential-Equations.pdf)
+  
   > 从高质量图像，加噪声到低质量图像，而不是到纯高斯噪声 》》加速
-
+  
 - [ ] "Refusion: Enabling Large-Size Realistic Image Restoration With Latent-Space Diffusion Models"
   [code](https://github.com/Algolzw/image-restoration-sde?utm_source=catalyzex.com)
 
-  > AdaIN 
-  >
   > 比赛 trick
   >
   > - 去噪步数
-  > - patch >> 越大越好
+  >- patch >> 越大越好
   >   - crop 大patch 再下采样 >> 让patch有全局性
-
+  
 - [ ] [ResShift: Efficient Diffusion Model for Image Super-resolution by Residual Shifting](https://arxiv.org/abs/2307.12348)
-
-  > 
 
 
 
@@ -488,11 +455,96 @@
   [paper](https://arxiv.org/abs/1807.02758)
 - [ ] "SRDiff: Single image super-resolution with diffusion probabilistic models" Neurocomputing, 2021 Apr
   [paper](https://arxiv.org/abs/2104.14951) [code](https://github.com/LeiaLi/SRDiff)
-- [ ] "Implicit Diffusion Models for Continuous Super-Resolution" CVPR, 2023 Mar
-  [paper](https://arxiv.org/abs/2303.16491) [code](https://github.com/Ree1s/IDM?utm_source=catalyzex.com)
 - [ ] "Exploiting Diffusion Prior for Real-World Image Super-Resolution" Arxiv, 2023 Mar, **Stable-SR**
   [paper](https://arxiv.org/abs/2305.07015) [code](https://github.com/IceClear/StableSR) [website](https://iceclear.github.io/projects/stablesr/?utm_source=catalyzex.com) :star:
   [paper local pdf](./2023_preprint_Exploiting-Diffusion-Prior-for-Real-World-Image-Super-Resolution.pdf)
+
+
+
+### Clandestine :mailbox:
+
+> put below the works that not classified yet 
+
+- [ ] Self-Supervised Learning with Random-Projection Quantizer for Speech Recognition
+
+  > 参考 random-projection 操作
+
+- [ ] Locally Hierarchical Auto-Regressive Modeling for Image Generation :+1:
+
+  https://github.com/kakaobrain/hqtransformer
+
+- [ ] Scalable Diffusion Models with Transformers
+
+- [ ] All are Worth Words: A ViT Backbone for Diffusion Models
+
+- [ ] LayoutDM: Transformer-based Diffusion Model for Layout Generation
+
+- [ ] Vector Quantized Diffusion Model for Text-to-Image Synthesis
+
+- [ ] Image Super-Resolution via Iterative Refinement
+
+- [ ] Real-World Denoising via Diffusion Model
+
+- [ ] Diffusion in the Dark A Diffusion Model for Low-Light Text Recognition
+
+- [ ] Privacy Leakage of SIFT Features via Deep Generative Model based Image Reconstruction
+
+- [ ] "DreamDiffusion: Generating High-Quality Images from Brain EEG Signals" Arxiv, 2023 Jun, DreamDiffusion
+  [paper](https://arxiv.org/abs/2306.16934) [code](https://github.com/bbaaii/DreamDiffusion) [blog](https://mp.weixin.qq.com/s/RDXINIvJvU_6FMoiX42bKg)
+
+- [ ] SWAGAN: A Style-based Wavelet-driven Generative Model  23.7.14
+
+- [ ] Shifted Diffusion for Text-to-image generation 23.7.15
+
+- [ ] [Generative image inpainting with contextual attention](http://openaccess.thecvf.com/content_cvpr_2018/html/Yu_Generative_Image_Inpainting_CVPR_2018_paper.html) :star:
+
+  类似 non-local attention  
+
+- [ ] "Towards Explainable In-the-Wild Video Quality Assessment: a Database and a Language-Prompted Approach"
+  [code](https://github.com/VQAssessment/MaxVQA) 7.29
+
+  > AIGC IQA
+
+- [ ] "Intelligent Grimm - Open-ended Visual Storytelling via Latent Diffusion Models" 7.29
+  [code](https://github.com/haoningwu3639/StoryGen) [website](https://haoningwu3639.github.io/StoryGen_Webpage/)
+
+  > Our results have superior style and content consistency, text-image alignment, and image quality
+  
+- [ ] "Learning with noisy correspondence for cross-modal matching" NeurIPS, 2021
+  [paper](https://proceedings.nips.cc/paper/2021/hash/f5e62af885293cf4d511ceef31e61c80-Abstract.html) [code](https://github.com/XLearning-SCU/2021-NeurIPS-NCR)
+
+  > 类似偏多标签
+
+- [ ] "A Unified HDR Imaging Method with Pixel and Patch Level"
+
+  ---
+
+- [ ] "[Perception prioritized training of diffusion models](http://openaccess.thecvf.com/content/CVPR2022/html/Choi_Perception_Prioritized_Training_of_Diffusion_Models_CVPR_2022_paper.html)" 8.2
+
+  > Diffusion 去噪过程，对 loss 加权实现 初步加噪和纯高斯噪声附近的权值小(避免训练难以察觉的细节)，学习中间 content
+  >
+  > - InvBlock 替换 U-net >> 实现完全复原
+  > - 隐式网络
+  > - 8.2
+
+- [ ] "End-to-End Diffusion Latent Optimization Improves Classifier Guidance" 8.2
+
+- [ ] "GSURE-Based Diffusion Model Training with Corrupted Data" 8.2
+  [paper](https://arxiv.org/abs/2305.13128) [code](https://github.com/bahjat-kawar/gsure-diffusion?utm_source=catalyzex.com)
+
+- [ ] "Zero-Shot Noise2Noise: Efficient Image Denoising without any Data" 8.2
+
+- [ ] "Invertible Image Rescaling" ECCV, 2020 May 8.2
+  [paper](https://arxiv.org/abs/2005.05650)
+  "Invertible Rescaling Network and Its Extensions" IJCV 2022 Oct
+  [paper](https://arxiv.org/abs/2210.04188) [code](https://github.com/pkuxmq/Invertible-Image-Rescaling?utm_source=catalyzex.com)
+
+  > 可逆网络代替 U-net，实现无损恢复
+  
+- [ ] MediaPipe Diffusion插件 7.25
+  [blog](https://mp.weixin.qq.com/s/jmIpdkPjj6o7UjNibk2jqg)
+
+  > 推理效率比ControlNet高20+倍！谷歌发布MediaPipe Diffusion插件
 
 
 
@@ -500,8 +552,6 @@
 
 - [ ] "waifu2x " a tool for Image Super-Resolution for Anime-style art using Deep CNN.
   [code](https://github.com/nagadomi/waifu2x)
-
----
 
 - [x] "ReBotNet: Fast Real-time Video Enhancement" AeXiv, 2023 Mar 
   [paper](https://arxiv.org/abs/2303.13504) [website](https://jeya-maria-jose.github.io/rebotnet-web/?utm_source=catalyzex.com)
@@ -615,7 +665,7 @@
 
 
 
-## Super-resolution
+## Video SR
 
 - [ ] "Video Super-Resolution Transformer" 2021 Jun
   [paper](https://arxiv.org/abs/2106.06847) [code](https://github.com/caojiezhang/VSR-Transformer)
@@ -641,6 +691,25 @@
 - [ ] Video SAM
 
   https://mp.weixin.qq.com/s/hyf_DnEdbUTh8VpeP0Mq-w
+  
+- [ ] "Swin Transformer: Hierarchical Vision Transformer using Shifted Windows" ICCV, 2021 Mar
+  [paper](https://arxiv.org/abs/2103.14030) [code](https://github.com/microsoft/Swin-Transformer?utm_source=catalyzex.com)
+
+- [ ] "Shunted Self-Attention via Multi-Scale Token Aggregation" CVPR, 2021 Nov :star:
+  [paper](https://arxiv.org/abs/2111.15193) [code](https://github.com/OliverRensu/Shunted-Transformer?utm_source=catalyzex.com) 8.2
+
+  > backbone
+
+- [ ] "DLGSANet: Lightweight Dynamic Local and Global Self-Attention Networks for Image Super-Resolution" Arxiv, 2023 Jan
+  [paper](https://arxiv.org/abs/2301.02031) 8.2
+
+- [ ] "Deep Discriminative Spatial and Temporal Network for Efficient Video Deblurring" CVPR, 2023
+  [paper](https://openaccess.thecvf.com/content/CVPR2023/html/Pan_Deep_Discriminative_Spatial_and_Temporal_Network_for_Efficient_Video_Deblurring_CVPR_2023_paper.html) [code](https://github.com/xuboming8/DSTNet) 8.2
+
+- [ ] "Learning A Sparse Transformer Network for Effective Image Deraining" CVPR, 2023 Mar
+  [paper](https://arxiv.org/abs/2303.11950) [code](https://github.com/cschenxiang/DRSformer) 8.2
+  
+  
 
 
 
@@ -676,9 +745,15 @@
 
 
 
-**MAE**
+### SSL
 
-- [ ] **MAE**
+> Self-Supervised Learning
+
+- [ ] "EMP-SSL: Towards Self-Supervised Learning in One Training Epoch" Arxiv, 2023 Apr, **EMP-SSL** :star:
+  [paper](https://arxiv.org/abs/2304.03977) [code](https://github.com/tsb0601/EMP-SSL) [blog_explanation](https://mp.weixin.qq.com/s/OJphdhUrihKSVj14b6gLmA)
+  [note](./2023_04_Arxiv_EMP-SSL--Towards-Self-Supervised-Learning-in-One-Training-Epoch_Note.md)
+
+  > 突破自监督学习效率极限！马毅、LeCun联合发布EMP-SSL：30个epoch实现SOTA
 
 - [ ] Siamese Masked Autoencoders 
 
@@ -756,12 +831,70 @@
   https://github.com/princeton-computational-imaging/Neural-Volume-Super-Resolution  NeRF+SR
 - [x] LERF: Language Embedded Radiance Fields 
   https://github.com/kerrj/lerf  NeRF + 3D CLIP
-- [ ] Implicit Neural Representations for Image Compression
-  https://github.com/YannickStruempler/inr_based_compression 
 - [ ] iNeRF: Inverting Neural Radiance Fields for Pose Estimation 
 - [ ] ViP-NeRF: Visibility Prior for Sparse Input Neural Radiance Fields 
 - [ ] AdaNeRF: Adaptive Sampling for Real-time Rendering of Neural Radiance Fields
 - [ ] 2022_CVPR_Aug-NeRF--Training-Stronger-Neural-Radiance-Fields-with-Triple-Level-Physically-Grounded-Augmentations >> 输入增加扰动
+
+
+
+## Implicit Neural Network
+
+> [Implicit Neural Representation blog explanation](https://zhuanlan.zhihu.com/p/372338398)
+
+- [ ] "Implicit Neural Representations with Periodic Activation Functions" NeurIPS, 2020 Jun
+  [paper](https://arxiv.org/abs/2006.09661) [code](https://github.com/vsitzmann/siren?utm_source=catalyzex.com)
+
+- [ ] "Learning Continuous Image Representation with Local Implicit Image Function" CVPR oral, 2020 Dec, **LIIF**
+  [paper](https://arxiv.org/abs/2012.09161) [code](https://github.com/yinboc/liif)
+
+- [ ] "UltraSR: Spatial Encoding is a Missing Key for Implicit Image Function-based Arbitrary-Scale Super-Resolution" Arxiv, 2021 Mar
+  [paper](https://arxiv.org/abs/2103.12716) [code](https://github.com/SHI-Labs/UltraSR-Arbitrary-Scale-Super-Resolution?utm_source=catalyzex.com)
+
+- [ ] "An Arbitrary Scale Super-Resolution Approach for 3D MR Images via Implicit Neural Representation" `Biomedical and Health Informatics`, 2021 Oct, **ArSSR**
+  [paper](https://arxiv.org/abs/2110.14476) [code](https://github.com/iwuqing/ArSSR?utm_source=catalyzex.com)
+
+- [ ] "Implicit Neural Representations for Image Compression" ECCV, 2021 Dec
+  [code](https://github.com/YannickStruempler/inr_based_compression)
+
+- [ ] "MINER: Multiscale Implicit Neural Representations" ECCV, 2022 Feb, **MINER**
+  [paper](https://arxiv.org/abs/2202.03532) [code](https://github.com/vishwa91/miner)
+
+- [ ] "Signal Processing for Implicit Neural Representations" NeurIPS, 2022 Oct
+  [paper](https://arxiv.org/abs/2210.08772) [code](https://github.com/VITA-Group/INSP) [website](https://vita-group.github.io/INSP/?utm_source=catalyzex.com)
+
+- [ ] "TITAN: Bringing the deep image prior to implicit representations" Arxiv, 2022 Nov
+  [paper](https://arxiv.org/abs/2211.00219) [code](https://github.com/dlej/titan-implicit-prior)
+
+- [ ] "CiaoSR: Continuous Implicit Attention-in-Attention Network for Arbitrary-Scale Image Super-Resolution" CVPR, 2022 Dec
+  [paper](https://arxiv.org/abs/2212.04362) [code](https://github.com/caojiezhang/CiaoSR?utm_source=catalyzex.com)
+
+- [ ] "WIRE: Wavelet Implicit Neural Representations" CVPR, 2023 Jan, **WIRE**
+  [paper](https://arxiv.org/abs/2301.05187) [code](https://github.com/vishwa91/wire)
+
+- [ ] "Local Implicit Normalizing Flow for Arbitrary-Scale Image Super-Resolution" CVPR, 2023 Mar
+  [paper](https://arxiv.org/abs/2303.05156)
+
+- [ ] "Cascaded Local Implicit Transformer for Arbitrary-Scale Super-Resolution" CVPR, 2023 Mar
+  [paper](https://arxiv.org/abs/2303.16513) [code](https://github.com/jaroslaw1007/CLIT?utm_source=catalyzex.com)
+
+- [ ] "Implicit Diffusion Models for Continuous Super-Resolution" CVPR, 2023 Mar
+  [paper](https://arxiv.org/abs/2303.16491) [code](https://github.com/Ree1s/IDM?utm_source=catalyzex.com)
+
+- [ ] "Super-Resolution Neural Operator" CVPR, 2023 Mar
+  [paper](https://arxiv.org/abs/2303.02584) [code](https://github.com/2y7c3/Super-Resolution-Neural-Operator?utm_source=catalyzex.com)
+
+- [ ] "Implicit Neural Representation for Cooperative Low-light Image Enhancement" ICCV, 2023 Mar
+  [paper](https://arxiv.org/abs/2303.11722) [code](https://github.com/Ysz2022/NeRCo?utm_source=catalyzex.com)
+
+- [x] "Inverting the Imaging Process by Learning an Implicit Camera Model" CVPR, 2023, Apr, **NeuCam**
+  [paper](https://arxiv.org/abs/2304.12748) [code](https://github.com/xhuangcv/neucam) [website](https://xhuangcv.github.io/neucam/) :warning:
+  [our note](./2023_CVPR_Inverting-the-Imaging-Process-by-Learning-an-Implicit-Camera-Model_Note.md)
+
+  > simulate camera model
+
+- [ ] "Revisiting Implicit Neural Representations in Low-Level Vision" Arxiv, 2023 Apr, LINR
+  [paper](https://arxiv.org/abs/2304.10250) [code](https://github.com/WenTXuL/LINR) [website](https://wentxul.github.io/LINR-projectpage/)
 
 
 
@@ -808,6 +941,8 @@
   > - high-level content representation using MoCoV2
   >
   >   2 crops from same image -> similar scores, but not the case for some human viewers.
+  
+- [ ] "Half of an image is enough for quality assessment"
 
 
 
@@ -819,9 +954,15 @@
 
 > Latex Reference 直接在 Google research 上获取引用格式
 
+- Title
+
 - Abstract
 
   按句子：1 背景；2-3 存在问题；4-5-6 提出的方法，创新点；7实验证明有效
+
+  会议版本 paper 长度限制，背景可以不写。teaser 第一页右上角给出能展示 idea 的图
+
+  
 
 - introduction
 
@@ -832,6 +973,8 @@
   P2 **按时间线**早期到近期写。但是还存在啥问题。
 
   P3 提出的方法
+
+  contribution 要总结
 
 - related work 可以开 3 个小章节
 
@@ -858,8 +1001,32 @@
   > - 公式
   >
   >   变量斜体，操作/运算符用正体 （Relu）
+  >   
+  > - 表格
+  >
+  >   用三线表（表头，为用两条线）；SOTA 性能用颜色+区分
+  >
+  > - 图
+  >
+  >   测试集上平均结果更好，要选一看就能凸显优势的图
+  
+- Experiments
 
+  - setting
 
+    数据集、指标、training_details （例如 loss 权值，优化器，learning rate）
+
+    comparing baseline
+
+  - 性能比较
+
+    指标的客观比较，qualitative comparision
+
+  - ablation study :star:
+
+    **证明提出的不同模块是有效的，**可以排列组合（太多）。可以直接把要验证的模块去掉 or 换成普通的 cov. 
+
+- Conclusion
 
 
 
@@ -933,15 +1100,15 @@
 
 # Current Progress :dart:
 
-
-
-
+> [my_own_work_journey](./my_own_work_journey)
 
 ## Dataset
 
 > - [youtube-dl](https://ytdl-org.github.io/youtube-dl/index.html)
 >
 >   *youtube-dl* is a command-line program to download videos from YouTube.com
+>   
+> - [10downloader tools to Download Youtube Video](https://10downloader.com/en/74)
 
 - FFHQ(Flickr-Faces-Hight-Quality) 
 
@@ -1052,9 +1219,7 @@
 ### Old Films Dataset
 
 > old movie, old cartoon 都可以！
->
-> [10downloader tools to Download Youtube Video](https://10downloader.com/en/74)
-> [How Old Movies Are Professionally Restored | Movies Insider](https://www.youtube.com/watch?v=6NzfJJny3Yg)
+>[How Old Movies Are Professionally Restored | Movies Insider](https://www.youtube.com/watch?v=6NzfJJny3Yg)
 > [中国电影修复馆](https://www.cfa.org.cn/cfa/gz/xf/index.html)
 > [Baidu 智感超清服务](https://zhuanlan.zhihu.com/p/302719798)
 
@@ -1071,7 +1236,7 @@
 
 - Youtube Old cartoon
 
-  [A Day at the Zoo (1939)](https://www.youtube.com/watch?v=RtblQQvT2Nk&list=PL-F4vmhdMdiXIXZEDNQ3UFLXmQqjHguBA)
+  [A Day at the Zoo (1939) [goland-2022.2.1.exe](E:\Download\goland-2022.2.1.exe) ](https://www.youtube.com/watch?v=RtblQQvT2Nk&list=PL-F4vmhdMdiXIXZEDNQ3UFLXmQqjHguBA)
 
 - [Youtube GHWTVideos](https://www.youtube.com/@GHWTVideos/videos)
 
@@ -1390,9 +1555,10 @@ $$
 
  when $\eta ==0$ 
 
+## Score-based
 
-
-
+> [参考](https://zhuanlan.zhihu.com/p/551139290)
+> [Stochastic Differential Equations and Diffusion Models](https://www.vanillabug.com/posts/sde/)
 
 # package
 
