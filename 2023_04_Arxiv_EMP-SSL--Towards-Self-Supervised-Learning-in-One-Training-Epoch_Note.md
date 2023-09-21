@@ -6,13 +6,17 @@
 
 ## **Key-point**
 
-主要解决自监督学习训练效率低的问题，发现 Joint-embedding 方法提高效率的关键是增加 patches 的数量（1 epoch 训到很好的效果）
+主要解决**自监督学习**训练效率低的问题。设计了一个 loss 使得相似的图，得到的  latent representation 更加接近，并且这样**学习到的 latent representation 有意义 & 训练加速& 很好的迁移性 && 有区分度** >> 思考怎么用于 diffusion 加速 ！:star:
 
-这样学习到的 latent representation 有意义 && 很好的迁移性 && 有区分度 >> 思考怎么用于 diffusion 加速 ！:star:
+发现 Joint-embedding 方法提高效率的关键是增加 patches 的数量（1 epoch 训到很好的效果），1 个 epoch 就在 CIFAR10 上收敛到 85%
 
 
 
 **Contributions**
+
+- 实验发现一种自监督学习方式，**学到的 latent code 更有意义，加速收敛**
+
+
 
 ## **Related Work**
 
@@ -25,6 +29,12 @@
   [paper](https://arxiv.org/abs/2103.09742)
 
 - SSL(Self-Supervised Learning)
+
+- LARS 优化器
+
+  > [blog](https://www.jianshu.com/p/e430620d3acf) :+1:
+
+  用于大 batchsize 时进行优化，对模型每个 layer 单独设置 learning rate，避免 batchsize 增大 learning rate 设置导致的不稳定问题。
 
 
 
@@ -40,7 +50,11 @@
 
 一种协方差正则化方法
 
-Total Coding Rate (TCR) [36, 35, 53, 15], which is a covariance regularization technique, to **avoid collapsed representation**
+- Total Coding Rate (TCR) [36, 35, 53, 15], which is a covariance regularization technique, to **avoid collapsed representation**
+  $$
+  R(Z) = \frac{1}{2} \log{\det{(I + \frac{feature\_dim}{batch\_num * \epsilon^2}Z*Z^T)}}
+  $$
+  
 
 **covariance regularization is achieved by maximizing the Total Coding Rate (TCR).**
 
@@ -51,10 +65,10 @@ Loss = \max{\frac{1}{n}\sum_{i=1}^{n}{(R(Z_i) ~+~\lambda\cdot D(Z_i, \bar{Z}))}}
 \bar{Z} = \frac{1}{n}\sum_{i=1}^{n}{Z_i}\\
 \text{where $n$ is augmented results number, $\bar{Z}$ is the mean of representations of different augmented
 patches ,}\\
-\text{In the TCR loss, λ is set to 200.0 and $\epsilon^2$is set to 0.2 (Exp setting)} 
+\text{In the TCR loss, λ is set to 200.0 and $\epsilon^2$is set to 0.2 (Exp setting)}
 $$
 
-
+- $D(Z_i, \bar{Z_i})$ 为余弦相似度函数
 
 
 
@@ -103,9 +117,68 @@ Several Fining:
 
   
 
+$*v = \frac{v}{\max(\lVert v \rVert_p, \epsilon)}.*$
+
+## Code
+
+- res18
+
+```python
+from torchvision.models import resnet18, resnet34, resnet50
+
+def getmodel(arch):
+    """get resnet 18 model"""
+    #backbone = resnet18()
+    
+    if arch == "resnet18-cifar":
+        backbone = resnet18()
+        backbone.conv1 = nn.Conv2d(3, 64, kernel_size=3, stride=1, padding=1, bias=False) 
+        backbone.maxpool = nn.Identity()
+        backbone.fc = nn.Identity()
+        return backbone, 512  
+    elif arch == "resnet18-imagenet":
+        backbone = resnet18()    
+        backbone.fc = nn.Identity()
+        return backbone, 512
+    elif arch == "resnet18-tinyimagenet":
+        backbone = resnet18()    
+        backbone.avgpool = nn.AdaptiveAvgPool2d(1)
+        backbone.fc = nn.Identity()
+        return backbone, 512
+    else:
+        raise NameError("{} not found in network architecture".format(arch))
+```
+
+- Total Coding Rate
+  $$
+  R(Z) = \frac{1}{2} \log{\det{(I + \frac{feature\_dim}{batch\_num * \epsilon^2}Z*Z^T)}}
+  $$
+  
+
+  - `torch.logdet` [doc](https://pytorch.org/docs/stable/generated/torch.logdet.html?highlight=logdet#torch.logdet)
+    Calculates log determinant of a square matrix or batches of square matrice
+
+  ```python
+  class TotalCodingRate(nn.Module):
+      def __init__(self, eps=0.01):
+          super(TotalCodingRate, self).__init__()
+          self.eps = eps
+          
+      def compute_discrimn_loss(self, W):
+          """Discriminative Loss."""
+          p, m = W.shape  #[d, B]
+          I = torch.eye(p,device=W.device)
+          scalar = p / (m * self.eps)
+          logdet = torch.logdet(I + scalar * W.matmul(W.T))
+          return logdet / 2.
+      
+      def forward(self,X):
+          return - self.compute_discrimn_loss(X.T)
+  ```
+
+  
 
 
-## **Limitations**
 
 ## **Summary :star2:**
 

@@ -2,7 +2,7 @@
 
 > "Deep Exemplar-based Video Colorization" CVPR, 2019 Jun
 > [paper](https://arxiv.org/abs/1906.09909) [code](https://github.com/zhangmozhe/Deep-Exemplar-based-Video-Colorization)
-> [local pdf](./2019_07_CVPR_Deep-Exemplar-based-Video-Colorization.pdf)
+> [paper local pdf](./2019_07_CVPR_Deep-Exemplar-based-Video-Colorization.pdf)
 
 **Key-point**
 

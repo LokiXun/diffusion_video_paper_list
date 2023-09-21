@@ -149,7 +149,13 @@
 
 > 4 x 2080Ti >> 44G 显存
 
-**Detailed Exp**
+
+
+
+
+### **Ablation Study**
+
+用别的去替换 Temporal Bi-directional RNN， Learnable Guided Mask，Spatial Transformer 看效果
 
 - 合成数据集上的效果，比较 PSNR，SSIM
   DAVIS dataset & degradation model(See [Dataset](#Dataset))
@@ -163,16 +169,36 @@
 
   predict the colors of the first 50 frames by taking the 100th frame as the colorization reference 因为对比的是 example-based 上色方法
 
-**Ablation Study**
 
-用别的去替换 Temporal Bi-directional RNN， Learnable Guided Mask，Spatial Transformer 看效果
+
+### setting
+
+**During optimization**, we randomly crop 256 patches from REDS [33] dataset and apply the proposed video degradation model on the fly
+batchsiz=4, 4*2080Ti
+
+- learning rate is set to 2e-4 for both generators and disc
+- 微调 RAFT
 
 
 
 ### Dataset
 
-**During optimization**, we randomly crop 256 patches from **REDS [33] dataset** and **apply the proposed video degradation model on the fly**
-collect 63 old films from the internet for evaluation
+> :question: 4 张卡做 DDP batchsize=4, 每张卡 batchsize = 1?
+
+- training set
+
+  crop 256 patches from REDS [33] dataset and apply the proposed video degradation model on the fly
+
+  **batchsize = 4, 4 卡 DDP, 训  2 天**
+
+- Quantitative Comparison
+
+  - DAVIS 视频 + 合成: 计算 PSNR, SSIM 等客观指标
+  - 收集的 63 个真实老电影: 计算 NIQE, BRISQUE 指标
+
+
+
+
 
 #### Degradation
 
@@ -190,6 +216,29 @@ collect 63 old films from the internet for evaluation
 
 **inject these defects randomly,** one observation of old films. **first define a set of template parameters for each video.** Then we further apply predefined parameters with slight perturbations on consecutive temporal frames to achieve more realistic rendering
 随机将上述 DA 映射到随机的帧上，相邻帧之间用相同的 DA 组合 & 扰动
+
+> Code implementation
+
+- `def degradation_video_list_4`
+
+  先做 UMS 锐化：随机取一个 gaussianBlur，然后原图 - blur 得到一个残差，这个残差和原图加权平均一下
+
+  
+
+
+### Loss
+
+- L1 loss 多帧平均
+
+- perceptual loss
+
+  loss is accumulated over all frames in the generated video
+
+- Spatial-Temporal Adversarial Loss
+
+  Temporal-PatchGAN  enhance both perceptual quality and spatial-temporal coherence
+
+对于上色 task，转换到 LAB 空间来处理
 
 
 

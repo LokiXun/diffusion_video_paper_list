@@ -3,7 +3,7 @@
 > paper: [arxiv ](https://arxiv.org/abs/2304.08818) Apr 2023
 > official blog: https://research.nvidia.com/labs/toronto-ai/VideoLDM/
 > [unofficial implementation](https://github.com/srpkdyy/VideoLDM.git)
-> [2023_CVPR_Align-your-Latents--High-Resolution-Video-Synthesis-with-Latent-Diffusion-Models.pdf](./2023_CVPR_Align-your-Latents--High-Resolution-Video-Synthesis-with-Latent-Diffusion-Models.pdf)
+> [paper local pdf](./2023_04_CVPR_Align-your-Latents--High-Resolution-Video-Synthesis-with-Latent-Diffusion-Models.pdf)
 >
 > - Andreas Blattmann >> Stable Diffusion 作者
 

@@ -1,14 +1,10 @@
-# Stable Diffusion :moyai: (High-Resolution Image Synthesis with Latent Diffusion Models )
+# High-Resolution Image Synthesis with Latent Diffusion Models (stable diffusion)
 
-
-
-> [2022_CVPR_High-Resolution Image Synthesis with Latent Diffusion Models.pdf](./2022_CVPR_High-Resolution Image Synthesis with Latent Diffusion Models.pdf)
 > [github](https://github.com/CompVis/stable-diffusion) ![GitHub Repo stars](https://img.shields.io/github/stars/CompVis/stable-diffusion?style=social)
+> [paper local pdf](./2022_CVPR_High-Resolution Image Synthesis with Latent Diffusion Models.pdf)
 > [Youtube 博主解读](https://www.youtube.com/watch?v=f6PtJKdey8E) [知乎博客](https://zhuanlan.zhihu.com/p/597247221) [towardScience 博客](https://towardsdatascience.com/paper-explained-high-resolution-image-synthesis-with-latent-diffusion-models-f372f7636d42) :+1:
 > [What can Stable Diffusion do?](https://stable-diffusion-art.com/how-stable-diffusion-work/)
 > [Stable Diffusion with 🧨 Diffusers](https://huggingface.co/blog/stable_diffusion#how-does-stable-diffusion-work)
-
-
 
 
 
@@ -64,7 +60,11 @@ image generation has been tackled mainly through **four families of models**: Ge
 
 #### Optimization
 
-![VQGAN_approach_overview.jpg](C:\Users\Loki\workspace\LearningJourney_Notes\Tongji_CV_group\docs\VQGAN_approach_overview.jpg)
+> Details in Appendix G
+
+We train all our autoencoder models in an adversarial manner following VQGAN
+
+![VQGAN_approach_overview.jpg](./docs\VQGAN_approach_overview.jpg)
 
 - Regularization
 
@@ -100,11 +100,30 @@ $$
 
 > learn what & how to apply to our task
 
-# Code >> Stable Diffusion
+# Code
 
 > pytorch-lighting  >> save moves for zero the gradient,...
+> [stable-diffusion code analysis blog](https://zhuanlan.zhihu.com/p/613337342)
 >
-> https://zhuanlan.zhihu.com/p/613337342
+> - Summary
+>
+>   有了 x 和 condition info ( class_name )
+>
+>   1. 将 x 通过 VQGAN encoder 映射为 latent code
+>
+>   2. DDPM 训练
+>
+>      1. 从 0-1000 随机取 timestep 
+>
+>      2. condition  经过 `ClassEmbedder `映射得到 1x512 tensor
+>
+>      3. `def p_losses` 从干净 x0 加噪 T 步
+>
+>         随机取噪声 noise $\epsilon$ (shape 和 x0 一样)
+>
+>         `def q_sample` 按公式加噪 $q(x_t | x_0)\sim \mathcal{N}(\sqrt{\bar{a_t}} x_0, (1-\bar{a_t})I)$
+>
+>      4. 调 U-net 输入 x_t, t, condition 预测噪声，与之前随机取的 noise $\epsilon$ 计算 L2 loss
 
 ```
 # training config
@@ -144,7 +163,7 @@ configs/latent-diffusion/cin-ldm-vq-f8.yaml
 
   
 
-## Autoencoder
+## AutoencoderKL
 
 `def training_step` main training procedures happens
 
@@ -301,6 +320,10 @@ initialize the `class DDPM(pl.LightningModule)`
 
 ![U-net structure](./docs/stable_diffusion_unet_architecture.png)
 
+> Upsample 一般都是先 Upsample 再接 `Conv2d(kernel_size=3,stride=1,padding=1)`
+
+
+
 
 
 #### **timestep_embedding**
@@ -374,31 +397,28 @@ time_embed = nn.Sequential(
 
 
 
-**VQModelInterface**
+## **VQModelInterface**
 
 > `ldm.models.autoencoder.VQModelInterface`
 
 
 
-> Summary
->
-> 有了 x 和 condition info ( class_name )
->
-> 1. 将 x 通过 VQGAN encoder 映射为 latent code
->
-> 2. DDPM 训练
->
->    1. 从 0-1000 随机取 timestep 
->
->    2. condition  经过 `ClassEmbedder `映射得到 1x512 tensor
->
->    3. `def p_losses` 从干净 x0 加噪 T 步
->
->       随机取噪声 noise $\epsilon$ (shape 和 x0 一样)
->
->       `def q_sample` 按公式加噪 $q(x_t | x_0)\sim \mathcal{N}(\sqrt{\bar{a_t}} x_0, (1-\bar{a_t})I)$
->
->    4. 调 U-net 输入 x_t, t, condition 预测噪声，与之前随机取的 noise $\epsilon$ 计算 L2 loss
+## LitEMA :open_hands:
+
+> [blog: stable-diffusion optimization: EMA weights on CPU](https://lunnova.dev/articles/stable-diffusion-ema-on-cpu/)
+> Stable Diffusion 的 LitEMA 滑动平均回到是参数在 GPU 某一时刻加倍，可能导致显存溢出！可以根据此 blog 修改 `LitEMA()` 将参数存在 CPU 上，据说可以从 32G -> 27G 显存
+
+Stable diffusion uses an Exponential Moving Average of the model's weights to improve quality of resulting images and **avoid overfitting to the most recently trained images.**
+
+Stable Diffusion includes an implementation of an EMA called `LitEma`, found at [ldm/modules/ema.py](https://github.com/CompVis/stable-diffusion/blob/69ae4b35e0a0f6ee1af8bb9a5d0016ccb27e36dc/ldm/modules/ema.py)
+
+- How do you implement an EMA for a machine learning model?
+
+  With PyTorch modules you can use [the `named_parameters()` iterator](https://pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module.named_parameters) to access all parameters. :star:
+
+- the EMA weights end up on the GPU like everything else. This **doubles the memory required** to store the model parameters! 可能造成显存溢出 !! :warning:
+
+  > [How to keep some LightningModule's parameters on cpu when using CUDA devices for training](https://github.com/Lightning-AI/lightning/issues/3698)
 
 
 

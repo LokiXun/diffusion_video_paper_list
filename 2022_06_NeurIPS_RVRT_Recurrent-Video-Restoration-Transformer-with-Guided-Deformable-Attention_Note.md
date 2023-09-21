@@ -6,9 +6,13 @@
 
 ## **Key-point**
 
-**Contributions**
+> Introduction 总结了现有 video restoration 两类框架：Parallel & recurrent
 
-- RVRT将视频分成多个片段，利用先前的片段特征来估计后续的片段特征。通过减小视频序列长度并且以更大的隐藏状态传递信息'
+
+
+## **Contributions**
+
+- RVRT将视频分成多个片段，**以 clip 为单位提取特征**，利用先前的片段特征来估计后续的片段特征。通过减小视频序列长度并且以更大的隐藏状态传递信息
 - 使用引导变形注意（GDA）从整个推断片段中预测多个相关位置，然后通过注意机制聚合它们的特征来进行片段间对齐。
 
 
@@ -17,10 +21,32 @@
 
 现有的视频恢复方法主要有两种 ：
 
-1. 并行恢复所有帧，它具有时间信息融合的优势，但是模型尺寸大，内存消耗大
+1. 并行恢复所有帧，但是模型尺寸大，内存消耗大
+
+   Parallel methods estimate all frames simultaneously, as the refinement of one frame feature is not dependent on the update of other frame features
+
+   - "Spatio-Temporal Filter Adaptive Network for Video Deblurring" STFAN
+     [paper](https://arxiv.org/abs/1904.12257) [code](https://www.github.com/sczhou/STFAN)
+
 2. 循环逐帧恢复，它跨帧共享参数所以模型尺寸较小，但是缺乏长期建模能力和并行性
 
+
+
 ## **methods**
+
+> [RVRT code](https://github.com/JingyunLiang/RVRT/blob/main/models/network_rvrt.py#L742)
+
+将 T 帧的视频按 `window_size=N` 分为 $T/N$ 段，每段里面
+
+
+
+
+
+### Guided Deformable Attention :star:
+
+
+
+
 
 ## **Experiment**
 
@@ -56,6 +82,29 @@ training set of DAVIS [31], test on DAVIS-test-set & Set8
 - Set8 (usually used as test set)
 
   *Set8* is composed of 8 sequences: 4 sequences from the *Derf 480p* testset ("tractor", "touchdown", "park_joy", "sunflower") plus other 4 540p sequences. You can find these under the *test_sequences* folder [here](https://drive.google.com/drive/folders/11chLkbcX-oKGLOLONuDpXZM2-vujn_KD?usp=sharing).
+
+## Code
+
+### **RSTB**
+
+先转到 `(b c t h w)` 用 3D 卷积
+
+```python
+        main += [Rearrange('n d c h w -> n c d h w'),
+                 nn.Conv3d(in_channels,
+                           kwargs['dim'],
+                           kernel_size=kernel_size,
+                           stride=stride,
+                           padding=(kernel_size[0] // 2, kernel_size[1] // 2, kernel_size[2] // 2),
+                           groups=groups),
+                 Rearrange('n c d h w -> n d h w c'),
+                 nn.LayerNorm(kwargs['dim']),
+                 Rearrange('n d h w c -> n c d h w')]
+```
+
+> In MRSTB, we upgrade the original 2D h × w attention window to the 3D N × h × w attention window
+
+
 
 
 
