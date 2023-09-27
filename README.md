@@ -1,4 +1,4 @@
-# **Diffusion_Journey** :gun:
+# Diffusion_Journey** :gun:
 
 > This document mainly works as an **paper List in categories** :cat:
 > Also, our notes for read papers are linked beside, which could help us recall the main idea in paper more quickly.
@@ -72,6 +72,11 @@
   
 - [ ] "Focusing on Persons: Colorizing Old Images Learning from Modern Historical Movies" 2021 Aug, **HistoryNet**
   [paper](https://arxiv.org/abs/2108.06515) [code](https://github.com/BestiVictory/HistoryNet#historynet)
+  
+- [ ] "Towards Robust Blind Face Restoration with Codebook Lookup Transformer" NeurIPS, 2022 Jun, CodeFormer :statue_of_liberty:
+  [paper](https://arxiv.org/abs/2206.11253) [code](https://github.com/sczhou/CodeFormer) [website](https://shangchenzhou.com/projects/CodeFormer/)
+
+  > Blind Face Restoration SOTA, 老照片修复
 
 
 
@@ -368,7 +373,7 @@
 
 
 
-### Diffusion Prior
+### (Diffusion) Prior
 
 > get prior info from large-scale model
 > [Kelvin C.K. Chan](https://ckkelvinchan.github.io/?utm_source=catalyzex.com)
@@ -411,6 +416,12 @@
 
 - [ ] "ShadowDiffusion: When Degradation Prior Meets Diffusion Model for Shadow Removal" CVPR, 2022 Dec :warning:
   [paper](https://arxiv.org/abs/2212.04711) [code]()
+
+- [ ] "Zero-shot Generation of Coherent Storybook from Plain Text Story using Diffusion Models"
+  [paper](https://arxiv.org/abs/2302.03900)
+
+- [ ] "CLIP-Driven Universal Model for Organ Segmentation and Tumor Detection" ICCV, 2023 Jan
+  [paper](https://arxiv.org/abs/2301.00785) [code](https://github.com/ljwztc/CLIP-Driven-Universal-Model)
 
 - [ ] "Generative Diffusion Prior for Unified Image Restoration and Enhancement" CVPR, 2023 Apr
   [paper](https://arxiv.org/abs/2304.01247) [website](https://generativediffusionprior.github.io/?utm_source=catalyzex.com)
@@ -584,6 +595,24 @@
   [note](./2023_05_CVPRW_Denoising-Diffusion-Models-for-Plug-and-Play-Image-Restoration_Note.md)
 
   > Multi-task Restoration
+
+
+
+### Blind-Restoration
+
+- [ ] "Towards Robust Blind Face Restoration with Codebook Lookup Transformer" NeurIPS, 2022 Jun, CodeFormer :statue_of_liberty:
+  [paper](https://arxiv.org/abs/2206.11253) [code](https://github.com/sczhou/CodeFormer) [website](https://shangchenzhou.com/projects/CodeFormer/)
+
+  > Blind Face Restoration SOTA, 老照片修复
+
+- [ ] "CodeTalker: Speech-Driven 3D Facial Animation with Discrete Motion Prior" Arxiv, 2023 Jan
+  [paper](https://arxiv.org/abs/2301.02379) [website](https://doubiiu.github.io/projects/codetalker/)
+
+- [ ] "RIDCP: Revitalizing Real Image Dehazing via High-Quality Codebook Priors" CVPR, 2023 Apr :star:
+  [paper](https://arxiv.org/abs/2304.03994)
+
+- [ ] "RestoreFormer++: Towards Real-World Blind Face Restoration from Undegraded Key-Value Pairs" TPAMI, 2023 Aug
+  [code](https://github.com/wzhouxiff/RestoreFormerPlusPlus)
 
 
 
@@ -827,7 +856,7 @@
   > optical-flow based VFI methods
 
 - [ ] "FuseFormer: Fusing Fine-Grained Information in Transformers for Video Inpainting" ICCV, 2021 Sep :statue_of_liberty:
-  [paper](https://arxiv.org/abs/2109.02974) [code](https://github.com/ruiliu-ai/FuseFormer?utm_source=catalyzex.com)
+  [paper](https://arxiv.org/abs/2109.02974) [codeInternImage: Exploring Large-Scale Vision Foundation Models with Deformable Convolutions](https://github.com/ruiliu-ai/FuseFormer?utm_source=catalyzex.com)
 
   > `FuseFormer` 将patch之间做到了融合，overlapped区域聚合了很多tokens的信息，这对于平滑的边界以及增加感受野很有用
 
@@ -927,6 +956,16 @@
 
 - [ ] "Can SAM Boost Video Super-Resolution?" Arxiv, 2023 May
   [paper](https://arxiv.org/abs/2305.06524v2) :warning:
+  
+- [ ] "BasicVSR++: Improving video super-resolution with enhanced propagation and alignment"
+
+  > Deformable Transformer
+  
+- [x] "STDAN: Deformable Attention Network for Space-Time Video Super-Resolution" NNLS, 2023 Feb :statue_of_liberty:
+  [paper](https://ieeexplore.ieee.org/document/10045744) [code](https://github.com/littlewhitesea/STDAN)
+  [note](./2023_02_NNLS_STDAN--Deformable-Attention-Network-for-Space-Time-Video-Super-Resolution_Note.md)
+
+  > *Deformable Attention* 视频 SR
 
 
 
@@ -1072,7 +1111,7 @@
   [paper](https://arxiv.org/abs/2201.00520) [code](https://github.com/LeapLabTHU/DAT) [blog_explanation](https://zhuanlan.zhihu.com/p/497432647) [code_improvement](https://github.com/lucidrains/deformable-attention/blob/main/deformable_attention/deformable_attention_2d.py)
   [note](./2022_01_CVPR_Vision-Transformer-with-Deformable-Attention_Note.md)
   
-  > 特征融合部分可以考虑使用这个deformable attention，**此前deformable convolution经常用于非对齐的特征融合**，local reference 7和5帧特征就是非对齐的特征融合，考虑使用这种deformable attention
+  > 特征融合部分可以考虑使用这个deformable attention，**此前deformable convolution经常用于非对齐的特征融合**，local reference 7和5帧特征就是非对齐的特征融合，考虑使用这种 deformable attention
   >
   > **2D deformable attention**
   
@@ -1107,6 +1146,12 @@
   2. "Flow-Guided Sparse Transformer for Video Deblurring" ICML, 2022 Jan :statue_of_liberty:
      [paper](https://arxiv.org/abs/2201.01893) [local_pdf](./2022_01_ICML_Flow-Guided-Sparse-Transformer-for-Video-Deblurring.pdf)
      FGSW-MSA attn [code](https://github.com/linjing7/VR-Baseline/blob/99611fb878962b1924ab1b15af170a3c3824e447/mmedit/models/backbones/sr_backbones/FGST_util.py#L75)
+  
+- [x] "STDAN: Deformable Attention Network for Space-Time Video Super-Resolution" NNLS, 2023 Feb :statue_of_liberty:
+  [paper](https://ieeexplore.ieee.org/document/10045744) [code](https://github.com/littlewhitesea/STDAN)
+  [note](./2023_02_NNLS_STDAN--Deformable-Attention-Network-for-Space-Time-Video-Super-Resolution_Note.md)
+
+  > *Deformable Attention* 视频 SR
 
 
 
@@ -1124,6 +1169,8 @@
 - [ ] "Reference-based Video Super-Resolution Using Multi-Camera Video Triplets" CVPR, 2022 Mar, **RefVSR** :statue_of_liberty:
   [paper](https://arxiv.org/abs/2203.14537) [website](https://junyonglee.me/projects/RefVSR/) [code](https://github.com/codeslake/RefVSR)
 
+  > cosine similarity, reference alignment, and propagative temporal fusion module
+  
 - [ ] "NeuriCam: Key-Frame Video Super-Resolution and Colorization for IoT Cameras" MobiCom, 2022 Jul
   [paper](https://arxiv.org/abs/2207.12496) [code](https://github.com/vb000/NeuriCam)
 
@@ -1132,6 +1179,9 @@
 
 - [ ] "Efficient Reference-based Video Super-Resolution (ERVSR): Single Reference Image Is All You Need" WACV, 2023 Jan, **ERVSR**
   [paper](https://openaccess.thecvf.com/content/WACV2023/papers/Kim_Efficient_Reference-Based_Video_Super-Resolution_ERVSR_Single_Reference_Image_Is_All_WACV_2023_paper.pdf) [code](https://github.com/haewonc/ERVSR)
+  
+- [ ] "RefVSR++: Exploiting Reference Inputs for Reference-based Video Super-resolution" Arxiv, 2023 Jul **RefVSR++**
+  [paper](https://arxiv.org/abs/2307.02897)
 
 
 
@@ -1321,9 +1371,12 @@
 - [ ] On the Expressivity Role of LayerNorm in Transformer's Attention  
   https://github.com/tech-srl/layer_norm_expressivity_role 这个工作可以加深对 transformer 的一些理解 :star:
 
-- [ ] HaloNet padding 方式的注意力
+- [ ] "Scaling Local Self-Attention for Parameter Efficient Visual Backbones" CVPR, 2021 Mar, HaloNet
+  [paper](https://arxiv.org/abs/2103.12731)
 
-  Scaling Local Self-Attention for Parameter Efficient Visual Backbones
+  > 对特征图进行窗口注意力（分成 bxb 的patch），patch 之间没有交互，信息有丢失。对 patch 设置为 bxb+2*halo_size 增大 patch 大小 & 让 patch 之间有重叠
+
+  
 
 - [ ] SpectFormer: Frequency and Attention is what you need in a Vision Transformer  
   https://github.com/badripatro/SpectFormers
@@ -1358,15 +1411,26 @@
 
 - [ ] "SG-Former: Self-guided Transformer with Evolving Token Reallocation"
   [code](https://github.com/OliverRensu/SG-Former)
+  
+- [ ] "Global Context Vision Transformers" ICML, 2022 Jun, GCViT
+  [paper](https://arxiv.org/abs/2206.09959) [code](https://github.com/NVlabs/GCViT)
+  [note](./2023_06_ICML_Global-Context-Vision-Transformers_Note.md)
+
+  
 
 
 
 
-#### Deformable Transformer
+### Deformable Transformer
+
+- [ ] "Deformable ConvNets v2: More Deformable, Better Results" CVPR, 2018 Nov
+  [paper](https://arxiv.org/abs/1811.11168)
 
 - [ ] "Deformable 3D Convolution for Video Super-Resolution" Trans, 2020 Jul
   [paper](https://ieeexplore.ieee.org/abstract/document/9153920) [code](https://github.com/XinyiYing/D3Dnet)
 
+  > deformable 代替 inaccurate optical flow
+  
 - [x] "Vision Transformer with Deformable Attention" CVPR, 2022 Jan, DAT
   [paper](https://arxiv.org/abs/2201.00520) [code](https://github.com/LeapLabTHU/DAT) [blog_explanation](https://zhuanlan.zhihu.com/p/497432647) [code_improvement](https://github.com/lucidrains/deformable-attention/blob/main/deformable_attention/deformable_attention_2d.py)
 
@@ -1395,11 +1459,12 @@
 
   > Deformable attn 用于图像 SR
 
-- [ ] "STDAN: Deformable Attention Network for Space-Time Video Super-Resolution" NNLS, 2023 Feb
+- [x] "STDAN: Deformable Attention Network for Space-Time Video Super-Resolution" NNLS, 2023 Feb :statue_of_liberty:
   [paper](https://ieeexplore.ieee.org/document/10045744) [code](https://github.com/littlewhitesea/STDAN)
-
+  [note](./2023_02_NNLS_STDAN--Deformable-Attention-Network-for-Space-Time-Video-Super-Resolution_Note.md)
+  
   > *Deformable Attention* 视频 SR
-
+  
 - [ ] "An Efficient Accelerator Based on Lightweight Deformable 3D-CNN for Video Super-Resolution" CS, 2023 Mar
   [paper](https://ieeexplore.ieee.org/abstract/document/10079152)
 
@@ -1435,7 +1500,7 @@
 
 
 
-### SSL
+### Self-Supervised Learning
 
 > Self-Supervised Learning
 
@@ -1883,7 +1948,9 @@
     [code](https://github.com/xiaom233/HDRTVNet-plus)
   - [ ] "CNN Injected Transformer for Image Exposure Correction"
     [paper](https://arxiv.org/abs/2309.04366)
-  - [ ] "RVRT"
+  - [ ] "Pixel-Aware Stable Diffusion for Realistic Image Super-resolution and Personalized Stylization"
+    [code](https://github.com/yangxy/PASD)
+  - [ ] "Exploring Overcomplete Representations for Single Image Deraining using CNNs"
 
 
 

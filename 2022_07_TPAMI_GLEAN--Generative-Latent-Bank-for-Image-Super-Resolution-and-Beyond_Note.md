@@ -1,7 +1,7 @@
 # GLEAN: Generative Latent Bank for Image Super-Resolution and Beyond
 
 > "GLEAN: Generative Latent Bank for Image Super-Resolution and Beyond" TAPMI, 2022 Jul :star:
-> [paper](https://arxiv.org/abs/2207.14812) [code](https://github.com/open-mmlab/mmagic?utm_source=catalyzex.com) [video_explanation](https://www.youtube.com/watch?v=73EqkLim41U) :+1:
+> [paper](https://arxiv.org/abs/2207.14812) [code](https://github.com/open-mmlab/mmagic/blob/5bfcda6a3cef2f2100413ac30d3f15faf98d2c1b/mmagic/models/editors/glean/glean_styleganv2.py) [video_explanation](https://www.youtube.com/watch?v=73EqkLim41U) :+1:
 > [paper local pdf](./2022_07_TPAMI_GLEAN--Generative-Latent-Bank-for-Image-Super-Resolution-and-Beyond.pdf)
 >
 > 使用 StyleGAN 大模型先验，从里面抽一些特征辅助进行 SR。参考同样方式做 Diffusion
@@ -19,7 +19,7 @@
 
 **提出的 Latent Bank 全新框架， 验证了融合结构信息 & 自然图像的先验，很有必要 :star:**
 
-![image-20230921154117103](C:\Users\Loki\AppData\Roaming\Typora\typora-user-images\image-20230921154117103.png)
+![GLEAN_compare](C:\Users\Loki\workspace\Tongji_CV_group\docs\2022_07_TPAMI_GLEAN--Generative-Latent-Bank-for-Image-Super-Resolution-and-Beyond_Note\GLEAN_compare.png)
 
 - 场景
   1. GLEAN 提供额外的自然图像先验，针对高倍率 SR 和输入图像退化很严重时候，能够有效输出
@@ -121,7 +121,7 @@ GAN inversion 利用低维 latent code 引导先验网络，保真度还可以�
 
 ## **methods**
 
-![image-20230921164501263](C:\Users\Loki\AppData\Roaming\Typora\typora-user-images\image-20230921164501263.png)
+![image-20230922005304358](C:\Users\Loki\workspace\Tongji_CV_group\docs\2022_07_TPAMI_GLEAN--Generative-Latent-Bank-for-Image-Super-Resolution-and-Beyond_Note\image-20230922005304358.png)
 
 - Encoder
 
@@ -133,7 +133,7 @@ GAN inversion 利用低维 latent code 引导先验网络，保真度还可以�
 
 - Generative Latent Bank
 
-  ![image-20230921173426982](C:\Users\Loki\AppData\Roaming\Typora\typora-user-images\image-20230921173426982.png)
+  ![image-20230922005318645](C:\Users\Loki\workspace\Tongji_CV_group\docs\2022_07_TPAMI_GLEAN--Generative-Latent-Bank-for-Image-Super-Resolution-and-Beyond_Note\image-20230922005318645.png)
 
   each $c_i$ corresponds to one latent vector 对应 `StyleGAN` 每个 style block 的 A，Encoder 卷积层的特征 $f_i$ 代替 `StyleBlock` 的 Noise B
 
@@ -147,7 +147,7 @@ GAN inversion 利用低维 latent code 引导先验网络，保真度还可以�
 
 - Decoder 融合 StyleGAN 特征 & Encoder 初始特征
 
-  ![image-20230921173526218](C:\Users\Loki\AppData\Roaming\Typora\typora-user-images\image-20230921173526218.png)
+  ![image-20230921173526218](C:\Users\Loki\workspace\Tongji_CV_group\docs\2022_07_TPAMI_GLEAN--Generative-Latent-Bank-for-Image-Super-Resolution-and-Beyond_Note\image-20230921173526218.png)
 
 - Loss
 
@@ -160,7 +160,7 @@ GAN inversion 利用低维 latent code 引导先验网络，保真度还可以�
 
 ### Light-GLEAN
 
-![image-20230921175254661](C:\Users\Loki\AppData\Roaming\Typora\typora-user-images\image-20230921175254661.png)
+![image-20230921175254661](C:\Users\Loki\workspace\Tongji_CV_group\docs\2022_07_TPAMI_GLEAN--Generative-Latent-Bank-for-Image-Super-Resolution-and-Beyond_Note\image-20230921175254661.png)
 
 > propose the following two strategies to simplify the structure of GLEAN. **LightGLEAN has only 21% of parameters when compared to GLEAN**
 >
@@ -183,21 +183,21 @@ GAN inversion 利用低维 latent code 引导先验网络，保真度还可以�
 - Class-specific
   16x SR 人脸 和 其他数据，ESRGAN 生成细节不行
 
-  ![image-20230921175931935](C:\Users\Loki\AppData\Roaming\Typora\typora-user-images\image-20230921175931935.png)
+  ![image-20230921175931935](C:\Users\Loki\workspace\Tongji_CV_group\docs\2022_07_TPAMI_GLEAN--Generative-Latent-Bank-for-Image-Super-Resolution-and-Beyond_Note\image-20230921175931935.png)
 
-  ![image-20230921182204167](C:\Users\Loki\AppData\Roaming\Typora\typora-user-images\image-20230921182204167.png)
+  ![image-20230921182204167](C:\Users\Loki\workspace\Tongji_CV_group\docs\2022_07_TPAMI_GLEAN--Generative-Latent-Bank-for-Image-Super-Resolution-and-Beyond_Note\image-20230921182204167.png)
 
   - Cosine similarity
 
-  ![image-20230921180039404](C:\Users\Loki\AppData\Roaming\Typora\typora-user-images\image-20230921180039404.png)
+  ![image-20230921180039404](C:\Users\Loki\workspace\Tongji_CV_group\docs\2022_07_TPAMI_GLEAN--Generative-Latent-Bank-for-Image-Super-Resolution-and-Beyond_Note\image-20230921180039404.png)
 
   - multi-class SR
 
   先验替换 multi-class 先验 BigGAN，GLEAN outperforms existing works in terms of both fidelity and quality
 
-  ![image-20230921180656729](C:\Users\Loki\AppData\Roaming\Typora\typora-user-images\image-20230921180656729.png)
+  ![image-20230921180656729](C:\Users\Loki\workspace\Tongji_CV_group\docs\2022_07_TPAMI_GLEAN--Generative-Latent-Bank-for-Image-Super-Resolution-and-Beyond_Note\image-20230921180656729.png)
 
-  ![image-20230921184527018](C:\Users\Loki\AppData\Roaming\Typora\typora-user-images\image-20230921184527018.png)
+  ![image-20230921184527018](C:\Users\Loki\workspace\Tongji_CV_group\docs\2022_07_TPAMI_GLEAN--Generative-Latent-Bank-for-Image-Super-Resolution-and-Beyond_Note\image-20230921184527018.png)
 
 
 
@@ -205,11 +205,11 @@ GAN inversion 利用低维 latent code 引导先验网络，保真度还可以�
 
   -  Image colorization
 
-    ![image-20230921180842097](C:\Users\Loki\AppData\Roaming\Typora\typora-user-images\image-20230921180842097.png)
+    ![image-20230921180842097](C:\Users\Loki\workspace\Tongji_CV_group\docs\2022_07_TPAMI_GLEAN--Generative-Latent-Bank-for-Image-Super-Resolution-and-Beyond_Note\image-20230921180842097.png)
 
   - unknown degradations
 
-    ![image-20230921181132282](C:\Users\Loki\AppData\Roaming\Typora\typora-user-images\image-20230921181132282.png)
+    ![image-20230921181132282](C:\Users\Loki\workspace\Tongji_CV_group\docs\2022_07_TPAMI_GLEAN--Generative-Latent-Bank-for-Image-Super-Resolution-and-Beyond_Note\image-20230921181132282.png)
 
 ### Ablation Study
 
@@ -221,13 +221,13 @@ GAN inversion 利用低维 latent code 引导先验网络，保真度还可以�
 
   StyleGAN 加入 Encoder 多尺度的特征，输出的图像逐渐能够学到更为细节的信息。只用 Encoder 单个尺度特征，只能获取到全局信息，但细节差异很大
 
-  ![image-20230921183119146](C:\Users\Loki\AppData\Roaming\Typora\typora-user-images\image-20230921183119146.png)
+  ![image-20230921183119146](C:\Users\Loki\workspace\Tongji_CV_group\docs\2022_07_TPAMI_GLEAN--Generative-Latent-Bank-for-Image-Super-Resolution-and-Beyond_Note\image-20230921183119146.png)
 
 - Latent Bank 有效性
 
   使用 prior 减轻 Encoder 负担，获取额外的细节信息，生成高质量 & 高保真度的结果
 
-  ![image-20230921183341718](C:\Users\Loki\AppData\Roaming\Typora\typora-user-images\image-20230921183341718.png)
+  ![image-20230921183341718](C:\Users\Loki\workspace\Tongji_CV_group\docs\2022_07_TPAMI_GLEAN--Generative-Latent-Bank-for-Image-Super-Resolution-and-Beyond_Note\image-20230921183341718.png)
 
 - Decoder 的有效性
 
@@ -235,7 +235,13 @@ GAN inversion 利用低维 latent code 引导先验网络，保真度还可以�
 
   DFDNet 构造一个 eyes, lips 的 dictionary。对于 dictionary 里面有的特征修复的很好，但对于 dictionary  没有的特征，例如皮肤、头发，修复的就很差
 
-  ![image-20230921184239242](C:\Users\Loki\AppData\Roaming\Typora\typora-user-images\image-20230921184239242.png)
+  ![image-20230921184239242](C:\Users\Loki\workspace\Tongji_CV_group\docs\2022_07_TPAMI_GLEAN--Generative-Latent-Bank-for-Image-Super-Resolution-and-Beyond_Note\image-20230921184239242.png)
+
+
+
+## Code
+
+
 
 
 
@@ -243,7 +249,6 @@ GAN inversion 利用低维 latent code 引导先验网络，保真度还可以�
 
 - 对于真实图像中的极端退化，修复效果仍然有限。
 
-  ![image-20230921184721059](C:\Users\Loki\AppData\Roaming\Typora\typora-user-images\image-20230921184721059.png)
 
 
 
