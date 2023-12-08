@@ -152,7 +152,7 @@
 
 由于 condition 过于抽象，此类 alignment 在高度抽象的语义上进行，得到的 warped image 一般不太好，追求形式上类似
 
-![image-20231206140225489](docs/feature_alignment_note/image-translation-task_example.png)
+![image-20231206140225489](docs/survey_feature_alignment/image-translation-task_example.png)
 
 
 
@@ -173,7 +173,7 @@
 
 可以参考一些 Exemplar-based image synthesis 方法，如何做 alignment
 
-![image-20231206135941412](docs/feature_alignment_note/CoCosNet_framework.png)
+![image-20231206135941412](docs/survey_feature_alignment/CoCosNet_framework.png)
 
 
 
