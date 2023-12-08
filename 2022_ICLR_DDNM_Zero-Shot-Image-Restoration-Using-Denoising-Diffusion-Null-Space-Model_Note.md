@@ -1,33 +1,20 @@
-#  **D**enoising **D**iffusion **N**ull-Space **M**odel (**DDNM**)
+#  DDNM
 
-> [github page](https://wyhuai.github.io/ddnm.io/)
-> [2022_ICLR_DDNM_Zero-Shot-Image-Restoration-Using-Denoising-Diffusion-Null-Space-Model.pdf](./2022_ICLR_DDNM_Zero-Shot-Image-Restoration-Using-Denoising-Diffusion-Null-Space-Model.pdf)
-> [paper with code](https://paperswithcode.com/paper/zero-shot-image-restoration-using-denoising)  [**Colorization Task**](https://paperswithcode.com/task/colorization)
+> "Zero-Shot Image Restoration Using Denoising Diffusion Null-Space Model" ICLR Notable-Top-25%, 2022 Dec, DDNM
+> [paper](https://arxiv.org/pdf/2212.00490.pdf) [website](https://wyhuai.github.io/ddnm.io/)
+> [pdf](./2022_ICLR_DDNM_Zero-Shot-Image-Restoration-Using-Denoising-Diffusion-Null-Space-Model.pdf)
+>
+> - Authors: Yinhuai Wang  Jiwen Yu Jian Zhang 
 
-- Zero-Shot Image Restoration Using Denoising Diffusion Null-Space Model
+## **Key-point**
 
-  ICLR 2023, Notable-Top-25% 
-  Yinhuai Wang  Jiwen Yu Jian Zhang 
-  
-- 1*2080Ti batchsize=1
-
-
-
-**Background**
-
-Image Restoration (IR) task:
-
-- Inpainting
-
-- Colorization
-
-- SR with scale n
-
-  文中需要 256x256 的 GT，对其进行 averagePooling 每个区域用一个值表示，来得到小分辨率图像
+- Task: Zero-shot Image Restoration
+- Background: 预先指导指定类型的退化，去修复
+- :label: Label: diffusion prior, plug&play finetune,
 
 
 
-**Contributions**
+## Contributions
 
 - 把 RangeNull space 分解用于 IR task，结合 pretrained 模型实现 zero-shot
 - DDNM+ 针对 noisy IR task （有高斯噪声的情况）对 x0 预测方式进行修改
@@ -36,7 +23,7 @@ Image Restoration (IR) task:
 
 
 
-**Related Work/Details To Read**
+## Related Work
 
 - score-based model
   - [ ] Score-Based Generative Modeling through Stochastic Differential Equations
@@ -49,18 +36,19 @@ Image Restoration (IR) task:
 
 
 
-## **methods**
+## methods
 
-> - Datasets
-> - GPU configuration >> 判断算力是否足够
+### Range-Null Space 理论
 
-### Range-Null Space
+将图像 x 分解为 range-space part 和 null-space part
 
 ![DDNM_RangeNullSpace.png](./docs/DDNM_RangeNullSpace.png)
 
 ### DDNM
 
-![DDNM_whole_diffusion_process](C:\Users\Loki\workspace\LearningJourney_Notes\Tongji_CV_group\docs\DDNM_whole_diffusion_process.png)
+将前面的 A 理解成退化的变换，$y=Ax$ 带入公式 8，实现 diffusion 中融入退化图像先验。由于 ZIR 任务预先知道退化类型，所以能够知道退化 A 的对应修复变换 $A^+$，因此通过 Algorithm1.4 进行修复
+
+![DDNM_whole_diffusion_process](docs\DDNM_whole_diffusion_process.png)
 
 - 使用预训练模型得到 x0
 
@@ -145,9 +133,6 @@ DDNM 中使用的预训练模型，输出的图像大小受限，对输入图分
 
 
 ## Experiment
-
-[Experiment Part In 2022_ICLR_DDNM_Zero-Shot-Image-Restoration-Using-Denoising-Diffusion-Null-Space-Model.pdf](./2022_ICLR_DDNM_Zero-Shot-Image-Restoration-Using-Denoising-Diffusion-Null-Space-Model.pdf#P7)
-[DDNM+ Experiment Part In 2022_ICLR_DDNM_Zero-Shot-Image-Restoration-Using-Denoising-Diffusion-Null-Space-Model.pdf](./2022_ICLR_DDNM_Zero-Shot-Image-Restoration-Using-Denoising-Diffusion-Null-Space-Model.pdf#P15)
 
 - 上色
 

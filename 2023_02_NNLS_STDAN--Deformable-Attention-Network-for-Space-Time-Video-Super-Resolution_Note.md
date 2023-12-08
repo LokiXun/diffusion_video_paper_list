@@ -18,6 +18,8 @@
 
 用 Deformable CNN 代替光流（可能不准确！）$F_{3\to 1}:~ Backward~I_3 \to I_1 的特征$
 
+> local 每个点，用 deformable 筛选的 T=2 个点去融合特征。feature map 逐点融合，因此没有加 position bias
+
 
 
 ## **Contributions**
@@ -113,9 +115,35 @@ LSTFI 模块通过 **DFI 模块**提取 前向 F1->F3, 反向 F3->F1 的特征�
 
 ![image-20230925134726748](C:\Users\Loki\workspace\Tongji_CV_group\docs\2023_02_NNLS_STDAN--Deformable-Attention-Network-for-Space-Time-Video-Super-Resolution_Note\image-20230925134726748.png)
 
+- **获取当前帧 i 与参考帧 t （两帧）在空间维度融合**
+
+  > 用 QK 点积作为相似度指标，QK结果为 weighted map，参考帧 t 对应 Value
+
+  1. 初筛：每一个 Q 中的点，去与 K 中 offset 得到的 kxk 个点计算相似度，取 top T 相似度 K 中的点。
+
+  2. 用这个筛选后的 T 个点，加权更新 Key, Value >> 公式 10，11
+
+     **Deformable 的 k x k 个点，取 top T 最相似的点，计算 QK 后 Softmax 作为权重，将 T 个点的特征加权融合，理解为“融合成一个点”。从而 Q 中每个点对应 K，V 中一个“融合后”的点**
+     $$
+     w_\xi=\frac{e^{Q_i(\mathbf{p}_o)\cdot K_j\left(\mathbf{p}_o+\overline{\mathbf{p}}_\xi+\Delta\overline{\mathbf{p}}_\xi\right)}}{\sum_{\xi=1}^Te^{Q_i(\mathbf{p}_o)\cdot K_j\left(\mathbf{p}_o+\overline{\mathbf{p}}_\xi+\Delta\overline{\mathbf{p}}_\xi\right)}} \\
+     
+     K_{j\to i}(\mathbf{p}_o)=\sum_{\xi=1}^Tw_\xi\cdot K_j\left(\mathbf{p}_o+\overline{\mathbf{p}}_\xi+\Delta\overline{\mathbf{p}}_\xi\right).
+     $$
+
+  3. 用 Q 和更新后的 Key 相乘的权重（已经筛选好 T 个点），去融合 Value 中的T个点。因此得到当前帧 i 和参考帧 t 的 weighted_map $W_{t\to i} \in R^{H*W}， ~V_{j\to i}\in R^{H*W}$
+
+- 当前帧 i 和其余帧都计算了权值矩阵 和 Value 后，在 **temporal 维度加权平均**
+
+  $W_{t\to i} \in R^{H*W}$ 作为权重， $V_{j\to i}\in R^{H*W}$ 作为参考帧 j 中提取出的有用信息
+
+  1. 再次加权平均一下，提取其余帧中能够用到当前帧的特征
+  2. 其余帧融合过滤后的特征 + 当前帧本身的特征
+
+> 参考帧太多，加权后融合的特征太均匀，直接糊掉了？
 
 
-#### Deformable Attn
+
+#### dueformable Attn
 
 > [code url](https://github.com/littlewhitesea/STDAN/blob/main/codes/models/modules/def_enc_dec.py)
 
@@ -185,6 +213,8 @@ class L1_Charbonnier_loss(torch.nn.Module):
 
   PSNR，SSIM 和 TMNet 接近
 
+
+
 ### Ablation Study
 
 - 比较 3 种 Feature Aggregation 融合方法：STFA（spatial-temporal feature aggregation）STDFA(Deformable)
@@ -194,6 +224,23 @@ class L1_Charbonnier_loss(torch.nn.Module):
   ![image-20230925144933035](C:\Users\Loki\workspace\Tongji_CV_group\docs\2023_02_NNLS_STDAN--Deformable-Attention-Network-for-Space-Time-Video-Super-Resolution_Note\image-20230925144933035.png)
 
   ![image-20230925145124023](C:\Users\Loki\workspace\Tongji_CV_group\docs\2023_02_NNLS_STDAN--Deformable-Attention-Network-for-Space-Time-Video-Super-Resolution_Note\image-20230925145124023.png)
+
+  
+
+  ![image-20231008102724269](docs/2023_02_NNLS_STDAN--Deformable-Attention-Network-for-Space-Time-Video-Super-Resolution_Note/image-20231008102724269.png)
+
+  1. feature aggregation 有用
+
+  2. spatial range 越大越好
+
+  3. deformable 相对于 fixed patch 更有效
+
+     STDAN 按像素点来融合，对于 deformable 的一个区域，选择 T 个相似度最高的点更为合理
+
+- STDAN 与 3D conv 比较
+
+  1. STDAN 按学到的 offset 去采样 deformable 区域，3D Conv 是固定的
+  2. STDAN 动态加权的融合时序上多帧，可以长距离提取特征；3D CNN 大多只能是相邻帧
 
 - Feature Interpolation
 

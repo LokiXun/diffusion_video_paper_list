@@ -81,7 +81,7 @@ StyleGAN's latent space W suffers distortion-editability tradeoff (the editted p
 
   **e4e 学习 lower frequency representation, 作者希望几帧之间连贯的变化，对应到 latent code 的变化也连贯**
 
-![STIT_inversion_PTI_loss.jpg](C:\Users\Loki\workspace\LearningJourney_Notes\Tongji_CV_group\docs\STIT_inversion_PTI_loss.jpg)
+![STIT_inversion_PTI_loss.jpg](docs\STIT_inversion_PTI_loss.jpg)
 
 
 

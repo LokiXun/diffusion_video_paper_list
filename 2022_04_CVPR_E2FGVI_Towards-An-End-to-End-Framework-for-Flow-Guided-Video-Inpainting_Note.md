@@ -42,9 +42,11 @@ End2end & optical-flow based video inpainting methods
 
 ## **methods**
 
-> - [ ] local neighboring frames, non-local reference frames 如何选取
-> - [ ] AutoEncoder?
-> - [ ] Content hallucination 里面 soft split?
+> - [x] local neighboring frames, non-local reference frames 如何选取
+>
+>   local 连续取7帧，训练时随机取一段。non-local reference 整个视频除去 local 的范围，随机取 5 帧
+>
+> - [x] Content hallucination 里面 soft split?
 
 ![](https://github.com/MCG-NKU/E2FGVI/raw/master/figs/framework.png)
 
@@ -54,6 +56,14 @@ End2end model，分解为 `flow completion`, `feature propagation`, `content hal
   Training: local neighboring frames 选取连续的 5 帧，non-local reference frames 在整个视频范围随机取 3 帧
 
   > Testing: use a sliding window with the size of 10 to get local neighboring frames and uniformly sample the non-local neighboring frames with a sampling rate of 10
+
+
+
+### Context Encoder
+
+> See Appendix A
+
+ the encoder and the decoder use the same architecture as `FuseFormer`
 
 
 
@@ -392,6 +402,56 @@ $$
   num_local_frame: 7  # FrameNum
   num_ref_frames: 5
   gt_size: [256,256]
+  ```
+
+- Q&A [Understanding transform.Normalize](https://discuss.pytorch.org/t/understanding-transform-normalize/21730)
+
+  > About whether it helps CNN to learn better, I’m not sure. But majority of the papers I read employ some normalization schema. What you are following is one of them.
+  >
+  > Normalization helps get data within a range and reduces the skewness which helps learn faster and better
+  >
+  > [visualize](https://discuss.pytorch.org/t/understanding-transform-normalize/21730/18)
+  > [Scaling vs. Normalization](https://www.kaggle.com/code/alexisbcook/scaling-and-normalization)
+
+  图像灰度范围调整到 `[0,1]`后，使用`torchvision.transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))`  数据范围变为`[-1,1]`
+  $$
+  x_i\in [0,1]. ~x_{min}=\frac{0 - 0.5}{1/2} = -1,~ x_{max}= (1-0.5)/0.5=1
+  $$
+  对于可视化时候，if you would like to get your image back in [0,1] range, you could use, `image = ((image * std) + mean)`
+
+  对于 `Bring-Old-films Back to Life` 输入数据归一化到 [-1,1], 模型的输出直接 `(x+1)/2`
+
+  ```
+  # train data
+  if self.data_config['normalizing']:
+      transform_normalize=transforms.Normalize((0.5, 0.5, 0.5),(0.5, 0.5, 0.5))
+      for i in range(len(img_results)):
+      	img_results[i]=transform_normalize(img_results[i])
+  
+  # test
+  if self.config['datasets']['val']['normalizing']:
+      self.val_output = (self.val_output + 1)/2
+      self.gt = (self.gt + 1)/2
+      self.lq = (self.lq + 1)/2
+      
+  def tensor2img(imgs):
+      """
+      Input: t,c,h,w
+      """
+      def _toimg(img):
+  
+          img = torch.clamp(img, 0, 1)
+          img = img.numpy().transpose(1, 2, 0)
+  
+          img = (img * 255.0).round().astype('uint8')
+  
+          img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+          return img
+  
+      if isinstance(imgs, list):
+          return [_toimg(img) for img in imgs]
+      else:
+          return _toimg(imgs)
   ```
 
   

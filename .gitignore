@@ -7,6 +7,7 @@
 # ignore all the directories for codes and datasets
 /**/
 !/docs/
+!research_writing_note/
 
 # User-specific stuff:
 *.pptx

@@ -9,7 +9,6 @@
 > Introduction 总结了现有 video restoration 两类框架：Parallel & recurrent
 
 
-
 ## **Contributions**
 
 - RVRT将视频分成多个片段，**以 clip 为单位提取特征**，利用先前的片段特征来估计后续的片段特征。通过减小视频序列长度并且以更大的隐藏状态传递信息

@@ -19,7 +19,7 @@
 
 **提出的 Latent Bank 全新框架， 验证了融合结构信息 & 自然图像的先验，很有必要 :star:**
 
-![GLEAN_compare](C:\Users\Loki\workspace\Tongji_CV_group\docs\2022_07_TPAMI_GLEAN--Generative-Latent-Bank-for-Image-Super-Resolution-and-Beyond_Note\GLEAN_compare.png)
+![GLEAN_compare](docs\2022_07_TPAMI_GLEAN--Generative-Latent-Bank-for-Image-Super-Resolution-and-Beyond_Note\GLEAN_compare.png)
 
 - 场景
   1. GLEAN 提供额外的自然图像先验，针对高倍率 SR 和输入图像退化很严重时候，能够有效输出
@@ -69,10 +69,11 @@ GAN inversion 利用低维 latent code 引导先验网络，保真度还可以�
 
 ### PULSE
 
-> "PULSE: Self-Supervised Photo Upsampling via Latent Space Exploration of Generative Models"
-> [code](https://github.com/krantirk/Self-Supervised-photo) [blog](https://medium.com/@joniak/keep-your-finger-on-the-pulse-of-the-super-resolution-5201a855e1a0)
+> "PULSE: Self-Supervised Photo Upsampling via Latent Space Exploration of Generative Models" CVPR, 2020 Mar
+> [paper](https://arxiv.org/abs/2003.03808) [code](https://github.com/krantirk/Self-Supervised-photo) [blog_explanation](https://medium.com/@joniak/keep-your-finger-on-the-pulse-of-the-super-resolution-5201a855e1a0)
 
-对 LR 图像 $I_{LR}$ 做超分，给定一堆 HR 图像，PULSE seeks for for a latent vector $z\in \cal{L}(latent~space)$ that minimizes  $downscaling~loss = \abs{\abs{DS(G(z)) - I_{LR}}}_p^p < \epsilon(1e{-3})$ ，$I_{SR}=G(z)$, $DS$ 代表下采样
+对 LR 图像 $I_{LR}$ 做超分，给定一堆 HR 图像（Manifold），如果有 HR 图像下采样后能近似输入的 LR 图像，则认为这个 HR 为输入 LR图像超分的结果。关键在于如何构建一个 HR Manifold，作者用预训练的 latent space 生成模型 $G$ （本文中使用 StyleGAN）的 latent space 去近似这个 Manifold，转化问题为：去 latent space 找与 LR 接近的 latent code。
+PULSE seeks for for a latent vector $z\in \cal{L}(latent~space)$ that minimizes  $downscaling~loss = \abs{\abs{DS(G(z)) - I_{LR}}}_p^p < \epsilon(1e{-3})$ ，$I_{SR}=G(z)$ 生成模型结果, $DS$ 代表下采样
 
 - 缺点：推理很慢，需要不停迭代 latent space 去找合适的 latent code
 
@@ -80,7 +81,8 @@ GAN inversion 利用低维 latent code 引导先验网络，保真度还可以�
 
 ### StyleGAN
 
-> [blog](https://zhuanlan.zhihu.com/p/263554045)
+> "A style-based generator architecture for generative adversarial networks"
+> [paper](https://arxiv.org/abs/1812.04948) [blog](https://zhuanlan.zhihu.com/p/263554045)
 > [Understanding Latent Space in Machine Learning](https://towardsdatascience.com/understanding-latent-space-in-machine-learning-de5a7c687d8d)
 
 ![](https://pic3.zhimg.com/80/v2-b54e4ac6af2ffb7e0b0b7697b64e937e_720w.webp)

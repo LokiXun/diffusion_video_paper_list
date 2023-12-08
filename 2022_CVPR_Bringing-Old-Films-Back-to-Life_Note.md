@@ -51,37 +51,44 @@
 
   无法处理 photometric degradations (e.g., blurriness and noises)；以来手工特征检测 structed artifacts，没有理解内容
 
-- 修复 baseline
 
-  - Deepremaster
 
-  - Bring-Old-photos & temporal smoothing
+- Deepremaster
 
-    > "Learning blind video temporal consistency" ECCV, 2018 Aug
-    > [paper](https://arxiv.org/abs/1808.00449)
+- temporal smoothing
 
-  - BasicVSR
+  "Learning blind video temporal consistency" ECCV, 2018 Aug
+  [paper](https://arxiv.org/abs/1808.00449)
 
-    > "BasicVSR: The Search for Essential Components in Video Super-Resolution and Beyond" CVPR, 2020 Dec
-    >
-    > [paper](https://arxiv.org/abs/2012.02181) [code](https://github.com/ckkelvinchan/BasicVSR-IconVSR) [website](https://ckkelvinchan.github.io/projects/BasicVSR/) [blog explanation](https://zhuanlan.zhihu.com/p/364872992)
+  E-warp Loss as temporal consistency metrics
 
-  - Video Swim
+  相邻帧之间的短期 temporal loss
+  $$
+  \mathcal{L}_{st}=\sum_{t=2}^T\sum_{i=1}^N M_{t\Rightarrow t-1}^{(i)}\left\|O_t^{(i)}-\hat{O}_{t-1}^{(i)}\right\|_1
+  $$
+  $\hat{O}_{t-1}^{(i)}$ 为 ${O}_{t-1}$ 帧用下一帧到当前帧的反向光流 $F_{t\Rightarrow t-1}$ warp ；$ M_{t\Rightarrow t-1}^{(i)}$ 为原始输入视频
 
-    > "Video Swin Transformer" CVPR, 2021 Jun
-    > [paper](https://arxiv.org/abs/2106.13230) [code](https://github.com/SwinTransformer/Video-Swin-Transformer?utm_source=catalyzex.com)
+  光流用 FlowNet，bilinear 去 warp
 
-- 上色 Baseline
+  长期 temporal loss （5帧以上），每帧去和第一帧
 
-  - DeepExemplar
+- "BasicVSR: The Search for Essential Components in Video Super-Resolution and Beyond" CVPR, 2020 Dec
+  [paper](https://arxiv.org/abs/2012.02181) [code](https://github.com/ckkelvinchan/BasicVSR-IconVSR) [website](https://ckkelvinchan.github.io/projects/BasicVSR/) [blog explanation](https://zhuanlan.zhihu.com/p/364872992)
 
-    > "Deep Exemplar-based Video Colorization" CVPR, 2019 Jun
-    > [paper](https://arxiv.org/abs/1906.09909) [code](https://github.com/zhangmozhe/Deep-Exemplar-based-Video-Colorization)
-    > [local pdf](./2019_07_CVPR_Deep-Exemplar-based-Video-Colorization.pdf) [note](./2019_07_CVPR_Deep-Exemplar-based-Video-Colorization_Note.md)
+- "Video Swin Transformer" CVPR, 2021 Jun
+  [paper](https://arxiv.org/abs/2106.13230) [code](https://github.com/SwinTransformer/Video-Swin-Transformer?utm_source=catalyzex.com)
 
-- Flow estimation
+上色 Baseline
 
-  - RAFT
+- DeepExemplar
+
+  > "Deep Exemplar-based Video Colorization" CVPR, 2019 Jun
+  > [paper](https://arxiv.org/abs/1906.09909) [code](https://github.com/zhangmozhe/Deep-Exemplar-based-Video-Colorization)
+  > [local pdf](./2019_07_CVPR_Deep-Exemplar-based-Video-Colorization.pdf) [note](./2019_07_CVPR_Deep-Exemplar-based-Video-Colorization_Note.md)
+
+Flow estimation
+
+- RAFT
 
 
 
@@ -149,10 +156,6 @@
 
 > 4 x 2080Ti >> 44G 显存
 
-
-
-
-
 ### **Ablation Study**
 
 用别的去替换 Temporal Bi-directional RNN， Learnable Guided Mask，Spatial Transformer 看效果
@@ -178,6 +181,7 @@ batchsiz=4, 4*2080Ti
 
 - learning rate is set to 2e-4 for both generators and disc
 - 微调 RAFT
+- PSNR, SSIM, NIQE, BRISQUE, E-warp 指标
 
 
 
@@ -241,6 +245,55 @@ batchsiz=4, 4*2080Ti
 对于上色 task，转换到 LAB 空间来处理
 
 
+
+## Code
+
+### Dataset
+
+Dataset 图像训练数据(LQ, GT)：**RGB 格式**；像素值归一化到 [-1，1] （从 0-255 >>x/255, 用均值和方差=0.5 归一化到 [-1,1]）；
+代码前面的 DA 部分， 都按 `BGR. [-1,1]` 处理，最后 `img2tensor()` 转为 RGB, float32
+
+
+
+- 模型最后加了一层 `tanh()` ，预测输出范围也是 [-1, 1]  RGB 格式
+
+  > cv2.imwrite() 保存 BGR 3通道图像。cv2 BGR 转为 `PIL.Image` RGB 方式
+  >
+  > `Image.fromarray(cv2.cvtColor(ar, cv2.COLOR_BGR2RGB)).convert("L")`
+
+  ```python
+  if config_dict['datasets']['val']['normalizing']:
+      val_output = (val_output + 1)/2
+      gt = (gt + 1)/2
+      lq = (lq + 1)/2
+  torch.cuda.empty_cache()
+  
+  gt_imgs = []
+  sr_imgs = []
+  for j in range(len(val_output)):
+      gt_imgs.append(tensor2img(gt[j]))
+      sr_imgs.append(tensor2img(val_output[j]))
+  
+  
+  def tensor2img(imgs):
+      """
+      Input: t,c,h,w
+      """
+      def _toimg(img):
+  
+          img = torch.clamp(img, 0, 1)
+          img = img.numpy().transpose(1, 2, 0)
+          img = (img * 255.0).round().astype('uint8')
+          img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)  # write using cv2
+          return img
+  
+      if isinstance(imgs, list):
+          return [_toimg(img) for img in imgs]
+      else:
+          return _toimg(imgs)    
+  ```
+
+  
 
 
 
