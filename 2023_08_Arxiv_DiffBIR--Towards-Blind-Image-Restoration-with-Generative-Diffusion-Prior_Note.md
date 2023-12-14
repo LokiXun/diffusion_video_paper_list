@@ -355,6 +355,8 @@ $$
   - no-reference IQA metrics: MANIQA, NIQE
   - BFR: IDS, FID
 
+
+
 ### Exp
 
 - real-world 4x upsampling
@@ -525,7 +527,7 @@ self.cond_encoder = nn.Sequential(OrderedDict([
 
 
 
-`sapced_sampling()` >> `p_sample_spaced()` index 为 N=50 timestep的第几步，t为原先 1000 步的第几步
+`sapced_sampling()` >> `p_sample_spaced()` index 为 N=50 timestep的第几步，t 为原先 1000 步的第几步
 
 > `x_T.shape=(b,4, h/8 == 64, w/8==120)` 随机采样的高斯噪声
 
@@ -533,7 +535,7 @@ self.cond_encoder = nn.Sequential(OrderedDict([
 
 
 
-预测噪声 $\epsilon_t$, 
+预测噪声 $\epsilon_t$
 
 > DiffBIR U-net 模块的[code](https://github.com/XPixelGroup/DiffBIR/blob/26ba8222165b72a1dc42cc86e4538630e45be025/model/spaced_sampler.py#L319) >>`ControlLDM.apply_model()` [code](https://github.com/XPixelGroup/DiffBIR/blob/26ba8222165b72a1dc42cc86e4538630e45be025/model/cldm.py#L343)
 

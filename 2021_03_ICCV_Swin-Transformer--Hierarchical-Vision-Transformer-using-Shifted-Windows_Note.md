@@ -212,6 +212,42 @@ SwinTransformer 区别在于加了相对位置编码和 mask
 
 
 
+### mask
+
+![](https://pic4.zhimg.com/80/v2-b07efe0f45aef515b8464a7db124afaf_1440w.webp)
+
+![](https://pic1.zhimg.com/80/v2-5c3205c71cd53521e9f62b7476dec2e8_1440w.webp)
+
+整体看各个 window
+
+> 这张图里面的原始是对应像素（特征）， window 概念。后续对特征拉直
+
+![](https://pic3.zhimg.com/80/v2-9ce8b7bfcc3a5c2d4cb0a87c90efa66a_1440w.webp)
+
+
+
+> `slice(start, end, step)` 访问某一范围的元素
+
+在某一窗口维度上，切割为（原始窗口范围，shift 后仍为原始位置的小窗口，shift 过来的窗口）`slice(-window_size[0])` 访问第 0 个 window，设为 0；
+
+```python
+def compute_mask(D, H, W, window_size, shift_size, device):
+    img_mask = torch.zeros((1, D, H, W, 1), device=device)  # 1 Dp Hp Wp 1
+    cnt = 0
+    for d in slice(-window_size[0]), slice(-window_size[0], -shift_size[0]), slice(-shift_size[0], None):
+        for h in slice(-window_size[1]), slice(-window_size[1], -shift_size[1]), slice(-shift_size[1], None):
+            for w in slice(-window_size[2]), slice(-window_size[2], -shift_size[2]), slice(-shift_size[2], None):
+                img_mask[:, d, h, w, :] = cnt
+                cnt += 1
+    mask_windows = window_partition(img_mask, window_size)  # nW, ws[0]*ws[1]*ws[2], 1 >> 特征拉直
+    mask_windows = mask_windows.squeeze(-1)  # nW, ws[0]*ws[1]*ws[2]
+    attn_mask = mask_windows.unsqueeze(1) - mask_windows.unsqueeze(2)  # >> 广播
+    attn_mask = attn_mask.masked_fill(attn_mask != 0, float(-100.0)).masked_fill(attn_mask == 0, float(0.0))
+    return attn_mask
+```
+
+
+
 
 
 ## Experiment

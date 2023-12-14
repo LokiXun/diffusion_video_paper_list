@@ -69,7 +69,7 @@
 
 ### LDMs
 
-Compared with pixel-space DMs, LDM use a compression model to map the image to **latent space, which lower complexity(smaller memory cost,** parameters count)**
+Compared with pixel-space DMs, LDM use a compression model to map the image to **latent space, which lower complexity(smaller memory cost,** parameters count)
 
 ### Cascaded DM
 

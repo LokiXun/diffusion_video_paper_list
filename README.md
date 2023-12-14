@@ -1,4 +1,4 @@
-# Diffusion_Journey:gun:
+# Diffusion_Journey :gun:  {ignore=true}
 
 > This document mainly works as an **paper List in categories** :cat:
 > Also, our notes for read papers are linked beside, which could hFelp us recall the main idea in paper more quickly.
@@ -27,6 +27,34 @@
 > - [GPU comparison website](https://topcpu.net/gpu-c/GeForce-RTX-4090-vs-Tesla-V100-PCIe-32-GB)
 > - [CCF Rec. Conference Deadlines](https://ccfddl.github.io/)
 > - [get stamp for github stars](https://shields.io/)
+
+
+
+## Table Of Content
+
+[toc]
+
+
+
+
+
+## Q&A{ignore=True}
+
+> **Problem Formulation**: It's **quite slow to read a paper just to get enlightenment for ideas**. This would attribute to not being able to read much paper in one field to get whole picture and forget previous paper's idea after 1-2 weeks. *Not able to generate ideas is caused by little accumulation.* Some modules in paper are proposed to make up 2 novelties and may have not much enlightenment on our work. In this case, it's not worth it to spend much time read it and find not that helpful when finished.
+>
+> In order to solve that problem, we should **scan the paper within 30mins at maximum at first read** and it's ok not to understand every details at first time! **In this section, we could record the meaningful papers and corresponding problems to remind us figure out some problems that we met later**.
+>
+> Also, we should read paper with purpose, like when we need to solve scratch detection problems then we search paper with this objective. First read collected paper coarsely and understand the methods(whole pipeline) at minimum level. If find helpful, then check the code and read in details. And **quickly apply the idea to our framework, which is the objective and most significant stuff!** :moneybag: If find not much enlightenment, then quickly turn to search other papers.
+>
+> However, In these cases, some paper includes some basics knowledge, formulations, like DDPM, or the paper we need further modify. It's worth it to spend 1-2 days to understand every little details or line of code.
+
+- "SeeSR: Towards Semantics-Aware Real-World Image Super-Resolution" Arxiv, 2023 Nov :star:
+  [paper](http://arxiv.org/abs/2311.16518v1) [code]() 
+  [note](./2023_11_Arxiv_SeeSR--Towards-Semantics-Aware-Real-World-Image-Super-Resolution_Note.md)
+
+  看具体实现
+
+
 
 
 
@@ -187,13 +215,16 @@
 
 
 
-## Diffusion in Video
+## Video Diffusion
 
 > [Awesome Video Diffusion](https://github.com/showlab/Awesome-Video-Diffusion)
 > [paper with code searching 'diffusion video'](https://paperswithcode.com/search?q_meta=&q_type=&q=diffusion+video) :+1:
 >
-> "A Survey on Video Diffusion Models"
-> [paper](https://arxiv.org/pdf/2310.10647.pdf)
+> - "A Survey on Video Diffusion Models"
+>   [paper](https://arxiv.org/pdf/2310.10647.pdf)
+
+- [ ] "Video Diffusion Models" CVPR, 2022 Apr
+  [paper](https://arxiv.org/abs/2204.03458v2)
 
 - [ ] "Imagen Video: High Definition Video Generation with Diffusion Models" Arxiv, 2022 Oct :star: 
   [paper](https://arxiv.org/abs/2210.02303)
@@ -283,7 +314,7 @@
 - [ ] "StableVideo: Text-driven Consistency-aware Diffusion Video Editing" ICCV. 2023 Aug
   [paper](https://arxiv.org/abs/2308.09592) [code](https://github.com/rese1f/StableVideo)
 
-- [ ] "CoDeF: Content Deformation Fields for Temporally Consistent Video Processing" Arxiv, 2023 Aug :star:
+- [x] "CoDeF: Content Deformation Fields for Temporally Consistent Video Processing" Arxiv, 2023 Aug :star:
   [paper](https://arxiv.org/abs/2308.07926) [code](https://github.com/qiuyu96/codef) [website](https://qiuyu96.github.io/CoDeF/) [![Star](https://camo.githubusercontent.com/d2dd0fe7649113630ad8a2aff29ee15fe78f6d2dd4a19385121ee2b26fc6cc7c/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f73746172732f716975797539362f436f4465462e7376673f7374796c653d736f6369616c266c6162656c3d53746172)](https://github.com/qiuyu96/CoDeF)
   [note](./2023_08_Arxiv_CoDeF--Content-Deformation-Fields-for-Temporally-Consistent-Video-Processing_Note.md)
 
@@ -297,6 +328,12 @@
 - [ ] "VideoCrafter1: Open Diffusion Models for High-Quality Video Generation" Arxiv, 2023 Oct
   [paper](https://arxiv.org/abs/2310.19512) [code](https://github.com/AILab-CVC/VideoCrafter)
   [note](./2023_10_Arxiv_VideoCrafter1--Open-Diffusion-Models-for-High-Quality-Video-Generation_Note.md)
+  
+- [ ] "Stable Video Diffusion: Scaling Latent Video Diffusion Models to Large Datasets" CVPR, 2023 Nov
+  [paper](https://arxiv.org/abs/2311.15127) [code](https://github.com/Stability-AI/generative-models)
+  
+- [ ] "VideoBooth: Diffusion-based Video Generation with Image Prompts" CVPR, 2023 Dec
+  [paper](https://arxiv.org/abs/2312.00777)
 
 
 
@@ -459,6 +496,19 @@
 
 
 
+### findings
+
+- [x] "FreeU: Free Lunch in Diffusion U-Net" CVPR, 2023 Sep
+  [paper](https://arxiv.org/abs/2309.11497)
+
+  > improves diffusion model sample quality at no costs: no training, no additional parameter introduced, and no increase in memory or sampling time.
+  >
+  > 可视化发现 U-Net Encoder 的残差主要是高频信息，含有较多噪声。因此先用 FFT 和 IFFT 变换降低高频信息，将 UNet decoder 特征乘个系数（加大权重）再 concat
+
+
+
+
+
 ### Generative Prior
 
 > get prior info from large-scale model
@@ -539,6 +589,8 @@
   [paper](https://arxiv.org/abs/2308.15070) [code](https://github.com/xpixelgroup/diffbir) [website](https://0x3f3f3f3fun.github.io/projects/diffbir/)
   [note](./2023_08_Arxiv_DiffBIR--Towards-Blind-Image-Restoration-with-Generative-Diffusion-Prior_Note.md)
   
+  > diffusion 先验实现 real-world 修复
+  
 - [ ] "Are Diffusion Models Vision-And-Language Reasoners"
   [code](https://github.com/McGill-NLP/diffusion-itm)
 
@@ -552,6 +604,13 @@
   [note](./2023_10_CVPR_DreamCraft3D--Hierarchical-3D-Generation-with-Bootstrapped-Diffusion-Prior_Note.md)
 
   > 训练合成新视角的 diffusion 出图，辅助生成 3D 模型；用 stable diffusion 用 VSD loss 细化细节?
+  
+- [x] "Text-to-Image Generation for Abstract Concepts" AAAI, 2023 Sep
+  [paper](https://arxiv.org/abs/2309.14623) [note](./2023_09_AAAI_Text-to-Image-Generation-for-Abstract-Concepts_Note.md)
+
+  > 抽象概念的 text2image，分解为理解层次（object，form） 优化 prompt
+
+
 
 
 
@@ -578,13 +637,33 @@
 - [ ] "Stable Diffusion Reference Only: Image Prompt and Blueprint Jointly Guided Multi-Condition Diffusion Model for Secondary Painting" Arxiv, 2023 Nov
   [paper](http://arxiv.org/abs/2311.02343v1) [code](https://github.com/aihao2000/stable-diffusion-reference-only) 
   [note](./2023_11_Arxiv_Stable-Diffusion-Reference-Only--Image-Prompt-and-Blueprint-Jointly-Guided-Multi-Condition-Diffusion-Model-for-Secondary-Painting_Note.md)
+  
+- [x] "DiffiT: Diffusion Vision Transformers for Image Generation" CVPR, 2023 Dec :baby_chick:
+  [paper](https://arxiv.org/abs/2312.02139) [code](https://github.com/NVlabs/DiffiT)
+
+  > 引入了一种新的时间依赖的自注意力模块，允许注意力层以高效的方式适应其在去噪过程中的不同阶段的行为
+  >
+  > ![image-20231211095709811](docs/README/DiffiT_framework.png)
 
 
 
-### inpaint
+
+
+### restoration
 
 - [x] "SketchFFusion: Sketch-guided image editing with diffusion model" CVPR, 2023 Apr
   [paper](https://arxiv.org/abs/2304.03174)
+  
+- [x] "SinDDM: A Single Image Denoising Diffusion Model" ICML, 2022 Nov
+  [paper](https://arxiv.org/abs/2211.16582) [code](https://github.com/fallenshock/SinDDM)
+
+  > 多尺度 DDPM 去噪
+  >
+  > ![image-20231210023156266](docs/README/SinDDM_framework.png)
+  >
+  > 
+
+
 
 
 
@@ -756,12 +835,25 @@
   > 极简标定流程下的 **RAW 去噪** & **少量配对数据（6对）和快速微调**即可适应目标相机, **0.2% 原来训练时间**实现 SOTA
   > [blog 相机标定基础知识](https://zhuanlan.zhihu.com/p/397873289)
   
-- [ ] "Single Image Reflection Separation via Component Synergy" ICCV, 2023 Aug, DSR-net
+- [x] "Single Image Reflection Separation via Component Synergy" ICCV, 2023 Aug, DSR-net
   [paper](https://arxiv.org/abs/2308.10027) [code](https://github.com/mingcv/DSRNet)
 
   > 8.22 图像反射分解 single image reflection separation task，重新定义数学模型 $I = W ◦ T + \bar{W} ◦ R$; dual 网络出来的分支，再去用一个网络预测残差
   > dual-stream, reconstruction loss with residual correction
   
+- [x] "Pixel-Aware Stable Diffusion for Realistic Image Super-resolution and Personalized Stylization" CVPR, 2023 Aug, PASD
+  [paper](http://arxiv.org/abs/2308.14469v2) [code](https://github.com/yangxy/PASD) 
+  [note](./2023_08_Arxiv_Pixel-Aware-Stable-Diffusion-for-Realistic-Image-Super-resolution-and-Personalized-Stylization_Note.md)
+
+- [x] "SeeSR: Towards Semantics-Aware Real-World Image Super-Resolution" Arxiv, 2023 Nov :star:
+  [paper](http://arxiv.org/abs/2311.16518v1) [code](https://github.com/cswry/SeeSR)
+  [note](./2023_11_Arxiv_SeeSR--Towards-Semantics-Aware-Real-World-Image-Super-Resolution_Note.md)
+
+  > 微调 stable diffusion
+
+
+
+
 
 ### Colorization
 
@@ -1006,7 +1098,7 @@
   
   > Deformable attn 用于图像 SR
   
-- [ ] "Exploiting Diffusion Prior for Real-World Image Super-Resolution" Arxiv, 2023 Mar, **Stable-SR**
+- [ ] "Exploiting Diffusion Prior for Real-World Image Super-Resolution" Arxiv, 2023 May, **Stable-SR**
   [paper](https://arxiv.org/abs/2305.07015) [code](https://github.com/IceClear/StableSR) [website](https://iceclear.github.io/projects/stablesr/?utm_source=catalyzex.com) :star:
   [paper local pdf](./2023_preprint_Exploiting-Diffusion-Prior-for-Real-World-Image-Super-Resolution.pdf)
   
@@ -1049,6 +1141,8 @@
   > generated video is temporal consistent, 效果很不错
   > 使用 video atlas
 
+  
+  
 - [ ] "StableVideo: Text-driven Consistency-aware Diffusion Video Editing" ICCV. 2023 Aug
   [paper](https://arxiv.org/abs/2308.09592) [code](https://github.com/rese1f/StableVideo)
 
@@ -1168,7 +1262,7 @@
 
   [paper](https://arxiv.org/abs/1905.02716) [code](https://github.com/xinntao/EDVR)
 
-- [ ] "ESRGAN: Enhanced Super-Resolution Generative Adversarial Networks" ECCV, 2018 Sep, **ESRGAN(Enhanced SRGAN)** :star:
+- [x] "ESRGAN: Enhanced Super-Resolution Generative Adversarial Networks" ECCV, 2018 Sep, **ESRGAN(Enhanced SRGAN)** :star:
   [paper](https://arxiv.org/abs/1809.00219) [code](https://github.com/xinntao/ESRGAN)
 
 - [ ] "Real-ESRGAN: Training Real-World Blind Super-Resolution with Pure Synthetic Data" ICCV, 2021 Aug :rocket:
@@ -1831,6 +1925,11 @@
   [paper](https://arxiv.org/abs/2201.03545)
 
   > 当作卷积
+  
+- [ ] "Learning to Upsample by Learning to Sample" ICCV, 2023 Aug
+  [paper](https://arxiv.org/abs/2308.15085) [code](https://github.com/tiny-smart/dysample)
+
+  对特征进行上采样方式，先前都是 bilinear+Conv; PixelShuffle
 
 
 
@@ -2225,6 +2324,14 @@
 
 
 
+### distribution mismatch
+
+1. 如何验证是否存在特征分布不均衡？
+
+
+
+
+
 **NLP & 多模态**
 
 - [ ] Multimodal Prompting with Missing Modalities for Visual Recognition
@@ -2409,6 +2516,8 @@
 
 
 ## Impressive Blog
+
+- [数字图像处理 Note](./digital_image_processing_note.md)
 
 - https://lilianweng.github.io/posts/2023-06-23-agent/
 
@@ -2763,7 +2872,51 @@
     [paper](https://drive.google.com/drive/my-drive)
     
   - "Deep Spectral Methods: A Surprisingly Strong Baseline for Unsupervised Semantic Segmentation and Localization"
+  
+  - "Self-conditioned Image Generation via Generating Representations"
+  
+  - "Extracting Training Data from Diffusion Models"
+  
+  - "Self-conditioned Image Generation via Generating Representations"
+    [paper](https://arxiv.org/pdf/2312.03701.pdf)
+  
+- 12.13
 
+  - "Diffusion Model for Camouflaged Object Detection"
+
+  - "Discrete Cosine Transform Network for Guided Depth Map Super-Resolution"
+
+  - "UC-Net: Uncertainty Inspired RGB-D Saliency Detection via Conditional Variational Autoencoders"
+    [code](https://github.com/JingZhang617/UCNet)
+
+  - "Attend-and-Excite: Attention-Based Semantic Guidance for Text-to-Image Diffusion Models" SIGGRAPH, 2023 Jan
+    [paper](https://arxiv.org/abs/2301.13826) [code](https://github.com/yuval-alaluf/Attend-and-Excite)
+
+    很简单明了的idea，分析stable diffusion的一些特性，解决方案是推理过程中smooth attention map
+
+  - "Physics-Driven Turbulence Image Restoration with Stochastic Refinement" ICCV, 2023 Jul
+    [paper](https://arxiv.org/abs/2307.10603) [code](https://github.com/VITA-Group/PiRN)
+
+  - "Solving 3D Inverse Problems using Pre-trained 2D Diffusion Models"
+    [paper]() [code](https://github.com/HJ-harry/DiffusionMBIR)
+
+  - "SinDDM: A Single Image Denoising Diffusion Model"
+    [paper]() [code](https://github.com/fallenshock/SinDDM)
+
+  - "CABM: Content-Aware Bit Mapping for Single Image Super-Resolution Network with Large Input"
+    [code](https://github.com/Sheldon04/CABM-pytorch)
+
+  - "MulT: An End-to-End Multitask Learning Transformer"
+    [code](https://github.com/IVRL/MulT )
+
+  - "MED-VT: Multiscale Encoder-Decoder Video Transformer with Application to Object Segmentation"
+
+    [code](https://github.com/rkyuca/medvt)
+
+  - "Cross-Modal Learning with 3D Deformable Attention for Action Recognition"
+
+  - "Memory-Aided Contrastive Consensus Learning for Co-salient Object Detection"
+    [code](https://github.com/ZhengPeng7/MCCL)
 
 
 
