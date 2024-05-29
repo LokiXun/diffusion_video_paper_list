@@ -162,7 +162,7 @@ PULSE seeks for for a latent vector $z\in \cal{L}(latent~space)$ that minimizes 
 
 ### Light-GLEAN
 
-![image-20230921175254661](C:\Users\Loki\workspace\Tongji_CV_group\docs\2022_07_TPAMI_GLEAN--Generative-Latent-Bank-for-Image-Super-Resolution-and-Beyond_Note\image-20230921175254661.png)
+![GLEAN_overview.png](docs\2022_07_TPAMI_GLEAN--Generative-Latent-Bank-for-Image-Super-Resolution-and-Beyond_Note\GLEAN_overview.png)
 
 > propose the following two strategies to simplify the structure of GLEAN. **LightGLEAN has only 21% of parameters when compared to GLEAN**
 >

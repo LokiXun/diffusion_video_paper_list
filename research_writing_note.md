@@ -4,6 +4,40 @@
 
 - 论文中值得参考的语言表达，行文顺序/逻辑
 - 文献整理工具
+- 论文写作教程
+
+
+
+## tutorial
+
+- "The Most Common Habits from more than 200 English Papers written by  Graduate Chinese Engineering Students"
+  [paper](https://www.semanticscholar.org/paper/The-Most-Common-Habits-from-more-than-200-English/a80b02201a44e69fcf5f1b037327449d292b0f10) [pdf](./The Most Common Habits from more than 200 English Papers written by Graduate Chinese Engineering Students.pdf)
+
+### Not work?
+
+> [Frustration with machine learning and deep learning research](https://academia.stackexchange.com/questions/175209/frustration-with-machine-learning-and-deep-learning-research)
+
+不 work 要知道为什么不 work
+
+> **Why was the theory wrong?** "It didn't work" is not the end -- the end is knowing why it didn't work. There are at least two possible answers:
+
+
+
+确保代码没问题；疯狂加 assert ，例如输入输出 tensor 的 range， cross-attention 是否用到了 KV 特征还是没做 cross 只是做了 self-attn
+
+> do many "sanity checks" before running the complicated, conclusive experiment or calculation
+
+尽可能简化模型，达到一个能 work & **快速能得到反馈的状态；之后再加模块，看哪个模块导致了不 work**
+
+> I always suggest the opposite: start with the simplest possible thing (e.g., 16x16 thumbnail images) and verify that that works as expected. Keep simplifying until it does the right thing (and ideally, until it runs very quickly, allowing you to run experiments in near-real time). 
+>
+> Then you can **slowly add back the complexity.** In this way, you can ensure things are implemented correctly, and if it ends up not working, you'll have some intuition for why the original idea didn't work in practice.
+
+- GAN 很难训，会增加训练时间；简化的模型里面先暂时不用
+
+
+
+
 
 ## structure
 
@@ -90,6 +124,10 @@
 MLA是Modern Language Association的缩写，是美国现代语言协会制定的论文指导格式，相比APA，CMS等格式来说，MLA论文格式更加严谨，更加常用
 
 `Wan, Ziyu, et al. "Bringing old films back to life." *Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition*. 2022.`
+
+
+
+文献引用的常用方法和技巧，能清楚地展示前人已经研究了什么，研究的困难和挑战在什么地方
 
 
 
@@ -232,6 +270,18 @@ $$
   “i.e.”是拉丁短语id est的缩写，意思是“也就是说”或“换句话说” (that is)
 
   **e.g. 提供例子，所以e.g. 倾向于增加选项的数量；而i.e.提供澄清或精确的信息，所以i.e.倾向于缩小选项的数量。**
+  
+- `Some` 不要用，直接写 Exiting works 就可
+
+
+
+
+
+### 时态
+
+自己工作（abstract,intro, methos, exp ...）一般现在时，描述客观事实。
+
+related work 可以用一般过去时。
 
 
 
@@ -242,6 +292,24 @@ $$
 > "Clearer Frames, Anytime: Resolving Velocity Ambiguity in Video Frame Interpolation" Arxiv, 2023 Nov
 > [paper]() [website](https://zzh-tech.github.io/InterpAny-Clearer/)
 > [note](./2023_11_Arxiv_Clearer-Frames--Anytime--Resolving-Velocity-Ambiguity-in-Video-Frame-Interpolation_Note.md)
+
+**Abstract**
+
+1. 研究背景
+2. 目前存在的问题
+3. contribution
+
+
+
+**Introduction**
+
+要有总结性的写，例如：一部分人提出基于哈希编码的（列几个工作），一部分。。。
+
+不要仅仅罗列
+
+
+
+
 
 
 
@@ -285,6 +353,136 @@ $$
 
 
 
+- 不同的模块，背景不要用一个
+- Nature Science 
+  - 配色表
+  - 属性图，表格
+
+
+
+
+
 ### 配色
 
-> [blog](https://mp.weixin.qq.com/s/iNK1YvZTxQg2CeqRAmMXFA)
+> [0blog](https://mp.weixin.qq.com/s/iNK1YvZTxQg2CeqRAmMXFA) 
+>
+> [科研配色｜ 第5期. CNS科研配色闭眼抄！](https://mp.weixin.qq.com/s/yKPB9ZK0Nv4BPmokG1B-yA) 
+> [科研配色 | 第6期： Nature文章中的缤纷nature配色！](https://mp.weixin.qq.com/s/Mp9ewGtpU2VO3pwedfiJUQ)  :star:  
+> [科研配色 | 第7期 清冷色系和堆叠图色系](https://mp.weixin.qq.com/s/0wrRm8R13UoSf_RzPQ2sUQ) 
+> [科研配色 blog8](https://mp.weixin.qq.com/s/p3zngb9V7PTfvukmXeq8xw)
+
+Drawio 取色器：点一个模块，`样式` 中点击颜色区域的画笔，进去点击大的画笔
+
+
+
+- 双色
+
+![image-20240131230543576](docs/research_writing_note/image-20240131230543576.png)
+
+```
+#97C8AF
+#96B6D8
+```
+
+
+
+![image-20240131231158113](docs/research_writing_note/image-20240131231158113.png)
+
+```
+#42BCB2 #235689  #A5CFE3 #197AB7 #55759E #CFD4D7
+```
+
+
+
+
+
+- 多色搭配
+
+![image-20240131231536506](docs/research_writing_note/image-20240131231536506.png)
+
+![image-20240131231508309](docs/research_writing_note/image-20240131231508309.png)
+
+
+
+渐进配色 :+1:
+
+![image-20240131230712098](docs/research_writing_note/image-20240131230712098.png)
+
+```
+#712274 #bc388b df639c#ec9ab4 #efb1bb #f5d4ce
+```
+
+
+
+<img src="docs/research_writing_note/image-20240131230916534.png" alt="image-20240131230916534" style="zoom:33%;" />
+
+```
+#992f87 #c9a2c6 #552e81 #a695bd #efae42 #f9daa6
+```
+
+
+
+
+
+![image-20240131225515245](docs/research_writing_note/image-20240131225515245.png)
+
+浅色
+
+```
+#F1DBE7
+#E0F1F7
+#DBD8E9
+#DEECD9
+#D0D2D4
+```
+
+深色
+
+```
+9BC985
+F7D58B
+B595BF
+797BB7
+```
+
+
+
+![image-20240131230309611](docs/research_writing_note/image-20240131230309611.png)
+
+```
+#9DDOC7
+#9180AC
+#D9BDD8
+#E58579
+#8AB1D2
+```
+
+
+
+![image-20240131225749700](docs/research_writing_note/image-20240131230112633.png)
+
+```
+#EEC79F
+#F1DFA4
+#74B69F
+#A6CDE4
+#E2C8D8
+```
+
+
+
+![](docs/research_writing_note/image-20240131225749700.png)
+
+```
+#CC88B0
+#998DB7
+#DBEOED
+#87B5B2
+#F4CEB4
+```
+
+
+
+## 论文写作课程
+
+> [course](https://tongxuetang.tongji.edu.cn/course/1445/task/5018/show#)

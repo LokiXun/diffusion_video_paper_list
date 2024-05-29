@@ -91,7 +91,7 @@ Compared with pixel-space DMs, LDM use a compression model to map the image to *
 
 `Section 3` describe how we video **fine-tune pre-trained image LDMs (and DM upsamplers) for high-resolution video synthesis.**  **turn pre-trained image diffusion models into temporally consistent video generators.**
 
-![VideoLDM_temporal_finetune.png](./docs/VideoLDM_temporal_finetune.png)
+![VideoLDM_temporal_finetune.png](docs/2023_04_CVPR_Align-your-Latents--High-Resolution-Video-Synthesis-with-Latent-Diffusion-Models_Note/VideoLDM_temporal_finetune.png)
 
 直接用 stable diffusion 一帧帧生成 batch frames, 生成的结果互不相关。引出文章里面的 temporal finetune.
 
@@ -103,7 +103,7 @@ Initially, different samples of a batch synthesized by the model are independent
 
 ### pipline
 
-![VideoLDM_structure.png](./docs/VideoLDM_structure.png)
+![VideoLDM_structure.png](docs/2023_04_CVPR_Align-your-Latents--High-Resolution-Video-Synthesis-with-Latent-Diffusion-Models_Note/VideoLDM_structure.png)
 
 1. 首先生成离散的关键帧；
 2. 用 interpolation LDM 进行插值，在关键帧之间进行时序插值，以实现较高的帧率；
@@ -115,11 +115,11 @@ Initially, different samples of a batch synthesized by the model are independent
 
 - 改进 temporal layer in U-net block
 
-![VideoLDM_temporal_layers.png](./docs/VideoLDM_temporal_layers.png)
+![VideoLDM_temporal_layers.png](docs/2023_04_CVPR_Align-your-Latents--High-Resolution-Video-Synthesis-with-Latent-Diffusion-Models_Note/VideoLDM_temporal_layers.png)
 
 对于 pretrained-LDM 的 downsample / upsample layers 加入 temporal layer(此图右侧部分绿色的 Conv3D & temporal atten 组成)
 
-![VideoLDM_temporal_layers_formula.png](./docs/VideoLDM_temporal_layers_formula.png)
+![VideoLDM_temporal_layers_formula.png](docs/2023_04_CVPR_Align-your-Latents--High-Resolution-Video-Synthesis-with-Latent-Diffusion-Models_Note/VideoLDM_temporal_layers_formula.png)
 
 > :bulb: By **fixing the Spatial layers from pretrained LDMs**, A crucial advantage of our strategy is that **huge image datasets can be used to pre-train the spatial layers, while the video data, which is often less widely available, ** 解决视频数据少的问题 :star::star::star:
 
@@ -143,7 +143,7 @@ Initially, different samples of a batch synthesized by the model are independent
 
   T 帧的序列，让模型先生成开头的 S 帧。对 (T-S) -> T 帧加上 mask 让模型预测。**用 mask 和 masked encoded frames (frame先用 image LDM encode, 乘上 mask) 作为 conditioning**
 
-  ![VideoLDM_long_term_generation_mask.png](./docs/VideoLDM_long_term_generation_mask.png)
+  ![VideoLDM_long_term_generation_mask.png](docs/2023_04_CVPR_Align-your-Latents--High-Resolution-Video-Synthesis-with-Latent-Diffusion-Models_Note/VideoLDM_long_term_generation_mask.png)
 
 - **inference for generating long videos**
 
@@ -169,7 +169,7 @@ Initially, different samples of a batch synthesized by the model are independent
 
 使用 mask 的 conditioning 方式和 [Section Long-Term Generation](#Long-Term Generation) 中一样
 
-![VideoLDM_structure.png](./docs/VideoLDM_structure.png)
+![VideoLDM_structure.png](docs/2023_04_CVPR_Align-your-Latents--High-Resolution-Video-Synthesis-with-Latent-Diffusion-Models_Note/VideoLDM_structure.png)
 
 
 

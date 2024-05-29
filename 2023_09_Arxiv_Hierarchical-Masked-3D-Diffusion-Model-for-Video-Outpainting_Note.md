@@ -2,7 +2,7 @@
 
 > "Hierarchical Masked 3D Diffusion Model for Video Outpainting" Arxiv, 2023 Sep
 > [paper](https://arxiv.org/abs/2309.02119) [website](https://fanfanda.github.io/M3DDM/)
-> [paper local pdf](./2023_09_Arxiv_Hierarchical-Masked-3D-Diffusion-Model-for-Video-Outpainting.pdf)
+> [pdf](./2023_09_Arxiv_Hierarchical-Masked-3D-Diffusion-Model-for-Video-Outpainting.pdf)
 
 ## Keypoint
 

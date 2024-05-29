@@ -356,6 +356,18 @@ StableSR 直接再 decoder 外面加残差跳连处理一下，再加入到 deco
 
 
 
+### Image Encoder
+
+- Q：Image Encoder 结构？
+
+  Image Encoder 结构使用 ControlNet 原文中的 image encoder " Adding conditional control to text-to-image diffusion models"
+
+> we use a **tiny network E(·) of four convolution layers with 4 × 4 kernels and 2 × 2 strides** (activated by ReLU, using 16, 32, 64, 128, channels respectively, initialized with Gaussian weights and trained jointly with the full model) to encode an image-space condition ci into a feature space conditioning vector cf
+
+
+
+### Tagging Model
+
 ### finetune :star:
 
 finetune the entire DAPE module from RAM [71] using LORA (r = 8) [22] for 20k iterations

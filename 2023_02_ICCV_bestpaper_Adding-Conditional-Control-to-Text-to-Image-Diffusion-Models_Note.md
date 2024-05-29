@@ -32,9 +32,19 @@
 
 ## **methods**
 
+### image-encoder
+
+模仿 SD 的 VQ-GAN 将 512x512 图像转换到 64x64 的 feature space
+
+we use a **tiny network E(·) of four convolution layers with 4 × 4 kernels and 2 × 2 strides** (activated by ReLU, using 16, 32, 64, 128, channels respectively, initialized with Gaussian weights and trained jointly with the full model) to encode an image-space condition ci into a feature space conditioning vector cf
+
+
+
+
+
 ### zero-conv :key:
 
-> - :question: 什么是 `zero-conv` ?
+> - Q： 什么是 `zero-conv` ? 把卷积核的参数置0
 >
 > - [QA: Why "zero convolution" works?](https://github.com/lllyasviel/ControlNet/blob/main/docs/faq.md)
 >   $$

@@ -1,8 +1,7 @@
 # RefineDNet: A Weakly Supervised Refinement Framework for Single Image Dehazing
 
-> "RefineDNet: A Weakly Supervised Refinement Framework for Single Image Dehazing" TIP, 2021 Mar
-> [paper](https://ieeexplore.ieee.org/document/9366772) [code](https://github.com/xiaofeng94/RefineDNet-for-dehazing) 
-> [pdf](./2021_03_TIP_RefineDNet--A-Weakly-Supervised-Refinement-Framework-for-Single-Image-Dehazing.pdf)
+> "RefineDNet: A Weakly Supervised Refinement Framework for Single Image Dehazing" TIP, 2021 Mar, `RefineDNet`
+> [paper](https://ieeexplore.ieee.org/document/9366772) [code](https://github.com/xiaofeng94/RefineDNet-for-dehazing) [pdf](./2021_03_TIP_RefineDNet--A-Weakly-Supervised-Refinement-Framework-for-Single-Image-Dehazing.pdf) [note](./2021_03_TIP_RefineDNet--A-Weakly-Supervised-Refinement-Framework-for-Single-Image-Dehazing_Note.md)
 > Authors: [Shiyu Zhao](https://ieeexplore.ieee.org/author/37086638386); [Lin Zhang](https://ieeexplore.ieee.org/author/37406079100); [Ying Shen](https://ieeexplore.ieee.org/author/37085566774); [Yicong Zhou](https://ieeexplore.ieee.org/author/37399620500)
 
 ## Key-point
@@ -36,10 +35,19 @@ Existing dehazing methods can be roughly classified into two categories
 `Koschmieder’s law`
 $$
 I\left(\mathbf{x}\right)=J\left(\mathbf{x}\right)t\left(\mathbf{x}\right)+A\left(1-t\left(\mathbf{x}\right)\right). \\
-\text{$I\left(\mathbf{x}\right)$ is foggt image, $J\left(\mathbf{x}\right)$ is clean img;}\\
+\text{$I\left(\mathbf{x}\right)$ is foggy image, $J\left(\mathbf{x}\right)$ is clean img;}\\
 \text{$t(x)$ is the transmission of the intrinsic luminance in the atmosphere, A is ambient light}
 $$
 there are more than two unknown variables in Koschmieder’s law 没法直接只用一个 foggy 输入求解，**proposed various priors as extra constraints** to find a proper solution for $J(x)$ ；但这些 prior 只能针对特定场景才有效果
+
+![image-20231219122732325](docs/2021_03_TIP_RefineDNet--A-Weakly-Supervised-Refinement-Framework-for-Single-Image-Dehazing_Note/image-20231219122732325.png)
+
+- "Single image haze removal using dark channel prior"
+  [blog](https://zhuanlan.zhihu.com/p/440903916)
+
+
+
+
 
 ###  learning-based approach
 
@@ -63,7 +71,7 @@ there are more than two unknown variables in Koschmieder’s law 没法直接只
 
 ## methods
 
-![image-20231110144559503](docs/2021_03_TIP_RefineDNet--A-Weakly-Supervised-Refinement-Framework-for-Single-Image-Dehazing_Note/RefineDNet_structure.png)
+![RefineDNet_structure.png](docs/2021_03_TIP_RefineDNet--A-Weakly-Supervised-Refinement-Framework-for-Single-Image-Dehazing_Note/RefineDNet_structure.png)
 
 
 

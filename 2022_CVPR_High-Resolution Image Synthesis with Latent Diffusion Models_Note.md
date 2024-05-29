@@ -1,7 +1,7 @@
 # High-Resolution Image Synthesis with Latent Diffusion Models (stable diffusion)
 
 > [github](https://github.com/CompVis/stable-diffusion) ![GitHub Repo stars](https://img.shields.io/github/stars/CompVis/stable-diffusion?style=social)
-> [paper local pdf](./2022_CVPR_High-Resolution Image Synthesis with Latent Diffusion Models.pdf)
+> [pdf](./2022_CVPR_High-Resolution Image Synthesis with Latent Diffusion Models.pdf)
 > [Youtube 博主解读](https://www.youtube.com/watch?v=f6PtJKdey8E) [知乎博客](https://zhuanlan.zhihu.com/p/597247221) [towardScience 博客](https://towardsdatascience.com/paper-explained-high-resolution-image-synthesis-with-latent-diffusion-models-f372f7636d42) :+1:
 > [What can Stable Diffusion do?](https://stable-diffusion-art.com/how-stable-diffusion-work/)
 > [Stable Diffusion with 🧨 Diffusers](https://huggingface.co/blog/stable_diffusion#how-does-stable-diffusion-work)
@@ -292,7 +292,6 @@ configs/latent-diffusion/cin-ldm-vq-f8.yaml
 
 >  in `ldm/models/diffusion/ddpm.py`
 >  configure file=`configs/latent-diffusion/cin-ldm-vq-f8.yaml`
->
 
 initialize the `class DDPM(pl.LightningModule)`
 
@@ -433,3 +432,97 @@ Stable Diffusion includes an implementation of an EMA called `LitEma`, found at 
 > [local pdf](./2022_ICLR_PNDM_Pseudo-Numerical-Methods-for-Diffusion-Models-on-Manifolds.pdf)
 
 - [invisible-watermark](https://github.com/ShieldMnt/invisible-watermark)
+
+
+
+## finetune SDv2-inpaint
+
+> [diffuser baisc training](https://huggingface.co/docs/diffusers/tutorials/basic_training)
+>
+> SDv2-inpaint checkpoint https://huggingface.co/stabilityai/stable-diffusion-2-inpainting :star:
+
+This `stable-diffusion-2-inpainting` model is resumed from [stable-diffusion-2-base](https://huggingface.co/stabilityai/stable-diffusion-2-base) (`512-base-ema.ckpt`) and trained for another 200k steps.
+
+- Q：输入？
+
+```python
+z, c, x, xrec, xc = super().get_input(batch, self.first_stage_key, return_first_stage_outputs=True,force_c_encode=True, return_original_cond=True, bs=bs)
+# inpaint: [z: jpg_vae_fea, c:text_fea, x:jpg, xrec: vae_Recon, xc: text]
+bchw = z.shape
+
+c_cat = list()  # 
+# mask, resize to z's shape
+cc = torch.nn.functional.interpolate(cc, size=bchw[-2:])
+c_cat.append(cc)
+# masked_image, apply vae-encde; 
+cc = self.get_first_stage_encoding(self.encode_first_stage(cc))
+c_cat.append(cc)
+
+c_cat = torch.cat(c_cat, dim=1)
+all_conds = {"c_concat": [c_cat], "c_crossattn": [c]}
+```
+
+初始噪声 xT，训练时候直接对 GT 加噪
+
+```
+prng = np.random.RandomState(seed)
+start_code = prng.randn(num_samples, 4, h // 8, w // 8)
+start_code = torch.from_numpy(start_code).to(
+device=device, dtype=torch.float32)
+```
+
+- SDv2-inpaint UNet 输入 [code](https://vscode.dev/github/Stability-AI/stablediffusion/blob/main/ldm/models/diffusion/ddpm.py#L1346)
+
+将 noise_fea(c=4), mask(c=1), masked_image_fea(c=4) 合并起来输入 Unet，**调整 unet 的 conv_in 的 C=9 通道**
+
+```
+        elif self.conditioning_key == 'hybrid':
+            xc = torch.cat([x] + c_concat, dim=1)
+            cc = torch.cat(c_crossattn, 1)
+            out = self.diffusion_model(xc, t, context=cc)
+```
+
+Framework 参考 BrushNet 的 Controlnet 部分的输入
+
+![ComparsionDiffusionFramework.png](docs/2024_03_Arxiv_BrushNet--A-Plug-and-Play-Image-Inpainting-Model-with-Decomposed-Dual-Branch-Diffusion_Note/ComparsionDiffusionFramework.png)
+
+
+
+
+
+- Q：SDv2 github repo 代码基于 pytorch lightning，不方便
+
+重写一个 diffuser 的，找一个 diffusers SDv2 的代码 :star:
+
+> issue https://github.com/huggingface/diffusers/issues/1392#issuecomment-1326349638 >> https://huggingface.co/stabilityai/stable-diffusion-2-inpainting
+
+```python
+from diffusers import StableDiffusionInpaintPipeline
+pipe = StableDiffusionInpaintPipeline.from_pretrained(
+    "stabilityai/stable-diffusion-2-inpainting",
+    torch_dtype=torch.float16,
+)
+pipe.to("cuda")
+prompt = "Face of a yellow cat, high resolution, sitting on a park bench"
+#image and mask_image should be PIL images.
+#The mask structure is white for inpainting and black for keeping as is
+image = pipe(prompt=prompt, image=image, mask_image=mask_image).images[0]
+image.save("./yellow_cat_on_park_bench.png")
+```
+
+
+
+- Q：没有 controlnet or Lora 如何 finetune？
+
+> SDv2 inpaint finetune model [code](https://github.com/Stability-AI/stablediffusion/blob/cf1d67a6fd5ea1aa600c4df58e5b47da45f6bdbf/ldm/models/diffusion/ddpm.py#L1504)
+
+只微调一个 input block
+
+```python
+                 finetune_keys=("model.diffusion_model.input_blocks.0.0.weight",
+                                "model_ema.diffusion_modelinput_blocks00weight"
+                                ),
+```
+
+
+

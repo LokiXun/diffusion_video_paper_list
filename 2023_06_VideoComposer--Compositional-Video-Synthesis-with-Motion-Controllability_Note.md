@@ -1,9 +1,9 @@
 # VideoComposer
 
-> [VideoComposer: Compositional Video Synthesis with Motion Controllability](https://arxiv.org/abs/2306.02018) (May, 2023)
+> [arxiv](https://arxiv.org/abs/2306.02018) (May, 2023)
 > [![Star](https://camo.githubusercontent.com/f3e411ac406a8793396b60a88e445f2b46ab95fc46d0d0376607ea93e1fac6b9/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f73746172732f64616d6f2d76696c61622f766964656f636f6d706f7365722e7376673f7374796c653d736f6369616c266c6162656c3d53746172)](https://github.com/damo-vilab/videocomposer) [![arXiv](https://camo.githubusercontent.com/0835af0e1376c6ea0c5c19fc50d0824d82eec71980e055575cb87b55a74f8b39/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f61725869762d6233316231622e737667)](https://arxiv.org/abs/2306.02018) [![Website](https://camo.githubusercontent.com/3e5ac86a01b8da4c1744c6b481736db4f759253d7b2bd1c6ee2bf1882146717f/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f576562736974652d396366)](https://videocomposer.github.io/)
 >
-> [2023_June_VideoComposer--Compositional-Video-Synthesis-with-Motion-Controllability.pdf](./2023_June_VideoComposer--Compositional-Video-Synthesis-with-Motion-Controllability.pdf)
+> [pdf](./2023_06_VideoComposer--Compositional-Video-Synthesis-with-Motion-Controllability.pdf)
 
 ![VideoComposer_methods_structure.jpg](./docs/VideoComposer_methods_structure.jpg)
 
@@ -86,6 +86,147 @@ decompose videos into **three distinct types of conditions**, i.e., textual cond
 
 
 
+各个 condition 提取特征直接相加
+
+```
+        concat = x.new_zeros(batch, self.concat_dim, f, h, w)
+        if depth is not None:
+            ### DropPath mask
+            depth = rearrange(depth, 'b c f h w -> (b f) c h w')
+            depth = self.depth_embedding(depth)
+            h = depth.shape[2]
+            depth = self.depth_embedding_after(rearrange(depth, '(b f) c h w -> (b h w) f c', b = batch))
+
+            # 
+            depth = rearrange(depth, '(b h w) f c -> b c f h w', b = batch, h = h)
+            concat = concat + misc_dropout(depth)
+        
+        # local_image_embedding
+        if local_image is not None:
+            local_image = rearrange(local_image, 'b c f h w -> (b f) c h w')
+            local_image = self.local_image_embedding(local_image)
+
+            h = local_image.shape[2]
+            local_image = self.local_image_embedding_after(rearrange(local_image, '(b f) c h w -> (b h w) f c', b = batch))
+            local_image = rearrange(local_image, '(b h w) f c -> b c f h w', b = batch, h = h)
+
+            # 
+            concat = concat + misc_dropout(local_image)
+```
+
+输入 condition 转为 `(b h w) f c` 对时序融合一下
+
+> [code](https://github.com/damo-vilab/videocomposer/blob/5c14d4f2846029026e91ed4b68fea1704c2bb3e5/tools/videocomposer/unet_sd.py#L1731)
+
+```python
+class Attention(nn.Module):
+    def __init__(self, dim, heads = 8, dim_head = 64, dropout = 0.):
+        super().__init__()
+        inner_dim = dim_head *  heads
+        project_out = not (heads == 1 and dim_head == dim)
+
+        self.heads = heads
+        self.scale = dim_head ** -0.5
+
+        self.attend = nn.Softmax(dim = -1)
+        self.to_qkv = nn.Linear(dim, inner_dim * 3, bias = False)
+
+        self.to_out = nn.Sequential(
+            nn.Linear(inner_dim, dim),
+            nn.Dropout(dropout)
+        ) if project_out else nn.Identity()
+
+    def forward(self, x):
+        b, n, _, h = *x.shape, self.heads
+        qkv = self.to_qkv(x).chunk(3, dim = -1)  # Tuple["(b h w) f c"]
+        q, k, v = map(lambda t: rearrange(t, 'b n (h d) -> b h n d', h = h), qkv)  # split head, MHSA
+
+        dots = einsum('b h i d, b h j d -> b h i j', q, k) * self.scale
+
+        attn = self.attend(dots)
+
+        out = einsum('b h i j, b h j d -> b h i d', attn, v)
+        out = rearrange(out, 'b h n d -> b n (h d)')
+        return self.to_out(out)
+```
+
+
+
+
+
+
+
+### Temporal layer
+
+we instantiate ϵθ(·, ·, t) as a 3D UNet augmented with temporal convolution and cross-attention mechanism following
+
+> - Text to video synthesis in modelscope [code]([modelscope.cn/models/damo/text-to-video-synthesis/summary](https://modelscope.cn/models/damo/text-to-video-synthesis/summary))
+> - "Video diffusion models"
+
+在每个 `spatial transformer` 之后加一个 temporal attention
+
+![image-20231227145218295](docs/2023_06_VideoComposer--Compositional-Video-Synthesis-with-Motion-Controllability_Note/VideoComposer_temporal_attention.png)
+
+UNet mid block
+
+```python
+        # middle
+        self.middle_block = nn.ModuleList([
+            ResBlock(out_dim, embed_dim, dropout, use_scale_shift_norm=False, use_image_dataset=use_image_dataset,),
+            
+            SpatialTransformer(
+                out_dim, out_dim // head_dim, head_dim, depth=1, context_dim=self.context_dim,
+                disable_self_attn=False, use_linear=True
+            )])        
+        
+        if self.temporal_attention:
+            if USE_TEMPORAL_TRANSFORMER:
+                self.middle_block.append(
+                 TemporalTransformer( 
+                            out_dim, out_dim // head_dim, head_dim, depth=transformer_depth, context_dim=context_dim,
+                            disable_self_attn=disabled_sa, use_linear=use_linear_in_temporal,
+                            multiply_zero=use_image_dataset,
+                        )
+                )
+            else:
+                self.middle_block.append(TemporalAttentionMultiBlock(out_dim, num_heads, head_dim, rotary_emb =  self.rotary_emb, use_image_dataset=use_image_dataset, use_sim_mask=use_sim_mask, temporal_attn_times=temporal_attn_times))        
+
+        # self.middle.append(ResidualBlock(out_dim, embed_dim, out_dim, use_scale_shift_norm, 'none'))
+        self.middle_block.append(ResBlock(out_dim, embed_dim, dropout, use_scale_shift_norm=False))
+```
+
+
+
+> 前向传播时候，latent feature `x` always in shape `(b f) c h w`
+
+在每个 module 前向时候，判断一下，如果是 `TemporalAttention`，先改一下 shape
+
+```python
+def _forward_single(self, ...):
+    # ...
+    elif isinstance(module, TemporalAttentionBlock):
+        module = checkpoint_wrapper(module) if self.use_checkpoint else module
+        x = rearrange(x, '(b f) c h w -> b c f h w', b = self.batch)
+        x = module(x, time_rel_pos_bias, focus_present_mask, video_mask)
+        x = rearrange(x, 'b c f h w -> (b f) c h w')
+   elif isinstance(module, TemporalAttentionMultiBlock):
+        module = checkpoint_wrapper(module) if self.use_checkpoint else module
+        x = rearrange(x, '(b f) c h w -> b c f h w', b = self.batch)
+        x = module(x, time_rel_pos_bias, focus_present_mask, video_mask)
+        x = rearrange(x, 'b c f h w -> (b f) c h w')
+            
+# middle
+for block in self.middle_block:
+    x = self._forward_single(block, x, e, context, time_rel_pos_bias,focus_present_mask, video_mask)
+
+```
+
+
+
+
+
+
+
 ### Training and inference
 
 **2stage 训练策略**
@@ -93,11 +234,36 @@ decompose videos into **three distinct types of conditions**, i.e., textual cond
 1. text-to-video generation
 2. excel in video synthesis **controlled by the diverse conditions** through compositional training.
 
-**Inference.** :question:
+
+
+**Inference** :question:
 
 ![VideoComposer_inderence.png](./docs/VideoComposer_inderence.png)
 
 
+
+## Code
+
+> [Canny Detector](https://github.com/damo-vilab/videocomposer/blob/5c14d4f2846029026e91ed4b68fea1704c2bb3e5/tools/annotator/canny/__init__.py#L7)
+> [depth estimator](https://github.com/damo-vilab/videocomposer/blob/5c14d4f2846029026e91ed4b68fea1704c2bb3e5/tools/videocomposer/inference_single.py#L453)
+
+log GPU memory
+
+```python
+import pynvml
+
+# Log memory
+pynvml.nvmlInit()
+handle = pynvml.nvmlDeviceGetHandleByIndex(0)
+meminfo = pynvml.nvmlDeviceGetMemoryInfo(handle)
+```
+
+`class UNetSD_temporal` [code](https://github.com/damo-vilab/videocomposer/blob/5c14d4f2846029026e91ed4b68fea1704c2bb3e5/tools/videocomposer/unet_sd.py#L1442)
+
+
+
+- :question: 输入视频太大?
+  1. 按最短边，resize 到 256；center crop 256x256, 再 norm
 
 
 

@@ -43,6 +43,8 @@
 > - 试一版只修改 prompt 实现修复
 > - 每一帧用 SAM 获取 mask
 
+![image-20231226150043146](docs/2023_08_Arxiv_CoDeF--Content-Deformation-Fields-for-Temporally-Consistent-Video-Processing_Note/CoDeF_framework.png)
+
 propose representing a video V using a flattened canonical image Ic and a deformation field D
 
 提出一种新的视频表征，类似 Neural atlas 但效果更好。将视频分解伪 canonical image 和 各帧的形变空间，之后可以对 canonical image 编辑，然后用形变空间的信息 propagate 到其余帧。

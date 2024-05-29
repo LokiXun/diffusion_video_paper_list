@@ -1,8 +1,7 @@
 # Reference-based Restoration of Digitized Analog Videotapes
 
 > "Reference-based Restoration of Digitized Analog Videotapes" WACV, 2023 Oct
-> [paper](http://arxiv.org/abs/2310.14926v2) [code](https://github.com/miccunifi/TAPE) 
-> [pdf](./2023_10_WACV_Reference-based-Restoration-of-Digitized-Analog-Videotapes.pdf)
+> [paper](http://arxiv.org/abs/2310.14926v2) [code](https://github.com/miccunifi/TAPE) [pdf](./2023_10_WACV_Reference-based-Restoration-of-Digitized-Analog-Videotapes.pdf)
 > Authors: Lorenzo Agnolucci, Leonardo Galteri, Marco Bertini, Alberto Del Bimbo
 
 ## Key-point
@@ -175,7 +174,22 @@ thresh = threshold_otsu(image)
 
 2. **需要将 D 个 reference 维度给消掉**，使用 attention pooling 代替简单的平均
 
-   
+
+
+
+- Q：reference 特征怎么来？
+
+对于筛选出来的帧，用预训练的 SwinTransformer 提取特征
+
+> We extract multi-scale features from the **reference frames** through a pre-trained Swin Transformer feature extractor
+
+
+
+- Q：如何筛选干净的帧？
+
+用 CLIP + text "image with color artifacts" 预测图像 & 文本特征相似度，再加一个阈值
+
+
 
 
 

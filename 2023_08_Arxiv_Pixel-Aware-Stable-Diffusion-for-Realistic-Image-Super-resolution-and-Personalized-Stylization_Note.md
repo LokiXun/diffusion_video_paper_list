@@ -171,13 +171,110 @@ noisy_latents = noise_scheduler.add_noise(latents, noise, timesteps)  # z_t
 
 
 
-### Degradation Removal
+### SD Pipeline
 
-> [code](https://github.com/yangxy/PASD/blob/19d2a876ee710f9014cc37a029bc7ccde921ed24/models/pasd_light/controlnet.py#L106)
+> [doc](https://huggingface.co/docs/diffusers/api/pipelines/controlnet)
+> [code in PASD model](https://github.com/yangxy/PASD/blob/19d2a876ee710f9014cc37a029bc7ccde921ed24/pipelines/pipeline_pasd.py#L796)
 
-**Framework 左上角绿色的 Encoder，训练一个 Encoder 代替 VAE Encoder**
+对 prompt 提取 embedding `(b 77 768)`
 
-输入 512x512，为了和 StableDiffusion 中 VAE encoder 输出特征匹配（`512x512 -> 64x64`） ，训一个含有4个 scale 的卷积模块，每个 scale 再通过 Conv2d 认为得到 RGB 对应的图像，存入`controlnet_cond_mid`，与 GT 的插值图像做 L1 Loss；
+准备图像，多小都 resize 到（2*b, 3, 768, 768）
+
+
+
+**图像提取特征** `prepare_latents` [code](https://github.com/yangxy/PASD/blob/19d2a876ee710f9014cc37a029bc7ccde921ed24/pipelines/pipeline_pasd.py#L701)
+
+> VAE Encode `site-packages/diffusers/models/autoencoder_kl.py:252`
+>
+> fp16 要处理一下！`if dtype==torch.float16: self.vae.quant_conv.half()`
+
+```
+init_latents = self.vae.encode(image*2.0-1.0).latent_dist.sample(generator)
+init_latents = self.vae.config.scaling_factor * init_latents  # 0.18215 * x
+
+# def encode 
+h = self.encoder(x)
+moments = self.quant_conv(h)
+posterior = DiagonalGaussianDistribution(moments)
+```
+
+VAE 输入要压缩到 `[-1, 1]`，`[1, 3, 768, 768]` encode 到 `[1, 8==2*4, 96, 96]`，再过一层 `quant_conv `1x1 卷积，得到 c=4 特征，chunk 为均值、方差；
+
+`init_latents` 取为
+
+```
+    def sample(self, generator: Optional[torch.Generator] = None) -> torch.FloatTensor:
+        # make sure sample is on the same device as the parameters and has same dtype
+        sample = randn_tensor(
+            self.mean.shape, generator=generator, device=self.parameters.device, dtype=self.parameters.dtype
+        )
+        x = self.mean + self.std * sample
+        return x
+```
+
+
+
+`UniPCMultistepScheduler`
+
+```
+tensor([999, 949, 899, 849, 799, 749, 699, 649, 599, 549, 500, 450, 400, 350,
+        300, 250, 200, 150, 100,  50], device='cuda:0')
+```
+
+1. DDPM 方式加噪到 xt , T 取上面 steps 第0 个timestep
+2. Noise_level 概念，继续加噪 `args.added_noise_level=400` 步，实现**可控加噪**
+
+**相当于加噪了 1k + noise_level 步**
+
+```
+self.scheduler.set_timesteps(args.num_inference_steps, device=device)
+timesteps = self.scheduler.timesteps[0:]
+latent_timestep = timesteps[:1].repeat(batch_size * 1)  # 999 what if <999"?
+shape = init_latents.shape
+noise = randn_tensor(shape, generator=generator, device=device, dtype=dtype)
+init_latents = self.scheduler.add_noise(init_latents, noise, latent_timestep)
+
+added_latent_timestep = torch.LongTensor([args.added_noise_level]).repeat(batch_size * 1).to(self.device)
+added_noise = randn_tensor(shape, generator=generator, device=device, dtype=dtype)
+init_latents = self.scheduler.add_noise(init_latents, added_noise, added_latent_timestep)
+latents = init_latents
+
+# scale the initial noise by the standard deviation required by the scheduler
+latents = latents * self.scheduler.init_noise_sigma
+```
+
+
+
+#### **ControlNet**
+
+- 输入：图像加噪得到的 noise， prompt 特征，原始 RGB 图像
+
+将加噪的 latent，为了进行 classifier free guidance 将batchsize x2, 作为 controlNet image_embdding 输入 `([2, 4, 96, 96])`; prompt 特征 `([2, 77, 768])`
+
+>  adopt the tiled vae method proposed by [multidiffusion-upscaler-for-automatic1111](https://github.com/pkuliyi2015/multidiffusion-upscaler-for-automatic1111) to save GPU memory.
+>
+> `tile_size, tile_overlap = (args.latent_tiled_size, args.latent_tiled_overlap) if args is not None else (256, 8)`
+>
+> 当 hxw 大于 320x320 才需要（针对输入尺寸大于 2560 ^2 的图像），否则正常去噪
+
+```python
+rgbs, down_block_res_samples, mid_block_res_sample = self.controlnet(...)  
+# RGB, UNet 各个残差, [1280, 12, 12]
+```
+
+
+
+
+
+#### Degradation Removal
+
+> [code](https://github.com/yangxy/PASD/blob/19d2a876ee710f9014cc37a029bc7ccde921ed24/models/pasd/controlnet.py#L782)
+
+Degradation Removal 在了 ControlNet 里面，刚开始提取 condition image 特征部分
+
+输入 768x768，训一个含有4个 scale 的卷积模块，每个 scale 再通过 Conv2d 认为得到 RGB 对应的图像，存入`controlnet_cond_mid`，与 GT 的插值图像做 L1 Loss；
+
+UNet 对于的输入 latent_noise `[2, 320, 96, 96]` 用一个卷积将 C=4 -> 320；Condition 特征为 `[2, 320, 96, 96]`
 
 Encoder 的输出特征 `controlnet_cond` 与经过一层 Conv 的高斯噪声 `Conv2d(sample)` 相加作为 ControlNet  输入
 
@@ -202,61 +299,368 @@ else:
 
 
 
-### ControlNet
+#### UNet
 
-`ControlNet` 提取 `down_block_additional_residual` 和 `mid_block_additional_residual` Encoder 和 bottleneck 的特征。输入 `class UNet2DConditionModel`
+> [framework_pdf](./docs\2023_08_Arxiv_Pixel-Aware-Stable-Diffusion-for-Realistic-Image-Super-resolution-and-Personalized-Stylization_Note/StableDiffusion_framework.drawio.pdf)
+
+**SD UNet 大致结构**
+
+UNet 分为 4 个scale 和 1 个 `bottleneck layer`，通道数分别为 `(320, 640, 1280, 1280)`，
+
+```json
+  "block_out_channels": [
+    320,
+    640,
+    1280,
+    1280
+  ],
+  "center_input_sample": false,
+  "cross_attention_dim": 768,
+  "down_block_types": [
+    "CrossAttnDownBlock2D",
+    "CrossAttnDownBlock2D",
+    "CrossAttnDownBlock2D",
+    "DownBlock2D"
+  ],
+  "downsample_padding": 1,
+  "flip_sin_to_cos": true,
+  "freq_shift": 0,
+  "in_channels": 4,
+  "layers_per_block": 2,
+  "mid_block_scale_factor": 1,
+  "norm_eps": 1e-05,
+  "norm_num_groups": 32,
+  "out_channels": 4,
+  "sample_size": 64,
+  "up_block_types": [
+    "UpBlock2D",
+    "CrossAttnUpBlock2D",
+    "CrossAttnUpBlock2D",
+    "CrossAttnUpBlock2D"
+  ]
+```
+
+SD Unet 结构
+
+![U-net structure](./docs/stable_diffusion_unet_architecture.png)
+
+
+
+下面过一遍`forward` 流程
+
+**预处理 sample, timestep-embedding 和 condition**
+
+将 `timestep: int` 得到 `channel=320` 的 timestep embedding `emb`;
+
+若有其他 condition 分别得到 `aug_emb` 和 timestep embedding 相加
+
+```
+emb = emb + aug_emb if aug_emb is not None else emb
+```
+
+`sample` 即 $z_t$，`channel=4`，先经过一层卷积(k3p1) 调整到 SD 第一个 scale `channel=320`；
 
 ```python
-# unet encoder: 将 unet 的 encoder 特征和controlnet 对应的特征相加（residual 先加一下）
-if is_controlnet:
-    new_down_block_res_samples = ()
-
-    for down_block_res_sample, down_block_additional_residual in zip(
-    down_block_res_samples, down_block_additional_residuals
-    ):
-        down_block_res_sample = down_block_res_sample + down_block_additional_residual
-        new_down_block_res_samples = new_down_block_res_samples + (down_block_res_sample,)
-
-    down_block_res_samples = new_down_block_res_samples
-
-# 4. mid
-if is_controlnet:
-	sample = sample + mid_block_additional_residual
-	
-# 5.up
-# ... 每个 block 中
-# 逆序取出特征
-down_block_additional_residual = down_block_additional_residuals[-len(upsample_block.resnets) :]
-down_block_additional_residuals = down_block_additional_residuals[: -len(upsample_block.resnets)]
-
-# if we have not reached the final block and need to forward the
-# upsample size, we do it here
-if not is_final_block and forward_upsample_size:
-    upsample_size = down_block_res_samples[-1].shape[2:]
-
-if hasattr(upsample_block, "has_cross_attention") and upsample_block.has_cross_attention:
-    sample = upsample_block(
-        hidden_states=sample,
-        temb=emb,
-        res_hidden_states_tuple=res_samples,
-        encoder_hidden_states=encoder_hidden_states,
-        pixelwise_hidden_states=down_block_additional_residual,
-        cross_attention_kwargs=cross_attention_kwargs,
-        upsample_size=upsample_size,
-        attention_mask=attention_mask,
-        encoder_attention_mask=encoder_attention_mask,
-    )
+# 2. pre-process
+sample = self.conv_in(sample)
 ```
 
 
 
-`def get_up_block()` 中获取 decoder block；`CrossAttnUpBlock2D` 含有 `has_cross_attention` 参数的模块，有 PACA 模块
+
+
+#### **`UNet downblocks`**
+
+> [code](https://github.com/yangxy/PASD/blob/19d2a876ee710f9014cc37a029bc7ccde921ed24/models/pasd_light/unet_2d_condition.py#L924)
+
+`forward` 先依次过 `downblocks`，**每个 downblock 模块作为一个 scale。**
+
+各个 scale 用于 decoder 的残差存入 `down_block_res_samples`
+
+```python
+        down_block_res_samples = (sample,)
+        for downsample_block in self.down_blocks:
+            if hasattr(downsample_block, "has_cross_attention") and downsample_block.has_cross_attention:
+                # For t2i-adapter CrossAttnDownBlock2D
+                additional_residuals = {}
+                if is_adapter and len(down_block_additional_residuals) > 0:
+                    additional_residuals["additional_residuals"] = down_block_additional_residuals.pop(0)
+
+                sample, res_samples = downsample_block(
+                    hidden_states=sample,
+                    temb=emb,  # timestep
+                    encoder_hidden_states=encoder_hidden_states,
+                    attention_mask=attention_mask,
+                    cross_attention_kwargs=cross_attention_kwargs,
+                    encoder_attention_mask=encoder_attention_mask,
+                    **additional_residuals,
+                )
+            else:
+                sample, res_samples = downsample_block(hidden_states=sample, temb=emb)
+
+                if is_adapter and len(down_block_additional_residuals) > 0:
+                    sample += down_block_additional_residuals.pop(0)
+
+            down_block_res_samples += res_samples
+```
+
+:warning: tips
+
+1. 每个 scale 里面的 `layers_per_block=2`
+2. 注意如果使用 `t2i-adapter CrossAttnDownBlock2D` ，有一个`additional_residuals` 参数传入，会在 `CrossAttnDownBlock2D` 里面用到
+
+具体看**每个 scale 为哪些模块**
 
 ```
-up_block_types: Tuple[str] = ("UpBlock2D", "CrossAttnUpBlock2D", "CrossAttnUpBlock2D", "CrossAttnUpBlock2D"),
+  "down_block_types": [
+    "CrossAttnDownBlock2D",
+    "CrossAttnDownBlock2D",
+    "CrossAttnDownBlock2D",
+    "DownBlock2D"
+  ],
 ```
 
-> [`CrossAttnUpBlock2D`](https://github.com/yangxy/PASD/blob/19d2a876ee710f9014cc37a029bc7ccde921ed24/models/pasd_light/unet_2d_blocks.py#L2145)
+
+
+
+
+##### `CrossAttnDownBlock2D`
+
+> [code](https://github.com/yangxy/PASD/blob/19d2a876ee710f9014cc37a029bc7ccde921ed24/models/pasd_light/unet_2d_blocks.py#L920)
+
+`CrossAttnDownBlock2D` 由 2 层`(ResBlock, TransformerBlock)` 组成
+
+![SD_CrossAttnDownBlock.png](docs/2023_08_Arxiv_Pixel-Aware-Stable-Diffusion-for-Realistic-Image-Super-resolution-and-Personalized-Stylization_Note/SD_CrossAttnDownBlock.png)
+
+**`class ResnetBlock2D(nn.Module):`**
+
+在每个 scale 开始，融合 timestep，调整通道数 :star:
+
+<img src="docs/2023_08_Arxiv_Pixel-Aware-Stable-Diffusion-for-Realistic-Image-Super-resolution-and-Personalized-Stylization_Note/SDUNet_downblock_ResBlock.png" alt="SDUNet_downblock_ResBlock.png" style="zoom: 67%;" />
+
+> SiLU activation [doc](https://pytorch.org/docs/stable/generated/torch.nn.SiLU.html) 
+>
+> `torch.nn.SiLU()`相比 relu 在 0 点更平滑
+> $$
+> relu(x) = max(0,x)\\
+> silu(x) = x* sigmoid(x) = \frac{x}{1+e^{-x}}
+> $$
+> <img src="https://pytorch.org/docs/stable/_images/SiLU.png" style="zoom:50%;" />
+
+**`class Transformer2DModel(ModelMixin, ConfigMixin):`**
+
+> [code](https://github.com/yangxy/PASD/blob/19d2a876ee710f9014cc37a029bc7ccde921ed24/models/pasd_light/transformer_2d.py#L44)
+
+![SD_TransformerBlock.png](docs/2023_08_Arxiv_Pixel-Aware-Stable-Diffusion-for-Realistic-Image-Super-resolution-and-Personalized-Stylization_Note/SD_TransformerBlock.png)
+
+主要模块`class BasicTransformerBlock(nn.Module):` （PASD 改进加了 PACA 模块）
+
+forward 参数： `hidden_states` 为 UNet 当前特征，`encoder_hidden_states` 为 text embedding，`pixelwise_hidden_state` 为改进的 PACA 模块中来自 ControlNet 的特征
+
+FeedForward 使用 GELU 作为激活函数
+
+> [doc](https://pytorch.org/docs/stable/generated/torch.nn.GELU.html#torch.nn.GELU)
+
+```python
+class GELU(nn.Module):
+    r"""
+    GELU activation function with tanh approximation support with `approximate="tanh"`.
+    """
+
+    def __init__(self, dim_in: int, dim_out: int, approximate: str = "none"):
+        super().__init__()
+        self.proj = nn.Linear(dim_in, dim_out)
+        self.approximate = approximate
+
+    def gelu(self, gate):
+        if gate.device.type != "mps":
+            return F.gelu(gate, approximate=self.approximate)
+        # mps: gelu is not implemented for float16
+        return F.gelu(gate.to(dtype=torch.float32), approximate=self.approximate).to(dtype=gate.dtype)
+
+    def forward(self, hidden_states):
+        hidden_states = self.proj(hidden_states)
+        hidden_states = self.gelu(hidden_states)
+        return hidden_states
+```
+
+##### `DownBlock2D`
+
+由 2 层 Resblock2D 组成，不加 downsample；
+
+
+
+
+
+#### `UNet midblocks`
+
+`class UNetMidBlock2DCrossAttn(nn.Module):` 由 `ResBlock, TransformerBlock, ResBlock` 组成
+
+
+
+注意，当使用 ControlNet 方式时，**SD UNet 和 ControlNet 输出的 Encoder 和 BottleNeck 的残差相加一下，再作为残差加入 SD UNet Decoder** :star:
+
+`SDUNet Encoder` 提取的残差存于 `down_block_res_samples`；
+`ControlNet ` 的 Encoder 提取 `down_block_additional_residual` 和 bottleneck 特征为 `mid_block_additional_residual` 
+
+```python
+        if is_controlnet:
+            new_down_block_res_samples = ()
+
+            for down_block_res_sample, down_block_additional_residual in zip(
+                down_block_res_samples, down_block_additional_residuals
+            ):
+                down_block_res_sample = down_block_res_sample + down_block_additional_residual
+                new_down_block_res_samples = new_down_block_res_samples + (down_block_res_sample,)
+
+            down_block_res_samples = new_down_block_res_samples
+
+        # 4. mid
+        if self.mid_block is not None:
+            sample = self.mid_block(
+                sample,
+                emb,
+                encoder_hidden_states=encoder_hidden_states,
+                attention_mask=attention_mask,
+                cross_attention_kwargs=cross_attention_kwargs,
+                encoder_attention_mask=encoder_attention_mask,
+            )
+            # To support T2I-Adapter-XL
+            if (
+                is_adapter
+                and len(down_block_additional_residuals) > 0
+                and sample.shape == down_block_additional_residuals[0].shape
+            ):
+                sample += down_block_additional_residuals.pop(0)
+
+        if is_controlnet:
+            sample = sample + mid_block_additional_residual
+
+```
+
+
+
+
+
+#### `UNet Upblocks`
+
+由以下模块组成
+
+```
+  "up_block_types": [
+    "UpBlock2D",
+    "CrossAttnUpBlock2D",
+    "CrossAttnUpBlock2D",
+    "CrossAttnUpBlock2D"
+  ]
+```
+
+
+
+forward 流程
+
+```python
+        # 5. up
+        for i, upsample_block in enumerate(self.up_blocks):
+            is_final_block = i == len(self.up_blocks) - 1
+		   
+        	# 5.1 extract encoder's residuals
+            res_samples = down_block_res_samples[-len(upsample_block.resnets):]  # residuals, `len(upsample_block.resnets)` denotes layerNum(residualNum) in each scale
+            down_block_res_samples = down_block_res_samples[: -len(upsample_block.resnets)]
+
+            down_block_additional_residual = down_block_additional_residuals[-len(upsample_block.resnets):]
+            down_block_additional_residuals = down_block_additional_residuals[: -len(upsample_block.resnets)]
+
+            # if we have not reached the final block and need to forward the
+            # upsample size, we do it here
+            if not is_final_block and forward_upsample_size:
+                upsample_size = down_block_res_samples[-1].shape[2:]  # next scale's size
+
+            if hasattr(upsample_block, "has_cross_attention") and upsample_block.has_cross_attention:
+                sample = upsample_block(
+                    hidden_states=sample,
+                    temb=emb,
+                    res_hidden_states_tuple=res_samples,  # SDUNet_Encoder_residual + ControlNet_residual
+                    encoder_hidden_states=encoder_hidden_states,
+                    pixelwise_hidden_states=down_block_additional_residual,  # ControlNet residual
+                    cross_attention_kwargs=cross_attention_kwargs,
+                    upsample_size=upsample_size,
+                    attention_mask=attention_mask,
+                    encoder_attention_mask=encoder_attention_mask,
+                )
+            else:
+                sample = upsample_block(
+                    hidden_states=sample, temb=emb, res_hidden_states_tuple=res_samples, upsample_size=upsample_size, #pixelwise_hidden_states=down_block_additional_residual,
+                )
+```
+
+
+
+##### `UpBlock2D`
+
+由两个 `ResnetBlock2D` 组成，每个 ResnetBlock 输入 `torch.cat([hidden_states, res_hidden_states]` **把残差和当前特征 concat 并调整通道为当前 scale 的通道数** :star:
+
+模型定义代码，其中 `prev_output_channel` 为上一个 scale 的通道数 ， `in_channels` 为输入残差的通道数，`out_channels` 为当前 scale 的通道数；
+
+**Decoder 中当前 scale 都有 3 层，最后一层的残差通道数是下个 scale 的通道数！**`res_skip_channels = in_channels if (i == num_layers - 1) else out_channels`:star:
+
+```python
+        for i in range(num_layers):
+            res_skip_channels = in_channels if (i == num_layers - 1) else out_channels  # residual's channel
+            resnet_in_channels = prev_output_channel if i == 0 else out_channels
+
+            resnets.append(
+                ResnetBlock2D(
+                    in_channels=resnet_in_channels + res_skip_channels,  # 输入残差的通道数 torch.cat([hidden_states, res_hidden_states], dim=1)
+                    out_channels=out_channels,  # 当前 scale 通道数
+                    temb_channels=temb_channels,
+                    eps=resnet_eps,
+                    groups=resnet_groups,
+                    dropout=dropout,
+                    time_embedding_norm=resnet_time_scale_shift,
+                    non_linearity=resnet_act_fn,
+                    output_scale_factor=output_scale_factor,
+                    pre_norm=resnet_pre_norm,
+                )
+            )
+
+        self.resnets = nn.ModuleList(resnets)
+```
+
+**forward**
+
+```
+sample = upsample_block(
+                    hidden_states=sample, temb=emb, res_hidden_states_tuple=res_samples, upsample_size=upsample_size, #pixelwise_hidden_states=down_block_additional_residual,
+                )
+```
+
+输入的`res_samples` 为 `(SD_UNet_encoder residual + ControlNet_residual)` 相加后的 residuals；
+
+每个 ResnetBlock 输入 `torch.cat([hidden_states, res_hidden_states]` **把残差和当前特征 concat 并调整通道为当前 scale 的通道数** :star:
+
+```python
+    def forward(self, hidden_states, res_hidden_states_tuple, temb=None, upsample_size=None):
+        for resnet in self.resnets:
+            # pop res hidden states
+            res_hidden_states = res_hidden_states_tuple[-1]
+            res_hidden_states_tuple = res_hidden_states_tuple[:-1]
+            hidden_states = torch.cat([hidden_states, res_hidden_states], dim=1)  # !!
+
+            hidden_states = resnet(hidden_states, temb)
+
+        if self.upsamplers is not None:
+            for upsampler in self.upsamplers:
+                hidden_states = upsampler(hidden_states, upsample_size)  # nearest(scale=2)+Conv
+
+        return hidden_states
+```
+
+
+
+
+
+##### [`CrossAttnUpBlock2D`](https://github.com/yangxy/PASD/blob/19d2a876ee710f9014cc37a029bc7ccde921ed24/models/pasd_light/unet_2d_blocks.py#L2145)
 
 `res_samples`为 unet encoder 特征 + `controlnet` 的残差 ，作为图中蓝色的输入；
 `pixelwise_hidden_states` 为 `controlnet` 的残差，作为图中的 $y^\prime$；
@@ -265,9 +669,31 @@ up_block_types: Tuple[str] = ("UpBlock2D", "CrossAttnUpBlock2D", "CrossAttnUpBlo
 
 
 
+Transformer Block 中先做 self-attn （noise 特征，在 controlnet 里面是图像）, 再做 cross-attn (文本)
+
+> E:/Anaconda/envs/sklearn/Lib/site-packages/diffusers/models/attention.py:213
+>
+> 有 `self.fuser = GatedSelfAttentionDense(...)` 没有用，对 x+= attn * nn.Parameter 来实现类似 gated convolution 操作
+>
+> - 每个 attention 出来不是 normalize 的，所以需要在每个 attn 和 FFN 之前都进行一次 norm
+
+
+
+
+
+原始 ControlNet
+
+![image-20231005173806023](docs/2023_02_ICCV_bestpaper_Adding-Conditional-Control-to-Text-to-Image-Diffusion-Models_Note/image-20231005173806023.png)
+
+
+
+
+
 ### PACA 模块
 
-就是 Transformer QKV 加权融合
+> [code](https://github.com/yangxy/PASD/blob/19d2a876ee710f9014cc37a029bc7ccde921ed24/models/pasd_light/attention.py#L249)
+
+就是 Transformer QKV 加权融合，在 UNet transformeblock 里面加了一个 cross-attn
 
 ![image-20231213110142932](docs/2023_08_Arxiv_Pixel-Aware-Stable-Diffusion-for-Realistic-Image-Super-resolution-and-Personalized-Stylization_Note/PACA_module.png)
 
@@ -314,6 +740,28 @@ up_block_types: Tuple[str] = ("UpBlock2D", "CrossAttnUpBlock2D", "CrossAttnUpBlo
 
 
 
+### Tiled VAE
+
+> [code](https://github.com/yangxy/PASD/blob/19d2a876ee710f9014cc37a029bc7ccde921ed24/pipelines/pipeline_pasd.py#L196) >> 参考 [UI](https://github.com/pkuliyi2015/multidiffusion-upscaler-for-automatic1111#%F0%9F%94%A5-tiled-vae) :star:
+
+用于降低 VAE Encoder 与 Decoder 前向的显存。对于 Encoder，先拆开再 Encode ；Decoder 先拆开 decode 再拼起来；
+
+**重合的地方不取平均，直接用最新的 tile  的结果**
+
+> `self.pad = 11 if is_decoder else 32`; `encoder_tile_size = 1024, decoder_tile_size = 256,`
+
+```python
+result = torch.zeros((N, tile.shape[1], height * 8 if is_decoder else height // 8, width * 8 if is_decoder else width // 8), device=device, requires_grad=False)
+```
+
+
+
+
+
+### Pipeline
+
+> [`__call__` ](https://github.com/yangxy/PASD/blob/19d2a876ee710f9014cc37a029bc7ccde921ed24/pipelines/pipeline_pasd.py#L796)
+
 
 
 
@@ -324,19 +772,29 @@ up_block_types: Tuple[str] = ("UpBlock2D", "CrossAttnUpBlock2D", "CrossAttnUpBlo
 
 ### setup
 
+训练策略：对 HQ 图像通过 VAE 得到 z0 特征。随机采样一个时间步，对 z0 加噪到 zt。给定 condition 包含时间步 t，LQ 图像，文本，让模型去预测 zt 到 z0 的噪声。
+
+![image-20231213115521234](docs/2023_08_Arxiv_Pixel-Aware-Stable-Diffusion-for-Realistic-Image-Super-resolution-and-Personalized-Stylization_Note/PACA_Loss.png)
+
+
+
+
+
 adopt the Adam optimizer to train PASD with a batch size of 4. The learning rate is fixed as 5 × 10−5 . The model is updated for 500K iterations with 8 NVIDIA Tesla 32G-V100 GPU
 
 employ degradation pipeline of Real-ESRGAN to synthesize LQ-HQ training pairs.
+
+ freeze all the parameters in SD, and only train the newly added modules, including degradation removal module
+
+we randomly replace 50% of the text prompts with null-text prompts
 
 
 
 **Loss**
 
-随机采样一个高斯噪声 $z_t$，和时间步 t
-
 freeze all the parameters in SD, and only train the newly added modules, including degradation removal module
 
-![image-20231213115521234](docs/2023_08_Arxiv_Pixel-Aware-Stable-Diffusion-for-Realistic-Image-Super-resolution-and-Personalized-Stylization_Note/PACA_Loss.png)
+
 
 
 
