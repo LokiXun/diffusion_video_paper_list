@@ -697,6 +697,66 @@ SD-Turbo 模型，基于 SDv2.1 使用 ADD 进行蒸馏实现 **1step 出图**
 
 
 
+## Sora
+
+> https://openai.com/index/video-generation-models-as-world-simulators/
+>
+> - https://github.com/hpcaitech/Open-Sora
+> - https://github.com/PKU-YuanGroup/Open-Sora-Plan
+
+**Dataset**
+
+training with original video's resolution, aspect ratio, and length increase sampling flexibility and improve framing and composition
+
+**Bucket** ([SDXL](https://arxiv.org/abs/2307.01952), [PixArt](https://arxiv.org/abs/2310.00426)): support dynamic size in different batches by bucketing, but the size must be the same within the same batch
+
+> https://github.com/hpcaitech/Open-Sora/blob/main/docs/config.md#training-bucket-configs
+
+Buck 实现多分辨率训练，用于指定 batch 内训练数据的分辨率
+
+
+
+**VariableVideoTextDataset** 
+
+> https://vscode.dev/github/hpcaitech/Open-Sora/blob/main/opensora/datasets/datasets.py#L136
+
+默认 FPS=24,
+
+RandomCrop 片段
+
+```
+class TemporalRandomCrop(object):
+    """Temporally crop the given frame indices at a random location.
+
+    Args:
+            size (int): Desired length of frames will be seen in the model.
+    """
+
+    def __init__(self, size):
+        self.size = size
+
+    def __call__(self, total_frames):
+        rand_end = max(0, total_frames - self.size - 1)
+        begin_index = random.randint(0, rand_end)
+        end_index = min(begin_index + self.size, total_frames)
+        return begin_index, end_index
+
+def temporal_random_crop(vframes, num_frames, frame_interval):
+    temporal_sample = video_transforms.TemporalRandomCrop(num_frames * frame_interval)
+    total_frames = len(vframes)
+    start_frame_ind, end_frame_ind = temporal_sample(total_frames)
+    assert end_frame_ind - start_frame_ind >= num_frames
+    frame_indice = np.linspace(start_frame_ind, end_frame_ind - 1, num_frames, dtype=int)
+    video = vframes[frame_indice]
+    return video
+```
+
+
+
+
+
+
+
 ## Auxiliary Info
 
 - 目标：每个区域具体内容 or 细节信息

@@ -26,8 +26,14 @@ Video tutorial
 ## basics
 
 - "Efficiently Modeling Long Sequences with Structured State Spaces" Arxiv, 2021 Oct 31, `S4`
-  [paper](http://arxiv.org/abs/2111.00396v3) [code]() [pdf](./2021_10_Arxiv_Efficiently-Modeling-Long-Sequences-with-Structured-State-Spaces.pdf) [note](./2021_10_Arxiv_Efficiently-Modeling-Long-Sequences-with-Structured-State-Spaces_Note.md)
+  [paper](http://arxiv.org/abs/2111.00396v3) [code]() [pdf](./2021_10_Arxiv_Efficiently-Modeling-Long-Sequences-with-Structured-State-Spaces.pdf) [note](./2021_10_Arxiv_Efficiently-Modeling-Long-Sequences-with-Structured-State-Spaces_Note.md) 
   Authors: Albert Gu, Karan Goel, Christopher Ré
+
+> official blog: https://srush.github.io/annotated-s4/
+
+
+
+
 
 
 
@@ -52,6 +58,21 @@ Video Mamba 大致 code 流程看下面文章的笔记
 - "VideoMamba: State Space Model for Efficient Video Understanding" Arxiv, 2024 Mar
   [paper](http://arxiv.org/abs/2403.06977v1) [code](https://github.com/OpenGVLab/VideoMamba) [pdf](./2024_03_Arxiv_VideoMamba--State-Space-Model-for-Efficient-Video-Understanding.pdf) [note](./2024_03_Arxiv_VideoMamba--State-Space-Model-for-Efficient-Video-Understanding_Note.md)
   Authors: Kunchang Li, Xinhao Li, Yi Wang, Yinan He, Yali Wang, Limin Wang, Yu Qiao
+
+
+
+### Mamba2
+
+> author's twitter: https://x.com/_albertgu/status/1797651225313423595
+>
+> tip: start reading from the blog instead of paper ;)
+
+- "Transformers are SSMs: Generalized Models and Efficient Algorithms Through Structured State Space Duality"
+  [paper](https://arxiv.org/abs/2405.21060) [code](https://github.com/state-spaces/mamba) [blog](https://goombalab.github.io/blog/2024/mamba2-part1-model/)
+
+
+
+Mamba-2's core SSD layer is more efficient, scalable, and powerful than Mamba. it's also much simpler (~30 LoC)
 
 
 

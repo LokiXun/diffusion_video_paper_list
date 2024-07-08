@@ -58,19 +58,13 @@ strong baseline in multi papers
 
 
 
-
-
 - "DeepRemaster: Temporal Source-Reference Attention Networks for Comprehensive Video Enhancement" SIGGRAPH, 2019 Nov :statue_of_liberty:
   [paper](https://arxiv.org/abs/2009.08692) [website](http://iizuka.cs.tsukuba.ac.jp/projects/remastering/en/index.html) [note](./2019_SIGGRAPH_DeepRemaster-Temporal-Source-Reference-Attention-Networks-for-Comprehensive-Video-Enhancement_Note.md)
 
 
 
-
-
 - "Bringing Old Films Back to Life" CVPR, 2022 Mar :statue_of_liberty:
   [paper](https://arxiv.org/abs/2203.17276) [code](https://github.com/raywzy/Bringing-Old-Films-Back-to-Life) [website](http://raywzy.com/Old_Film/) [note](./2022_CVPR_Bringing-Old-Films-Back-to-Life_Note.md)
-
-
 
 
 
@@ -84,12 +78,8 @@ strong baseline in multi papers
 
 
 
-
-
 - "Restoring Degraded Old Films with Recursive Recurrent Transformer Networks" WACV, 2024
   [paper](https://openaccess.thecvf.com/content/WACV2024/papers/Lin_Restoring_Degraded_Old_Films_With_Recursive_Recurrent_Transformer_Networks_WACV_2024_paper.pdf) [code](https://github.com/mountln/RRTN-old-film-restoration) [pdf](2024_01_WACV_Restoring_Degraded_Old_Films_With_Recursive_Recurrent_Transformer_Networks.pdf)
-
-
 
 
 
@@ -117,11 +107,16 @@ strong baseline in multi papers
 
 
 
+## Colorization
+
+- "LatentColorization: Latent Diffusion-Based Speaker Video Colorization"
+  [paper](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=10539953)
 
 
-## analog video restoration
 
-录像带修复
+## VHS
+
+> analog video restoration
 
 - "BasicVSR++: Improving video super-resolution with enhanced propagation and alignment" CVPR, 2021 Apr 🗿 
   [paper](https://arxiv.org/abs/2104.13371) [code](https://github.com/open-mmlab/mmagic/blob/main/configs/basicvsr_pp/README.md) [note](./2021_04_CVPR_BasicVSR++--Improving-Video-Super-Resolution-with-Enhanced-Propagation-and-Alignment_Note.md)
@@ -314,4 +309,125 @@ VHS 类似的噪声合成数据 :warning:
 还有就是有些难点，人工没办法解决，算法也没有办法比人工做的更好，比如有一根划痕，一直处于画面的一个地方10几秒
 
 
+
+
+
+# Old film Degradation Type
+
+- Target: 构造测试数据集，更好评估方法效果
+
+- 竖线
+
+
+
+## Synthetic Data
+
+TODO
+
+
+
+
+
+## RealData
+
+> 爱奇艺搜集 https://list.iqiyi.com/www/1/----------0-1980_1989--24-1-1-iqiyi--.html
+>
+> - Q：联系爱奇艺合作？https://www.infoq.cn/article/UdH2LorYBOkbV22oPQMO
+>
+>   朱俊敏，爱奇艺技术总监。上海交通大学硕士，拥有 3 篇美国专利， 8 篇中国专利。2015 年加入爱奇艺，负责 AI 产品落地和创新应用开发，先后孵化了 HomeAI（智能语音交互平台）， 奇观（智能识别平台），逗芽（表情生产和分发平台） 等创新应用。
+>
+> - Q：爱奇艺有独加修复视频？
+>
+>   搜 `独家修复电影`
+>
+> - Q：Motivation？
+>
+>   爱奇艺上专业修复的太少了只有 30部电影，还有很多没有得到修复！专业修复的机构修复完的还要去电影院才能看，自己想看的电影还不一定有修复
+
+- 洛奇1 开头有划痕
+- 十面埋伏 1989
+
+```
+00:00:20 00:00:31 闪烁细小划痕	公交车内景，背景高曝光，
+00:52:22 00:52:29 
+```
+
+
+
+### Chinese
+
+#### 1940s
+
+- 三毛流浪记 1949（爱奇艺独家修复版本）
+
+> https://www.iqiyi.com/v_19rrmyaa94.html?method=run_app
+>
+> 没法下载咋搞？
+
+- Q：如何在 T 上精准加残差？
+
+女人的衣服图案一开始看不清，后面拉近了才更明显，怎么关联到呢？
+
+https://www.bilibili.com/video/BV1ma411T7EZ?t=3390.8
+
+
+
+#### 1960s
+
+- 嘉陵江边
+
+> https://www.iqiyi.com/v_19rrn6m6hc.html?method=run_app
+
+480p；黑白老电影；1960；
+
+退化类型：高频划痕
+
+
+
+
+
+
+
+### Foreigner
+
+TODO
+
+
+
+### comics
+
+- 三毛
+
+  https://www.iqiyi.com/v_19rrmudgwg.html?method=run_app
+
+动画，传统中国风
+
+
+
+### Text
+
+- 三毛流浪记（爱奇艺独家修复版本）
+
+> https://www.iqiyi.com/v_19rrmyaa94.html?method=run_app
+>
+> 没法下载咋搞？
+
+<img src="docs/survey_old_film_restoration/2024-06-25 22-12-45.jpg" alt="2024-06-25 22-12-45" style="zoom:25%;" />
+
+
+
+
+
+## tools
+
+**qsv 格式视频** 
+
+> Rust 版本：https://github.com/zhangzhilinx/qsv2flv :+1:
+>
+> C版本 https://github.com/btnkij/qsv2flv
+
+```shell
+#下载位置：`E:\qycache\download`
+x86_64-pc-windows-msvc-qsv2flv.exe -v shimianmaifu_1989_480P.qsv shimianmaifu_1989_480P.mp4
+```
 

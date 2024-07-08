@@ -53,25 +53,34 @@
 
   
 
-- introduction
 
-  按段落可参考一下方式
+### introduction
 
-  P1 介绍的任务 2-3C. 应用 & 但存在啥问题。早期的工作 3-4 个，**按总结的角度来列举**，不要只写 A propose B propose ...（挑3-4 个非常有名 or 典型的）
+> https://www.zhihu.com/question/551747204/answer/2664501959?utm_campaign=shareopn&utm_content=group2_Answer&utm_medium=social&utm_psn=1791814378418479105&utm_source=wechat_session
 
-  P2 **按时间线**早期到近期写。但是还存在啥问题。
+按段落可参考一下方式
 
-  P3 提出的方法
+P1 介绍的任务 2-3C. 应用 & 但存在啥问题。早期的工作 3-4 个，**按总结的角度来列举**，不要只写 A propose B propose ...（挑3-4 个非常有名 or 典型的）
 
-  contribution 要总结
+P2 **按时间线**早期到近期写。但是还存在啥问题。
 
-- related work 可以开 3 个小章节
+P3 提出的方法
 
-  例如本文用到了 CLIP, MAE 在 LDR 任务上，可以分为以下三个小节介绍
+contribution 要总结
 
-  - LDR
-  - CLIP
-  - MAE
+
+
+
+
+### related work 
+
+可以开 3 个小章节
+
+例如本文用到了 CLIP, MAE 在 LDR 任务上，可以分为以下三个小节介绍
+
+- LDR
+- CLIP
+- MAE
 
 - Proposed Methods
 
@@ -99,21 +108,23 @@
   >
   >   测试集上平均结果更好，要选一看就能凸显优势的图
 
-- Experiments
 
-  - setting
 
-    数据集、指标、training_details （例如 loss 权值，优化器，learning rate）
+### Experiments
 
-    comparing baseline
+- setting
 
-  - 性能比较
+  数据集、指标、training_details （例如 loss 权值，优化器，learning rate）
 
-    指标的客观比较，qualitative comparision
+  comparing baseline
 
-  - ablation study :star:
+- 性能比较
 
-    **证明提出的不同模块是有效的，**可以排列组合（太多）。可以直接把要验证的模块去掉 or 换成普通的 cov. 
+  指标的客观比较，qualitative comparision
+
+- ablation study :star:
+
+  **证明提出的不同模块是有效的，**可以排列组合（太多）。可以直接把要验证的模块去掉 or 换成普通的 cov. 
 
 - Conclusion
 
@@ -135,10 +146,20 @@ MLA是Modern Language Association的缩写，是美国现代语言协会制定�
 
 > [research 常见工具](https://www.zhihu.com/question/384512106/answer/1140626874?utm_campaign=shareopn&utm_content=group3_Answer&utm_medium=social&utm_oi=1068508841213423616&utm_psn=1618971927564963840&utm_source=wechat_session)
 >
-> - AI/ML Papers with Code Everywhere - CatalyzeX Chrome 插件
-> - [get $\LaTeX$ code from formula's image](https://www.simpletex.cn/ai/latex_ocr)
 
-**Web of science**
+- AI/ML Papers with Code Everywhere - CatalyzeX Chrome 插件
+- [get $\LaTeX$ code from formula's image](https://www.simpletex.cn/ai/latex_ocr)
+- Web of science
+
+
+
+- Q: How to get remind when a specific article has been referenced?
+
+> https://www.cnblogs.com/picassooo/p/13206329.html
+
+点击文章的 `被引用次数`，点击左边栏中的 `创建快讯`
+
+
 
 
 
@@ -308,6 +329,19 @@ related work 可以用一般过去时。
 不要仅仅罗列
 
 
+
+## 实验设计
+
+### LowLevel
+
+- "One-Step Effective Diffusion Network for Real-World Image Super-Resolution" Arxiv, 2024 Jun 12, `OSEDiff`
+  [paper](http://arxiv.org/abs/2406.08177v2) [code](https://github.com/cswry/OSEDiff.) [pdf](./2024_06_Arxiv_One-Step-Effective-Diffusion-Network-for-Real-World-Image-Super-Resolution.pdf) [note](./2024_06_Arxiv_One-Step-Effective-Diffusion-Network-for-Real-World-Image-Super-Resolution_Note.md)
+  Authors: Rongyuan Wu, Lingchen Sun, Zhiyuan Ma, Lei Zhang
+
+- 这个图很漂亮，能直观反映性能！
+- 圆形大小反映参数量！
+
+![OSEDiff_figure1.png](docs/2024_06_Arxiv_One-Step-Effective-Diffusion-Network-for-Real-World-Image-Super-Resolution_Note/OSEDiff_figure1.png)
 
 
 

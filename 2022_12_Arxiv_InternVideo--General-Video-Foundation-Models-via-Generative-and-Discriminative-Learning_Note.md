@@ -1,8 +1,7 @@
 # InternVideo: General Video Foundation Models via Generative and Discriminative Learning
 
 > "InternVideo: General Video Foundation Models via Generative and Discriminative Learning" Arxiv, 2022 Dec
-> [paper](http://arxiv.org/abs/2212.03191v2) [code](https://github.com/OpenGVLab/InternVideo) 
-> [pdf](./2022_12_Arxiv_InternVideo--General-Video-Foundation-Models-via-Generative-and-Discriminative-Learning.pdf)
+> [paper](http://arxiv.org/abs/2212.03191v2) [code](https://github.com/OpenGVLab/InternVideo) [pdf](./2022_12_Arxiv_InternVideo--General-Video-Foundation-Models-via-Generative-and-Discriminative-Learning.pdf)
 > Authors: Yi Wang, Kunchang Li, Yizhuo Li, Yinan He, Bingkun Huang, Zhiyu Zhao, Hongjie Zhang, Jilan Xu, Yi Liu, Zun Wang, Sen Xing, Guo Chen, Junting Pan, Jiashuo Yu, Yali Wang, Limin Wang, Yu Qiao
 
 ## Key-point

@@ -30,7 +30,7 @@ ControlNet 的同期工作
 
 
 
-![image-20240202212103972](docs/2023_08_Arxiv_IP-Adapter--Text-Compatible-Image-Prompt-Adapter-for-Text-to-Image-Diffusion-Models_Note/image-20240202212103972.png)
+![IP-Adapter_framework.png](docs/2023_08_Arxiv_IP-Adapter--Text-Compatible-Image-Prompt-Adapter-for-Text-to-Image-Diffusion-Models_Note/IP-Adapter_framework.png)
 
 ## Experiment
 

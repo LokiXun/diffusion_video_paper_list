@@ -31,6 +31,27 @@ image outpaint 进行调研，整理 related work  效果
 
 
 
+### pose
+
+> 素描 pose 教程：https://www.posemuse.com/social-media
+
+- "Animate Anyone: Consistent and Controllable Image-to-Video Synthesis for Character Animation" 
+  [paper](https://arxiv.org/pdf/2311.17117) [code](https://github.com/HumanAIGC/AnimateAnyone)
+- "CharacterGen: Efficient 3D Character Generation from Single Imageswith Multi-View Pose Calibration" 2024 Feb
+  [paper](https://arxiv.org/abs/2402.17214) [code](https://charactergen.github.io/)
+
+- "PoseAnimate: Zero-shot high fidelity pose controllable character animation" 2024 Apr
+  [paper](https://arxiv.org/pdf/2404.13680) [code]()
+
+
+
+- MusePose: a Pose-Driven Image-to-Video Framework for Virtual Human Generation
+  [code](https://github.com/TMElyralab/MusePose) 腾讯开源软件
+
+> [MusePose](https://github.com/TMElyralab/MusePose) is an image-to-video generation framework for virtual human under control signal such as pose. The current released model was an implementation of [AnimateAnyone](https://github.com/HumanAIGC/AnimateAnyone) by optimizing [Moore-AnimateAnyone](https://github.com/MooreThreads/Moore-AnimateAnyone).
+
+
+
 
 
 ## img_completion
@@ -207,6 +228,215 @@ diffusion 每次推理不同随机种子随机性太大，用预训练的 dense 
 
 
 
+### reference
+
+- "Paint by Example: Exemplar-based Image Editing with Diffusion Models" CVPR, 2022 Nov
+  [paper](http://arxiv.org/abs/2211.13227v1) [code](https://github.com/Fantasy-Studio/Paint-by-Example) [pdf](./2022_11_CVPR_Paint-by-Example--Exemplar-based-Image-Editing-with-Diffusion-Models.pdf) [note](./2022_11_CVPR_Paint-by-Example--Exemplar-based-Image-Editing-with-Diffusion-Models_Note.md)
+  Authors: Binxin Yang, Shuyang Gu, Bo Zhang, Ting Zhang, Xuejin Chen, Xiaoyan Sun, Dong Chen, Fang Wen
+
+![image-20240202210709720](docs/2022_11_CVPR_Paint-by-Example--Exemplar-based-Image-Editing-with-Diffusion-Models_Note/PaintByExample_framework.png)
+
+
+
+
+
+- "RealFill: Reference-Driven Generation for Authentic Image Completion" Arxiv, 2023 Sep 28
+  [paper](http://arxiv.org/abs/2309.16668v1) [code](https://realfill.github.io) [pdf](./2023_09_Arxiv_RealFill--Reference-Driven-Generation-for-Authentic-Image-Completion.pdf) [note](./2023_09_Arxiv_RealFill--Reference-Driven-Generation-for-Authentic-Image-Completion_Note.md)
+  Authors: Luming Tang, Nataniel Ruiz, Qinghao Chu, Yuanzhen Li, Aleksander Holynski, David E. Jacobs, Bharath Hariharan, Yael Pritch, Neal Wadhwa, Kfir Aberman, Michael Rubinstein
+
+类似 DreamBooth, 用几张图去微调 Diffusion 学习 target image 的场景；
+参考图 & target 图做 mask 去微调 Diffusion；
+Diffusion 出图原始区域模糊，对 mask blur & 用 alpha  把生成的和原图融合；
+diffusion 每次推理不同随机种子随机性太大，用预训练的 dense correspondence 去筛选生成较好的图
+
+![refill_methods.png](docs/2023_09_Arxiv_RealFill--Reference-Driven-Generation-for-Authentic-Image-Completion_Note/refill_methods.png)
+
+
+
+
+
+- "CLiC: Concept Learning in Context" CVPR, 2023 Nov 28 :star:
+  [paper](http://arxiv.org/abs/2311.17083v1) [code]() [pdf](./2023_11_CVPR_CLiC--Concept-Learning-in-Context.pdf) [note](./2023_11_CVPR_CLiC--Concept-Learning-in-Context_Note.md)
+  Authors: Mehdi Safaee, Aryan Mikaeili, Or Patashnik, Daniel Cohen-Or, Ali Mahdavi-Amiri
+
+>  CLiC [35] could customize the local patterns to edit different objects, but it only demonstrates inner-category generalizations and still requires subject-specific fine-tuning
+
+
+
+- "StoryDiffusion: Consistent Self-Attention for Long-Range Image and Video Generation" Arxiv, 2024 May 2
+  [paper](http://arxiv.org/abs/2405.01434v1) [code](https://github.com/HVision-NKU/StoryDiffusion) [pdf](./2024_05_Arxiv_StoryDiffusion--Consistent-Self-Attention-for-Long-Range-Image-and-Video-Generation.pdf) [note](./2024_05_Arxiv_StoryDiffusion--Consistent-Self-Attention-for-Long-Range-Image-and-Video-Generation_Note.md)
+  Authors: Yupeng Zhou, Daquan Zhou, Ming-Ming Cheng, Jiashi Feng, Qibin Hou
+
+![storydiffusion_framework.png](docs/2024_05_Arxiv_StoryDiffusion--Consistent-Self-Attention-for-Long-Range-Image-and-Video-Generation_Note/storydiffusion_framework.png)
+
+
+
+
+
+- "AnyDoor: Zero-shot Object-level Image Customization" CVPR, 2023 Jul 18
+  [paper](http://arxiv.org/abs/2307.09481v2) [code](https://github.com/ali-vilab/AnyDoor) [pdf](./2023_07_CVPR_AnyDoor--Zero-shot-Object-level-Image-Customization.pdf) [note](./2023_07_CVPR_AnyDoor--Zero-shot-Object-level-Image-Customization_Note.md)
+  Authors: Xi Chen, Lianghua Huang, Yu Liu, Yujun Shen, Deli Zhao, Hengshuang Zhao
+
+> - **使用预训练的 DINOv2 提供细节特征**，DINOv2 有全局 和 patch 的特征，发现 concat 起来过可学习的 MLP，可以与 UNet 特征空间对齐 :star:
+> - **贴图的时候使用高频特征**，而不是放图像，避免生成图像不搭的情况
+> - 各个 trick，**细节一致性还是不足，例如文字扭曲了**
+>   1. DNIO or CLIP 特征很重要，作为图像物体生成的基本盘，不加物体直接不一样；细节不一致的问题要再用高频特征约束一下
+>   2. **发现训练早期多用视频中多姿态物体训练，能够增强生成物体的细节一致性，缓解色偏的问题**
+> - **对比 DINO, CLIP 提取物体特征**
+>   1. DINO 特征对于物体细节的特征比 CLIP 特征更优秀，但 DINO 特征要处理下才能好：用分割图提取物体再去提取特征才能得到接近原始物体的结果
+>   2. CLIP 特征有点离谱，可能是背景干扰很大
+
+![overview.png](docs/2023_07_CVPR_AnyDoor--Zero-shot-Object-level-Image-Customization_Note/overview.png)
+
+
+
+
+
+- "Zero-shot Image Editing with Reference Imitation" Arxiv, 2024 Jun 11, `MimicBrush`
+  [paper](http://arxiv.org/abs/2406.07547v1) [code](https://github.com/ali-vilab/MimicBrush) [pdf](./2024_06_Arxiv_Zero-shot-Image-Editing-with-Reference-Imitation.pdf) [note](./2024_06_Arxiv_Zero-shot-Image-Editing-with-Reference-Imitation_Note.md)
+  Authors: Xi Chen, Yutong Feng, Mengting Chen, Yiyang Wang, Shilong Zhang, Yu Liu, Yujun Shen, Hengshuang Zhao
+
+<img src="docs/2024_06_Arxiv_Zero-shot-Image-Editing-with-Reference-Imitation_Note/mimicbrush_overview.png" alt="mimicbrush_overview.png" style="zoom: 67%;" />
+
+
+
+
+
+
+
+## Image-to-video
+
+> - Q: SVD 框架图？
+> - Q: 光流如何去 warp 特征？
+
+- "Control-A-Video: Controllable Text-to-Video Generation with Diffusion Models" Arxiv, 2023 May :star:
+  [paper](https://arxiv.org/abs/2305.13840) [code](https://github.com/Weifeng-Chen/control-a-video) [website](https://controlavideo.github.io /) [note](../2023_05_Arxiv_Control-A-Video--Controllable-Text-to-Video-Generation-with-Diffusion-Model_Note.md)
+
+训练 I2V 把首帧 xT 换成 VAE embedding
+
+![image-20240628093638986](docs/survey_comics_generate_video/image-20240628093638986.png)
+
+
+
+- "VideoComposer: Compositional Video Synthesis with Motion Controllability" Arxiv, 2023 Jun, **VideoComposer**
+  [arXiv](https://arxiv.org/abs/2306.02018) [Website](https://videocomposer.github.io/) [note](./2023_06_VideoComposer--Compositional-Video-Synthesis-with-Motion-Controllability_Note.md)
+
+![VideoComposer_methods_structure.jpg](./docs/VideoComposer_methods_structure.jpg)
+
+
+
+
+
+- "I2VGen-XL: High-Quality Image-to-Video Synthesis via Cascaded Diffusion Models" Arxiv, 2023 Nov 7
+  [paper](http://arxiv.org/abs/2311.04145v1) [code](https://i2vgen-xl.github.io) [pdf](./2023_11_Arxiv_I2VGen-XL--High-Quality-Image-to-Video-Synthesis-via-Cascaded-Diffusion-Models.pdf) [note](../2023_11_Arxiv_I2VGen-XL--High-Quality-Image-to-Video-Synthesis-via-Cascaded-Diffusion-Models_Note.md)
+  Authors: Shiwei Zhang, Jiayu Wang, Yingya Zhang, Kang Zhao, Hangjie Yuan, Zhiwu Qin, Xiang Wang, Deli Zhao, Jingren Zhou
+
+![I2VGen_framework.png](./docs/2023_11_Arxiv_I2VGen-XL--High-Quality-Image-to-Video-Synthesis-via-Cascaded-Diffusion-Models_Note/I2VGen_framework.png)
+
+
+
+
+
+- "Stable Video Diffusion: Scaling Latent Video Diffusion Models to Large Datasets" Arxiv, 2023 Nov 25
+  [paper](http://arxiv.org/abs/2311.15127v1) [code](https://github.com/Stability-AI/generative-models) [pdf](../2023_11_Arxiv_Stable-Video-Diffusion--Scaling-Latent-Video-Diffusion-Models-to-Large-Datasets.pdf) [note](./2023_11_Arxiv_Stable-Video-Diffusion--Scaling-Latent-Video-Diffusion-Models-to-Large-Datasets_Note.md)
+  Authors: Andreas Blattmann, Tim Dockhorn, Sumith Kulal, Daniel Mendelevitch, Maciej Kilian, Dominik Lorenz, Yam Levi, Zion English, Vikram Voleti, Adam Letts, Varun Jampani, Robin Rombach
+
+**SVD Video pretrain** 在 SDv2.1 text2image 基础上，加入 656M 参数量的 temporal layer(总共 1521M 参数)，T=14 256x384 上训练 15w iteration; 看文章是整个 UNet 都训练？
+
+> use the resulting model as the image backbone of our video model. We then insert temporal convolution and attention layers. In particular, we follow the exact setup from [9], inserting a total of 656M new parameters into the UNet bumping its total size (spatial and temporal layers) to 1521M parameters. We then train the resulting UNet on 14 frames on resolution 256 × 384 for 150k iters using AdamW [59] with learning rate 10−4 and a batch size of 1536.
+
+**增加分辨率**，85% 概率使用文本，增加 noise 程度，再调 10w iteration
+
+> increase the spatial resolution to 320 × 576 and train for an additional 100k iterations,
+
+Appendix D 部分, **换到 image2video 进行微调**；不使用文本，**把文本换成 CLIP-Image feature**; 把 condition frame 加噪，复制 T 帧 和 UNet 原始输入 concat
+
+> We do not use text-conditioning but rather replace text embeddings fed into the base model with the CLIP image embedding of the conditioning frame. Additionally, we concatenate a noise-augmented [39] version of the conditioning frame channel-wise to the input of the UNet [73]. In particular, we add a small amount of noise of strength log σ ∼ N (−3.0, 0.5 2 ) to the conditioning frame and then feed it through the standard SD 2.1 encoder.
+
+只微调 5w iteration 够了，batch size of 768
+
+> We train two versions: one to generate 14 frames and one to generate 25 frames. We train both models for 50k iterations at a batch size of 768, learning rate 3 × 10−5
+
+
+
+- "Motion-I2V: Consistent and Controllable Image-to-Video Generation with Explicit Motion Modeling" Arxiv, 2024 Jan 29
+  [paper](http://arxiv.org/abs/2401.15977v2) [code](https://xiaoyushi97.github.io/Motion-I2V/.) [pdf](./2024_01_Arxiv_Motion-I2V--Consistent-and-Controllable-Image-to-Video-Generation-with-Explicit-Motion-Modeling.pdf) [note](./2024_01_Arxiv_Motion-I2V--Consistent-and-Controllable-Image-to-Video-Generation-with-Explicit-Motion-Modeling_Note.md)
+  Authors: Xiaoyu Shi, Zhaoyang Huang, Fu-Yun Wang, Weikang Bian, Dasong Li, Yi Zhang, Manyuan Zhang, Ka Chun Cheung, Simon See, Hongwei Qin, Jifeng Dai, Hongsheng Li
+
+
+
+- "Improving Diffusion Models for Virtual Try-on" Arxiv, 2024 Mar 8
+  [paper](http://arxiv.org/abs/2403.05139v2) [code](https://idm-vton.github.io) [pdf](./2024_03_Arxiv_Improving-Diffusion-Models-for-Virtual-Try-on.pdf) [note](./2024_03_Arxiv_Improving-Diffusion-Models-for-Virtual-Try-on_Note.md)
+  Authors: Yisol Choi, Sangkyung Kwak, Kyungmin Lee, Hyungwon Choi, Jinwoo Shin
+
+![image-20240628093919602](docs/survey_comics_generate_video/image-20240628093919602.png)
+
+
+
+
+
+- "Pix2Gif: Motion-Guided Diffusion for GIF Generation" Arxiv, 2024 Mar 7
+  [paper](http://arxiv.org/abs/2403.04634v2) [code](https://github.com/XuweiyiChen/Pix2Gif) [pdf](./2024_03_Arxiv_Pix2Gif--Motion-Guided-Diffusion-for-GIF-Generation.pdf) [note](./2024_03_Arxiv_Pix2Gif--Motion-Guided-Diffusion-for-GIF-Generation_Note.md)
+  Authors: Hitesh Kandala, Jianfeng Gao, Jianwei Yang
+
+> Our model takes three inputs: an image, a text instruction, and a motion magnitude. These inputs are fed into the model through two pathways
+
+
+
+- "Ctrl-Adapter: An Efficient and Versatile Framework for Adapting Diverse Controls to Any Diffusion Model" Arxiv, 2024 Apr 15
+  [paper](http://arxiv.org/abs/2404.09967v2) [code]() [pdf](../2024_04_Arxiv_Ctrl-Adapter--An-Efficient-and-Versatile-Framework-for-Adapting-Diverse-Controls-to-Any-Diffusion-Model.pdf) [note](../2024_04_Arxiv_Ctrl-Adapter--An-Efficient-and-Versatile-Framework-for-Adapting-Diverse-Controls-to-Any-Diffusion-Model_Note.md)
+  Authors: Han Lin, Jaemin Cho, Abhay Zala, Mohit Bansal
+
+
+
+- "ConsistI2V: Enhancing Visual Consistency for Image-to-Video Generation" Arxiv, 2024 Feb 6
+  [paper](http://arxiv.org/abs/2402.04324v1) [code](https://github.com/TIGER-AI-Lab/ConsistI2V) [website](https://tiger-ai-lab.github.io/ConsistI2V/) [pdf](../2024_02_Arxiv_ConsistI2V--Enhancing-Visual-Consistency-for-Image-to-Video-Generation.pdf) [note](./2024_02_Arxiv_ConsistI2V--Enhancing-Visual-Consistency-for-Image-to-Video-Generation_Note.md)
+  Authors: Weiming Ren, Harry Yang, Ge Zhang, Cong Wei, Xinrun Du, Stephen Huang, Wenhu Chen
+
+
+
+- "MOFA-Video: Controllable Image Animation via Generative Motion Field Adaptions in Frozen Image-to-Video Diffusion Model" Arxiv, 2024 May 30
+  [paper](http://arxiv.org/abs/2405.20222v2) [code](https://myniuuu.github.io/MOFA_Video/) [pdf](./2024_05_Arxiv_MOFA-Video--Controllable-Image-Animation-via-Generative-Motion-Field-Adaptions-in-Frozen-Image-to-Video-Diffusion-Model.pdf) [note](./2024_05_Arxiv_MOFA-Video--Controllable-Image-Animation-via-Generative-Motion-Field-Adaptions-in-Frozen-Image-to-Video-Diffusion-Model_Note.md) :star:
+  Authors: Muyao Niu, Xiaodong Cun, Xintao Wang, Yong Zhang, Ying Shan, Yinqiang Zheng
+
+将多种模态计算帧间的移动信息，获取一个运动向量，再去训练一个 Sparse2Dense CMP 网络将运动向量修复成 dense optical flow;
+
+多种模态通过 dense optical flow 统一进行控制
+
+![MOFA_overview.png](docs/2024_05_Arxiv_MOFA-Video--Controllable-Image-Animation-via-Generative-Motion-Field-Adaptions-in-Frozen-Image-to-Video-Diffusion-Model_Note/MOFA_overview.png)
+
+
+
+## Pose
+
+使用场景：部分肢体出现，补充肢体 && 让手部动起来
+
+- "Animate Anyone: Consistent and Controllable Image-to-Video Synthesis for Character Animation" Arxiv, 2023 Nov 28
+  [paper](http://arxiv.org/abs/2311.17117v2) [code](https://github.com/MooreThreads/Moore-AnimateAnyone.git) [pdf](./2023_11_Arxiv_Animate-Anyone--Consistent-and-Controllable-Image-to-Video-Synthesis-for-Character-Animation.pdf) [note](../2023_11_Arxiv_Animate-Anyone--Consistent-and-Controllable-Image-to-Video-Synthesis-for-Character-Animation_Note.md)
+  Authors: Li Hu, Xin Gao, Peng Zhang, Ke Sun, Bang Zhang, Liefeng Bo
+
+We employ DWPose[52] to extract the pose sequence of characters in the video, including the body and hands, rendering it as pose skeleton images following OpenPose[5]
+
+
+
+- "Effective Whole-body Pose Estimation with Two-stages Distillation" ICCV 2023
+  [paper](https://arxiv.org/abs/2307.15880) [code](https://github.com/IDEA-Research/DWPose) [demo](https://openxlab.org.cn/apps/detail/mmpose/RTMPose)
+
+使用 DWPose 提取骨架再输入网络，支持部分身体
+
+
+
+- MusePose: a Pose-Driven Image-to-Video Framework for Virtual Human Generation
+  [code](https://github.com/TMElyralab/MusePose) 腾讯开源软件
+
+> [MusePose](https://github.com/TMElyralab/MusePose) is an image-to-video generation framework for virtual human under control signal such as pose. The current released model was an implementation of [AnimateAnyone](https://github.com/HumanAIGC/AnimateAnyone) by optimizing [Moore-AnimateAnyone](https://github.com/MooreThreads/Moore-AnimateAnyone).
+
+
+
+
+
+
+
 ## Story-telling
 
 > search key-word `comic video generation`
@@ -284,14 +514,81 @@ diffusion 每次推理不同随机种子随机性太大，用预训练的 dense 
 
 
 
-- 问题点
-  - 人体不好：关键点信息；
-  - 衣着不好：给衣着图；预测衣着边缘？
-  - 背景不好
-  - 从漫画抽出来一格，要去掉边缘黑边
+### 问题点
+
+- 人体不好：关键点信息；
+- 衣着不好：给衣着图；预测衣着边缘？
+- 背景不好
+- 从漫画抽出来一格，要去掉边缘黑边
+
+- 漫画里面有些帧画的太简单，视频放大 or 动起来看起来人物 ID 一致性很烂
+
+![image-20240606103730210](docs/survey_comics_generate_video/image-20240606103730210.png)
+
+
+
+## Dataset 制作
+
+- Q：pySceneDetect 切出来的单个场景，动作太过单一，不符合动漫变化巨大的场景？
+
+- Q：想要啥样的 source reference？
+
+希望需要补图的人物 / 物体是一个，但是背景（场景 or 光照）完全换掉的数据
+
+
+
+**同一场景下，但人物动作变化非常多的情况**
+
+举例视频
+
+```
+106753	50769:7	998		2024-06-14 23:30:41	2024-06-14 23:30:41	0		9e1bc51219e0061a9fdad8ed80f675d8dc7dc9e156447b79795c9b86f9391bc4	https://www.sakugabooru.com/data/107eeceaf139bf0952d8ed4b17bea7ec.mp4
+```
+
+几乎每张图都在不同场景，想要找到这种图作为 reference
+
+![image-20240703180000571](docs/survey_comics_generate_video/image-20240703180000571.png)
+
+- 识别多个 clip 下面有相同人物的 clip，记录这些 clips 的关系
+
+
+
+## Mask 制作
+
+- "RealFill: Reference-Driven Generation for Authentic Image Completion" Arxiv, 2023 Sep 28
+  [paper](http://arxiv.org/abs/2309.16668v1) [code](https://realfill.github.io) [pdf](./2023_09_Arxiv_RealFill--Reference-Driven-Generation-for-Authentic-Image-Completion.pdf) [note](./2023_09_Arxiv_RealFill--Reference-Driven-Generation-for-Authentic-Image-Completion_Note.md)
+  Authors: Luming Tang, Nataniel Ruiz, Qinghao Chu, Yuanzhen Li, Aleksander Holynski, David E. Jacobs, Bharath Hariharan, Yael Pritch, Neal Wadhwa, Kfir Aberman, Michael Rubinstein
+
+> mask 生成：随机取正方形设为 0，迭代随即设置 30 次
+> https://github.com/thuanz123/realfill/blob/70cd2cc04041f84b45da1693c452b998d92115fc/train_realfill.py#L46
+
+![refill_methods.png](docs/2023_09_Arxiv_RealFill--Reference-Driven-Generation-for-Authentic-Image-Completion_Note/refill_methods.png)
 
 
 
 
 
-- 需求：爬取人物
+- "BrushNet: A Plug-and-Play Image Inpainting Model with Decomposed Dual-Branch Diffusion" Arxiv, 2024 Mar 11
+  [paper](http://arxiv.org/abs/2403.06976v1) [code](https://github.com/tencentarc/brushnet) [pdf](./2024_03_Arxiv_BrushNet--A-Plug-and-Play-Image-Inpainting-Model-with-Decomposed-Dual-Branch-Diffusion.pdf) [note](./2024_03_Arxiv_BrushNet--A-Plug-and-Play-Image-Inpainting-Model-with-Decomposed-Dual-Branch-Diffusion_Note.md)
+  Authors: Xuan Ju, Xian Liu, Xintao Wang, Yuxuan Bian, Ying Shan, Qiang Xu
+
+![BrushNet_framework.png](docs/2024_03_Arxiv_BrushNet--A-Plug-and-Play-Image-Inpainting-Model-with-Decomposed-Dual-Branch-Diffusion_Note/BrushNet_framework.png)
+
+
+
+
+
+- GridMask
+  [code](https://github.com/dvlab-research/GridMask/blob/master/imagenet_grid/utils/grid.py#L8)
+
+
+
+
+
+### MAE
+
+- "SimMIM: A Simple Framework for Masked Image Modeling" CVPR, 2021 Nov 18
+  [paper](http://arxiv.org/abs/2111.09886v2) [code](https://github.com/microsoft/SimMIM) [pdf](./2021_11_CVPR_SimMIM--A-Simple-Framework-for-Masked-Image-Modeling.pdf) [note](./2021_11_CVPR_SimMIM--A-Simple-Framework-for-Masked-Image-Modeling_Note.md)
+  Authors: Zhenda Xie, Zheng Zhang, Yue Cao, Yutong Lin, Jianmin Bao, Zhuliang Yao, Qi Dai, Han Hu
+
+![fig2.png](docs/2021_11_CVPR_SimMIM--A-Simple-Framework-for-Masked-Image-Modeling_Note/fig2.png)

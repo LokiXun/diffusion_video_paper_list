@@ -56,7 +56,7 @@
 
 
 
-![image-20240119030103415](docs/2023_12_Arxiv_PhotoMaker--Customizing-Realistic-Human-Photos-via-Stacked-ID-Embedding_Note/image-20240119030103415.png)
+![PhotoMaker_overview.png](docs/2023_12_Arxiv_PhotoMaker--Customizing-Realistic-Human-Photos-via-Stacked-ID-Embedding_Note/PhotoMaker_overview.png)
 
 1. We first obtain the text embedding and image embeddings from text encoder(s) and image encoder, respectively. Then, we extract the fused embedding by merging the corresponding class embedding (e.g., man and woman) and each image embedding. Next, we concatenate all fused embeddings along the length dimension to form the **stacked ID embedding**.
 2. feed the stacked ID embedding to **all cross-attention layers** for adaptively merging the ID content in the diffusion model.

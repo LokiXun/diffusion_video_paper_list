@@ -1,6 +1,6 @@
 # RealFill: Reference-Driven Generation for Authentic Image Completion
 
-> "RealFill: Reference-Driven Generation for Authentic Image Completion" Arxiv, 2023 Sep 28
+> "RealFill: Reference-Driven Generation for Authentic Image Completion" SIGGRAPH, 2023 Sep 28
 > [paper](http://arxiv.org/abs/2309.16668v1) [code](https://github.com/thuanz123/realfill) [website](https://realfill.github.io) [pdf](./2023_09_Arxiv_RealFill--Reference-Driven-Generation-for-Authentic-Image-Completion.pdf) [note](./2023_09_Arxiv_RealFill--Reference-Driven-Generation-for-Authentic-Image-Completion_Note.md)
 > Authors: Luming Tang, Nataniel Ruiz, Qinghao Chu, Yuanzhen Li, Aleksander Holynski, David E. Jacobs, Bharath Hariharan, Yael Pritch, Neal Wadhwa, Kfir Aberman, Michael Rubinstein
 
@@ -96,6 +96,40 @@
 ## Experiment
 
 > ablation study 看那个模块有效，总结一下
+
+## Code
+
+- Q：mask 如何生成？
+
+![refill_methods.png](docs/2023_09_Arxiv_RealFill--Reference-Driven-Generation-for-Authentic-Image-Completion_Note/refill_methods.png)
+
+> https://github.com/thuanz123/realfill/blob/70cd2cc04041f84b45da1693c452b998d92115fc/train_realfill.py#L46
+
+```python
+def make_mask(images, resolution, times=30):
+    mask, times = torch.ones_like(images[0:1, :, :]), np.random.randint(1, times)
+    min_size, max_size, margin = np.array([0.03, 0.25, 0.01]) * resolution
+    max_size = min(max_size, resolution - margin * 2)
+
+    for _ in range(times):
+        width = np.random.randint(int(min_size), int(max_size))
+        height = np.random.randint(int(min_size), int(max_size))
+
+        x_start = np.random.randint(int(margin), resolution - int(margin) - width + 1)
+        y_start = np.random.randint(int(margin), resolution - int(margin) - height + 1)
+        mask[:, y_start:y_start + height, x_start:x_start + width] = 0
+
+    mask = 1 - mask if random.random() < 0.5 else mask
+    return mask
+```
+
+
+
+
+
+
+
+
 
 ## Limitations
 
