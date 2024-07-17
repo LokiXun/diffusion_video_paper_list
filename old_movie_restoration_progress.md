@@ -26,15 +26,15 @@ Here we posts some current results.
   <tr>
      <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">
       <div style="font-weight: bold; margin-bottom: 8px;">DAVIS-boat</div>
-      <video src="docs/old_movie_restoration_progress/pred_boat_it44000.mp4" controls style="width: 100%; height: auto;"></video>
+      <img src="docs/old_movie_restoration_progress/pred_boat_it44000.gif" style="width:100%">
     </td>
     <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">
       <div style="font-weight: bold; margin-bottom: 8px;">DAVIS-bear</div>
-      <video src="docs/old_movie_restoration_progress/pred_bear_it44000.mp4" controls style="width: 100%; height: auto;"></video>
+      <img src="docs/old_movie_restoration_progress/pred_bear_it44000.gif" style="width:100%">
     </td>
     <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">
       <div style="font-weight: bold; margin-bottom: 8px;">DAVIS-swan</div>
-      <video src="docs/old_movie_restoration_progress/pred_blackswan_it44000.mp4" controls style="width: 100%; height: auto;"></video>
+      <img src="docs/old_movie_restoration_progress/pred_blackswan_it44000.gif" style="width:100%">
     </td>
    </tr>
 </table>
