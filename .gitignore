@@ -8,12 +8,13 @@
 /**/
 !/docs/
 !/docs/**
-!research_writing_note/
+!/research_writing_note/
+!/docs/old_movie_restoration_progress/**
 
 # User-specific stuff:
 *.pptx
 *.drawio
-*.mp4
+#*.mp4
 *.drawio.bkp
 *.pt
 *.zip
