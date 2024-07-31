@@ -70,7 +70,7 @@ rely on **CLIP for Chinese text encoding.**
 
 
 
-### CogVLM
+### CogVLM2
 
 - CogVLM-1.1-chat 生成训练用的 caption 
   [code](https://github.com/THUDM/CogVLM)
@@ -81,7 +81,167 @@ rely on **CLIP for Chinese text encoding.**
 
 > 网页版  http://36.103.203.44:7861/ :star:
 
+对于GUI代理任务，建议每个图像只进行一轮对话以获得更好的结果
 
+**视觉定位**
+
+- 带有定位坐标（边界框）的图像描述。使用caption_with_box模板中的任何模板作为模型输入。例如:
+
+> Can you provide a description of the image and include the coordinates [[x0,y0,x1,y1]] for each mentioned object?
+
+逐个物体的描述
+
+> 确定 box 位置
+>
+> ```
+> origin region [0,0,512,512]
+> target format: [[000,000,512/1280*1000, 512/720*1000]] >> [[000,000,400,712]]
+> ```
+
+```shell
+# Can you provide a description of the image and include the coordinates [[000,000,400,712]] for each mentioned object?
+Certainly, I'll provide a description of the image and the coordinates for each object within the designated area.
+
+1. Sandy Path: The sandy path is the main feature of the image, stretching from the bottom left to the top right. It is bordered by trees and has a rough texture with patches of grass and small rocks. The coordinates for the path are approximately 000,000, 400,712.
+2. ...
+These coordinates are approximate and based on the visible boundaries of each object within the designated area.
+```
+
+
+
+- 根据物体的描述返回接地坐标（边界框）。使用caption2box模板中的任何模板，将 替换为物体的描述。例如:
+
+> Can you point out *children in blue T-shirts* in the image and provide the bounding boxes of their location?
+
+- 根据边界框坐标提供描述。使用box2caption模板中的模板，将 替换为位置坐标。例如：
+
+> Tell me what you see within the designated area *[[086,540,400,760]]* in the picture.
+
+```shell
+# Tell me what you see within the designated area [[000,000,400,712]] in the picture.
+Within the designated area marked by the coordinates 000,000,400,712, the image shows a natural setting that appears to be a part of a zoo or wildlife park. The area is characterized by a sandy path that meanders through a wooded area, bordered by trees with dense foliage. On the left side of the path, there is a structure that looks like a wooden bridge or platform, possibly designed for visitors to observe animals from a safe distance. The path itself is uneven, with patches of grass and small rocks scattered along its length. The overall atmosphere of the scene is serene and natural, with the presence of a large rock formation on the right side of the path adding to the ruggedness of the landscape.
+```
+
+**坐标格式:** 模型的输入和输出中的边界框坐标使用 `[[x1, y1, x2, y2]]` 格式，原点位于左上角，x轴向右，y轴向下。 (x1, y1) 和 (x2, y2) 分别是左上角和右下角，其值为相对坐标乘以1000（前缀为零，三位数）。
+
+
+
+- Q:**应用到 Video restoration 任务**，如何对每个 patch 生成 prompt？
+
+指定坐标的方式效果不是那么好，会把 patch 之外的内容也描述出来；
+
+直接对 patch 推理
+
+
+
+- Q：确定 prompt？
+
+> Question 模板参考：https://github.com/THUDM/CogVLM/blob/main/utils/utils/template.py#L400
+
+- 目标：描述到每一个物体；句子简单；细微的细节；
+- 根据结果 + 手动调整
+
+| whole 720p                                                   | left-up                                                      |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| <img src="docs/2024_07_Arxiv_Kolors--Effective-Training-of-Diffusion-Model-for-Photorealistic-Text-to-Image-Synthesis_Note/00000000.png" alt="00000000" style="zoom:33%;" /> | <img src="docs/2024_07_Arxiv_Kolors--Effective-Training-of-Diffusion-Model-for-Photorealistic-Text-to-Image-Synthesis_Note/patch1_00000000.png" alt="patch1_00000000" style="zoom:33%;" /> |
+
+- 简单描述，细节粗略描述 ok
+
+```sh
+# Describe this image as simply as possible.
+CogVLM2: This image shows a road with cars and a bus on it, surrounded by trees and hills under a blue sky with white clouds.<|end_of_text|>
+
+This is a black and white photo of a busy street. There are several cars parked on the side of the road, and a bus is driving on the road. There are trees on the sidewalk and a building in the background.
+
+```
+
+发现有多句话，不好搞 :+1:
+
+```sh
+# Describe this image as simply as possible in one sentence.
+Cars and a bus are on a road surrounded by trees under a blue sky with clouds.
+## 会缺失细节 or 物体，修改 prompt
+
+# Briefly describe all the objects in the image in one sentence.
+The image showcases a road with parked cars, a green bus, a hill with trees, and a clear blue sky with scattered clouds.
+
+```
+
+> 就用 Briefly describe all the objects in the image in one sentence. 这个 :+1:
+
+
+
+- Q：加上 `in one sentence` 似乎包含不了很多细节？
+
+```sh
+# Describe this image in one sentence and describe details
+
+Cars and a bus are on a road surrounded by trees under a blue sky with clouds.
+```
+
+```sh
+# Briefly describe the objects and its details in the image
+The image shows a road with several vehicles, including cars and a bus, parked or driving on it. There are trees on both sides of the road, and the sky above is blue with some clouds.
+```
+
+
+
+- 生成 tagger，只考虑物体 :+1:
+
+生成太多，少一点
+
+```sh
+# Briefly describe the objects in the image in a few words
+## whole 720p
+The image depicts a street scene with vehicles, including cars and a green bus, parked along the side of the road. There are trees and shrubs lining the sidewalk, and a pedestrian crossing sign is visible. The sky is partly cloudy, suggesting a pleasant day.
+
+## left-up
+Cars, bus, road, trees, sky.
+```
+
+ok，但会生成出来一些多余的 tag，但方便手动去掉
+
+```sh
+# Briefly describe the objects in the image in a few tagger, seperate in comma
+Cars, bus, trees, sky, road, sidewalk, buildings, pedestrians, traffic signs, and parking lines.
+
+## left-up
+Cars, trees, bus, road, sky, clouds, mountains, and parking lot.
+```
+
+`Briefly describe the objects in the image in a few tagger, seperate in comma` 生成出来 600+ tags... 重复 & 风格类型；
+
+- Q：如何造 prompt
+
+
+
+- 其他一些 prompt 效果不好
+
+```sh
+# Describe the primary elements of the photo.
+CogVLM2: The primary elements of the photo include a road with multiple vehicles, such as cars and a bus, parked or in motion. There are trees and hills in the background, and the sky is clear with a few clouds. The road appears to be a two-lane highway with a solid white line separating the lanes. The vehicles vary in color and model, indicating a mix of personal and possibly commercial use. The surrounding area is lush and green, suggesting a location that values natural beauty alongside urban development.<|end_of_text|>
+```
+
+```sh
+# Describe the image.
+CogVLM2: The image shows a road with several vehicles, including cars and a bus, parked or in motion. The road is surrounded by trees and hills, and the sky is clear with a few clouds. The vehicles vary in color and model, indicating a mix of personal and possibly commercial use. The surrounding area is lush and green, suggesting a location that values natural beauty alongside urban development.<|end_of_text|>
+```
+
+details are too vauge 
+
+```sh
+# Describe the main events or objects in the image.
+The image shows a road with cars and a bus, surrounded by trees and hills, under a blue sky with clouds.
+
+# Human:Describe each object in this image in a simple way.
+CogVLM2: The road is a two-lane highway with a solid white line. There are several vehicles on the road: a white car, a silver car, a black car, and a green bus with yellow and white text on its back. The road is surrounded by tall trees and a hill covered in greenery. Above, the sky is blue with a few white clouds scattered across it.<|end_of_text|>
+```
+
+
+
+#### CogVLM2-Video
+
+> http://cogvlm2-online.cogviewai.cn:7868/
 
 
 

@@ -1,6 +1,6 @@
 # Diffusion_Journey :gun:
 
-> ThisAn document mainly works as an **paper List in categories** :cat:
+> This document mainly works as an **paper List in categories** :cat:
 > Also, our notes for read papers are linked beside, which could hFelp us recall the main idea in paper more quickly.
 >
 > :ticket: Note that
@@ -30,6 +30,12 @@
 > - https://papers.cool/arxiv/cs.CV
 
 
+
+Here is Table Of Content! :book:
+
+[TOC]
+
+---
 
 
 
@@ -133,6 +139,8 @@ strong baseline in multi papers :+1:
   > REDS `sharp data`: train 240 video and each has 100 Frame
   > collect 63 old films from the internet for evaluation
 
+- [x] 
+  
 - [x] "DSTT-MARB: Multi-scale Attention Based Spatio-Temporal Transformers for Old Film Restoration" Master Thesis report, 2022 Sep
   [thesis-report](https://ntnuopen.ntnu.no/ntnu-xmlui/bitstream/handle/11250/3023083/no.ntnu:inspera:118516831:64411262.pdf?sequence=1) [local pdf](./2022_master_report_DSTT-MARB--Multi-scale-Attention-Based-Spatio-Temporal-Transformers-for-Old-Film-Restoration.pdf)
 
@@ -1675,6 +1683,23 @@ ControlNet 有学习 dense correspondence 的能力，基于 correspondence 去�
 
 
 
+### block-based
+
+- "MultiDiffusion: Fusing Diffusion Paths for Controlled Image Generation" ICML, 2023 Feb 16
+  [paper](http://arxiv.org/abs/2302.08113v1) [code](https://multidiffusion.github.io) [pdf](./2023_02_ICML_MultiDiffusion--Fusing-Diffusion-Paths-for-Controlled-Image-Generation.pdf) [note](./2023_02_ICML_MultiDiffusion--Fusing-Diffusion-Paths-for-Controlled-Image-Generation_Note.md)
+  Authors: Omer Bar-Tal, Lior Yariv, Yaron Lipman, Tali Dekel
+
+
+
+- "Mixture of diffusers for scene composition and high resolution image generation"
+
+- "Orthogonal Adaptation for Modular Customization of Diffusion Models" CVPR, 2023 Dec 
+  [paper](https://arxiv.org/abs/2312.02432)
+- "Zero-Painter: Training-Free Layout Control for Text-to-Image Synthesis" CVPR, 2023 Unknown
+  [paper](https://arxiv.org/abs/2406.04032)
+
+
+
 - "Inf-DiT: Upsampling Any-Resolution Image with Memory-Efficient Diffusion Transformer" Arxiv, 2024 May 7
   [paper](http://arxiv.org/abs/2405.04312v2) [code](https://github.com/THUDM/Inf-DiT.) [pdf](./2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer.pdf) [note](./2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note.md)
   Authors: Zhuoyi Yang, Heyang Jiang, Wenyi Hong, Jiayan Teng, Wendi Zheng, Yuxiao Dong, Ming Ding, Jie Tang
@@ -2640,6 +2665,26 @@ ControlNet 有学习 dense correspondence 的能力，基于 correspondence 去�
 > [Awesome-Transformer-Attention](https://github.com/cmhungsteve/Awesome-Transformer-Attention)
 > [Flighting-CV attention_usage](https://github.com/xmu-xiaoma666/External-Attention-pytorch)
 > [GNN survey](https://mp.weixin.qq.com/s/uG88KzR_RZg4D36nEBxR7Q)
+
+- "Attention Is All You Need" NIPS, 2017 Jun 12 :star::star:
+  [paper](http://arxiv.org/abs/1706.03762v7) [code]() [pdf](./2017_06_NIPS_Attention-Is-All-You-Need.pdf) [note](./2017_06_NIPS_Attention-Is-All-You-Need_Note.md)
+  Authors: Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, Illia Polosukhin
+
+$$
+WindowAttention(Q,K,V)=Softmax(Dropout\big(\frac{Q}{\sqrt{d_k}} K^T +Pos + mask)\big) *V
+$$
+
+- Q：$\sqrt{d_k}$ 是干嘛的？
+
+dk 为 Q,K,V 特征的通道数 or 维度 :star: ，用于做 scaling 的，不加会导致 Dot products 值很大，做完 softmax 梯度太小
+
+> We suspect that for **large values of dk, the dot products grow large in magnitude**, pushing the softmax function into regions where it has **extremely small gradients**
+
+- multi-head 就是在一开始 MLP ，把 C 拆成 `nH, C/nH`，单独做 attention；最后做完再 reshape 回去；认为对应到了子空间中的不同位置，能够得到更丰富特征
+
+
+
+
 
 - [x] "Swin Transformer: Hierarchical Vision Transformer using Shifted Windows" ICCV_best_paper, 2021 Mar
   [paper](http://arxiv.org/abs/2103.14030v2) [code](https://github.com/microsoft/Swin-Transformer)
@@ -4080,7 +4125,7 @@ $$
 
 
 
-- "AnyText: Multilingual Visual Text Generation And Editing" ICLR-Spotlight, 2023 Nov
+- ST"AnyText: Multilingual Visual Text Generation And Editing" ICLR-Spotlight, 2023 Nov
   [paper](http://arxiv.org/abs/2311.03054v4) [code](https://github.com/tyxsspa/AnyText) [pdf](./2023_11_ICLR_AnyText--Multilingual-Visual-Text-Generation-And-Editing.pdf) [note](./2023_11_ICLR_AnyText--Multilingual-Visual-Text-Generation-And-Editing_Note.md)
 
 - "RMT: Retentive Networks Meet Vision Transformers"
@@ -4446,7 +4491,7 @@ cross-attn KV concat 融合实现匹配
 
 > 24.06.25
 
-- z"Inf-DiT: Upsampling Any-Resolution Image with Memory-Efficient Diffusion Transformer" Arxiv, 2024 May 7
+- "Inf-DiT: Upsampling Any-Resolution Image with Memory-Efficient Diffusion Transformer" Arxiv, 2024 May 7
   [paper](http://arxiv.org/abs/2405.04312v2) [code](https://github.com/THUDM/Inf-DiT.) [pdf](./2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer.pdf) [note](./2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note.md)
   Authors: Zhuoyi Yang, Heyang Jiang, Wenyi Hong, Jiayan Teng, Wendi Zheng, Yuxiao Dong, Ming Ding, Jie Tang
 
@@ -4501,7 +4546,7 @@ RealSR
 
 设计方法https://arxiv.org/pdf/2406.14130提升当前 video synthesis 生成的时序长度，显存更低
 
-> , we propose a novel post-tuning methodology for video synthesis models, called ExVideo. This approach is designed to enhance the capability of current video synthesis models, allowing them to produce content over extended temporal durations while incurring lower training expenditures. I
+> , we propose a novel post-tuning methodology fMicmicBrushor video synthesis models, called ExVideo. This approach is designed to enhance the capability of current video synthesis models, allowing them to produce content over extended temporal durations while incurring lower training expenditures. I
 
 - "AnyDoor: Zero-shot Object-level Image Customization" CVPR, 2023 Jul 18
   [paper](http://arxiv.org/abs/2307.09481v2) [code](https://github.com/ali-vilab/AnyDoor) [pdf](./2023_07_CVPR_AnyDoor--Zero-shot-Object-level-Image-Customization.pdf) [note](./2023_07_CVPR_AnyDoor--Zero-shot-Object-level-Image-Customization_Note.md)
@@ -4535,6 +4580,97 @@ Mask 制作
   Authors: Zhenda Xie, Zheng Zhang, Yue Cao, Yutong Lin, Jianmin Bao, Zhuliang Yao, Qi Dai, Han Hu
 
 ![fig2.png](docs/2021_11_CVPR_SimMIM--A-Simple-Framework-for-Masked-Image-Modeling_Note/fig2.png)
+
+
+
+24.07.08
+
+kuaishou 可图，keling
+
+- https://github.com/Kwai-Kolors/Kolors/blob/master/imgs/Kolors_paper.pdf
+- "Kolors: Effective Training of Diffusion Model for Photorealistic Text-to-Image Synthesis" Arxiv, 2024 Jul 7
+  [paper](https://github.com/Kwai-Kolors/Kolors/blob/master/imgs/Kolors_paper.pdf) [code](https://github.com/Kwai-Kolors/Kolors) [pdf](./2024_07_Arxiv_Kolors--Effective-Training-of-Diffusion-Model-for-Photorealistic-Text-to-Image-Synthesis.pdf) [note](./2024_07_Arxiv_Kolors--Effective-Training-of-Diffusion-Model-for-Photorealistic-Text-to-Image-Synthesis_Note.md) [website](https://klingai.kuaishou.com/)
+  Authors: Kolors Team
+- "LivePortrait: Efficient Portrait Animation with Stitching and Retargeting Control" Arxiv, 2024 Jul 3
+  [paper](http://arxiv.org/abs/2407.03168v1) [code](https://github.com/KwaiVGI/LivePortrait) [pdf](./2024_07_Arxiv_LivePortrait--Efficient-Portrait-Animation-with-Stitching-and-Retargeting-Control.pdf) [note](./2024_07_Arxiv_LivePortrait--Efficient-Portrait-Animation-with-Stitching-and-Retargeting-Control_Note.md)
+  Authors: Jianzhu Guo, Dingyun Zhang, Xiaoqiang Liu, Zhizhou Zhong, Yuan Zhang, Pengfei Wan, Di Zhang
+
+**Fancy Stuff, efficiency**
+
+- "Learning to (Learn at Test Time): RNNs with Expressive Hidden States" 
+  [paper](https://arxiv.org/pdf/2407.04620)
+
+- "StreamMultiDiffusion: Real-Time Interactive Generation with Region-Based Semantic Control"
+  [paper](https://arxiv.org/pdf/2403.09055)
+
+
+
+24.07.15
+
+- "Explore the Limits of Omni-modal Pretraining at Scale" Arxiv , 2024 Jun 13, `MiCo`,
+  [paper](http://arxiv.org/abs/2406.09412v1) [code](https://github.com/invictus717/MiCo) [pdf](./2024_06_Arxiv _Explore-the-Limits-of-Omni-modal-Pretraining-at-Scale.pdf) [note](./2024_06_Arxiv _Explore-the-Limits-of-Omni-modal-Pretraining-at-Scale_Note.md)
+  Authors: Yiyuan Zhang, Handong Li, Jing Liu, Xiangyu Yue
+
+多模态
+
+
+
+- "MambaVision: A Hybrid Mamba-Transformer Vision Backbone" Arxiv , 2024 Jul 10, `MambaVision`
+  [paper](http://arxiv.org/abs/2407.08083v1) [code](https://github.com/NVlabs/MambaVision) [pdf](./2024_07_Arxiv _MambaVision--A-Hybrid-Mamba-Transformer-Vision-Backbone.pdf) [note](./2024_07_Arxiv _MambaVision--A-Hybrid-Mamba-Transformer-Vision-Backbone_Note.md)
+  Authors: Ali Hatamizadeh, Jan Kautz
+
+Backbone
+
+
+
+- SEED-Story: Multimodal Long Story Generation with Large Language Model
+
+  https://arxiv.org/abs/2407.08683v1
+
+
+
+- "MoSca: Dynamic Gaussian Fusion from Casual Videos via 4D Motion Scaffolds" https://arxiv.org/pdf/2405.17421
+
+视频直接到 4D
+
+- "FoleyCrafter: Bring Silent Videos to Life with Lifelike and Synchronized Sounds"
+  [paper](https://arxiv.org/pdf/2407.01494)
+
+视频生成音频
+
+
+
+- "Image Neural Field Diffusion Models"
+  [paper](https://arxiv.org/pdf/2406.07480)
+
+高分辨率输出逼真细节
+
+- "A Comprehensive Survey on Human Video Generation: Challenges, Methods, and Insights"
+  [paper](https://arxiv.org/pdf/2407.08428v1)
+- "Video Diffusion Alignment via Reward Gradients" Arxiv , 2024 Jul 11
+  [paper](http://arxiv.org/abs/2407.08737v1) [code](https://github.com/mihirp1998/vader) [web](https://vader-vid.github.io) [pdf](./2024_07_Arxiv _Video-Diffusion-Alignment-via-Reward-Gradients.pdf) [note](./2024_07_Arxiv _Video-Diffusion-Alignment-via-Reward-Gradients_Note.md)
+  Authors: Mihir Prabhudesai, Russell Mendonca, Zheyang Qin, Katerina Fragkiadaki, Deepak Pathak
+
+
+
+> 24.07.21
+
+- "Visual Geometry Grounded Deep Structure From Motion" CVPR, 2023 Dec 7
+  [paper](http://arxiv.org/abs/2312.04563v1) [code]() [pdf](./2023_12_CVPR_Visual-Geometry-Grounded-Deep-Structure-From-Motion.pdf) [note](./2023_12_CVPR_Visual-Geometry-Grounded-Deep-Structure-From-Motion_Note.md)
+  Authors: Jianyuan Wang, Nikita Karaev, Christian Rupprecht, David Novotny
+
+predict camera pose
+
+- "BlazeBVD: Make Scale-Time Equalization Great Again for Blind Video Deflickering" Arxiv, 2024 Mar 10
+  [paper](http://arxiv.org/abs/2403.06243v1) [code]() [pdf](./2024_03_Arxiv_BlazeBVD--Make-Scale-Time-Equalization-Great-Again-for-Blind-Video-Deflickering.pdf) [note](./2024_03_Arxiv_BlazeBVD--Make-Scale-Time-Equalization-Great-Again-for-Blind-Video-Deflickering_Note.md)
+  Authors: Xinmin Qiu, Congying Han, Zicheng Zhang, Bonan Li, Tiande Guo, Pingyu Wang, Xuecheng Nie
+- "LightenDiffusion: Unsupervised Low-Light Image Enhancement with Latent-Retinex Diffusion Models" Arxiv, 2024 Jul 12
+  [paper](http://arxiv.org/abs/2407.08939v1) [code](https://github.com/JianghaiSCU/LightenDiffusion.) [pdf](./2024_07_Arxiv_LightenDiffusion--Unsupervised-Low-Light-Image-Enhancement-with-Latent-Retinex-Diffusion-Models.pdf) [note](./2024_07_Arxiv_LightenDiffusion--Unsupervised-Low-Light-Image-Enhancement-with-Latent-Retinex-Diffusion-Models_Note.md)
+  Authors: Hai Jiang, Ao Luo, Xiaohong Liu, Songchen Han, Shuaicheng Liu
+
+
+
+
 
 # Research Note
 
@@ -4617,6 +4753,21 @@ Mask 制作
 - [Xintao Wang](https://scholar.google.com/citations?hl=zh-CN&user=OSDCB0UAAAAJ&view_op=list_works&sortby=pubdate) Kuaishou
 - [Chen Change Loy](https://scholar.google.com/citations?user=559LF80AAAAJ&hl=zh-CN&oi=ao) NTU
 - [Zhangkai NI](https://scholar.google.com/citations?hl=zh-CN&user=68IcrE4AAAAJ&view_op=list_works&sortby=pubdate) TJ
+
+
+
+## Q&A 
+
+- Q：DDPM 采样原理；
+- Q：DDIM 的区别？
+- Q：ControlNet reference-only 处理残差的方式？
+- Q：手写一下 self-attention 公式和代码 :star:
+
+> "Attention Is All You Need" NIPS, 2017 Jun 12
+> [paper](http://arxiv.org/abs/1706.03762v7) [code]() [pdf](./2017_06_NIPS_Attention-Is-All-You-Need.pdf) [note](./2017_06_NIPS_Attention-Is-All-You-Need_Note.md)
+> Authors: Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, Illia Polosukhin
+
+
 
 
 
@@ -4913,4 +5064,4 @@ Mask 制作
 >   - [How to compile using Makefile.am](https://www.baeldung.com/linux/makefile-am-vs-in)
 >
 
-v	
+v	ba

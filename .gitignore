@@ -14,7 +14,7 @@
 # User-specific stuff:
 *.pptx
 *.drawio
-#*.mp4
+*.mp4
 *.drawio.bkp
 *.pt
 *.zip
