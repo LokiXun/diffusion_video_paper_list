@@ -1,6 +1,6 @@
 # MOFA-Video: Controllable Image Animation via Generative Motion Field Adaptions in Frozen Image-to-Video Diffusion Model
 
-> "MOFA-Video: Controllable Image Animation via Generative Motion Field Adaptions in Frozen Image-to-Video Diffusion Model" Arxiv, 2024 May 30
+> "MOFA-Video: Controllable Image Animation via Generative Motion Field Adaptions in Frozen Image-to-Video Diffusion Model" ECCV, 2024 May 30
 > [paper](http://arxiv.org/abs/2405.20222v2) [code](https://github.com/MyNiuuu/MOFA-Video) [web](https://myniuuu.github.io/MOFA_Video/) [pdf](./2024_05_Arxiv_MOFA-Video--Controllable-Image-Animation-via-Generative-Motion-Field-Adaptions-in-Frozen-Image-to-Video-Diffusion-Model.pdf) [note](./2024_05_Arxiv_MOFA-Video--Controllable-Image-Animation-via-Generative-Motion-Field-Adaptions-in-Frozen-Image-to-Video-Diffusion-Model_Note.md)
 > Authors: Muyao Niu, Xiaodong Cun, Xintao Wang, Yong Zhang, Ying Shan, Yinqiang Zheng
 >
@@ -175,7 +175,7 @@ SVD 的动态效果比 SDv1.5+AnimateDiff-MoitionModule 更丝滑；官网示例
 
 多个 condition 都去更新 flow，**以 flow 作为最终的 condition 去融合 image feature**
 
-![image-20240619173624922](docs/2024_05_Arxiv_MOFA-Video--Controllable-Image-Animation-via-Generative-Motion-Field-Adaptions-in-Frozen-Image-to-Video-Diffusion-Model_Note/image-20240619173624922.png)
+![fig13.png](docs/2024_05_Arxiv_MOFA-Video--Controllable-Image-Animation-via-Generative-Motion-Field-Adaptions-in-Frozen-Image-to-Video-Diffusion-Model_Note/fig13.png)
 
 
 
@@ -550,7 +550,48 @@ controlnet forward
 
 
 
-### Unimatch
+### ControlNet 输入
+
+```python
+inp_noisy_latents = torch.cat(
+                    [inp_noisy_latents, conditional_latents], dim=2)
+```
+
+输入 T 帧用 unimatch 提取 t-1 个光流，**watershed 去筛选一下目标光流**
+
+> https://vscode.dev/github/MyNiuuu/MOFA-Video/blob/main/Training/train_stage2.py#L110-L118
+
+```
+def get_cmpsample_mask(flows):
+    fb, fl, fc, fh, fw = flows.shape
+    masks = []
+    for i in range(fb):
+        temp_flow = flows[i, -1].permute(1, 2, 0).cpu().numpy()  # [h, w, 2]
+        _, temp_mask = flow_sampler(temp_flow, ['grid', 'watershed'])
+        masks.append(temp_mask)
+    masks = torch.from_numpy(np.stack(masks, axis=0)).to(flows.device, flows.dtype)  # [b, h, w, 2]
+    masks = masks.unsqueeze(1).repeat(1, fl, 1, 1, 1).permute(0, 1, 4, 2, 3)  # [b, l, 2, h, w]
+```
+
+
+
+### flow_encoder 获取 warped 光流
+
+> https://vscode.dev/github/MyNiuuu/MOFA-Video/blob/main/Training/models/svdxt_featureflow_forward_controlnet_s2d_fixcmp_norefine.py#L300-L301
+
+```
+controlnet_cond_features = [controlnet_cond] + self.flow_encoder(controlnet_cond)  # [4]
+```
+
+
+
+![fig13.png](docs/2024_05_Arxiv_MOFA-Video--Controllable-Image-Animation-via-Generative-Motion-Field-Adaptions-in-Frozen-Image-to-Video-Diffusion-Model_Note/fig13.png)
+
+
+
+```
+warped_cond_feature = self.get_warped_frames(cond_feature, scale_flows[fh // ch])
+```
 
 
 

@@ -1,12 +1,12 @@
 # Inf-DiT: Upsampling Any-Resolution Image with Memory-Efficient Diffusion Transformer
 
-> "Inf-DiT: Upsampling Any-Resolution Image with Memory-Efficient Diffusion Transformer" Arxiv, 2024 May 7
+> "Inf-DiT: Upsampling Any-Resolution Image with Memory-Efficient Diffusion Transformer" ECCV, 2024 May 7
 > [paper](http://arxiv.org/abs/2405.04312v2) [code](https://github.com/THUDM/Inf-DiT) [pdf](./2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer.pdf) [note](./2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note.md)
 > Authors: Zhuoyi Yang, Heyang Jiang, Wenyi Hong, Jiayan Teng, Wendi Zheng, Yuxiao Dong, Ming Ding, Jie Tang
 
 ## Key-point
 
-- Task: `ultra-high-resolution SR` 
+- Task: `ultra-high-resolution SR`
 
 - Problems
 
@@ -118,6 +118,22 @@ LDM 使用 VAE 转换到 latent 处理，但**过高的压缩比导致信息丢�
 
 ![fig3.png](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/fig3.png)
 
+- Q：在 layer 里面对特征划分 patch？:star:
+
+> When the image is fed into the network, the channel size and resolution of a block may change, but the layout and the relative positional relationships between blocks will remain unchanged.
+
+只输入一部分 patch 的特征到模型里面降低显存
+
+> If there is a way to apply sequential batch generation of blocks where each batch simultaneously produces a subset of the blocks, only a small number of block hidden states have to be kept in memory simultaneously, making it possible to generate ultra-high-resolution images.
+
+- Q：relative positional relationships between blocks will remain unchanged？设个 pos 怎么设计？
+
+
+
+
+
+
+
 - Q：如何定义两个 block 是相关的？
 
 > define that blockA is dependent on blockB if the generation of blockA involves the hidden state of blockB in computation
@@ -126,22 +142,28 @@ LDM 使用 VAE 转换到 latent 处理，但**过高的压缩比导致信息丢�
 
 > dependencies between blocks are bidirectional in most previous structures
 
-- **Q：但目标是在 hidden space 降低显存，只放入一小部分 blocks 行不行？**
+- Q：怎么理解双向？
+
+**相邻的 patch** 的特征在 CNN 里面会一起处理，来做到双向；这里也只是**相邻的 patch 也有个局部性**
+
+> Take UNet as an example: two adjacent elements in neighboring blocks use each other’s hidden state in the convolution operation, therefore all pairs of neighboring blocks must be generated simultaneously
+
+- Q：分 patch 后，这个 bidirectional 怎么办？:star:
+
+
+
+
 
 本工作目标设计一个算法，可以把各个 blocks 拆分成一个个 batch 进行处理（提升效率？）
 
 > Given the aim to save the memory of blocks’ hidden states, we hope to devise an algorithm that allows the blocks in the same image to be divided into several batches for generation
 
-定义一下情况可以把 blocks 按顺序分别推理
+定义一下情况可以把 blocks 按顺序分别推理，**做了一些假设限定**
 
 > Generally, an image generation algorithm can perform such a sequential batch generation among blocks if it meets the following conditions
-
-生成模型的依赖要是单向的，每个 block 只受到前一个block 影响？？？:warning:
-
-> 1. The generative dependency between blocks are unidirectional, and can form a directed acyclic graph (DAG). 
-> 2. Each block has only a few direct (1st-order) dependencies on other blocks, since the hidden states of the block and its direct dependencies should simultaneously be kept in the memory
-
-
+>
+> 1. The generative dependency between blocks are **unidirectional**, and can form a directed acyclic graph (DAG). 
+> 2. Each block has only **a few direct (1st-order) dependencies on other blocks**, since the hidden states of the block and its direct dependencies should simultaneously be kept in the memory
 
 - Q：ensure consistency across the whole image？（**多次推理的全局一致性！**）
 
@@ -160,6 +182,8 @@ LDM 使用 VAE 转换到 latent 处理，但**过高的压缩比导致信息丢�
 - Q：如何加上这个 relative pos embedding?
 
 ![image-20240625230116594](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/image-20240625230116594.png)
+
+
 
 
 
@@ -241,25 +265,27 @@ xLR 是 resized 的 LR 图像，从而得到 XT
 
 
 
-### InfDiT
+### Framework
 
-![image-20240625234257492](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/image-20240625234257492.png)
+![fig4.png](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/fig4.png)
 
 
 
-DiT 验证了**使用 ViT 方式分 patch 再处理更高效，可扩展性更好**
+DiT 验证了使用 ViT 方式分 patch 再处理更高效，可扩展性更好
 
 > DiT [17], which applies Vision Transformer (ViT) [6] to diffusion models and proves its efficacy and scalability
 
-#### **Model input**
+**Model input**
 
-分成不重叠的 block
+在 RGB 空间分 patch
 
 > Inf-DiT first partitions input images into multiple non-overlapping blocks, which are further divided into patches with a side length equal to the patch size
 
 模型没有用类似 VAE 的东西对输入下采样，类似 SDv2 x4 SR 直接把 LR 作为输入，最后只对输出过 VAE 上采样得到 x4
 
 > Unlike DiT, considering the compression loss such as color shifting and detail loss, the patchifying of Inf-DiT is conducted in RGB pixel space instead of latent space.
+
+
 
 
 
@@ -297,17 +323,25 @@ LLM 一些工作发现相对 pos embedding 更有效，**因此使用 Rotary Pos
 
 ### Global  Consistency :star:
 
-用 CLIP image embedding 作为全局特征
+> The global semantic information within low-resolution (LR) images, such as artistic style and object material, plays a crucial role during upsampling.
+
+加入全局图，减轻模型理解图像内容的负担？？
+
+> However, compared to text-to-image generation models, **the upsampling model has an additional task understanding and analyzing the semantic information of LR images,** which significantly increases the model’s burden
+
+**是因为没有 paired text 导致不好理解**？所以用 CLIP image embedding 作为全局特征
+
+> This is particularly challenging when training without text data, as high-resolution images rarely have high-quality paired texts, making these aspects difficult for the model.
+
+对 LR 图提取特征加到 t-embedding 上
 
 > Inspired by DALL·E2 [20], we utilize the image encoder from pre-trained CLIP [19] to extract image embedding ILR from low-resolution images, which we refer to as Semantic Input.
 >
-> We add the global semantic embedding to the time embedding of the diffusion transformer and **input it into each layer,** enabling the model to learn directly from high-level semantic information.
-
-- Q：只能在 spatial 维度上面搞？
-
-TODO
+> We **add the global semantic embedding to the time embedding of the diffusion transformer** and **input it into each layer,** enabling the model to learn directly from high-level semantic information.
 
 
+
+- Q：与文本冲突？？
 
 使用 CLIP 还有个好处是能让模型通过 text CLIP embedding 引导 :star:
 
@@ -318,6 +352,8 @@ TODO
 ![image-20240626000015585](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/image-20240626000015585.png)
 
 > Cpos = “clear” and Cneg = “blur” sometimes help.
+
+
 
 
 
@@ -338,6 +374,10 @@ TODO
 
 
 ![image-20240626002014394](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/image-20240626002014394.png)
+
+
+
+
 
 
 
