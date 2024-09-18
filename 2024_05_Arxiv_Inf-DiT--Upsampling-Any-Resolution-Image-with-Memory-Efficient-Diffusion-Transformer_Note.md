@@ -24,7 +24,7 @@
 
 - propose Unidirectional Block Attention (UniBA) 实现全局一致性 & 降低推理时候的显存占用
 
-  4096x4096 每次只预测 1/16 居然可以保持全局一致性很牛逼
+  4096x4096 每次只预测 1/16 居然可以保持全局一致性很牛
 
 - 训练了一个 DiT 实现多分辨率（没说是任意分辨率很严谨）& SOTA
 
@@ -54,7 +54,9 @@
 
 - Q：什么是 cascaded generation？
 
-TODO
+![fig1](docs/2024_06_CVPR_Hierarchical-Patch-Diffusion-Models-for-High-Resolution-Video-Generation_Note/fig1.png)
+
+
 
 
 
@@ -106,11 +108,13 @@ LDM 使用 VAE 转换到 latent 处理，但**过高的压缩比导致信息丢�
 
 - Q：How to avoid storing the entire image’s hidden state in memory becomes the key issue？
 
-类似 RVRT 的方式，划分滑动窗口；这里是指空间上的
+类似 RVRT 的方式，划分滑动窗口；这里是指空间上的（h,w）上拆分 patch。以 patch=4x4 像素为最小单位，32x32 个patch 为一个 block (128x128 像素)，每次把一个 block 的图像特征输入到 DiT 中；
 
-![image-20240625224224817](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/image-20240625224224817.png)
+> 具体实现见后面的 code
 
-![image-20240625224233226](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/image-20240625224233226.png)
+1. 加上整个图的 clip image embedding 1x768 + MLP 映射为 1x1028 特征，加到 time-step embedding 上 **（全局一致性）**
+2. 在 Self-Attn 中把**当前 patch 和前几个 patch 的 K，V 一起 concat ，加上相对位置编码（block 的 id）**，融合实现局部一致性；
+3. **在 DiT 的第一层**， cross-attn 模块不用文本，换成 LR 图像中取一个更大的范围（包含当前 block 信息）的局部图，一层 Conv + ViT patchify 提取图像特征，作为 KV 融合；（"全局"一致性，这里可以理解为还是局部一致性。。没用全图啊）
 
 
 
@@ -181,7 +185,7 @@ LDM 使用 VAE 转换到 latent 处理，但**过高的压缩比导致信息丢�
 
 - Q：如何加上这个 relative pos embedding?
 
-![image-20240625230116594](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/image-20240625230116594.png)
+![eq1](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/eq1.png)
 
 
 
@@ -213,7 +217,7 @@ LDM 使用 VAE 转换到 latent 处理，但**过高的压缩比导致信息丢�
 
 #### pseudocode
 
-![image-20240625231346721](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/image-20240625231346721.png)
+![fig10](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/fig10.png)
 
 
 
@@ -229,7 +233,7 @@ LDM 使用 VAE 转换到 latent 处理，但**过高的压缩比导致信息丢�
 
 参考 ViT 中训练 trick 对 Q，K 分别都做 Norm
 
-![image-20240625231713609](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/image-20240625231713609.png)
+![appendix_attn_eq](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/appendix_attn_eq.png)
 
 
 
@@ -241,7 +245,7 @@ LDM 使用 VAE 转换到 latent 处理，但**过高的压缩比导致信息丢�
 
 xLR 是 resized 的 LR 图像，从而得到 XT
 
-![image-20240625231914146](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/image-20240625231914146.png)
+![initial_noise](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/initial_noise.png)
 
 - Q：这里替换均值是几个意思？
 
@@ -333,7 +337,13 @@ LLM 一些工作发现相对 pos embedding 更有效，**因此使用 Rotary Pos
 
 > This is particularly challenging when training without text data, as high-resolution images rarely have high-quality paired texts, making these aspects difficult for the model.
 
-对 LR 图提取特征加到 t-embedding 上
+
+
+- Q：CLIP image embedding 放到哪里？:star:
+
+![fig4.png](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/fig4.png)
+
+对 LR 图提取特征，**加到输入的 t-embedding 上**
 
 > Inspired by DALL·E2 [20], we utilize the image encoder from pre-trained CLIP [19] to extract image embedding ILR from low-resolution images, which we refer to as Semantic Input.
 >
@@ -341,15 +351,17 @@ LLM 一些工作发现相对 pos embedding 更有效，**因此使用 Rotary Pos
 
 
 
-- Q：与文本冲突？？
+
+
+- Q：与文本冲突？？对 image embedding 更新一下？
 
 使用 CLIP 还有个好处是能让模型通过 text CLIP embedding 引导 :star:
 
-> using the aligned image-text latent space in CLIP, we can use text to guide the direction of generation, even if our model has not been trained on any image-text pairs.
+> using the aligned image-text latent space in CLIP, we can **use text to guide the direction of generation**, even if our model has not been trained on any image-text pairs.
 
-**使用 Pos & Negative Prompt**，也没说一定有用！:star: :star:
+**使用 Pos & Negative Prompt** 去更新一下 image embedding，也没说一定有用！:star: :star:
 
-![image-20240626000015585](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/image-20240626000015585.png)
+![eq5](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/eq5.png)
 
 > Cpos = “clear” and Cneg = “blur” sometimes help.
 
@@ -371,9 +383,7 @@ LLM 一些工作发现相对 pos embedding 更有效，**因此使用 Rotary Pos
 
 实验发现能够明显降低不一致
 
-
-
-![image-20240626002014394](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/image-20240626002014394.png)
+![fig7](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/fig7.png)
 
 
 
@@ -381,7 +391,7 @@ LLM 一些工作发现相对 pos embedding 更有效，**因此使用 Rotary Pos
 
 
 
-## Setting
+## Exp Setting
 
 -  LAION-5B [25] with a resolution higher than 1024×1024 and aesthetic score higher than 5, and 100 thousand high-resolution wallpapers from the Internet
 
@@ -434,21 +444,21 @@ block size = 128 and patch size = 4, which means every training image is divided
 
 说明显存爆炸的问题（完全可以用 Swin3D & Mamba 展示一下）
 
-![image-20240625214558939](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/image-20240625214558939.png)
+![fig2](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/fig2.png)
 
 **HPDV2 dataset**
 
-![image-20240626000650653](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/image-20240626000650653.png)
+![tb1](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/tb1.png)
 
 主观结果，基于 patch 的方式细节好，但是 patch 之间 blocking 太明显
 
-![image-20240626001129088](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/image-20240626001129088.png)
+![fig5](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/fig5.png)
 
 
 
 LR=1024 数据
 
-![image-20240626001237309](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/image-20240626001237309.png)
+![fig6](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/fig6.png)
 
 
 
@@ -458,17 +468,15 @@ LR=1024 数据
 
 对比 RealSR 方法，效果居然接近 StableSR
 
-![image-20240625232922788](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/image-20240625232922788.png)
+![fig16](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/fig16.png)
 
 效果比 SDv2 x4SR 好太多了，看起来纹理扭曲得问题得到了解决？？纹理细节更加清晰了
-
-![image-20240625232952823](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/image-20240625232952823.png)
 
 
 
 ### Iterative SR
 
-![image-20240626002054083](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/image-20240626002054083.png)
+![fig8](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/fig8.png)
 
 - Q：细节还是很渣渣?
 
@@ -482,7 +490,7 @@ LR=1024 数据
 
 FID 看不出来差异
 
-![image-20240626002312935](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/image-20240626002312935.png)
+![tb3](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/tb3.png)
 
 
 
@@ -490,7 +498,7 @@ FID 看不出来差异
 
 整图 LR 的 Semantic Input 影响很大的！！！:star:
 
-![image-20240625232358246](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/image-20240625232358246.png)
+![fig12](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/fig12.png)
 
 
 
@@ -500,17 +508,883 @@ FID 看不出来差异
 
 **SDv2 也是可以这么搞得！**
 
-![image-20240625232745116](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/image-20240625232745116.png)
+![fig13](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/fig13.png)
 
-![image-20240625232759679](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/image-20240625232759679.png)
+![fig14](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/fig14.png)
 
-![image-20240625232811495](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/image-20240625232811495.png)
+![fig15](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/fig15.png)
 
 
 
 ## Code
 
+`pos_embed_config` 
 
+> https://vscode.dev/github/THUDM/Inf-DiT/blob/main/dit/model.py#L481
+
+```
+{'target': 'dit.embeddings.RotaryPositionEmbedding', 'params': {'num_patches': 1024, 'hidden_size': 1024, 'hidden_size_head': 64, 'pix2struct': True}}
+```
+
+
+
+- qk 上加 layerNorm
+
+```
+        if qk_ln:
+            print("--------use qk_ln--------")
+            self.q_layer_norm = nn.ModuleList([
+                nn.LayerNorm(hidden_size_head, eps=1e-6)
+                for _ in range(num_layers)
+            ])
+            self.k_layer_norm = nn.ModuleList([
+                nn.LayerNorm(hidden_size_head, eps=1e-6)
+                for _ in range(num_layers)
+            ])
+```
+
+
+
+- pos_embedding
+
+> https://vscode.dev/github/THUDM/Inf-DiT/blob/main/dit/model.py#L145
+
+```
+        if random_position:
+            self.rope = RotaryPositionEmbedding(pix2struct=True, num_patches=image_size * 8, hidden_size=hidden_size, hidden_size_head=hidden_size//num_head)
+        else:
+            self.rope = RotaryPositionEmbedding(pix2struct=True, num_patches=image_size * 2, hidden_size=hidden_size,
+                                                hidden_size_head=hidden_size // num_head)
+```
+
+
+
+
+
+- LR-image cross-attention :star:
+
+> https://vscode.dev/github/THUDM/Inf-DiT/blob/main/dit/model.py#L166
+
+```
+self.proj_lr = nn.Conv2d(in_channels, hidden_size, kernel_size=self.lr_patch_size, stride=self.lr_patch_size, bias=bias)
+# Conv2d(3, 1280, kernel_size=(2, 2), stride=(2, 2))
+```
+
+这里也加了 LayerNorm ！！
+
+
+
+- image-patch-embedding
+
+> https://vscode.dev/github/THUDM/Inf-DiT/blob/main/dit/embeddings.py#L114
+
+
+
+- time-embedding
+
+```python
+        if args.ddpm_time_emb:
+            self.time_embed = DDPMTimeEmbedding(args.hidden_size)  # Create sinusoidal timestep embeddings.
+        else:
+            self.time_embed = TimeEmbedding(args.hidden_size)
+```
+
+
+
+
+
+### Image-embedding
+
+> https://vscode.dev/github/THUDM/Inf-DiT/blob/main/dit/encoders.py#L244
+
+加载权重
+
+```python
+def load_checkpoint(model, checkpoint_path, strict=True):
+    state_dict = load_state_dict(checkpoint_path)
+    # detect old format and make compatible with new format
+    if 'positional_embedding' in state_dict and not hasattr(model, 'positional_embedding'):
+        state_dict = convert_to_custom_text_state_dict(state_dict)
+    # Certain text transformers no longer expect position_ids after transformers==4.31
+    position_id_key = 'text.transformer.embeddings.position_ids'
+    if position_id_key in state_dict and not hasattr(model, position_id_key):
+        del state_dict[position_id_key]
+    resize_pos_embed(state_dict, model)
+    incompatible_keys = model.load_state_dict(state_dict, strict=strict)
+    return incompatible_keys
+```
+
+details
+
+```python
+# set image / mean metadata from pretrained_cfg if available, or use default
+        model.visual.image_mean = pretrained_cfg.get('mean', None) or OPENAI_DATASET_MEAN
+        model.visual.image_std = pretrained_cfg.get('std', None) or OPENAI_DATASET_STD
+# OPENAI_DATASET_MEAN = (0.48145466, 0.4578275, 0.40821073)
+# OPENAI_DATASET_STD = (0.26862954, 0.26130258, 0.27577711)
+```
+
+freeze
+
+```python
+    def freeze(self):
+        self.model = self.model.eval()
+        for param in self.parameters():
+            param.requires_grad = False
+```
+
+
+
+
+
+#### download
+
+```
+{'embed_dim': 768, 'vision_cfg': {'image_size': 224, 'layers': 24, 'width': 1024, 'patch_size': 14}, 'text_cfg': {'context_length': 77, 'vocab_size': 49408, 'width': 768, 'heads': 12, 'layers': 12}}
+```
+
+预训练模型权重 `'datacomp_xl_s13b_b90k'`，去全局变量读取 url
+
+> https://vscode.dev/github/THUDM/SwissArmyTransformer/blob/main_clip/pretrained.py#L235 
+>
+> ```python
+> _VITL14 = dict(
+>     openai=_pcfg(
+>         "https://openaipublic.azureedge.net/clip/models/b8cca3fd41ae0c99ba7e8951adf17d267cdb84cd88be6f7c2e0eca1737a03836/ViT-L-14.pt"),
+>     laion400m_e31=_pcfg(
+>         "https://github.com/mlfoundations/open_clip/releases/download/v0.2-weights/vit_l_14-laion400m_e31-69988bb6.pt"),
+>     laion400m_e32=_pcfg(
+>         "https://github.com/mlfoundations/open_clip/releases/download/v0.2-weights/vit_l_14-laion400m_e32-3d133497.pt"),
+>     laion2b_s32b_b82k=_pcfg(
+>         hf_hub='laion/CLIP-ViT-L-14-laion2B-s32B-b82K/',
+>         mean=(0.5, 0.5, 0.5), std=(0.5, 0.5, 0.5)),
+>     # DataComp-XL models
+>     datacomp_xl_s13b_b90k=_pcfg(hf_hub='laion/CLIP-ViT-L-14-DataComp.XL-s13B-b90K/'),
+>     commonpool_xl_clip_s13b_b90k=_pcfg(hf_hub='laion/CLIP-ViT-L-14-CommonPool.XL.clip-s13B-b90K/'),
+>     commonpool_xl_laion_s13b_b90k=_pcfg(hf_hub='laion/CLIP-ViT-L-14-CommonPool.XL.laion-s13B-b90K/'),
+>     commonpool_xl_s13b_b90k=_pcfg(hf_hub='laion/CLIP-ViT-L-14-CommonPool.XL-s13B-b90K/'),
+> )
+> ```
+
+````
+pretrained_cfg = get_pretrained_cfg(model_name, pretrained)
+# pretrained_cfg={'url': '', 'hf_hub': 'laion/CLIP-ViT-L-14-DataComp.XL-s13B-b90K/', 'mean': None, 'std': None}
+
+````
+
+​	如果 `model_name` 是本地路径返回 `{}`, 去本地读取
+
+
+
+- download from huggingface :construction_worker:
+
+> https://vscode.dev/github/THUDM/SwissArmyTransformer/blob/main_clip/pretrained.py#L397
+
+```python
+try:
+    from huggingface_hub import hf_hub_download
+    hf_hub_download = partial(hf_hub_download, library_name="open_clip", library_version=__version__)
+    _has_hf_hub = True
+except ImportError:
+    hf_hub_download = None
+    _has_hf_hub = False
+
+cached_file = hf_hub_download(model_id, filename, revision=revision, cache_dir=cache_dir)
+```
+
+可以设置 `resume_download=True`
+
+> https://docs.python.org/3/library/stat.html  `os.stat(incomplete_path).st_size` 读取 byte size
+
+```python
+        if resume_download:
+            incomplete_path = blob_path + ".incomplete"
+
+            @contextmanager
+            def _resumable_file_manager() -> Generator[io.BufferedWriter, None, None]:
+                with open(incomplete_path, "ab") as f:
+                    yield f
+
+            temp_file_manager = _resumable_file_manager
+            if os.path.exists(incomplete_path):
+                resume_size = os.stat(incomplete_path).st_size
+            else:
+                resume_size = 0
+```
+
+
+
+`cache_dir=None` 默认保存位置
+
+```python
+HF_HOME = os.path.expanduser(
+    os.getenv(
+        "HF_HOME",
+        os.path.join(os.getenv("XDG_CACHE_HOME", default_home), "huggingface"),
+    )
+)
+default_cache_path = os.path.join(HF_HOME, "hub")
+HUGGINGFACE_HUB_CACHE = os.getenv("HUGGINGFACE_HUB_CACHE", default_cache_path)
+HF_HUB_CACHE = os.getenv("HF_HUB_CACHE", HUGGINGFACE_HUB_CACHE)  # /home/ps/.cache/huggingface/hub
+```
+
+`repo_folder_name(repo_id=repo_id, repo_type=repo_type)='models--laion--CLIP-ViT-L-14-DataComp.XL-s13B-b90K'`
+
+`storage_folder='/home/ps/.cache/huggingface/hub/models--laion--CLIP-ViT-L-14-DataComp.XL-s13B-b90K'`
+
+> https://hf-mirror.com/laion/CLIP-ViT-L-14-DataComp.XL-s13B-b90K/resolve/main/open_clip_pytorch_model.bin
+
+```python
+headers = {'user-agent': 'open_clip/2.22.0; hf_hub/0.22.2; python/3.10.9; torch/2.1.1+cu118'}
+
+# check python version
+import sys
+_PY_VERSION: str = sys.version.split()[0].rstrip("+")
+# sys.version  # '3.10.9 (main, Mar  8 2023, 10:47:38) [GCC 11.2.0]'
+# check package version
+import importlib.metadata
+_package_versions[candidate_name] = importlib.metadata.version(name)
+_package_versions.get(package_name, "N/A")
+```
+
+本地文件实际保存在 `blob` 目录，**文件名是 sha256sum 值** `6509f07e6fc0da68f8e1ee881bf90803f0b053d2f7ed2013cc7c3a49ac4dd3db`
+
+`pointer_path` 的 hash 值是对应仓库的提交 `commit=84c9828e63dc9a9351d1fe637c346d4c1c4db341` 
+
+```python
+blob_path = os.path.join(storage_folder, "blobs", etag)
+# '/home/ps/.cache/huggingface/hub/models--laion--CLIP-ViT-L-14-DataComp.XL-s13B-b90K/blobs/6509f07e6fc0da68f8e1ee881bf90803f0b053d2f7ed2013cc7c3a49ac4dd3db'
+pointer_path = _get_pointer_path(storage_folder, commit_hash, relative_filename)
+# '/home/ps/.cache/huggingface/hub/models--laion--CLIP-ViT-L-14-DataComp.XL-s13B-b90K/snapshots/84c9828e63dc9a9351d1fe637c346d4c1c4db341/open_clip_pytorch_model.bin'  # metadata.commit_hash
+```
+
+会检查 `pointer_path` & `blob_path` 如果本地文件存在就直接返回；下载到 `blob_path` 后面造一个软链接到 `pointer_path`
+
+> 下载模块代码 https://vscode.dev/github/THUDM/SwissArmyTransformer/blob/mainingface_hub/file_download.py#L1492
+>
+> ```python
+>     if _support_symlinks:
+>         src_rel_or_abs = relative_src or abs_src
+>         logger.debug(f"Creating pointer from {src_rel_or_abs} to {abs_dst}")
+>         try:
+>             os.symlink(src_rel_or_abs, abs_dst)
+>             return
+>         except FileExistsError:
+>             if os.path.islink(abs_dst) and os.path.realpath(abs_dst) == os.path.realpath(abs_src):
+>                 # `abs_dst` already exists and is a symlink to the `abs_src` blob. It is most likely that the file has
+>                 # been cached twice concurrently (exactly between `os.remove` and `os.symlink`). Do nothing.
+>                 return
+>             else:
+>                 # Very unlikely to happen. Means a file `dst` has been created exactly between `os.remove` and
+>                 # `os.symlink` and is not a symlink to the `abs_src` blob file. Raise exception.
+>                 raise
+>         except PermissionError:
+>             # Permission error means src and dst are not in the same volume (e.g. download to local dir) and symlink
+>             # is supported on both volumes but not between them. Let's just make a hard copy in that case.
+>             pass
+> 
+> ```
+
+```
+            is_big_file = os.stat(temp_file.name).st_size > constants.HF_HUB_LOCAL_DIR_AUTO_SYMLINK_THRESHOLD
+            if local_dir_use_symlinks is True or (local_dir_use_symlinks == "auto" and is_big_file):
+                logger.debug(f"Storing {url} in cache at {blob_path}")
+                _chmod_and_replace(temp_file.name, blob_path)
+                logger.debug("Create symlink to local dir")
+                _create_symlink(blob_path, local_dir_filepath, new_blob=False)
+```
+
+
+
+
+
+- Image-embedding + MLP
+
+> https://vscode.dev/github/THUDM/Inf-DiT/blob/main/dit/embeddings.py#L80
+
+```python
+class ConditionEmbedding(nn.Module):
+    def __init__(self, hidden_size, label_dim, augment_dim, vector_dim, label_dropout=0):
+        super().__init__()
+        self.map_vector = nn.Sequential(
+            nn.Linear(vector_dim, hidden_size),  # vector_dim=768, hidden_size=1280
+            nn.SiLU(),
+            nn.Linear(hidden_size, hidden_size),
+        ) if vector_dim != 0 else None
+        if self.map_vector:
+            #zero output init
+            nn.init.constant_(self.map_vector[2].weight, 0)
+            nn.init.constant_(self.map_vector[2].bias, 0)
+    
+    def forward(self, emb, **kwargs):
+        # emb: time-step-embedding
+        if self.map_vector is not None and 'vector' in kwargs:
+            emb = emb + self.map_vector(kwargs['vector'])
+        return emb
+```
+
+
+
+### sample prepare
+
+> https://vscode.dev/github/THUDM/Inf-DiT/blob/main/generate_t2i_sr.py#L163
+
+- `concat_lr_image` 把 LR 图像 resize 到 SR 大小
+
+```
+tmp_lr_image = transforms.functional.resize(lr_image, [new_h, new_w], interpolation=InterpolationMode.BICUBIC)
+concat_lr_image = torch.clip(tmp_lr_image, -1, 1).to(device).to(inference_type)
+```
+
+
+
+- 在 4h x 4w 图上，按 patch_size = 4x4 划分 patch，计算 `rope_position_ids`
+
+```python
+num_patches = h * w // (self.patch_size ** 2)  # (4h=1920 * 4w=3328)// 16 = 399360 = h*w
+position_ids = torch.zeros(num_patches, 2, device=images.device)
+position_ids[:, 0] = torch.arange(num_patches, device=images.device) // (w // self.patch_size)  # row id
+position_ids[:, 1] = torch.arange(num_patches, device=images.device) % (w // self.patch_size)  # column id
+
+position_ids = position_ids % (8 * self.image_size // self.patch_size)  # % 1024
+# if patch_id in h or w dim < 1024, nothing change
+
+position_ids = torch.repeat_interleave(position_ids.unsqueeze(0), images.shape[0], dim=0).long()
+position_ids[position_ids == -1] = 0
+rope_position_ids = position_ids
+```
+
+
+
+- sampler `ConcatSRHeunEDMSampler` :star:
+
+> https://vscode.dev/github/THUDM/Inf-DiT/blob/main/dit/sampling/samplers.py#L188
+>
+> - `dit.sampling.discretizers.EDMDiscretization` ??? 
+>   https://blog.csdn.net/weixin_44966641/article/details/135181485
+
+加噪到 xT，获取噪声表
+
+```python
+images, s_in, sigmas, num_sigmas, cond, uc = self.prepare_sampling_loop(
+            images, cond, uc, num_steps, init_noise=init_noise
+        )
+```
+
+- `self.num_steps=20` 的噪声表，长度 = 21，最后一步是噪声 = 0
+
+```python
+sigmas = self.discretization(
+            self.num_steps if num_steps is None else num_steps, device=self.device
+        ).to(x.dtype)
+"""
+tensor([4.0000e+01, 3.0125e+01, 2.2375e+01, 1.6375e+01, 1.1875e+01, 8.4375e+00,
+        5.9062e+00, 4.0625e+00, 2.7188e+00, 1.7891e+00, 1.1406e+00, 7.0703e-01,
+        4.2188e-01, 2.4219e-01, 1.3184e-01, 6.8359e-02, 3.2959e-02, 1.4587e-02,
+        5.7983e-03, 1.9989e-03, 0.0000e+00], device='cuda:0',
+       dtype=torch.bfloat16), len(sigmas)==21
+"""
+if init_noise:
+	x = x + torch.randn_like(x) * sigmas[0]
+```
+
+
+
+`def sampler_step ` 去噪一步，**使用 `HeunEDMSampler`** ：每次 DiT 出来，**去噪一步还要再修正一步**
+
+> https://vscode.dev/github/THUDM/Inf-DiT/blob/main/dit/sampling/samplers.py#L97
+
+```python
+    def sampler_step(self, sigma, next_sigma, denoiser, x, cond, uc=None, gamma=0, rope_position_ids=None, sample_step=None, return_attention_map=None):
+        sigma_hat = sigma * (gamma + 1.0)
+        if gamma > 0:
+            eps = torch.torch.randn_like(x) * self.s_noise
+            x = x + eps * append_dims(sigma_hat**2 - sigma**2, x.ndim) ** 0.5
+
+        denoised = self.denoise(x, denoiser, sigma_hat, cond, uc, rope_position_ids, sample_step)  # DiT
+        
+        # correction
+        d = to_d(x, sigma_hat, denoised)
+        dt = append_dims(next_sigma - sigma_hat, x.ndim)
+
+        euler_step = self.euler_step(x, d, dt)
+        x = self.possible_correction_step(
+            euler_step, x, d, dt, next_sigma, denoiser, cond, uc, rope_position_ids, sample_step
+        )
+        return x
+```
+
+
+
+### DiT infer
+
+![fig4.png](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/fig4.png)
+
+> https://vscode.dev/github/THUDM/Inf-DiT/blob/main/dit/model.py#L612
+
+```python
+denoiser = lambda images, sigmas, rope_position_ids, cond, sample_step: \
+	self.precond_forward(images=images, sigmas=sigmas, rope_position_ids=rope_position_ids, inference=True, sample_step=sample_step, do_concat=do_concat, ar=ar, ar2=ar2, block_batch=block_batch, **cond)
+    
+def precond_forward(self, inference, rope_position_ids, concat_lr_imgs, lr_imgs=None, ar=False,
+                    ar2=False, sample_step=None, block_batch=1, *args, **kwargs):
+    images, sigmas = kwargs["images"], kwargs["sigmas"]
+```
+
+input params
+
+- `kwargs["images"]` 输入的 resized LR image **加噪后的 xT**
+
+- `kwargs["sigmas"]` 噪声强度
+
+- `kwargs['do_concat'] = True` 
+
+- `concat_lr_image` 为 resized LR image
+
+- `cond`
+
+  ```python
+  # use lr_imgs extract fea
+  cond["vector"] = image_embedding  # [1, 768]
+  uncond["vector"] = image_embedding
+  
+  cond["lr_imgs"] = lr_imgs  # origin size LR image
+  cond["concat"] = torch.ones(1, dtype=torch.bool, device=images.device)
+  uncond["concat"] = torch.zeros(1, dtype=torch.bool, device=images.device)
+  
+  cond["concat_lr_imgs"] = images  # resized LR image
+  uncond["concat_lr_imgs"] = images
+  ```
+
+
+
+- images -> resized LR image **加噪后的 xT**  && concat_lr_imgs -> resized LR image，concat 起来输入 DiT
+
+```
+images = torch.cat((images, concat_lr_imgs), dim=1)  # [1, 6, 4h 4w]
+```
+
+
+
+**DiT prepare**
+
+> https://vscode.dev/github/THUDM/Inf-DiT/blob/main/sat/model/base_model.py#L93
+>
+> - DiT forward
+>
+> https://vscode.dev/github/THUDM/Inf-DiT/blob/main/sat/model/transformer.py 
+>
+> 模型函数都保存在 HOOKS 全局变量里面。。pdb 直接看就行
+>
+> ```python
+>         # embedding part
+>         if 'word_embedding_forward' in self.hooks:
+>             hidden_states = self.hooks['word_embedding_forward'](input_ids, output_cross_layer=output_cross_layer, **kw_args)
+>         else:  # default
+>             hidden_states = HOOKS_DEFAULT['word_embedding_forward'](self, input_ids, output_cross_layer=output_cross_layer,**kw_args)
+> ```
+>
+
+- Q：`rope_position_ids >> [1, 32*32, 2]` 取 `vit_block_size=32` ？？`tmp_images >> [1, 6, 128, 128]` 取 `block_size=128` 啥关系？
+
+concat x4 LR 图像，取 block=128 像素，以 patch=4 拆开, 就是 32 个 patch；
+
+rope_position_ids  是在 x4 LR 上**以 patch=4** 算的，大小和 LR 一样。取 vit_block_size=32 和上面 x4 LR 图像取得 block 对应
+
+
+
+- Q：cache 存得是啥，哪里用到？
+
+Self-attn 里面 K, V concat 起来
+
+
+
+
+
+**输入层提取特征**
+
+- embedding part >> `class ImagePatchEmbeddingMixin(BaseMixin):` 
+
+> https://vscode.dev/github/THUDM/Inf-DiT/blob/main/dit/embeddings.py#L127
+
+对 resized-LR one-block 图像 128x128，按 4x4 patch 提取特征，转为 `(b h*w c)`
+
+```python
+    def word_embedding_forward(self, input_ids, **kwargs):
+        images = kwargs["images"]  # [1, 6, 128, 128] one block in resized-LR
+        emb = self.proj(images)  # [1, 1280, 32, 32]
+        emb = emb.flatten(2).transpose(1, 2)  # ([1, 1024, 1280]
+        if self.append_emb:
+            emb = torch.cat((kwargs["emb"][:, None, :], emb), dim=1)
+        if self.reg_token_num > 0:
+            emb = torch.cat((self.reg_token_emb[None, ...].repeat(emb.shape[0], 1, 1), emb), dim=1)
+        if self.add_emb:
+            emb = emb + kwargs["emb"][:, None, :]
+        return emb
+```
+
+- position_embeddings=None
+- dropout(0)
+
+
+
+
+
+**`BaseTransformerLayer `**
+
+> https://vscode.dev/github/THUDM/Inf-DiT/blob/main/sat/model/transformer.py#L314
+>
+> 结构可以参考 SD3 [pdf](./2024_03_Arxiv_Scaling-Rectified-Flow-Transformers-for-High-Resolution-Image-Synthesis.pdf)
+>
+> `layer_forward`  https://vscode.dev/github/THUDM/Inf-DiT/blob/main/dit/model.py#L383
+
+#### **Self-Attn** (memory-concat)
+
+DiT 结构如图，在这里 KV concat 起来之前的 memory
+
+![fig2](docs/2024_03_Arxiv_Scaling-Rectified-Flow-Transformers-for-High-Resolution-Image-Synthesis_Note/fig2.png)
+
+- timestep 特征 `emb` 计算 AdaIN 调制参数
+
+```python
+self.adaLN_modulations = nn.ModuleList([
+            nn.Sequential(
+                nn.SiLU(),
+                nn.Linear(hidden_size, out_times * hidden_size)  # 1280 -> 4*1280
+            ) for _ in range(num_layers)
+            ])
+
+
+# ...
+pass
+elif self.nogate and not self.cross_adaln:
+    shift_msa, scale_msa, shift_mlp, scale_mlp = adaLN_modulation(kwargs['emb']).chunk(4, dim=1)  # [1, 4*1280] -> chunk
+    gate_msa = gate_mlp = 1
+```
+
+- xT 做 layerNorm + 调制
+
+```python
+def modulate(x, shift, scale):
+    return x * (1 + scale.unsqueeze(1)) + shift.unsqueeze(1)
+
+attention_input = layer.input_layernorm(hidden_states)
+attention_input = modulate(attention_input, shift_msa, scale_msa)  # [1, 1024, 1280]
+```
+
+实际 `attention_forward` 位置
+
+> https://vscode.dev/github/THUDM/Inf-DiT/blob/main/dit/model.py#L196 运行的 forward，但好多模块都用的是 对 https://vscode.dev/github/THUDM/Inf-DiT/blob/main/sat/model/transformer.py#L34
+
+MLP + 拆为 QKV
+
+> 用 cuda 算子并行 https://vscode.dev/github/THUDM/Inf-DiT/blob/main/sat/mpu/layers.py#L232
+
+- 对 QK 做 LayerNorm
+
+```python
+if origin.qk_ln:
+    query_layernorm = origin.q_layer_norm[kw_args['layer_id']]
+    key_layernorm = origin.q_layer_norm[kw_args['layer_id']]
+    query_layer = query_layernorm(query_layer)
+    key_layer = key_layernorm(key_layer)
+```
+
+- QK 加上 RotaryPositionEmbedding :star:
+
+加上 patch 的相对位置信息
+
+> https://vscode.dev/github/THUDM/Inf-DiT/blob/main/dit/embeddings.py#L433
+
+```python
+    def forward(self, t, **kwargs):
+        if self.pix2struct:
+            x_coords = kwargs['rope_position_ids'][:, :, 0]  # [1, 1024]
+            y_coords = kwargs['rope_position_ids'][:, :, 1]
+            freqs_cos = self.freqs_cos[x_coords, y_coords].unsqueeze(2)
+            freqs_sin = self.freqs_sin[x_coords, y_coords].unsqueeze(2)
+        else:
+            freqs_cos = self.freqs_cos
+            freqs_sin = self.freqs_sin
+        return t * freqs_cos + rotate_half(t) * freqs_sin
+
+if origin.rope:
+    query_layer = origin.rope(query_layer, rope_position_ids=rope_position_ids)  # [1, 1024, 16, 80]
+    key_layer = origin.rope(key_layer, rope_position_ids=rope_position_ids)  # [1, 1024, 16, 80]
+```
+
+- 和 memory 保存的 K, V concat 起来，这里的 KV 已经加上了 RotaryPositionEmbedding :star:
+
+```python
+            elif inference == 1:
+                kw_args['output_this_layer']['mem_kv'] = [key_layer, value_layer]  # save this k,v
+                k_stack = [key_layer]
+                v_stack = [value_layer]
+                for mem in mems:
+                    k_stack.append(mem[kw_args['layer_id']]['mem_kv'][0])  # [1, 1, 1, 1024, 16, 80]
+                    v_stack.append(mem[kw_args['layer_id']]['mem_kv'][1])
+                key_layer = torch.cat(k_stack, dim=3) # [1, 1, 1, 2048, 16, 80]
+                value_layer = torch.cat(v_stack, dim=3)
+```
+
+- Q：训练时候咋办？:question:
+
+  TODO
+
+
+
+- K 加上 re_position ?? 论文里面的 P
+
+![eq1](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/eq1.png)
+
+```python
+if re_position:
+	self.re_pos_embed = nn.Parameter(torch.zeros(num_layers, 4, num_head, hidden_size_head))  # [28, 4, 16, 80]
+if origin.re_position and do_concat:
+    re_pos_embed = origin.re_pos_embed[kw_args['layer_id']].repeat_interleave(key_layer.shape[1] // origin.re_pos_embed.shape[1], dim=0).unsqueeze(0)
+    # origin.re_pos_embed[kw_args['layer_id']].shape >> [4, 16, 80]
+    key_layer = key_layer + re_pos_embed  # [1, 2048, 16, 80]
+```
+
+- FFN: MLP 输出 `attention_output`
+- 在外面加上 residual
+
+```python
+hidden_states = hidden_states + gate_msa * attention_output  # gate_msa = 1
+```
+
+
+
+
+
+#### cross-LR :star:
+
+在 28 个 LayerForward block 里面，**只有第 0 个 block用 Cross-attn!** 其他 block 只做 layernorm :warning:
+
+```python
+        if layer_id == 0 and self.cross_lr:
+            cross_attention_input = layer.post_attention_layernorm(hidden_states)
+
+            # do cross attention here
+            cross_attention_output = self.cross_attention_forward(cross_attention_input, **kwargs)
+
+            hidden_states = hidden_states + cross_attention_output
+            mlp_input = self.post_cross_attention_layernorm(hidden_states)
+        else:
+            mlp_input = layer.post_attention_layernorm(hidden_states)
+```
+
+
+
+对于每个 block 想只用大一圈的 LR 图像，不用全图（看 code 里面 TODO 写了降低显存）；
+因此LR 图像先用一层卷积转为特征，再用**ViT 方式划分 patch，作为 LR-image feature**
+
+> https://vscode.dev/github/THUDM/Inf-DiT/blob/main/dit/model.py#L325
+
+- Conv2d 提取特征，转为 c=1280，h/2, w/2
+
+```python
+lr_imgs = self.proj_lr(lr_imgs)  # Conv2d(3, 1280, kernel_size=(2, 2), stride=(2, 2)) [1, 3, 480, 832] -> [1, 1280, 240, 416]
+```
+
+- Unfold
+
+> https://blog.csdn.net/ViatorSun/article/details/119940759
+
+**resized LR 上面取 128x128 区域**，sr=4, 相当于原始 LR 32x32 区域，由于 LR image 用了 stride = 2 的 conv，感受野相当于原始的 LR 图像中 **16x16 区域** :star: :star:
+
+后面 LR-image **取包括当前 resized block 的局部图时候**，stride 设置为 16x16 能够保证每个 LR-image-block 能包括当前 resized-block :star:
+
+```python
+self.block_size = 32  # 32 patches
+self.sr_scale = 4
+self.patch_size = 4
+self.lr_patch_size = 2  # using stride=2 conv
+self.lr_block_size = self.block_size * self.patch_size // self.sr_scale // self.lr_patch_size
+```
+
+
+
+**在 LR feature 上以 block=48x48 区域**，unfold，每个 fold 特征 `C=1280*48*48`；调整每个 block 的 image feature 为 `(b h*w c)`
+
+```python
+unFold = torch.nn.Unfold(kernel_size=3 * self.lr_block_size, stride=self.lr_block_size,  # self.lr_block_size=16
+                                 padding=self.lr_block_size)
+lr_imgs = unFold(lr_imgs)  # [1, 1280, 240, 416] -> [1, 2949120=1280*48*48, 390=((240 + 32 - 48) / 16 + 1) * (416 + 32 - 48) / 16 + 1]
+
+lr_imgs = lr_imgs.view(lr_imgs.shape[0], lr_hidden_size, self.lr_block_size * 3, self.lr_block_size * 3, -1)
+lr_imgs = lr_imgs.permute(0, 4, 2, 3, 1).contiguous()  # b n h w c [1, 390, 48, 48, 1280]
+lr_imgs = lr_imgs.view(lr_imgs.shape[0] * lr_imgs.shape[1], -1, lr_imgs.shape[-1])  # [390, 2304, 1280]
+```
+
+**Block =48x48 区域提取的特征，patch 为 4x4 像素区域，所以每个 block 有 3x3 个 patch (Fig3 图里面也画得是这样，后面有些不一致，但在 Cross-LR 是这样的）**
+
+1. 以 patch=4个基本单元（像素or特征点） 为最小的 patch
+
+2. block_size = 128 个基本单元（像素or特征点），就是单边 128/4=32 个 patch，组成一个 block
+
+3. **cross-LR-image 没有用全图**，在LR 图像中取 48x48 patch，**相当于 resized LR 中 96x96 patch**
+
+   > :warning: PS：**这里 cross-LR-image 放的不是整张图，是一个比当前 block 对应到原始 LR 图像中更大一丢的区域，code 里面用 resized LR block=32x32, 原始LR 用的 48x48 区域，对应 resized LR 上面 96x96 patch；**
+   >
+   > resized LR 上面取 block=32x32 个patch，对应 128x128 区域，sr=4, 相当于原始 LR 32x32 区域，由于 LR image 用了 stride = 2 的 conv，感受野相当于原始 LR 的 16x16 区域 :star: ；这里 cross 用的 LR-image block 是 48x48 block，相当于 resized LR 上面 96x96 block 大了 3 倍。
+   >
+   > ```python
+   > lr_id = i * block_w + j
+   > output, *output_per_layers = self.model_forward(*args, hw=[vit_block_size, vit_block_size], mems=mems, inference=1, lr_imgs=lr_imgs[lr_id:lr_id+1], **kwargs)
+   > ```
+
+<img src="docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/fig3.png" alt="fig3.png" style="zoom:50%;" />
+
+
+
+**`def cross_attention_forward(self, hidden_states, lr_imgs, **kw_args)`**
+
+> https://vscode.dev/github/THUDM/Inf-DiT/blob/main/dit/model.py#L338
+>
+> init https://vscode.dev/github/THUDM/Inf-DiT/blob/main/sat/model/transformer.py
+
+这里的 `lr_imgs` 是包含当前 32x32 block 信息在 LR 中一个大 3 倍的 block;
+
+- MLP 分为 QKV，LayerNorm
+- 加 `lr_query_position_embedding`
+
+```python
+self.lr_query_position_embedding = nn.Parameter(torch.zeros(1, self.block_size ** 2, head, hidden_size_per_attention_head))  # [1, 1024, 16, 80]
+self.lr_key_position_embedding = nn.Parameter(torch.zeros(1, (self.lr_block_size * 3) ** 2, head, hidden_size_per_attention_head))  # [1, 2304, 16, 80]
+
+query_layer = query_layer + origin.lr_query_position_embedding
+key_layer = key_layer + origin.lr_key_position_embedding
+```
+
+- attn + MLP
+
+- 在外面和输入相加 + LayerNorm
+
+```python
+cross_attention_output = self.cross_attention_forward(cross_attention_input, **kwargs)
+
+hidden_states = hidden_states + cross_attention_output  # hidden_states 是 self-attn 出来的特征
+mlp_input = self.post_cross_attention_layernorm(hidden_states)
+
+mlp_input = modulate(mlp_input, shift_mlp, scale_mlp)
+mlp_output = layer.mlp(mlp_input, **kwargs)
+```
+
+- FFN：Cross attention 模型的结果再要过一次 MLP，再和 self-attn 出来的特征相加
+
+```
+if self.transformer.layernorm_order == 'sandwich':
+	mlp_output = layer.fourth_layernorm(mlp_output)
+hidden_states = hidden_states + gate_mlp * mlp_output
+```
+
+
+
+#### Final-Forward
+
+> https://vscode.dev/github/THUDM/Inf-DiT/blob/main/dit/model.py#L73
+
+![fig2](docs/2024_03_Arxiv_Scaling-Rectified-Flow-Transformers-for-High-Resolution-Image-Synthesis_Note/fig2.png)
+
+- 28 个 DiT block 出来的特征 Norm 一下，和 timestep embedding **调制一下**
+- MLP 把每个 block 的特征转换为 pixel，每个 block 有 4x4 个 c=3 的像素 :star:
+- 初始化很重要！
+  - MLP 初始化 bias =0 ！
+  - 调制权重为 0
+
+```python
+class FinalLayerMixin(BaseMixin):
+    def __init__(self, hidden_size, patch_size, num_patches, out_channels):
+        super().__init__()
+        self.hidden_size = hidden_size
+        self.patch_size = patch_size
+        self.out_channels = out_channels
+        self.norm_final = nn.LayerNorm(hidden_size, elementwise_affine=False, eps=1e-6)
+        self.linear = nn.Linear(hidden_size, patch_size * patch_size * out_channels, bias=True)
+        self.adaLN_modulation = nn.Sequential(
+            nn.SiLU(),
+            nn.Linear(hidden_size, 2 * hidden_size, bias=True)
+        )
+    
+    def final_forward(self, logits, **kwargs):
+        x, emb = logits, kwargs['emb']  # [1, 1024, 1280], [1, 1280]
+        shift, scale = self.adaLN_modulation(emb).chunk(2, dim=1)
+        x = modulate(self.norm_final(x), shift, scale)
+        x = self.linear(x)  # [1, 1024=32*32, 1280] -> [1, 1024, 48]
+        return unpatchify(x, c=self.out_channels, p=self.patch_size, rope_position_ids=kwargs.get('rope_position_ids', None), hw=kwargs.get('hw', None))
+
+    def reinit(self, parent_model=None):
+        nn.init.constant_(self.adaLN_modulation[-1].weight, 0)
+        nn.init.constant_(self.adaLN_modulation[-1].bias, 0)
+        nn.init.xavier_uniform_(self.linear.weight)
+        nn.init.constant_(self.linear.bias, 0)
+```
+
+- unpatch
+
+> https://vscode.dev/github/THUDM/Inf-DiT/blob/main/dit/model.py#L35
+>
+> - https://pytorch.org/docs/stable/generated/torch.einsum.html#torch-einsum
+
+```python
+def unpatchify(x, c, p, rope_position_ids=None, hw=None):
+    """
+    x: (N, T, patch_size**2 * C)
+    imgs: (N, H, W, C)
+    """
+    if False:
+        # do pix2struct unpatchify
+        L = x.shape[1]
+        x = x.reshape(shape=(x.shape[0], L, p, p, c))
+        x = torch.einsum('nlpqc->ncplq', x)
+        imgs = x.reshape(shape=(x.shape[0], c, p, L * p))
+    else:
+        if hw is None:
+            h = w = int(x.shape[1] ** 0.5)
+        else:
+            h, w = hw
+        assert h * w == x.shape[1]
+
+        x = x.reshape(shape=(x.shape[0], h, w, p, p, c))
+        x = torch.einsum('nhwpqc->nchpwq', x)
+        imgs = x.reshape(shape=(x.shape[0], c, h * p, w * p))
+    
+    return imgs
+```
+
+
+
+
+
+#### EDM-Sampler :question:
+
+> 比 DDPM，DDIM 更优的采样方式
+
+- "Elucidating the Design Space of Diffusion-Based Generative Models" NIPS, 2022 Jun 1
+  [paper](http://arxiv.org/abs/2206.00364v2) [code](https://github.com/NVlabs/edm) [pdf](./2022_06_NIPS_Elucidating-the-Design-Space-of-Diffusion-Based-Generative-Models.pdf) [note](./2022_06_NIPS_Elucidating-the-Design-Space-of-Diffusion-Based-Generative-Models_Note.md)
+  Authors: Tero Karras, Miika Aittala, Timo Aila, Samuli Laine
+
+![tb1](docs/2022_06_NIPS_Elucidating-the-Design-Space-of-Diffusion-Based-Generative-Models_Note/tb1.png)
+
+对照上面公式
+
+```python
+class EDMPrecond:
+    def __init__(self, sigma_data=0.5):
+        self.sigma_data = sigma_data
+
+    def __call__(self, sigma):
+        c_skip = self.sigma_data**2 / (sigma**2 + self.sigma_data**2)
+        c_out = sigma * self.sigma_data / (sigma**2 + self.sigma_data**2) ** 0.5
+        c_in = 1 / (sigma**2 + self.sigma_data**2) ** 0.5
+        c_noise = 0.25 * sigma.log()
+        return c_skip, c_out, c_in, c_noise
+```
+
+
+
+![ag1](docs/2022_06_NIPS_Elucidating-the-Design-Space-of-Diffusion-Based-Generative-Models_Note/ag1.png)
 
 
 
@@ -556,5 +1430,10 @@ FID 看不出来差异
 
 ### how to apply to our task
 
-- 全局的 embedding 维持 global 一致性怎么搞？要不要给局部的坐标？
+- 和其他 patch 做 cross-attn？在 self-attn 里面的 KV concat 起来就好
+- 可以把整张图 resize 到 224 计算 CLIP-image-embedding，加到 timestep-embedding 里面
+  - 在 28 个 LayerForward block 里面，**只有第 0 个 block用 Cross-attn!** 其他 block 只做 layernorm :warning:
+
+
+![fig2](docs/2024_03_Arxiv_Scaling-Rectified-Flow-Transformers-for-High-Resolution-Image-Synthesis_Note/fig2.png)
 
