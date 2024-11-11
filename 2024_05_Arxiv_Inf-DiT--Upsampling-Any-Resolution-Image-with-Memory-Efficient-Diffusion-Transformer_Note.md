@@ -890,6 +890,37 @@ if init_noise:
 
 
 
+
+
+- 迭代去噪
+
+> https://vscode.dev/github/THUDM/Inf-DiT/blob/main/dit/sampling/samplers.py#L188
+
+```python
+        for i in tqdm(self.get_sigma_gen(num_sigmas)):
+            gamma = (
+                min(self.s_churn / (num_sigmas - 1), 2**0.5 - 1)
+                if self.s_tmin <= sigmas[i] <= self.s_tmax
+                else 0.0
+            )
+            images = self.sampler_step(
+                s_in * sigmas[i],
+                s_in * sigmas[i + 1],
+                denoiser,
+                images,
+                cond,
+                uc,
+                gamma,
+                rope_position_ids,
+                i,
+                return_attention_map
+            )
+
+        return images
+```
+
+
+
 `def sampler_step ` 去噪一步，**使用 `HeunEDMSampler`** ：每次 DiT 出来，**去噪一步还要再修正一步**
 
 > https://vscode.dev/github/THUDM/Inf-DiT/blob/main/dit/sampling/samplers.py#L97
@@ -966,6 +997,8 @@ images = torch.cat((images, concat_lr_imgs), dim=1)  # [1, 6, 4h 4w]
 
 
 
+
+
 **DiT prepare**
 
 > https://vscode.dev/github/THUDM/Inf-DiT/blob/main/sat/model/base_model.py#L93
@@ -991,11 +1024,40 @@ concat x4 LR 图像，取 block=128 像素，以 patch=4 拆开, 就是 32 个 p
 
 rope_position_ids  是在 x4 LR 上**以 patch=4** 算的，大小和 LR 一样。取 vit_block_size=32 和上面 x4 LR 图像取得 block 对应
 
+- Q：`rope_position_ids ` 在哪里用？ :star:
+
+Self-attn 里面对 QK 加上 RotaryPositionEmbedding
+
 
 
 - Q：cache 存得是啥，哪里用到？
 
-Self-attn 里面 K, V concat 起来
+之前的 patch 过当前 timestep 的 KV tensor 存下来，在后面 patch 过 Self-attn 将 K, V 和 memory 里的 KV concat 起来
+
+- Q：训练时候怎么分 patch 咋办？
+
+整个图放入训练，不分多个 patch
+
+
+
+- Q：怎么把整张图 resize 放入？？
+
+  1. reize 224
+
+- Q：先前的 patch 怎么 concat 做 QKV？
+
+- Plan1: 存好每个 scale 的 KV tensor :star:
+
+  1. diffusion 去噪 25 步，每一步都有 4 个 scale，**16 个 Self-Attn block 咋搞？**
+
+     $16 \times (b t c h w)$
+
+- Plan2: 类似 CLIP text encoder **单独弄个新的特征**？？咋训练呢。。
+
+  - Cross-LR ??
+  - 1x768
+
+
 
 
 
@@ -1127,9 +1189,9 @@ if origin.rope:
                 value_layer = torch.cat(v_stack, dim=3)
 ```
 
-- Q：训练时候咋办？:question:
+- Q：训练时候咋办？
 
-  TODO
+不用 memory
 
 
 
@@ -1387,6 +1449,81 @@ class EDMPrecond:
 ![ag1](docs/2022_06_NIPS_Elucidating-the-Design-Space-of-Diffusion-Based-Generative-Models_Note/ag1.png)
 
 
+
+### training
+
+**Loss**
+
+> https://vscode.dev/github/THUDM/Inf-DiT/blob/main/dit/loss.py#L74
+
+**模型直接输出 SR_img_pred** 和 GT_img 做 L2 Loss
+
+```python
+    def __call__(self, model, images, text_inputs=None, rope_position_ids=None):
+        concat_lr_imgs, lr_imgs, sr_imgs = images
+        kwargs = {}
+        if model.image_encoder:
+            image_embedding = model.image_encoder(lr_imgs)
+            kwargs["vector"] = image_embedding
+        images = sr_imgs
+        sigmas = self.sigma_sampler(images.shape[0]).to(images.dtype).to(images.device)
+        noise = torch.randn_like(images).to(images.dtype)
+        noised_images = images + noise * append_dims(sigmas, images.ndim)  # xT
+        model_output = model(images=noised_images, sigmas=sigmas, text_inputs=text_inputs, concat_lr_imgs=concat_lr_imgs, lr_imgs=lr_imgs, **kwargs)
+        w = append_dims(self.weighting(sigmas), images.ndim)
+        return self.get_loss(model_output, images, w)
+```
+
+
+
+- Q：多个 patch 怎么训练？？
+
+> https://vscode.dev/github/THUDM/Inf-DiT/blob/main/dit/model.py#L731
+
+直接把一个图（单个patch）去优化，没有用 memory
+
+```python
+images = torch.cat((images, concat_lr_imgs), dim=1)
+
+kwargs["images"] = images * c_in
+kwargs["sigmas"] = c_noise.reshape(-1)
+direction = "lt"
+if self.random_direction and torch.rand(1) > 0.5 and not inference:
+    direction = "rb"
+    if self.random_direction and sample_step is not None and sample_step % 2 == 1:
+        direction = "rb"
+        # switch direction
+        # if direction == "rb":
+        #     direction = "lt"
+        # else:
+        #     direction = "rb"
+        kwargs["direction"] = direction
+        output, *output_per_layers = self.model_forward(*args, hw=[h//self.patch_size, w//self.patch_size], rope_position_ids=rope_position_ids, lr_imgs=lr_imgs, **kwargs)
+        output = output * c_out + images[:, :self.out_channels] * c_skip
+
+        #calc attention score
+        if self.collect_attention is not None:
+            self.collect_attention.append(output_per_layers)
+
+            # output = output.to(in_type)
+            return 1. / self.scale_factor * output
+```
+
+
+
+- Q：训练数据？
+
+使用 LAION-5B 子集 $1024^2$ 大小图像 & 网上的高分辨率图像
+
+> Our dataset comprises a subset of LAION-5B [25] with a resolution higher than 1024×1024 and aesthetic score higher than 5
+
+对大图 crop or (crop+resize) **用 512x512 crop 出来的图进行训练**
+
+> Following the previous works [20,23,30], we use fixed-size image crops of 512×512 resolution during training.
+
+> When processing training images with a resolution higher than 512, there are two alternative methods: directly performing a random crop, or resizing the shorter side to 512 before performing a random crop
+>
+> Therefore, in practice, we randomly select from these two processing methods to crop training images.
 
 
 
