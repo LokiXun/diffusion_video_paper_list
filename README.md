@@ -1,7 +1,7 @@
 # Diffusion_Journey :gun:
 
 > This document mainly works as an **paper List in categories** :cat:
-> Also, our notes for read papers are linked beside, which could hFelp us recall the main idea in paper more quickly.
+> Also, our notes for read papers are linked beside, which could help us recall the main idea in paper more quickly.
 >
 > :ticket: Note that
 >
@@ -88,6 +88,15 @@ Face Enhancement 模块用 FFHQ 数据
 
 
 
+- "CT Film Recovery via Disentangling Geometric Deformation and Illumination Variation: Simulated Datasets and Deep Models" CVPR, 2020 Dec, `FiReNet`
+  [paper](https://arxiv.org/pdf/2012.09491)
+
+医用 CT 胶片实物数字化：实物拍摄的图像存在扭曲，折痕，想去复原得到原始 CT 照片；主要探索如何去 warp
+
+
+
+
+
 ### Degrade Region :crab:
 
 预测划痕、雨水区域，伪影问题的处理
@@ -119,6 +128,10 @@ Face Enhancement 模块用 FFHQ 数据
 ## Old video restoration :fire:
 
 > :dart: Current Working Direction!
+>
+> - "MovieNet: A Holistic Dataset for Movie Understanding" ECCV, 2020 Jul 21
+>   [paper](http://arxiv.org/abs/2007.10937v1) [code](https://movienet.github.io) [pdf](./2020_07_ECCV_MovieNet--A-Holistic-Dataset-for-Movie-Understanding.pdf) [note](./2020_07_ECCV_MovieNet--A-Holistic-Dataset-for-Movie-Understanding_Note.md)
+>   Authors: Qingqiu Huang, Yu Xiong, Anyi Rao, Jiaze Wang, Dahua Lin
 
 - [ ] "DeOldify" open-sourced toolbox to restore image and video
   [code](https://github.com/jantic/DeOldify)
@@ -131,16 +144,19 @@ strong baseline in multi papers :+1:
 
   > baseline in "Bringing Old Films Back to Life"
 
-- [x] "Bringing Old Films Back to Life" CVPR, 2022 Mar :star:
-  [paper](https://arxiv.org/abs/2203.17276) [code](https://github.com/raywzy/Bringing-Old-Films-Back-to-Life) [website](http://raywzy.com/Old_Film/) [note](./2022_CVPR_Bringing-Old-Films-Back-to-Life_Note.md)
 
-  > crop **256 patches from REDS dataset** and apply the proposed **video degradation model（DA & noise template）** on the fly
-  >
-  > REDS `sharp data`: train 240 video and each has 100 Frame
-  > collect 63 old films from the internet for evaluation
 
-- [x] 
-  
+- "Bringing Old Films Back to Life" CVPR, 2022 Mar 31, `RTN` :fire:
+  [paper](http://arxiv.org/abs/2203.17276v1) [code](https://github.com/raywzy/Bringing-Old-Films-Back-to-Life) [website](http://raywzy.com/Old_Film/) [pdf](./2022_03_CVPR_Bringing-Old-Films-Back-to-Life.pdf) [note](./2022_03_CVPR_Bringing-Old-Films-Back-to-Life_Note.md)
+  Authors: Ziyu Wan, Bo Zhang, Dongdong Chen, Jing Liao
+
+> crop **256 patches from REDS dataset** and apply the proposed **video degradation model（DA & noise template）** on the fly
+>
+> REDS `sharp data`: train 240 video and each has 100 Frame
+> collect 63 old films from the internet for evaluation
+
+
+
 - [x] "DSTT-MARB: Multi-scale Attention Based Spatio-Temporal Transformers for Old Film Restoration" Master Thesis report, 2022 Sep
   [thesis-report](https://ntnuopen.ntnu.no/ntnu-xmlui/bitstream/handle/11250/3023083/no.ntnu:inspera:118516831:64411262.pdf?sequence=1) [local pdf](./2022_master_report_DSTT-MARB--Multi-scale-Attention-Based-Spatio-Temporal-Transformers-for-Old-Film-Restoration.pdf)
 
@@ -160,13 +176,12 @@ strong baseline in multi papers :+1:
   > an unified framework for video SR, deblurring and denoising
 
 - [x] "Recurrent Video Restoration Transformer with Guided Deformable Attention" NeurlPS, 2022 June, **RVRT** :statue_of_liberty:
-  [paper](https://arxiv.org/abs/2206.02146) [code](https://github.com/JingyunLiang/RVRT?utm_source=catalyzex.com)
-  [note](./2022_06_NeurIPS_RVRT_Recurrent-Video-Restoration-Transformer-with-Guided-Deformable-Attention_Note.md)
-
+  [paper](https://arxiv.org/abs/2206.02146) [code](https://github.com/JingyunLiang/RVRT?utm_source=catalyzex.com) [note](./2022_06_NeurIPS_RVRT_Recurrent-Video-Restoration-Transformer-with-Guided-Deformable-Attention_Note.md)
+  
   > Video SR, deblurring, Denoising
   >
   > dataset: **30 frames for REDS** [53], 14 frames for Vimeo-90K [87], and 16 frames for DVD [63], GoPro [54] as well as DAVIS [31]
-
+  
 - [x] "Blind Video Deflickering by Neural Filtering with a Flawed Atlas" CVPR, 2023 Mar :star:
   [paper](https://arxiv.org/abs/2303.08120) [code](https://github.com/ChenyangLEI/All-In-One-Deflicker?utm_source=catalyzex.com) [website](https://chenyanglei.github.io/deflicker/) [note](./2023_05_CVPR_Blind-Video-Deflickering-by-Neural-Filtering-with-a-Flawed-Atlas_Note.md)
 
@@ -220,7 +235,7 @@ strong baseline in multi papers :+1:
 
   > VHS 类似的噪声合成数据 :warning:
 
-- [x] "Restoring Degraded Old Films with Recursive Recurrent Transformer Networks" WACV, 2024
+- [x] "Restoring Degraded Old Films with Recursive Recurrent Transformer Networks" WACV, 2024, `RRTN`
   [paper](https://openaccess.thecvf.com/content/WACV2024/papers/Lin_Restoring_Degraded_Old_Films_With_Recursive_Recurrent_Transformer_Networks_WACV_2024_paper.pdf) [code](https://github.com/mountln/RRTN-old-film-restoration) [pdf](2024_01_WACV_Restoring_Degraded_Old_Films_With_Recursive_Recurrent_Transformer_Networks.pdf)
 
 - [ ] "Unsupervised Model-based Learning for Simultaneous Video Deflickering and Deblotching" WACV, 2024 
@@ -253,7 +268,9 @@ strong baseline in multi papers :+1:
 
 
 
-## Video Diffusion
+
+
+## Video Diffusion :star2:
 
 >[paper with code searching 'diffusion video'](https://paperswithcode.com/search?q_meta=&q_type=&q=diffusion+video) :+1:
 > 
@@ -262,6 +279,8 @@ strong baseline in multi papers :+1:
 >   [paper](https://arxiv.org/pdf/2310.10647.pdf) [code](https://github.com/ChenHsing/Awesome-Video-Diffusion-Models)
 
 [survey_video_LDM.md](./survey_video_LDM.md)
+
+
 
 - [ ] "Video Diffusion Models" CVPR, 2022 Apr
   [paper](https://arxiv.org/abs/2204.03458v2)
@@ -373,14 +392,13 @@ text2video task, 提出 temporal adapter 和 attention adapter 把 image SD 调�
   > as a new type of video representation, which consists of a **canonical content field**
 
 - [ ] "FreeNoise: Tuning-Free Longer Video Diffusion Via Noise Rescheduling" Arxiv, 2023 Oct
-  [paper](http://arxiv.org/abs/2310.15169v1) [code](https://github.com/arthur-qiu/longercrafter) [website](http://haonanqiu.com/projects/FreeNoise.html)
-  [note](./2023_10_Arxiv_FreeNoise--Tuning-Free-Longer-Video-Diffusion-Via-Noise-Rescheduling_Note.md)
-
+  [paper](http://arxiv.org/abs/2310.15169v1) [code](https://github.com/arthur-qiu/longercrafter) [website](http://haonanqiu.com/projects/FreeNoise.html) [note](./2023_10_Arxiv_FreeNoise--Tuning-Free-Longer-Video-Diffusion-Via-Noise-Rescheduling_Note.md)
+  
 - [ ] "VideoCrafter1: Open Diffusion Models for High-Quality Video Generation" Arxiv, 2023 Oct
   [paper](https://arxiv.org/abs/2310.19512) [code](https://github.com/AILab-CVC/VideoCrafter)
   [note](./2023_10_Arxiv_VideoCrafter1--Open-Diffusion-Models-for-High-Quality-Video-Generation_Note.md)
 
-- [ ] "Stable Video Diffusion: Scaling Latent Video Diffusion Models to Large Datasets" Arxiv, 2023 Nov 25, `SVD`
+- [x] "Stable Video Diffusion: Scaling Latent Video Diffusion Models to Large Datasets" Arxiv, 2023 Nov 25, `SVD`
   [paper](http://arxiv.org/abs/2311.15127v1) [code](https://github.com/Stability-AI/generative-models) [pdf](./2023_11_Arxiv_Stable-Video-Diffusion--Scaling-Latent-Video-Diffusion-Models-to-Large-Datasets.pdf) [note](./2023_11_Arxiv_Stable-Video-Diffusion--Scaling-Latent-Video-Diffusion-Models-to-Large-Datasets_Note.md)
   Authors: Andreas Blattmann, Tim Dockhorn, Sumith Kulal, Daniel Mendelevitch, Maciej Kilian, Dominik Lorenz, Yam Levi, Zion English, Vikram Voleti, Adam Letts, Varun Jampani, Robin Rombach
   
@@ -393,10 +411,6 @@ text2video task, 提出 temporal adapter 和 attention adapter 把 image SD 调�
 - [ ] "VIDiff: Translating Videos via Multi-Modal Instructions with Diffusion Models" 
   [paper](https://arxiv.org/abs/2311.18837) [website](https://chenhsing.github.io/VIDiff/)
 
-- [ ] "Stable Video Diffusion: Scaling Latent Video Diffusion Models to Large Datasets" Arxiv, 2023 Nov 25
-  [paper](http://arxiv.org/abs/2311.15127v1) [code](https://github.com/Stability-AI/generative-models) [pdf](./2023_11_Arxiv_Stable-Video-Diffusion--Scaling-Latent-Video-Diffusion-Models-to-Large-Datasets.pdf) [note](./2023_11_Arxiv_Stable-Video-Diffusion--Scaling-Latent-Video-Diffusion-Models-to-Large-Datasets_Note.md)
-  Authors: Andreas Blattmann, Tim Dockhorn, Sumith Kulal, Daniel Mendelevitch, Maciej Kilian, Dominik Lorenz, Yam Levi, Zion English, Vikram Voleti, Adam Letts, Varun Jampani, Robin Rombach
-  
 - [x] "VideoBooth: Diffusion-based Video Generation with Image Prompts" CVPR, 2023 Dec
   [paper](https://arxiv.org/abs/2312.00777) [code](https://github.com/Vchitect/VideoBooth) [website](https://vchitect.github.io/VideoBooth-project/)
   [note](./2023_12_CVPR_VideoBooth--Diffusion-based-Video-Generation-with-Image-Prompts_Note.md)
@@ -453,15 +467,14 @@ text2video task, 提出 temporal adapter 和 attention adapter 把 image SD 调�
 >
 > - [VAE 博客](https://zhuanlan.zhihu.com/p/34998569) 提供了一个将概率图跟深度学习结合起来的一个非常棒的案例
 > [code](https://github.com/bojone/vae)
-> - lujianqing，zhangmingxuan，chengqifeng， zhenglei 老师：low level
-> - [Daniel Cohen-Or](https://danielcohenor.com/publications/)
 > - [Diffusion Blog](https://zhuanlan.zhihu.com/p/568213577)
 > - [苏剑林老师 DDPM 理解博客](https://spaces.ac.cn/search/%E7%94%9F%E6%88%90%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E6%BC%AB%E8%B0%88/)
 
 ### Diffusion basics
 
-- "Understanding Diffusion Models: A Unified Perspective" Arxiv, 2022 Aug
-  [paper](https://arxiv.org/abs/2208.11970) [note](./2022_08_Arxiv_Understanding Diffusion Models-A Unified Perspective_Note.md)
+- "Understanding Diffusion Models: A Unified Perspective" Arxiv, 2022 Aug 25
+  [paper](http://arxiv.org/abs/2208.11970v1) [code]() [pdf](./2022_08_Arxiv_Understanding-Diffusion-Models--A-Unified-Perspective.pdf) [note](./2022_08_Arxiv_Understanding-Diffusion-Models--A-Unified-Perspective_Note.md)
+  Authors: Calvin Luo
 
 the basic math for diffusion model
 
@@ -479,11 +492,21 @@ the basic math for diffusion model
 
 
 
+- "Elucidating the Design Space of Diffusion-Based Generative Models" NIPS, 2022 Jun 1
+  [paper](http://arxiv.org/abs/2206.00364v2) [code](https://github.com/NVlabs/edm) [pdf](./2022_06_NIPS_Elucidating-the-Design-Space-of-Diffusion-Based-Generative-Models.pdf) [note](./2022_06_NIPS_Elucidating-the-Design-Space-of-Diffusion-Based-Generative-Models_Note.md)
+  Authors: Tero Karras, Miika Aittala, Timo Aila, Samuli Laine
+
+Inf-DiT 使用此加噪
+
+
+
+
+
 
 
 ### milestone :moyai:
 
-- [ ] "Image-to-Image Translation with Conditional Adversarial Networks" CVPR, 2016 Nov, **Pix2pix** :moyai:
+- "Image-to-Image Translation with Conditional Adversarial Networks" CVPR, 2016 Nov, **Pix2pix** :moyai:
   [paper](https://arxiv.org/abs/1611.07004) [code](https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix) [website](https://phillipi.github.io/pix2pix/)
 
 
@@ -565,9 +588,9 @@ the basic math for diffusion model
 - [ ] "Diffusion Models Beat GANs on Image Classification" Arxiv, 2023 Jul
   [paper](https://arxiv.org/abs/2307.08702)
 
-- [ ] "SDXL: Improving Latent Diffusion Models for High-Resolution Image Synthesis" Arxiv, 2023 Jul :statue_of_liberty:
-  [paper](https://arxiv.org/abs/2307.01952) [code](https://github.com/stability-ai/generative-models) [blog_explanation](https://zhuanlan.zhihu.com/p/643420260)
-  [pdf](./2023_07_Arxiv_SDXL--Improving-Latent-Diffusion-Models-for-High-Resolution-Image-Synthesis.pdf)
+- [ ] "SDXL: Improving Latent Diffusion Models for High-Resolution Image Synthesis" ICLR, 2023 Jul 4
+  [paper](http://arxiv.org/abs/2307.01952v1) [code](https://github.com/Stability-AI/generative-models) [pdf](./2023_07_ICLR_SDXL--Improving-Latent-Diffusion-Models-for-High-Resolution-Image-Synthesis.pdf) [note](./2023_07_ICLR_SDXL--Improving-Latent-Diffusion-Models-for-High-Resolution-Image-Synthesis_Note.md)
+  Authors: Dustin Podell, Zion English, Kyle Lacey, Andreas Blattmann, Tim Dockhorn, Jonas Müller, Joe Penna, Robin Rombach
 
 - [ ] "Diffusion Models for Image Restoration and Enhancement -- A Comprehensive Survey" Arxiv, 2023 Aug :star:
   [paper](https://arxiv.org/abs/2308.09388) [code](https://github.com/lixinustc/Awesome-diffusion-model-for-image-processing?utm_source=catalyzex.com)
@@ -599,6 +622,18 @@ the basic math for diffusion model
   [note](./2023_08_ECAI_Diffusion-Model-for-Camouflaged-Object-Detection_Note.md)
 
   > 应用 DDPM 到目标检测；验证了输入图像提取多尺度特征&融合，到 diffusion attn 一起有效
+
+
+
+
+
+- "SDXL: Improving Latent Diffusion Models for High-Resolution Image Synthesis" ICLR, 2023 Jul 4
+  [paper](http://arxiv.org/abs/2307.01952v1) [code](https://github.com/Stability-AI/generative-models) [pdf](./2023_07_ICLR_SDXL--Improving-Latent-Diffusion-Models-for-High-Resolution-Image-Synthesis.pdf) [note](./2023_07_ICLR_SDXL--Improving-Latent-Diffusion-Models-for-High-Resolution-Image-Synthesis_Note.md)
+  Authors: Dustin Podell, Zion English, Kyle Lacey, Andreas Blattmann, Tim Dockhorn, Jonas Müller, Joe Penna, Robin Rombach
+
+2024 Jul 更新了一版本，增加 offsetNoise :star:
+
+
 
 
 
@@ -705,8 +740,6 @@ Video Diffusion 噪声图 $z_t$ 的**低频部分维持了视频的时序一致�
 
 - 怎么加 temporal layer
 
-Findings
-
 text2video inference 时候基于随机选取的高斯噪声开始，这里面的**高频信息很乱，造成生成的不一致**。因此先用训练的 text2video 模型得到更新的 z0 特征图（也认为是一种噪声），提取里面比较好的低频特征，高频信息替换为新的高斯噪声，优化初始噪声，重新进行去噪。
 
 对 Video Diffusion 的 noise $z_T$ 用 FFT 分解为低频、高频信息，逐步去掉高频信息后，发现生成的视频主体类似，**生成内容的时序一致性由视频本身的低频信息决定**
@@ -725,6 +758,52 @@ Framework
 
 发现 diffusion 去噪过程，对于 latent 图像编辑后特征分布改变的情况，导致了编辑结果的变差，而先前ODE方法认为仍是同一分布，没考虑此问题；
 在数学推导上**发现 SDE 去噪过程噪声有益处**，能够逐渐拉进编辑后特征的分布 & 原始图像空间特征的分布；而 ODE 去噪过程的分布是不变的，若 xT 分布改变则无法拉近特征分布距离；
+
+
+
+
+
+- "Not All Noises Are Created Equally:Diffusion Noise Selection and Optimization" Arxiv, 2024 Jul 19
+  [paper](http://arxiv.org/abs/2407.14041v1) [code]() [pdf](./2024_07_Arxiv_Not-All-Noises-Are-Created-Equally-Diffusion-Noise-Selection-and-Optimization.pdf) [note](./2024_07_Arxiv_Not-All-Noises-Are-Created-Equally-Diffusion-Noise-Selection-and-Optimization_Note.md)
+  Authors: Zipeng Qi, Lichen Bai, Haoyi Xiong, and Zeke Xie
+
+
+
+- "Prompt-to-Prompt Image Editing with Cross Attention Control" 
+  [code](https://github.com/google/prompt-to-prompt/)
+
+发现 cross attn 决定了 layout
+
+
+
+### evaluation :man_judge:
+
+收集一些评估 video/image 生成质量的 metrics
+
+- "Human Preference Score v2: A Solid Benchmark for Evaluating Human Preferences of Text-to-Image Synthesis" Arxiv, 2023 Jun 15, `HPSv2`
+  [paper](http://arxiv.org/abs/2306.09341v2) [code](https://github.com/tgxs002/HPSv2) [pdf](./2023_06_Arxiv_Human-Preference-Score-v2--A-Solid-Benchmark-for-Evaluating-Human-Preferences-of-Text-to-Image-Synthesis.pdf) [note](./2023_06_Arxiv_Human-Preference-Score-v2--A-Solid-Benchmark-for-Evaluating-Human-Preferences-of-Text-to-Image-Synthesis_Note.md)
+  Authors: Xiaoshi Wu, Yiming Hao, Keqiang Sun, Yixiong Chen, Feng Zhu, Rui Zhao, Hongsheng Li
+
+> - "Not All Noises Are Created Equally:Diffusion Noise Selection and Optimization" Arxiv, 2024 Jul 19
+>   [paper](http://arxiv.org/abs/2407.14041v1) [code]() [pdf](./2024_07_Arxiv_Not-All-Noises-Are-Created-Equally-Diffusion-Noise-Selection-and-Optimization.pdf) [note](./2024_07_Arxiv_Not-All-Noises-Are-Created-Equally-Diffusion-Noise-Selection-and-Optimization_Note.md)
+>   Authors: Zipeng Qi, Lichen Bai, Haoyi Xiong, and Zeke Xie
+>
+> HPS v2, PickScore, and ImageReward are all emerging human reward models that **approximate human preference** for text-to-image generation
+>
+> **HPS v2 is the state-of-the-art human reward model so far and offers a metric more close to human preference**
+>
+> human preference is regarded as the ground-truth and ultimate evaluation method for text-to-image generation. Thus, we regard **human preference and HPS v2 as the two most important metrics.**
+
+
+
+- "VBench: Comprehensive Benchmark Suite for Video Generative Models" CVPR-highlight, 2023 Nov 29 :star:
+  [paper](http://arxiv.org/abs/2311.17982v1) [code]() [pdf](./2023_11_CVPR-highlight_VBench--Comprehensive-Benchmark-Suite-for-Video-Generative-Models.pdf) [note](./2023_11_CVPR-highlight_VBench--Comprehensive-Benchmark-Suite-for-Video-Generative-Models_Note.md)
+  Authors: Ziqi Huang, Yinan He, Jiashuo Yu, Fan Zhang, Chenyang Si, Yuming Jiang, Yuanhan Zhang, Tianxing Wu, Qingyang Jin, Nattapol Chanpaisit, Yaohui Wang, Xinyuan Chen, Limin Wang, Dahua Lin, Yu Qiao, Ziwei Liu
+
+
+
+- "Pick-a-pic: Anopen dataset of user preferences for text-to-image generation" NIPS
+- "Imagereward: Learning and evaluating human preferences for text-to-image generation" NIPS
 
 
 
@@ -801,8 +880,11 @@ Framework
 - [ ] "Learning a Diffusion Prior for NeRFs" Arxiv, 2023 Apr
   [paper](https://arxiv.org/abs/2304.14473)
 
-- [x] "Exploiting Diffusion Prior for Real-World Image Super-Resolution" Arxiv, 2023 May
-  [paper](https://arxiv.org/abs/2305.07015) [website](https://iceclear.github.io/projects/stablesr/?utm_source=catalyzex.com) [code](https://github.com/IceClear/StableSR) [note](./2023_05_Arxiv_Exploiting-Diffusion-Prior-for-Real-World-Image-Super-Resolution_Note.md)
+
+
+- "Exploiting Diffusion Prior for Real-World Image Super-Resolution" Arxiv, 2023 May, **StableSR**
+  [paper](https://arxiv.org/abs/2305.07015) [website](https://iceclear.github.io/projects/stablesr/?utm_source=catalyzex.com) [code](https://github.com/IceClear/StableSR) [pdf](./2023_05_Arxiv_Exploiting-Diffusion-Prior-for-Real-World-Image-Super-Resolution.pdf) [note](./2023_05_Arxiv_Exploiting-Diffusion-Prior-for-Real-World-Image-Super-Resolution_Note.md) 
+  Authors: [Jianyi Wang](https://arxiv.org/search/cs?searchtype=author&query=Wang,+J), [Zongsheng Yue](https://arxiv.org/search/cs?searchtype=author&query=Yue,+Z), [Shangchen Zhou](https://arxiv.org/search/cs?searchtype=author&query=Zhou,+S), [Kelvin C.K. Chan](https://arxiv.org/search/cs?searchtype=author&query=Chan,+K+C), [Chen Change Loy](https://arxiv.org/search/cs?searchtype=author&query=Loy,+C+C)
 
 
 
@@ -1033,20 +1115,6 @@ Framework
 
 
 
-### 3D
-
-- [ ] "Adding 3D Geometry Control to Diffusion Models" Arxiv, 2023 Jun
-  [paper](https://arxiv.org/abs/2306.08103)
-
-  > Understanding the underlying 3D world of 2D images, existing challenge: 
-  >
-  > 1. inability to control the 3D properties of the object
-  > 2. difficulty in obtaining ground-truth 3D annotations of objects
-  >
-  > 用 edge map 作为 visual condition；文本用 tag 和 类别，将类别标签用 LLM 描述丰富一些，再使用。使用 ContolNet 来引导
-  >
-  > ![image-20231229194659120](docs/README/3D-DST_framework.png)
-
 
 
 ### Text specific
@@ -1073,6 +1141,106 @@ Framework
 2. 针对任务设计 Loss！
 
 ![AnyText_overview.png](docs/2023_11_ICLR_AnyText--Multilingual-Visual-Text-Generation-And-Editing_Note/AnyText_overview.png)
+
+
+
+
+
+### efficient :light_rail:
+
+- "ControlNeXt: Powerful and Efficient Control for Image and Video Generation" Arxiv, 2024 Aug 12
+  [paper](http://arxiv.org/abs/2408.06070v2) [code](https://github.com/dvlab-research/ControlNeXt) [web](https://pbihao.github.io/projects/controlnext/index.html) [pdf](./2024_08_Arxiv_ControlNeXt--Powerful-and-Efficient-Control-for-Image-and-Video-Generation.pdf) [note](./2024_08_Arxiv_ControlNeXt--Powerful-and-Efficient-Control-for-Image-and-Video-Generation_Note.md)
+  Authors: Bohao Peng, Jian Wang, Yuechen Zhang, Wenbo Li, Ming-Chang Yang, Jiaya Jia
+
+
+
+
+
+- "Deep Compression Autoencoder for Efficient High-Resolution Diffusion Models" Arxiv, 2024 Oct 14, `DC-AE`
+  [paper](http://arxiv.org/abs/2410.10733v1) [code](https://github.com/mit-han-lab/efficientvit) [pdf](./2024_10_Arxiv_Deep-Compression-Autoencoder-for-Efficient-High-Resolution-Diffusion-Models.pdf) [note](./2024_10_Arxiv_Deep-Compression-Autoencoder-for-Efficient-High-Resolution-Diffusion-Models_Note.md)
+  Authors: Junyu Chen, Han Cai, Junsong Chen, Enze Xie, Shang Yang, Haotian Tang, Muyang Li, Yao Lu, Song Han (MIT)
+
+F32,f64 的 VAE 重建效果和 f8 接近甚至更好一些
+
+
+
+
+
+### color shift
+
+- "Colorful Diffuse Intrinsic Image Decomposition in the Wild" Arxiv, 2024 Sep 20
+[paper](http://arxiv.org/abs/2409.13690v1) [code]() [pdf](./2024_09_Arxiv_Colorful-Diffuse-Intrinsic-Image-Decomposition-in-the-Wild.pdf) [note](./2024_09_Arxiv_Colorful-Diffuse-Intrinsic-Image-Decomposition-in-the-Wild_Note.md)
+Authors: Chris Careaga, Yağız Aksoy
+
+
+
+## 3D
+
+- SV3D https://huggingface.co/stabilityai/sv3d
+
+
+
+- "Adding 3D Geometry Control to Diffusion Models" Arxiv, 2023 Jun
+  [paper](https://arxiv.org/abs/2306.08103)
+
+Understanding the underlying 3D world of 2D images, existing challenge: 
+
+1. inability to control the 3D properties of the object
+2. difficulty in obtaining ground-truth 3D annotations of objects
+
+用 edge map 作为 visual condition；文本用 tag 和 类别，将类别标签用 LLM 描述丰富一些，再使用。使用 ContolNet 来引导
+
+![image-20231229194659120](docs/README/3D-DST_framework.png)
+
+
+
+
+
+- "MIMO: Controllable Character Video Synthesis with Spatial Decomposed Modeling"
+  [paper](https://arxiv.org/pdf/2409.16160)
+
+1. 按深度提取视频中**分层：任务、场景、遮挡，分别提取特征**
+2. SD1.5 + AnimateDiff
+
+> We initialize the model of denoising U-Net and referencenet based on the pretrained weights from SD 1.5 [25], whereas the motion module is initialized with the weights of AnimateDiff [4]
+
+
+
+- "DreamWaltz-G: Expressive 3D Gaussian Avatars from Skeleton-Guided 2D Diffusion"
+  [paper](https://arxiv.org/pdf/2409.17145)
+
+
+
+- "3DTOPIA-XL: SCALING HIGH-QUALITY 3D ASSET GENERATION VIA PRIMITIVE DIFFUSION" 
+  [paper](https://arxiv.org/pdf/2409.12957v1)
+
+
+
+
+
+- "Flash-Splat: 3D Reflection Removal with Flash Cues and Gaussian Splats" ECCV
+  [web](https://flash-splat.github.io/)
+
+
+
+
+
+### novel-view
+
+- "Depth Pro: Sharp Monocular Metric Depth in Less Than a Second" By Apple
+  [paper](https://arxiv.org/abs/2410.02073v1)
+
+深度估计，做新视角合成的纹理更好！
+
+
+
+### reference
+
+- "TextureDreamer: Image-guided Texture Synthesis through Geometry-aware Diffusion" CVPR, 2024 Jan 17
+  [paper](http://arxiv.org/abs/2401.09416v1) [code]() [pdf](./2024_01_CVPR_TextureDreamer--Image-guided-Texture-Synthesis-through-Geometry-aware-Diffusion.pdf) [note](./2024_01_CVPR_TextureDreamer--Image-guided-Texture-Synthesis-through-Geometry-aware-Diffusion_Note.md)
+  Authors: Yu-Ying Yeh, Jia-Bin Huang, Changil Kim, Lei Xiao, Thu Nguyen-Phuoc, Numair Khan, Cheng Zhang, Manmohan Chandraker, Carl S Marshall, Zhao Dong, Zhengqin Li
+
+参考 https://texturedreamer.github.io/ 视频，学习一下如何一步步从 baseline 改进一次后，发现还有问题逐步搭建新的模块 :star:
 
 
 
@@ -1208,12 +1376,11 @@ DoubleDIP 把各种 low-level 任务看作**图层分解任务**，**将图像�
 
   > 将图像修复任务的数学模型，转换到 Range-Null space 分解，对于分解的其中一项替换为 Diffusion 的 noise 实现修复操作，融入 diffusion 的方式值得借鉴。
 
-- [x] "Image Restoration with Mean-Reverting Stochastic Differential Equations" ICML, 2023 Jan :star:
+- "Image Restoration with Mean-Reverting Stochastic Differential Equations" ICML, 2023 Jan, **IR-SDE** :star:
   [Ziwei Luo](https://algolzw.github.io/), [Fredrik K. Gustafsson](https://www.fregu856.com/), [Zheng Zhao](https://zz.zabemon.com/), [Jens Sjölund](https://jsjol.github.io/), [Thomas B. Schön](https://user.it.uu.se/~thosc112/index.html)
-  [paper](https://arxiv.org/abs/2301.11699) [code](https://github.com/Algolzw/image-restoration-sde) [website](https://algolzw.github.io/ir-sde/index.html?utm_source=catalyzex.com)
-  [note](./2023_01_ICML_Image-Restoration-with-Mean-Reverting-Stochastic-Differential-Equations.pdf)
+  [paper](https://arxiv.org/abs/2301.11699) [code](https://github.com/Algolzw/image-restoration-sde) [website](https://algolzw.github.io/ir-sde/index.html?utm_source=catalyzex.com) [pdf](./2023_01_ICML_Image-Restoration-with-Mean-Reverting-Stochastic-Differential-Equations.pdf) [note](./2023_01_ICML_Image-Restoration-with-Mean-Reverting-Stochastic-Differential-Equations_Note.md)
 
-  > 从高质量图像，加噪声到低质量图像，而不是到纯高斯噪声 》》加速
+从高质量图像，加噪声到低质量图像，而不是到纯高斯噪声 》》加速
 
 - [ ] "DiffIR: Efficient Diffusion Model for Image Restoration" ICCV, 2023 Mar
   [paper](https://arxiv.org/abs/2303.09472) [code](https://github.com/Zj-BinXia/DiffIR)
@@ -1288,11 +1455,12 @@ DoubleDIP 把各种 low-level 任务看作**图层分解任务**，**将图像�
 - [x] "Pixel-Aware Stable Diffusion for Realistic Image Super-resolution and Personalized Stylization" CVPR, 2023 Aug, PASD
   [paper](http://arxiv.org/abs/2308.14469v2) [code](https://github.com/yangxy/PASD) [note](./2023_08_Arxiv_Pixel-Aware-Stable-Diffusion-for-Realistic-Image-Super-resolution-and-Personalized-Stylization_Note.md)
 
-- [x] "SeeSR: Towards Semantics-Aware Real-World Image Super-Resolution" Arxiv, 2023 Nov :star:
-  [paper](http://arxiv.org/abs/2311.16518v1) [code](https://github.com/cswry/SeeSR)
-  [note](./2023_11_Arxiv_SeeSR--Towards-Semantics-Aware-Real-World-Image-Super-Resolution_Note.md)
 
-  > 微调 stable diffusion
+
+
+- "SeeSR: Towards Semantics-Aware Real-World Image Super-Resolution" Arxiv, 2023 Nov
+  [paper](http://arxiv.org/abs/2311.16518v1) [code]() [pdf](./2023_11_Arxiv_SeeSR--Towards-Semantics-Aware-Real-World-Image-Super-Resolution.pdf) [note](./2023_11_Arxiv_SeeSR--Towards-Semantics-Aware-Real-World-Image-Super-Resolution_Note.md) 
+  Authors: Rongyuan Wu, Tao Yang, Lingchen Sun, Zhengqiang Zhang, Shuai Li, Lei Zhang
 
 
 
@@ -1305,6 +1473,33 @@ DoubleDIP 把各种 low-level 任务看作**图层分解任务**，**将图像�
   Authors: Dmitry Ulyanov, Andrea Vedaldi, Victor Lempitsky
 
 用随机初始化的 NN 只去拟合单张低质量图像，**发现神经网络本身在迭代过程的先验**，只要控制指定迭代步数就能得到较好的修复结果（一开始输出乱的，**100it 出了个接近修复的图**；1kiteration学的太好了输出含有噪声的原图）；
+
+
+
+### detail texture :sweat_drops:
+
+- "Concept Sliders: LoRA Adaptors for Precise Control in Diffusion Models" Arxiv, 2023 Nov 20 :star:
+  [paper](http://arxiv.org/abs/2311.12092v2) [web](https://sliders.baulab.info/) [code](https://github.com/rohitgandikota/sliders) [pdf](./2023_11_Arxiv_Concept-Sliders--LoRA-Adaptors-for-Precise-Control-in-Diffusion-Models.pdf) [note](./2023_11_Arxiv_Concept-Sliders--LoRA-Adaptors-for-Precise-Control-in-Diffusion-Models_Note.md)
+  Authors: Rohit Gandikota, Joanna Materzynska, Tingrui Zhou, Antonio Torralba, David Bau
+
+
+
+- "Interpreting the Weight Space of Customized Diffusion Models" Arxiv, 2024 Jun 13
+  [paper](http://arxiv.org/abs/2406.09413v2) [code]() [pdf](./2024_06_Arxiv_Interpreting-the-Weight-Space-of-Customized-Diffusion-Models.pdf) [note](./2024_06_Arxiv_Interpreting-the-Weight-Space-of-Customized-Diffusion-Models_Note.md)
+  Authors: Amil Dravid, Yossi Gandelsman, Kuan-Chieh Wang, Rameen Abdal, Gordon Wetzstein, Alexei A. Efros, Kfir Aberman
+
+
+
+- "TextureDreamer: Image-guided Texture Synthesis through Geometry-aware Diffusion" CVPR, 2024 Jan 17
+  [paper](http://arxiv.org/abs/2401.09416v1) [code]() [pdf](./2024_01_CVPR_TextureDreamer--Image-guided-Texture-Synthesis-through-Geometry-aware-Diffusion.pdf) [note](./2024_01_CVPR_TextureDreamer--Image-guided-Texture-Synthesis-through-Geometry-aware-Diffusion_Note.md)
+  Authors: Yu-Ying Yeh, Jia-Bin Huang, Changil Kim, Lei Xiao, Thu Nguyen-Phuoc, Numair Khan, Cheng Zhang, Manmohan Chandraker, Carl S Marshall, Zhao Dong, Zhengqin Li
+
+参考 https://texturedreamer.github.io/ 视频，学习一下如何一步步从 baseline 改进一次后，发现还有问题逐步搭建新的模块 :star:
+
+
+
+- "VideoGigaGAN: Towards Detail-rich Video Super-Resolution"
+  [paper](https://arxiv.org/pdf/2404.12388)
 
 
 
@@ -1413,6 +1608,146 @@ DoubleDIP 把各种 low-level 任务看作**图层分解任务**，**将图像�
 
 
 
+- "Coarse-to-fine mechanisms mitigate diffusion limitations on image restoration" CVIU, 2024 Aug 13
+  [paper](https://www.sciencedirect.com/science/article/pii/S1077314224001991) [code]() [pdf](./2024_08_CVIU_Coarse-to-fine-mechanisms-mitigate-diffusion-limitations-on-image-restoration.pdf) [note](./2024_08_CVIU_Coarse-to-fine-mechanisms-mitigate-diffusion-limitations-on-image-restoration_Note.md)
+  Authors: Liyan Wang
+
+
+
+
+
+- "PromptIR: Prompting for All-in-One Blind Image Restoration" Arxiv, 2023 Jun 22 :star:
+  [paper](http://arxiv.org/abs/2306.13090v1) [code](https://github.com/va1shn9v/PromptIR) [pdf](./2023_06_Arxiv_PromptIR--Prompting-for-All-in-One-Blind-Image-Restoration.pdf) [note](./2023_06_Arxiv_PromptIR--Prompting-for-All-in-One-Blind-Image-Restoration_Note.md)
+  Authors: Vaishnav Potlapalli, Syed Waqas Zamir, Salman Khan, Fahad Shahbaz Khan
+
+后续文章测试 PromptIR 效果可以的！
+
+![fig3](docs/2023_06_Arxiv_PromptIR--Prompting-for-All-in-One-Blind-Image-Restoration_Note/fig3.png)
+
+
+
+
+
+- "DreamClear: High-Capacity Real-World Image Restoration with Privacy-Safe Dataset Curation" NIPS, 2024 Oct 24
+  [paper](http://arxiv.org/abs/2410.18666v2) [code](https://github.com/shallowdream204/DreamClear.) [pdf](./2024_10_NIPS_DreamClear--High-Capacity-Real-World-Image-Restoration-with-Privacy-Safe-Dataset-Curation.pdf) [note](./2024_10_NIPS_DreamClear--High-Capacity-Real-World-Image-Restoration-with-Privacy-Safe-Dataset-Curation_Note.md)
+  Authors: Yuang Ai, Xiaoqiang Zhou, Huaibo Huang, Xiaotian Han, Zhengyu Chen, Quanzeng You, Hongxia Yang
+
+1. 本文还是参考 Real-ESRGAN 类似的合成数据方式，但着重探索于 **HQ 数据的版权问题**。**提出一个数据合成 pipeline**，去合成数据避免版权问题
+2. 训练 DiT, 提出 MoAM 模块，**识别退化类型，用于 IR 修复；**
+
+![fig3](docs/2024_10_NIPS_DreamClear--High-Capacity-Real-World-Image-Restoration-with-Privacy-Safe-Dataset-Curation_Note/fig3.png)
+
+
+
+
+
+- "A Preliminary Exploration Towards General Image Restoration" Arxiv, 2024 Aug 27
+  [paper](http://arxiv.org/abs/2408.15143v2) [code]() [pdf](./2024_08_Arxiv_A-Preliminary-Exploration-Towards-General-Image-Restoration.pdf) [note](./2024_08_Arxiv_A-Preliminary-Exploration-Towards-General-Image-Restoration_Note.md)
+  Authors: Xiangtao Kong, Jinjin Gu, Yihao Liu, Wenlong Zhang, Xiangyu Chen, Yu Qiao, Chao Dong
+
+> - we present a new problem called general image restoration (GIR) which aims to address these challenges within a unified model.
+>
+> - the establishment of new datasets and a thorough evaluation framework for GIR models is discussed
+>
+>   - 做了 Old Films 的修复 :star:
+>
+> - SOTA
+>
+> - 可以尝试作为新的研究方向
+>
+>   > we also try to understand and interpret these models’ behaviors to inspire the future direction
+
+
+
+
+
+#### Agent
+
+- "An Intelligent Agentic System for Complex Image Restoration Problems" Arxiv, 2024 Oct 23
+  [paper](http://arxiv.org/abs/2410.17809v1) [code]() [pdf](./2024_10_Arxiv_An-Intelligent-Agentic-System-for-Complex-Image-Restoration-Problems.pdf) [note](./2024_10_Arxiv_An-Intelligent-Agentic-System-for-Complex-Image-Restoration-Problems_Note.md)
+  Authors: Kaiwen Zhu, Jinjin Gu, Zhiyuan You, Yu Qiao, Chao Dong
+
+IR 修复效果不好就没后续了。。**设计修复控制系统，搞一个反馈回路，使用不同方法再修复下**；**效果没差多少，但至少发现模型集成一下还是能比单个模型做一次好一丢丢（PSNR 提高 1），所以 contribution 没说 SOTA 说的是 potential :joy:**
+
+1. 提出 Agentic System 5 个 stage 做 IR，finetune VLM 分析有什么退化，LLM 设计修复模型的使用&顺序；调用一个模型修复效果不行，类似控制系统设计反馈回路，让 LLM 重新规划修复顺序
+2. **微调 DepictQA 获取退化类型信息**，但准确率不稳定
+
+![fig2](docs/2024_10_Arxiv_An-Intelligent-Agentic-System-for-Complex-Image-Restoration-Problems_Note/fig2.png)
+
+
+
+
+
+#### Prompt
+
+- https://arxiv.org/pdf/2408.08601
+
+
+
+#### noisy CLIP
+
+需求：使用 CLIP 提取图像全局特征，但对于 degraded image 咋办？
+
+
+
+- "Improving Image Restoration through Removing Degradations in Textual Representations" CVPR, 2023 Dec 28
+  [paper](http://arxiv.org/abs/2312.17334v1) [code](https://github.com/mrluin/TextualDegRemoval) [pdf](./2023_12_CVPR_Improving-Image-Restoration-through-Removing-Degradations-in-Textual-Representations.pdf) [note](./2023_12_CVPR_Improving-Image-Restoration-through-Removing-Degradations-in-Textual-Representations_Note.md)
+  Authors: Jingbo Lin, Zhilu Zhang, Yuxiang Wei, Dongwei Ren, Dongsheng Jiang, Wangmeng Zuo
+
+
+
+- "Transfer CLIP for Generalizable Image Denoising" CVPR, 2024 Mar 22
+  [paper](http://arxiv.org/abs/2403.15132v1) [code]() [pdf](./2024_03_CVPR_Transfer-CLIP-for-Generalizable-Image-Denoising.pdf) [note](./2024_03_CVPR_Transfer-CLIP-for-Generalizable-Image-Denoising_Note.md)
+  Authors: Jun Cheng, Dong Liang, Shan Tan
+
+
+
+- "Diff-Restorer: Unleashing Visual Prompts for Diffusion-based Universal Image Restoration" Arxiv, 2024 Jul 4
+  [paper](http://arxiv.org/abs/2407.03636v1) [code]() [pdf](./2024_07_Arxiv_Diff-Restorer--Unleashing-Visual-Prompts-for-Diffusion-based-Universal-Image-Restoration.pdf) [note](./2024_07_Arxiv_Diff-Restorer--Unleashing-Visual-Prompts-for-Diffusion-based-Universal-Image-Restoration_Note.md)
+  Authors: Yuhong Zhang, Hengsheng Zhang, Xinning Chai, Zhengxue Cheng, Rong Xie, Li Song, Wenjun Zhang
+
+
+
+
+
+DA-CLIP，训练一个 controlnet 去修正 image embedding!
+
+- "Controlling Vision-Language Models for Multi-Task Image Restoration" ICLR, 2023 Oct 2, `DA-CLIP `
+  [paper](http://arxiv.org/abs/2310.01018v2) [code](https://github.com/Algolzw/daclip-uir) [pdf](./2023_10_ICLR_Controlling-Vision-Language-Models-for-Multi-Task-Image-Restoration.pdf) [note](./2023_10_ICLR_Controlling-Vision-Language-Models-for-Multi-Task-Image-Restoration_Note.md)
+  Authors: Ziwei Luo, Fredrik K. Gustafsson, Zheng Zhao, Jens Sjölund, Thomas B. Schön
+
+
+
+- "Photo-Realistic Image Restoration in the Wild with Controlled Vision-Language Models" Arxiv, 2024 Apr 15, `DA-CLIP-robust` 
+  [paper](http://arxiv.org/abs/2404.09732v1) [code]() [pdf](./2024_04_Arxiv_Photo-Realistic-Image-Restoration-in-the-Wild-with-Controlled-Vision-Language-Models.pdf) [note](./2024_04_Arxiv_Photo-Realistic-Image-Restoration-in-the-Wild-with-Controlled-Vision-Language-Models_Note.md)
+  Authors: Ziwei Luo, Fredrik K. Gustafsson, Zheng Zhao, Jens Sjölund, Thomas B. Schön
+
+DA-CLIP robust 基于 ViT-L-14，和 SDv1.5 一样，可以试试更换 CLIP
+
+
+
+
+
+### diffusion-bridge
+
+直接从xT=LQ 出发，学习 xT=LQ -> x0=HQ 的映射，不需要先验信息，节省计算量
+
+- "Image Restoration Through Generalized Ornstein-Uhlenbeck Bridge" ICML, 2023 Dec 16
+  [paper](http://arxiv.org/abs/2312.10299v2) [code](https://github.com/Hammour-steak/GOUB) [pdf](./2023_12_ICML_Image-Restoration-Through-Generalized-Ornstein-Uhlenbeck-Bridge.pdf) [note](./2023_12_ICML_Image-Restoration-Through-Generalized-Ornstein-Uhlenbeck-Bridge_Note.md)
+  Authors: Conghan Yue, Zhengwei Peng, Junlong Ma, Shiyan Du, Pengxu Wei, Dongyu Zhang
+
+
+
+- "Enhanced Control for Diffusion Bridge in Image Restoration" Arxiv, 2024 Aug 29
+  [paper](http://arxiv.org/abs/2408.16303v1) [code](https://github.com/Hammour-steak/ECDB) [pdf](./2024_08_Arxiv_Enhanced-Control-for-Diffusion-Bridge-in-Image-Restoration.pdf) [note](./2024_08_Arxiv_Enhanced-Control-for-Diffusion-Bridge-in-Image-Restoration_Note.md)
+  Authors: Conghan Yue, Zhengwei Peng, Junlong Ma, Dongyu Zhang
+
+diffusion-bridge + Controlnet 融合一下 LQ image condition，效果不咋样。。。
+
+
+
+
+
 ### inpainting
 
 - [x] "Rethinking Image Inpainting via a Mutual Encoder-Decoder with Feature Equalizations" ECCV oral, 2020 Jul
@@ -1494,39 +1829,19 @@ Self-atten QKV 特征都单独过 SE 空间注意力 + Deformable 偏移（自�
 
 
 
-### reference
+### shadow removal
 
-- "RealFill: Reference-Driven Generation for Authentic Image Completion" Arxiv, 2023 Sep 28
-  [paper](http://arxiv.org/abs/2309.16668v1) [code](https://realfill.github.io) [pdf](./2023_09_Arxiv_RealFill--Reference-Driven-Generation-for-Authentic-Image-Completion.pdf) [note](./2023_09_Arxiv_RealFill--Reference-Driven-Generation-for-Authentic-Image-Completion_Note.md)
-  Authors: Luming Tang, Nataniel Ruiz, Qinghao Chu, Yuanzhen Li, Aleksander Holynski, David E. Jacobs, Bharath Hariharan, Yael Pritch, Neal Wadhwa, Kfir Aberman, Michael Rubinstein
-
-类似 DreamBooth, 用几张图去微调 Diffusion 学习 target image 的场景；
-参考图 & target 图做 mask 去微调 Diffusion；
-Diffusion 出图原始区域模糊，对 mask blur & 用 alpha  把生成的和原图融合；
-diffusion 每次推理不同随机种子随机性太大，用预训练的 dense correspondence 去筛选生成较好的图
+- "Diff-Shadow: Global-guided Diffusion Model for Shadow Removal" Arxiv, 2024 Jul 23
+  [paper](http://arxiv.org/abs/2407.16214v1) [code]() [pdf](./2024_07_Arxiv_Diff-Shadow--Global-guided-Diffusion-Model-for-Shadow-Removal.pdf) [note](./2024_07_Arxiv_Diff-Shadow--Global-guided-Diffusion-Model-for-Shadow-Removal_Note.md)
+  Authors: Jinting Luo, Ru Li, Chengzhi Jiang, Mingyan Han, Xiaoming Zhang, Ting Jiang, Haoqiang Fan, Shuaicheng Liu
 
 
 
-- "AnyDoor: Zero-shot Object-level Image Customization" CVPR, 2023 Jul 18
-  [paper](http://arxiv.org/abs/2307.09481v2) [code](https://github.com/ali-vilab/AnyDoor) [pdf](./2023_07_CVPR_AnyDoor--Zero-shot-Object-level-Image-Customization.pdf) [note](./2023_07_CVPR_AnyDoor--Zero-shot-Object-level-Image-Customization_Note.md)
-  Authors: Xi Chen, Lianghua Huang, Yu Liu, Yujun Shen, Deli Zhao, Hengshuang Zhao
-
-> - **使用预训练的 DINOv2 提供细节特征**，DINOv2 有全局 和 patch 的特征，发现 concat 起来过可学习的 MLP，可以与 UNet 特征空间对齐 :star:
-> - **贴图的时候使用高频特征**，而不是放图像，避免生成图像不搭的情况
-> - 各个 trick，**细节一致性还是不足，例如文字扭曲了**
->   1. DNIO or CLIP 特征很重要，作为图像物体生成的基本盘，不加物体直接不一样；细节不一致的问题要再用高频特征约束一下
->   2. **发现训练早期多用视频中多姿态物体训练，能够增强生成物体的细节一致性，缓解色偏的问题**
-> - **对比 DINO, CLIP 提取物体特征**
->   1. DINO 特征对于物体细节的特征比 CLIP 特征更优秀，但 DINO 特征要处理下才能好：用分割图提取物体再去提取特征才能得到接近原始物体的结果
->   2. CLIP 特征有点离谱，可能是背景干扰很大
 
 
+### reference-based :star:
 
-- "Zero-shot Image Editing with Reference Imitation" Arxiv, 2024 Jun 11, `MimicBrush`
-  [paper](http://arxiv.org/abs/2406.07547v1) [code]() [pdf](./2024_06_Arxiv_Zero-shot-Image-Editing-with-Reference-Imitation.pdf) [note](./2024_06_Arxiv_Zero-shot-Image-Editing-with-Reference-Imitation_Note.md)
-  Authors: Xi Chen, Yutong Feng, Mengting Chen, Yiyang Wang, Shilong Zhang, Yu Liu, Yujun Shen, Hengshuang Zhao
-
-ControlNet 有学习 dense correspondence 的能力，基于 correspondence 去做 inpaint
+[survey_comics_generate_video.md](./survey_comics_generate_video.md)
 
 
 
@@ -1683,7 +1998,15 @@ ControlNet 有学习 dense correspondence 的能力，基于 correspondence 去�
 
 
 
-### block-based
+### block-based :meat_on_bone:
+
+> https://github.com/GuoLanqing/Awesome-High-Resolution-Diffusion
+
+- "Patch Diffusion: Faster and More Data-Efficient Training of Diffusion Models" NIPS, 2023 Apr 25
+  [paper](http://arxiv.org/abs/2304.12526v2) [code](https://github.com/Zhendong-Wang/Patch-Diffusion.) [pdf](./2023_04_NIPS_Patch-Diffusion--Faster-and-More-Data-Efficient-Training-of-Diffusion-Models.pdf) [note](./2023_04_NIPS_Patch-Diffusion--Faster-and-More-Data-Efficient-Training-of-Diffusion-Models_Note.md)
+  Authors: Zhendong Wang, Yifan Jiang, Huangjie Zheng, Peihao Wang, Pengcheng He, Zhangyang Wang, Weizhu Chen, Mingyuan Zhou
+
+
 
 - "MultiDiffusion: Fusing Diffusion Paths for Controlled Image Generation" ICML, 2023 Feb 16
   [paper](http://arxiv.org/abs/2302.08113v1) [code](https://multidiffusion.github.io) [pdf](./2023_02_ICML_MultiDiffusion--Fusing-Diffusion-Paths-for-Controlled-Image-Generation.pdf) [note](./2023_02_ICML_MultiDiffusion--Fusing-Diffusion-Paths-for-Controlled-Image-Generation_Note.md)
@@ -1701,14 +2024,89 @@ ControlNet 有学习 dense correspondence 的能力，基于 correspondence 去�
 
 
 - "Inf-DiT: Upsampling Any-Resolution Image with Memory-Efficient Diffusion Transformer" Arxiv, 2024 May 7
-  [paper](http://arxiv.org/abs/2405.04312v2) [code](https://github.com/THUDM/Inf-DiT.) [pdf](./2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer.pdf) [note](./2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note.md)
+  [paper](http://arxiv.org/abs/2405.04312v2) [code](https://github.com/THUDM/Inf-DiT) [pdf](./2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer.pdf) [note](./2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note.md)
   Authors: Zhuoyi Yang, Heyang Jiang, Wenyi Hong, Jiayan Teng, Wendi Zheng, Yuxiao Dong, Ming Ding, Jie Tang
 
 解决任意分辨率，多个 patch 一致性问题
 
+![fig3.png](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/fig3.png)
+
+
+
+
+
+- "Hierarchical Patch Diffusion Models for High-Resolution Video Generation" CVPR, 2024 Jun 12
+  [paper](http://arxiv.org/abs/2406.07792v1) [code](https://snap-research.github.io/hpdm.) [pdf](./2024_06_CVPR_Hierarchical-Patch-Diffusion-Models-for-High-Resolution-Video-Generation.pdf) [note](./2024_06_CVPR_Hierarchical-Patch-Diffusion-Models-for-High-Resolution-Video-Generation_Note.md)
+  Authors: Ivan Skorokhodov, Willi Menapace, Aliaksandr Siarohin, Sergey Tulyakov
+
+1. **训练 framework**，只用一个 patch 去训练模型，会 rescale 多个 patch 一起去噪，然后 LR stage 提取特征融合到后面 stage
+2. 生成高清细节，比生成低分辨率结构更简单。**因此对于高分辨率的 patch 不想用这么多资源**
+
+![fig2](docs/2024_06_CVPR_Hierarchical-Patch-Diffusion-Models-for-High-Resolution-Video-Generation_Note/fig2.png)
+
+
+
+- "AccDiffusion: An Accurate Method for Higher-Resolution Image Generation" ECCV, 2024 Jul 15
+  [paper](http://arxiv.org/abs/2407.10738v2) [code](https://github.com/lzhxmu/AccDiffusion) [web](https://lzhxmu.github.io/accdiffusion/accdiffusion.html) [pdf](./2024_07_ECCV_AccDiffusion--An-Accurate-Method-for-Higher-Resolution-Image-Generation.pdf) [note](./2024_07_ECCV_AccDiffusion--An-Accurate-Method-for-Higher-Resolution-Image-Generation_Note.md)
+  Authors: Zhihang Lin, Mingbao Lin, Meng Zhao, Rongrong Ji
+
+
+
+
+
+- "Breaking reCAPTCHAv2" COMPSAC, 2024 Sep 13
+  [paper](http://arxiv.org/abs/2409.08831v1) [code](https://github.com/aplesner/Breaking-reCAPTCHAv2) [pdf](./2024_09_COMPSAC_Breaking-reCAPTCHAv2.pdf) [note](./2024_09_COMPSAC_Breaking-reCAPTCHAv2_Note.md)
+  Authors: Andreas Plesner, Tobias Vontobel, Roger Wattenhofer (ETH)
+
+1. 用现有算法解决 google bot test 的实验报告；对于 Type2 给一张图选含有物体的 patch：**直接用 YoloV8 得到分割图，去各个 patch 检查重叠；**
+2. Bezier Curve 模拟鼠标自然轨迹，能减少 google 识别为 bot 概率 :joy:
+
+
+
+- "Oryx MLLM: On-Demand Spatial-Temporal Understanding at Arbitrary Resolution" Arxiv, 2024 Sep 19
+  [paper](http://arxiv.org/abs/2409.12961v1) [code](https://github.com/Oryx-mllm/Oryx) [web](https://github.com/Oryx-mllm/Oryx) [pdf](./2024_09_Arxiv_Oryx-MLLM--On-Demand-Spatial-Temporal-Understanding-at-Arbitrary-Resolution.pdf) [note](./2024_09_Arxiv_Oryx-MLLM--On-Demand-Spatial-Temporal-Understanding-at-Arbitrary-Resolution_Note.md)
+  Authors: Zuyan Liu, Yuhao Dong, Ziwei Liu, Winston Hu, Jiwen Lu, Yongming Rao
+
+- video caption 内容理解
+
+- MovieNet dataset 电影数据哦！ https://movienet.github.io/ :star:
+  - **Scene Segmentation**
+  - 预告片，有片头
+  - 动作：shoot gun
+  - 镜头：close-up, longshot, extreme closeup shot
+
+
+
+- "Boosting Latent Diffusion with Flow Matching" 
+  [paper](https://arxiv.org/pdf/2312.07360v2)
+
+> Flow Matching models are generative models that regress vector fields based on fixed conditional probability paths.
+
+在 latent 空间找更合理的 flow path
+
+
+
+
+
+- "DistriFusion: Distributed Parallel Inference for High-Resolution Diffusion Models" CVPR, 2024 Feb 29
+[paper](http://arxiv.org/abs/2402.19481v4) [code](https://github.com/mit-han-lab/distrifuser.) [pdf](./2024_02_CVPR_DistriFusion--Distributed-Parallel-Inference-for-High-Resolution-Diffusion-Models.pdf) [note](./2024_02_CVPR_DistriFusion--Distributed-Parallel-Inference-for-High-Resolution-Diffusion-Models_Note.md)
+Authors: Muyang Li, Tianle Cai, Jiaxin Cao, Qinsheng Zhang, Han Cai, Junjie Bai, Yangqing Jia, Ming-Yu Liu, Kai Li, Song Han
+
+多卡同时推理同一张图，实现加速 & 保持图像质量几乎不下降
+
+![fig3](docs/2024_02_CVPR_DistriFusion--Distributed-Parallel-Inference-for-High-Resolution-Diffusion-Models_Note/fig3.png)
+
+
+
 
 
 ### RealSR
+
+- "Scaling up GANs for Text-to-Image Synthesis" CVPR, 2023 Mar 9,`GigaGAN`
+[paper](http://arxiv.org/abs/2303.05511v2) [code](https://github.com/lucidrains/gigagan-pytorch) [pdf](./2023_03_CVPR_Scaling-up-GANs-for-Text-to-Image-Synthesis.pdf) [note](./2023_03_CVPR_Scaling-up-GANs-for-Text-to-Image-Synthesis_Note.md)
+Authors: Minguk Kang, Jun-Yan Zhu, Richard Zhang, Jaesik Park, Eli Shechtman, Sylvain Paris, Taesung Park
+
+
 
 - [x] "Exploiting Diffusion Prior for Real-World Image Super-Resolution" Arxiv, 2023 May, **StableSR** 
   [paper](https://arxiv.org/abs/2305.07015) [code](https://github.com/IceClear/StableSR) [website](https://iceclear.github.io/projects/stablesr/?utm_source=catalyzex.com) [pdf](./2023_preprint_Exploiting-Diffusion-Prior-for-Real-World-Image-Super-Resolution.pdf)
@@ -1732,6 +2130,151 @@ ControlNet 有学习 dense correspondence 的能力，基于 correspondence 去�
 
 - "CDFormer: When Degradation Prediction Embraces Diffusion Model for Blind Image Super-Resolution" 
   [paper](https://arxiv.org/pdf/2405.07648v1)
+
+
+
+
+
+## Video SR :mag:
+
+> [mmedit model-zoo](https://github.com/open-mmlab/mmagic#-model-zoo)
+> [paper with code: VSR](https://paperswithcode.com/sota/video-super-resolution-on-vid4-4x-upscaling-1)
+
+- [ ] "Video super-resolution based on spatial-temporal recurrent residual networks"  CVIU, 2018 Mar
+  [paper](https://www.sciencedirect.com/science/article/pii/S1077314217301583)
+
+  > 按 H264 考虑关键帧 & offset 作为输入实现超分
+  > takes not only the LR frames but also the differences of these adjacent LR frames as the input
+
+- [x] "EDVR: Video Restoration with Enhanced Deformable Convolutional Networks" CVPR NTIRE 1st, 2019 May
+
+  [paper](https://arxiv.org/abs/1905.02716) [code](https://github.com/xinntao/EDVR)
+  [note](./2019_05_CVPR-NTIRE_EDVR--Video-Restoration-with-Enhanced-Deformable-Convolutional-Networks_Note.md)
+
+- [x] "BasicVSR: The Search for Essential Components in Video Super-Resolution and Beyond" CVPR, 2020 Dec, **BasicVSR** :moyai:
+  [paper](http://arxiv.org/abs/2012.02181v2) [code](https://github.com/open-mmlab/mmagic/blob/main/configs/iconvsr/README.md) 
+  [note](./2020_12_CVPR_BasicVSR--The-Search-for-Essential-Components-in-Video-Super-Resolution-and-Beyond_Note.md)
+
+  > Authors: Kelvin C. K. Chan, Xintao Wang, Ke Yu, Chao Dong, Chen Change Loy
+
+- [ ] "Video Super-Resolution Transformer" 2021 Jun
+  [paper](https://arxiv.org/abs/2106.06847) [code](https://github.com/caojiezhang/VSR-Transformer)
+
+- [ ] "Memory-Augmented Non-Local Attention for Video Super-Resolution" CVPR, 2021 Aug
+  [paper](https://arxiv.org/abs/2108.11048) [code](https://github.com/jiy173/MANA)
+
+  > **memory mechanism**
+
+- [x] "BasicVSR++: Improving video super-resolution with enhanced propagation and alignment" CVPR, 2021 Apr :moyai:
+  [paper](https://arxiv.org/abs/2104.13371) [code](https://github.com/open-mmlab/mmagic/blob/main/configs/basicvsr_pp/README.md)
+  [note](./2021_04_CVPR_BasicVSR++--Improving-Video-Super-Resolution-with-Enhanced-Propagation-and-Alignment_Note.md)
+
+  > Deformable Transformer
+
+- [x] "Investigating Tradeoffs in Real-World Video Super-Resolution" CVPR, 2021 Nov, **RealBasicVSR**
+  [paper](https://arxiv.org/abs/2111.12704) [code](https://github.com/ckkelvinchan/RealBasicVSR)
+  [note](./2021_11_CVPR_Investigating-Tradeoffs-in-Real-World-Video-Super-Resolution_Note.md)
+
+  > 盲视频超分，**基于2个发现进行改进**：长时序反而会降低性能，有噪声没有特殊处理；iteration L=10 太少了会造成颜色伪影，20->30 会好一些
+  > 基于 BasicVSR 加入动态预处理模块，改进训练数据策略降低计算量
+
+- [ ] "TR-MISR: Multiimage Super-Resolution Based on Feature Fusion With Transformers" STAEOR, 2022 Jan :statue_of_liberty:
+  [paper](https://ieeexplore.ieee.org/document/9684717)'
+
+- [ ] "AnimeSR: Learning Real-World Super-Resolution Models for Animation Videos" NIPS, 2022 Jul :star:
+  [paper](https://arxiv.org/abs/2206.07038) [code](https://github.com/TencentARC/AnimeSR#open_book-animesr-learning-real-world-super-resolution-models-for-animation-videos)
+
+  > 如何去设计 LR，HR 配对数据集，思考是否可以用生成模型去学习退化；模型学习缩放尺度（缩放的尺度适合动画），实现任意分辨率超分；使用单向传播；
+  > 提出真实动画数据集，参考 LICENSE AGREEMENT.pdf
+
+- [ ] "Can SAM Boost Video Super-Resolution?" Arxiv, 2023 May :warning:
+  [paper](https://arxiv.org/abs/2305.06524v2) 
+
+- [x] "Recurrent Video Restoration Transformer with Guided Deformable Attention" NeurlPS, 2022 June, **RVRT** :statue_of_liberty:
+  [paper](https://arxiv.org/abs/2206.02146) [code](https://github.com/JingyunLiang/RVRT)
+  [note](./2022_06_NeurIPS_RVRT_Recurrent-Video-Restoration-Transformer-with-Guided-Deformable-Attention_Note.md)
+
+- [x] "STDAN: Deformable Attention Network for Space-Time Video Super-Resolution" NNLS, 2023 Feb :statue_of_liberty:
+  [paper](https://ieeexplore.ieee.org/document/10045744) [code](https://github.com/littlewhitesea/STDAN)
+  [note](./2023_02_NNLS_STDAN--Deformable-Attention-Network-for-Space-Time-Video-Super-Resolution_Note.md)
+
+  > *Deformable Attention* 视频 SR
+
+- [x] "Towards High-Quality and Efficient Video Super-Resolution via Spatial-Temporal Data Overfitting" CVPR_highlight, 2023 Mar
+  [paper](http://arxiv.org/abs/2303.08331v2) [code](https://github.com/coulsonlee/STDO-CVPR2023.git)
+  [note](./2023_03_CVPR_highlight_Towards-High-Quality-and-Efficient-Video-Super-Resolution-via-Spatial-Temporal-Data-Overfitting_Note.md)
+
+
+对视频分 patch 再按 PSNR 分组再去训练
+
+
+
+- [x] "Expanding Synthetic Real-World Degradations for Blind Video Super Resolution" CVPR, 2023 May
+  [paper](https://arxiv.org/abs/2305.02660)
+
+- [ ] "Mitigating Artifacts in Real-World Video Super-resolution Models" AAAI, 2023 Jun :warning:
+  [paper](https://arxiv.org/abs/2212.07339) [code](https://github.com/TencentARC/FastRealVSR)
+  [note](./2022_12_AAAI_Mitigating-Artifacts-in-Real-World-Video-Super-Resolution-Models_Note.md)
+
+
+
+### Diffusion-based
+
+- [x] "Motion-Guided Latent Diffusion for Temporally Consistent Real-world Video Super-resolution" Arxiv, 2023 Dec, `MGLD-VSR`
+  [paper](http://arxiv.org/abs/2312.00853v1) [code](https://github.com/IanYeung/MGLD-VSR) [note](2023_12_Arxiv_Motion-Guided-Latent-Diffusion-for-Temporally-Consistent-Real-world-Video-Super-resolution_Note.md) [pdf](./2023_12_Arxiv_Motion-Guided-Latent-Diffusion-for-Temporally-Consistent-Real-world-Video-Super-resolution.pdf)
+  Authors: Xi Yang, Chenhang He, Jianqi Ma, Lei Zhang
+
+![image-20240222173628376](docs/2023_12_Arxiv_Motion-Guided-Latent-Diffusion-for-Temporally-Consistent-Real-world-Video-Super-resolution_Note/image-20240222173628376.png)
+
+
+
+
+
+- "Upscale-A-Video: Temporal-Consistent Diffusion Model for Real-World Video Super-Resolution" Arxiv, 2023 Dec, `Upscale-A-Video`
+[paper](http://arxiv.org/abs/2312.06640v1) [code](https://github.com/sczhou/Upscale-A-Video) [website](https://shangchenzhou.com/projects/upscale-a-video/) [pdf](./2023_12_CVPR_Upscale-A-Video--Temporal-Consistent-Diffusion-Model-for-Real-World-Video-Super-Resolution.pdf)
+Authors: Shangchen Zhou, Peiqing Yang, Jianyi Wang, Yihang Luo, Chen Change Loy
+
+![image-20231220135955447](docs/2023_12_CVPR_Upscale-A-Video--Temporal-Consistent-Diffusion-Model-for-Real-World-Video-Super-Resolution_Note/Upscale-A-Video_framework.png)
+
+将整个视频按 8 帧切为各个 clip，模仿 `SD x4 upscaler` 将输入 LR 加噪作为 SD latent space 特征。改造了一下 UNet 加了一点 temporal layer 微调了一下，然后对 z0 对于不同clip 传播一下。更新后的特征输入 VAE decoder 得到 x4 的 HR。这里的 VAE Decoder 加入了 conv3d 微调了一下作为 decoder.
+
+
+
+
+
+- "VideoGigaGAN: Towards Detail-rich Video Super-Resolution" ECCV, 2024 Apr 18 
+  [paper](http://arxiv.org/abs/2404.12388v2) [code](https://github.com/danaigc/videoGigaGanHub) :warning: [web](https://videogigagan.github.io/) [pdf](./2024_04_ECCV_VideoGigaGAN--Towards-Detail-rich-Video-Super-Resolution.pdf) [note](./2024_04_ECCV_VideoGigaGAN--Towards-Detail-rich-Video-Super-Resolution_Note.md)
+  Authors: Yiran Xu, Taesung Park, Richard Zhang, Yang Zhou, Eli Shechtman, Feng Liu, Jia-Bin Huang, Difan Liu(Adobe)
+
+![fig3](docs/2024_04_ECCV_VideoGigaGAN--Towards-Detail-rich-Video-Super-Resolution_Note/fig3.png)
+
+把 Image GigaGAN (未开源) 改到 Video 上面，加 temporal attention & 光流；把 downsample block 改为 Pool 降低伪影；只比较了 PSNR（没 BasicVSR++好）LPIPS(好了一些)，FVD
+
+
+
+
+
+- "SeeClear: Semantic Distillation Enhances Pixel Condensation for Video Super-Resolution" NIPS, 2024 Oct 8
+  [paper](http://arxiv.org/abs/2410.05799v4) [code](https://github.com/Tang1705/SeeClear-NeurIPS24) [pdf](./2024_10_NIPS_SeeClear--Semantic-Distillation-Enhances-Pixel-Condensation-for-Video-Super-Resolution.pdf) [note](./2024_10_NIPS_SeeClear--Semantic-Distillation-Enhances-Pixel-Condensation-for-Video-Super-Resolution_Note.md)
+  Authors: Qi Tang, Yao Zhao, Meiqin Liu, Chao Yao
+
+
+
+- "Adversarial Diffusion Compression for Real-World Image Super-Resolution" Arxiv, 2024 Nov 20
+  [paper](http://arxiv.org/abs/2411.13383v1) [code]() [pdf](./2024_11_Arxiv_Adversarial-Diffusion-Compression-for-Real-World-Image-Super-Resolution.pdf) [note](./2024_11_Arxiv_Adversarial-Diffusion-Compression-for-Real-World-Image-Super-Resolution_Note.md)
+  Authors: Bin Chen, Gehui Li, Rongyuan Wu, Xindong Zhang, Jie Chen, Jian Zhang, Lei Zhang
+
+
+
+### 3D :bear:
+
+- "SuperGaussian: Repurposing Video Models for 3D Super Resolution" ECCV, 2024 Jun 2
+  [paper](http://arxiv.org/abs/2406.00609v4) [code]() [pdf](./2024_06_ECCV_SuperGaussian--Repurposing-Video-Models-for-3D-Super-Resolution.pdf) [note](./2024_06_ECCV_SuperGaussian--Repurposing-Video-Models-for-3D-Super-Resolution_Note.md)
+  Authors: Yuan Shen, Duygu Ceylan, Paul Guerrero, Zexiang Xu, Niloy J. Mitra, Shenlong Wang, Anna Frühstück
+
+
+
+
 
 
 
@@ -2007,101 +2550,15 @@ ControlNet 有学习 dense correspondence 的能力，基于 correspondence 去�
 
 
 
-## Video SR :mag:
-
-> [mmedit model-zoo](https://github.com/open-mmlab/mmagic#-model-zoo)
-> [paper with code: VSR](https://paperswithcode.com/sota/video-super-resolution-on-vid4-4x-upscaling-1)
-
-- [ ] "Video super-resolution based on spatial-temporal recurrent residual networks"  CVIU, 2018 Mar
-  [paper](https://www.sciencedirect.com/science/article/pii/S1077314217301583)
-  
-  > 按 H264 考虑关键帧 & offset 作为输入实现超分
-  > takes not only the LR frames but also the differences of these adjacent LR frames as the input
-  
-- [x] "EDVR: Video Restoration with Enhanced Deformable Convolutional Networks" CVPR NTIRE 1st, 2019 May
-  
-  [paper](https://arxiv.org/abs/1905.02716) [code](https://github.com/xinntao/EDVR)
-  [note](./2019_05_CVPR-NTIRE_EDVR--Video-Restoration-with-Enhanced-Deformable-Convolutional-Networks_Note.md)
-  
-- [x] "BasicVSR: The Search for Essential Components in Video Super-Resolution and Beyond" CVPR, 2020 Dec, **BasicVSR** :moyai:
-  [paper](http://arxiv.org/abs/2012.02181v2) [code](https://github.com/open-mmlab/mmagic/blob/main/configs/iconvsr/README.md) 
-  [note](./2020_12_CVPR_BasicVSR--The-Search-for-Essential-Components-in-Video-Super-Resolution-and-Beyond_Note.md)
-  
-  > Authors: Kelvin C. K. Chan, Xintao Wang, Ke Yu, Chao Dong, Chen Change Loy
-  
-- [ ] "Video Super-Resolution Transformer" 2021 Jun
-  [paper](https://arxiv.org/abs/2106.06847) [code](https://github.com/caojiezhang/VSR-Transformer)
-  
-- [ ] "Memory-Augmented Non-Local Attention for Video Super-Resolution" CVPR, 2021 Aug
-  [paper](https://arxiv.org/abs/2108.11048) [code](https://github.com/jiy173/MANA)
-
-  > **memory mechanism**
-
-- [x] "BasicVSR++: Improving video super-resolution with enhanced propagation and alignment" CVPR, 2021 Apr :moyai:
-  [paper](https://arxiv.org/abs/2104.13371) [code](https://github.com/open-mmlab/mmagic/blob/main/configs/basicvsr_pp/README.md)
-  [note](./2021_04_CVPR_BasicVSR++--Improving-Video-Super-Resolution-with-Enhanced-Propagation-and-Alignment_Note.md)
-  
-  > Deformable Transformer
-  
-- [x] "Investigating Tradeoffs in Real-World Video Super-Resolution" CVPR, 2021 Nov, **RealBasicVSR**
-  [paper](https://arxiv.org/abs/2111.12704) [code](https://github.com/ckkelvinchan/RealBasicVSR)
-  [note](./2021_11_CVPR_Investigating-Tradeoffs-in-Real-World-Video-Super-Resolution_Note.md)
-  
-  > 盲视频超分，**基于2个发现进行改进**：长时序反而会降低性能，有噪声没有特殊处理；iteration L=10 太少了会造成颜色伪影，20->30 会好一些
-  > 基于 BasicVSR 加入动态预处理模块，改进训练数据策略降低计算量
-  
-- [ ] "TR-MISR: Multiimage Super-Resolution Based on Feature Fusion With Transformers" STAEOR, 2022 Jan :statue_of_liberty:
-  [paper](https://ieeexplore.ieee.org/document/9684717)'
-
-- [ ] "AnimeSR: Learning Real-World Super-Resolution Models for Animation Videos" NIPS, 2022 Jul :star:
-  [paper](https://arxiv.org/abs/2206.07038) [code](https://github.com/TencentARC/AnimeSR#open_book-animesr-learning-real-world-super-resolution-models-for-animation-videos)
-
-  > 如何去设计 LR，HR 配对数据集，思考是否可以用生成模型去学习退化；模型学习缩放尺度（缩放的尺度适合动画），实现任意分辨率超分；使用单向传播；
-  > 提出真实动画数据集，参考 LICENSE AGREEMENT.pdf
-  
-- [ ] "Can SAM Boost Video Super-Resolution?" Arxiv, 2023 May :warning:
-  [paper](https://arxiv.org/abs/2305.06524v2) 
-  
-- [x] "Recurrent Video Restoration Transformer with Guided Deformable Attention" NeurlPS, 2022 June, **RVRT** :statue_of_liberty:
-  [paper](https://arxiv.org/abs/2206.02146) [code](https://github.com/JingyunLiang/RVRT)
-  [note](./2022_06_NeurIPS_RVRT_Recurrent-Video-Restoration-Transformer-with-Guided-Deformable-Attention_Note.md)
-  
-- [x] "STDAN: Deformable Attention Network for Space-Time Video Super-Resolution" NNLS, 2023 Feb :statue_of_liberty:
-  [paper](https://ieeexplore.ieee.org/document/10045744) [code](https://github.com/littlewhitesea/STDAN)
-  [note](./2023_02_NNLS_STDAN--Deformable-Attention-Network-for-Space-Time-Video-Super-Resolution_Note.md)
-
-  > *Deformable Attention* 视频 SR
-  
-- [x] "Towards High-Quality and Efficient Video Super-Resolution via Spatial-Temporal Data Overfitting" CVPR_highlight, 2023 Mar
-  [paper](http://arxiv.org/abs/2303.08331v2) [code](https://github.com/coulsonlee/STDO-CVPR2023.git)
-  [note](./2023_03_CVPR_highlight_Towards-High-Quality-and-Efficient-Video-Super-Resolution-via-Spatial-Temporal-Data-Overfitting_Note.md)
-
-  > 对视频分 patch 再按 PSNR 分组再去训练
-  
-- [x] "Expanding Synthetic Real-World Degradations for Blind Video Super Resolution" CVPR, 2023 May
-  [paper](https://arxiv.org/abs/2305.02660)
-
-- [ ] "Mitigating Artifacts in Real-World Video Super-resolution Models" AAAI, 2023 Jun :warning:
-  [paper](https://arxiv.org/abs/2212.07339) [code](https://github.com/TencentARC/FastRealVSR)
-  [note](./2022_12_AAAI_Mitigating-Artifacts-in-Real-World-Video-Super-Resolution-Models_Note.md)
 
 
+## New "Camera"
 
-- [x] "Motion-Guided Latent Diffusion for Temporally Consistent Real-world Video Super-resolution" Arxiv, 2023 Dec, `MGLD-VSR`
-  [paper](http://arxiv.org/abs/2312.00853v1) [code](https://github.com/IanYeung/MGLD-VSR) [note](2023_12_Arxiv_Motion-Guided-Latent-Diffusion-for-Temporally-Consistent-Real-world-Video-Super-resolution_Note.md) [pdf](./2023_12_Arxiv_Motion-Guided-Latent-Diffusion-for-Temporally-Consistent-Real-world-Video-Super-resolution.pdf)
-  Authors: Xi Yang, Chenhang He, Jianqi Ma, Lei Zhang
+### freeform pixel
 
-![image-20240222173628376](docs/2023_12_Arxiv_Motion-Guided-Latent-Diffusion-for-Temporally-Consistent-Real-world-Video-Super-resolution_Note/image-20240222173628376.png)
-
-
-
-- [x] "Upscale-A-Video: Temporal-Consistent Diffusion Model for Real-World Video Super-Resolution" CVPR, 2023 Dec, `Upscale-A-Video`
-  [paper](http://arxiv.org/abs/2312.06640v1) [code](https://github.com/sczhou/Upscale-A-Video) [website](https://shangchenzhou.com/projects/upscale-a-video/) 
-  [note](./2023_12_CVPR_Upscale-A-Video--Temporal-Consistent-Diffusion-Model-for-Real-World-Video-Super-Resolution_Note.md)
-
-![image-20231220135955447](docs/2023_12_CVPR_Upscale-A-Video--Temporal-Consistent-Diffusion-Model-for-Real-World-Video-Super-Resolution_Note/Upscale-A-Video_framework.png)
-
-将整个视频按 8 帧切为各个 clip，模仿 `SD x4 upscaler` 将输入 LR 加噪作为 SD latent space 特征。改造了一下 UNet 加了一点 temporal layer 微调了一下，然后对 z0 对于不同clip 传播一下。更新后的特征输入 VAE decoder 得到 x4 的 HR。这里的 VAE Decoder 加入了 conv3d 微调了一下作为 decoder.
+- "Minimalist Vision with Freeform Pixels" ECCV_bestpaper, 2024 Mar 8
+  [paper](https://www.ecva.net/papers/eccv_2024/papers_ECCV/papers/08113.pdf) [video](https://cave.cs.columbia.edu/old/projects/mincam_2024/videos/ECCV24_mincam.mp4) [web](https://cave.cs.columbia.edu/projects/categories/project?cid=Computational+Imaging&pid=Minimalist+Vision+with+Freeform+Pixels) [pdf](./2024_03_ECCV_bestpaper_Minimalist-Vision-with-Freeform-Pixels.pdf) [note](./2024_03_ECCV_bestpaper_Minimalist-Vision-with-Freeform-Pixels_Note.md)
+  Authors: Caroline Rae, Shree K. Nayar
 
 
 
@@ -2338,6 +2795,32 @@ ControlNet 有学习 dense correspondence 的能力，基于 correspondence 去�
 
 
 
+### ReID
+
+行人重识别
+
+- "Cross-video Identity Correlating for Person Re-identification Pre-training" Arxiv, 2024 Sep
+
+  [paper](https://arxiv.org/pdf/2409.18569v1)
+
+
+
+
+
+## Quantization :cloud_with_lightning:
+
+- "SVDQuant: Absorbing Outliers by Low-Rank Components for 4-Bit Diffusion Models" Arxiv, 2024 Nov 7
+  [paper](http://arxiv.org/abs/2411.05007v2) [code](https://github.com/mit-han-lab/nunchaku.git) [DecomposeCode](https://github.com/mit-han-lab/deepcompressor.git) [pdf](./2024_11_Arxiv_SVDQuant--Absorbing-Outliers-by-Low-Rank-Components-for-4-Bit-Diffusion-Models.pdf) [note](./2024_11_Arxiv_SVDQuant--Absorbing-Outliers-by-Low-Rank-Components-for-4-Bit-Diffusion-Models_Note.md)
+  Authors: Muyang Li, Yujun Lin, Zhekai Zhang, Tianle Cai, Xiuyu Li, Junxian Guo, Enze Xie, Chenlin Meng, Jun-Yan Zhu, Song Han
+
+diffusion 模型轻量化，显存降低 x4 倍
+
+
+
+
+
+
+
 ## feature alignment
 
 > [researcher: Prune Truong](https://prunetruong.com/) working on dense correspondence
@@ -2393,9 +2876,8 @@ ControlNet 有学习 dense correspondence 的能力，基于 correspondence 去�
   > 融合非对齐特征
 
 - [x] "Recurrent Video Restoration Transformer with Guided Deformable Attention" NeurlPS, 2022 June, **RVRT** :statue_of_liberty:
-  [paper](https://arxiv.org/abs/2206.02146) [code](https://github.com/JingyunLiang/RVRT?utm_source=catalyzex.com)
-  [note](./2022_06_NeurIPS_RVRT_Recurrent-Video-Restoration-Transformer-with-Guided-Deformable-Attention_Note.md)
-
+  [paper](https://arxiv.org/abs/2206.02146) [code](https://github.com/JingyunLiang/RVRT?utm_source=catalyzex.com) [note](./2022_06_NeurIPS_RVRT_Recurrent-Video-Restoration-Transformer-with-Guided-Deformable-Attention_Note.md)
+  
 - [ ] "Dual-Camera Super-Resolution with Aligned Attention Modules" ICCV oral, 2021 Sep, DCSR
   [paper](https://arxiv.org/abs/2109.01349) [code](https://github.com/Tengfei-Wang/DCSR)
   [note](./2021_09_ICCV_oral_Dual-Camera-Super-Resolution-with-Aligned-Attention-Modules_Note.md)
@@ -2614,6 +3096,20 @@ ControlNet 有学习 dense correspondence 的能力，基于 correspondence 去�
 
 
 
+- "A visualization method for data domain changes in CNNnetworks andtheoptimization method for selecting thresholds in classificationtasks" CVPRW
+  [paper](https://arxiv.org/pdf/2404.12602v1)
+
+
+
+- "Hyper-Connections" Arxiv, 2024 Sep 29
+  [paper](http://arxiv.org/abs/2409.19606v1) [code]() [pdf](./2024_09_Arxiv_Hyper-Connections.pdf) [note](./2024_09_Arxiv_Hyper-Connections_Note.md)
+  Authors: Defa Zhu, Hongzhi Huang, Zihao Huang, Yutao Zeng, Yunyao Mao, Banggu Wu, Qiyang Min, Xun Zhou (字节豆包)
+
+1. 可以**加速训练**，略微提升一些效果
+2. 分析先前 residual 方法缺陷，推断是 residual 特征没有可学习的强度问题，**提出可以学习的残差，动态连接。**提升训练稳定性直接去用实验验证；**需要把每个 block 的输入，复制 N 份（expansion rate），和 HC Matrix 做相乘。。。expansion rate N=4 才有点效果，资源消耗看起来不小** ，展示的实验都用 fp16 了。。
+
+
+
 
 
 
@@ -2769,6 +3265,21 @@ dk 为 Q,K,V 特征的通道数 or 维度 :star: ，用于做 scaling 的，不�
 
 - [ ] "PVT v2: Improved Baselines with Pyramid Vision Transformer"
   [paper](https://arxiv.org/pdf/2106.13797.pdf)
+
+
+
+
+
+- "RoFormer: Enhanced Transformer with Rotary Position Embedding" Neurocomputing, 2021 Apr 20,`RotaryPositionEmbedding(RoPE)`
+  [paper](http://arxiv.org/abs/2104.09864v4) [code](https://huggingface.co/docs/transformers/model_doc/roformer) [pdf](./2021_04_Neurocomputing_RoFormer--Enhanced-Transformer-with-Rotary-Position-Embedding.pdf) [note](./2021_04_Neurocomputing_RoFormer--Enhanced-Transformer-with-Rotary-Position-Embedding_Note.md)
+  Authors: Jianlin Su, Yu Lu, Shengfeng Pan, Ahmed Murtadha, Bo Wen, Yunfeng Liu
+
+Attention 中使用的相对位置编码使用仿射变换矩阵（旋转矩阵）代替之前直接相加的 sinusoidal pos embedding；具有更好的性质
+
+- 支持可变序列长度
+- 位置偏差越多的两个 token 相关性越小
+- 对 linear-attention 场景添加相对位置编码
+- PS：在短序列上还看不出来，实验 512->1024 序列长度才有明显提升！
 
 
 
@@ -3226,6 +3737,8 @@ $$
 
 
 
+
+
 ## IQA
 
 > :grey_question: what is IQA [CVPR IQA 博客](https://zhuanlan.zhihu.com/p/154017806)
@@ -3235,19 +3748,19 @@ $$
 >   想对某一项视觉任务评估图像能否满足需要，比如针对人脸识别的质量评价，看一幅图像是否应该拒绝还是输入到人脸识别系统中；texture classification；texture retrieval （texture similarity）；texture recovery
 > - 对于图像下游任务：denoising, deblurring, super-resolution, compression，能够提升图像质
 > - Full Reference, No-reference 
+>
+> https://github.com/chaofengc/Awesome-Image-Quality-Assessment
 
 - [x] "Image Quality Assessment: Unifying Structure and Texture Similarity" TPAMI, 2020 Dec, DISTS
   [paper](https://ieeexplore.ieee.org/abstract/document/9298952) [note](./2020_TPAMI_DISTS_Image-Quality-Assessment-Unifying-Structure-and-Texture-Similarity_Note.md)
-  
 
 针对有明显纹理的原图，让模型对 JPEG 压缩后、resample 的图像打分（实际上肉眼看上去 JPEG 更加模糊），之前方法对于 JPEG 图像质量评分错误地高于 resample 图。
 
 
 
 - [x] "Re-IQA: Unsupervised Learning for Image Quality Assessment in the Wild" CVPR, 2023 Apr
-  [paper]()
-  [our noted pdf](./2023_CVPR_Re-IQA-Unsupervised-Learning-for-Image-Quality-Assessment-in-the-Wild.pdf)
-
+  [paper](https://arxiv.org/abs/2304.00451) [pdf](./2023_CVPR_Re-IQA-Unsupervised-Learning-for-Image-Quality-Assessment-in-the-Wild.pdf)
+  
   > 一种 NR-IQA 算法，使用对比学习的方式，使用 2 个 Res50 去学习 content & image-quality-aware features. 最后加一个 regressor 输出 image quality scores.
   > 对于 quality feature 一路，模仿 MoCoV2 ，修改了构造正负样本的方式进行训练。
   >
@@ -3258,7 +3771,7 @@ $$
   > - high-level content representation using MoCoV2
   >
   >   2 crops from same image -> similar scores, but not the case for some human viewers.
-
+  
 - [ ] "Half of an image is enough for quality assessment"
 
 - [ ] "MaxVQA"
@@ -4398,7 +4911,7 @@ Diffusion 特征点匹配, Dense correspondence
 
 > 24.06.06
 
-- "MOFA-Video: Controllable Image Animation via Generative Motion Field Adaptions in Frozen Image-to-Video Diffusion Model" Arxiv, 2024 May 30
+- "MOFA-Video: Controllable Image Animation via Generative Motion Field Adaptions in Frozen Image-to-Video Diffusion Model" ECCV, 2024 May 30
   [paper](http://arxiv.org/abs/2405.20222v2) [code](https://myniuuu.github.io/MOFA_Video/) [pdf](./2024_05_Arxiv_MOFA-Video--Controllable-Image-Animation-via-Generative-Motion-Field-Adaptions-in-Frozen-Image-to-Video-Diffusion-Model.pdf) [note](./2024_05_Arxiv_MOFA-Video--Controllable-Image-Animation-via-Generative-Motion-Field-Adaptions-in-Frozen-Image-to-Video-Diffusion-Model_Note.md)
   Authors: Muyao Niu, Xiaodong Cun, Xintao Wang, Yong Zhang, Ying Shan, Yinqiang Zheng
 - "ZeroSmooth: Training-free Diffuser Adaptation for High Frame Rate Video Generation"
@@ -4661,14 +5174,251 @@ Backbone
 
 predict camera pose
 
-- "BlazeBVD: Make Scale-Time Equalization Great Again for Blind Video Deflickering" Arxiv, 2024 Mar 10
-  [paper](http://arxiv.org/abs/2403.06243v1) [code]() [pdf](./2024_03_Arxiv_BlazeBVD--Make-Scale-Time-Equalization-Great-Again-for-Blind-Video-Deflickering.pdf) [note](./2024_03_Arxiv_BlazeBVD--Make-Scale-Time-Equalization-Great-Again-for-Blind-Video-Deflickering_Note.md)
-  Authors: Xinmin Qiu, Congying Han, Zicheng Zhang, Bonan Li, Tiande Guo, Pingyu Wang, Xuecheng Nie
 - "LightenDiffusion: Unsupervised Low-Light Image Enhancement with Latent-Retinex Diffusion Models" Arxiv, 2024 Jul 12
   [paper](http://arxiv.org/abs/2407.08939v1) [code](https://github.com/JianghaiSCU/LightenDiffusion.) [pdf](./2024_07_Arxiv_LightenDiffusion--Unsupervised-Low-Light-Image-Enhancement-with-Latent-Retinex-Diffusion-Models.pdf) [note](./2024_07_Arxiv_LightenDiffusion--Unsupervised-Low-Light-Image-Enhancement-with-Latent-Retinex-Diffusion-Models_Note.md)
   Authors: Hai Jiang, Ao Luo, Xiaohong Liu, Songchen Han, Shuaicheng Liu
 
+Video restore
 
+- "HyperColorization: Propagating spatially sparse noisy spectral clues for reconstructing hyperspectral images" OpticsExpress, 2024 Mar 18
+  [paper](http://arxiv.org/abs/2403.11935v1) [code]() [pdf](./2024_03_OpticsExpress_HyperColorization--Propagating-spatially-sparse-noisy-spectral-clues-for-reconstructing-hyperspectral-images.pdf) [note](./2024_03_OpticsExpress_HyperColorization--Propagating-spatially-sparse-noisy-spectral-clues-for-reconstructing-hyperspectral-images_Note.md)
+  Authors: M. Kerem Aydin, Qi Guo, Emma Alexander
+- "BlazeBVD: Make Scale-Time Equalization Great Again for Blind Video Deflickering" Arxiv, 2024 Mar 10
+  [paper](http://arxiv.org/abs/2403.06243v1) [code]() [pdf](./2024_03_Arxiv_BlazeBVD--Make-Scale-Time-Equalization-Great-Again-for-Blind-Video-Deflickering.pdf) [note](./2024_03_Arxiv_BlazeBVD--Make-Scale-Time-Equalization-Great-Again-for-Blind-Video-Deflickering_Note.md)
+  Authors: Xinmin Qiu, Congying Han, Zicheng Zhang, Bonan Li, Tiande Guo, Pingyu Wang, Xuecheng Nie
+- "Semantic Lens: Instance-Centric Semantic Alignment for Video Super-Resolution" AAAI, 2023 Dec 13
+  [paper](http://arxiv.org/abs/2312.07823v4) [code]() [pdf](./2023_12_AAAI_Semantic-Lens--Instance-Centric-Semantic-Alignment-for-Video-Super-Resolution.pdf) [note](./2023_12_AAAI_Semantic-Lens--Instance-Centric-Semantic-Alignment-for-Video-Super-Resolution_Note.md)
+  Authors: Qi Tang, Yao Zhao, Meiqin Liu, Jian Jin, Chao Yao
+- "Video Colorization Based on Variational Autoencoder" mdpi, 2024 May 16
+  [paper](https://www.mdpi.com/2079-9292/13/12/2412) [code]() [pdf](./2024_05_mdpi_Video-Colorization-Based-on-Variational-Autoencoder.pdf) [note](./2024_05_mdpi_Video-Colorization-Based-on-Variational-Autoencoder_Note.md)
+  Authors: Guangzi Zhang
+
+- 2024_05_HeritageScience_Scratch-detection-of-archival-flms--modeling-and-trajectory-calculation_Note.md
+
+- "Reference-based Video Colorization with AB Chrominance Point and Temporal Propagation" ICML, 2024 Jun 7
+  [paper](https://dl.acm.org/doi/abs/10.1145/3651671.3651767) [code]() [pdf](./2024_06_ICML_Reference-based-Video-Colorization-with-AB-Chrominance-Point-and-Temporal-Propagation.pdf) [note](./2024_06_ICML_Reference-based-Video-Colorization-with-AB-Chrominance-Point-and-Temporal-Propagation_Note.md)
+  Authors: Yizhang Yang
+
+- "CatVTON: Concatenation Is All You Need for Virtual Try-On with Diffusion Models" Arxiv, 2024 Jul 21
+  [paper](http://arxiv.org/abs/2407.15886v1) [code]() [pdf](./2024_07_Arxiv_CatVTON--Concatenation-Is-All-You-Need-for-Virtual-Try-On-with-Diffusion-Models.pdf) [note](./2024_07_Arxiv_CatVTON--Concatenation-Is-All-You-Need-for-Virtual-Try-On-with-Diffusion-Models_Note.md)
+  Authors: Zheng Chong, Xiao Dong, Haoxiang Li, Shiyue Zhang, Wenqing Zhang, Xujie Zhang, Hanqing Zhao, Xiaodan Liang
+
+Diffusion Finding
+
+- "Artist: Aesthetically Controllable Text-Driven Stylization without Training" Arxiv, 2024 Jul 22
+  [paper](http://arxiv.org/abs/2407.15842v1) [code](https://DiffusionArtist.github.io) [pdf](./2024_07_Arxiv_Artist--Aesthetically-Controllable-Text-Driven-Stylization-without-Training.pdf) [note](./2024_07_Arxiv_Artist--Aesthetically-Controllable-Text-Driven-Stylization-without-Training_Note.md)
+  Authors: Ruixiang Jiang, Changwen Chen
+
+
+
+Diffusion weights space like StyleGAN  :star:
+
+纹理修复
+
+- "Concept Sliders: LoRA Adaptors for Precise Control in Diffusion Models" Arxiv, 2023 Nov 20 :star:
+  [paper](http://arxiv.org/abs/2311.12092v2) [web](https://sliders.baulab.info/) [code](https://github.com/rohitgandikota/sliders) [pdf](./2023_11_Arxiv_Concept-Sliders--LoRA-Adaptors-for-Precise-Control-in-Diffusion-Models.pdf) [note](./2023_11_Arxiv_Concept-Sliders--LoRA-Adaptors-for-Precise-Control-in-Diffusion-Models_Note.md)
+  Authors: Rohit Gandikota, Joanna Materzynska, Tingrui Zhou, Antonio Torralba, David Bau
+- "Interpreting the Weight Space of Customized Diffusion Models" Arxiv, 2024 Jun 13
+  [paper](http://arxiv.org/abs/2406.09413v2) [code]() [pdf](./2024_06_Arxiv_Interpreting-the-Weight-Space-of-Customized-Diffusion-Models.pdf) [note](./2024_06_Arxiv_Interpreting-the-Weight-Space-of-Customized-Diffusion-Models_Note.md)
+  Authors: Amil Dravid, Yossi Gandelsman, Kuan-Chieh Wang, Rameen Abdal, Gordon Wetzstein, Alexei A. Efros, Kfir Aberman
+
+Mamba 融合 SAM
+
+- "Mamba or RWKV: Exploring High-Quality and High-Efficiency Segment Anything Model"
+  https://arxiv.org/pdf/2406.19369v1
+
+> MBConv blocks, and the third uses the VRWKV blocks
+
+无限超分
+
+- **∞-Diff: Infinite Resolution Diffusion with Subsampled Mollified States**
+
+- "AVID: Any-Length Video Inpainting with Diffusion Model" CVPR, 2023 Dec 6
+  [paper](http://arxiv.org/abs/2312.03816v3) [code](https://zhang-zx.github.io/AVID/) [pdf](./2023_12_CVPR_AVID--Any-Length-Video-Inpainting-with-Diffusion-Model.pdf) [note](./2023_12_CVPR_AVID--Any-Length-Video-Inpainting-with-Diffusion-Model_Note.md)
+  Authors: Zhixing Zhang, Bichen Wu, Xiaoyan Wang, Yaqiao Luo, Luxin Zhang, Yinan Zhao, Peter Vajda, Dimitris Metaxas, Licheng Yu
+
+- "Hierarchical Patch Diffusion Models for High-Resolution Video Generation" CVPR, 2024 Jun 12
+  [paper](http://arxiv.org/abs/2406.07792v1) [code](https://snap-research.github.io/hpdm.) [pdf](./2024_06_CVPR_Hierarchical-Patch-Diffusion-Models-for-High-Resolution-Video-Generation.pdf) [note](./2024_06_CVPR_Hierarchical-Patch-Diffusion-Models-for-High-Resolution-Video-Generation_Note.md)
+  Authors: Ivan Skorokhodov, Willi Menapace, Aliaksandr Siarohin, Sergey Tulyakov
+
+- "TCAN: Animating Human Images with Temporally Consistent Pose"
+
+引入人体骨架，缓解生成人体垃圾的问题
+
+
+
+- "Kalman-Inspired Feature Propagation for Video Face Super-Resolution" Arxiv, 2024 Aug 9
+  [paper](http://arxiv.org/abs/2408.05205v1) [code](https://jnjaby.github.io/projects/KEEP.) [pdf](./2024_08_Arxiv_Kalman-Inspired-Feature-Propagation-for-Video-Face-Super-Resolution.pdf) [note](./2024_08_Arxiv_Kalman-Inspired-Feature-Propagation-for-Video-Face-Super-Resolution_Note.md)
+  Authors: Ruicheng Feng, Chongyi Li, Chen Change Loy
+
+替代光流传播！
+
+
+
+- "SC4D: Sparse-Controlled Video-to-4D Generation and Motion Transfer" 
+  [paper](https://arxiv.org/pdf/2404.03736v2)
+
+> All experiments are conducted on a single Tesla V100 GPU with 32 GB of graphics memory.
+
+
+
+- "Not All Noises Are Created Equally:Diffusion Noise Selection and Optimization" Arxiv, 2024 Jul 19
+  [paper](http://arxiv.org/abs/2407.14041v1) [code]() [pdf](./2024_07_Arxiv_Not-All-Noises-Are-Created-Equally-Diffusion-Noise-Selection-and-Optimization.pdf) [note](./2024_07_Arxiv_Not-All-Noises-Are-Created-Equally-Diffusion-Noise-Selection-and-Optimization_Note.md)
+  Authors: Zipeng Qi, Lichen Bai, Haoyi Xiong, and Zeke Xie
+
+
+
+**DeepSeed**
+
+> accelerate doc
+>
+> https://huggingface.co/docs/accelerate/usage_guides/deepspeed
+
+- "ZeRO: Memory Optimizations Toward Training Trillion Parameter Models" ICHPC, 2019 Oct 4
+  [paper](http://arxiv.org/abs/1910.02054v3) [code]() [pdf](./2019_10_ICHPC_ZeRO--Memory-Optimizations-Toward-Training-Trillion-Parameter-Models.pdf) [note](./2019_10_ICHPC_ZeRO--Memory-Optimizations-Toward-Training-Trillion-Parameter-Models_Note.md)
+  Authors: Samyam Rajbhandari, Jeff Rasley, Olatunji Ruwase, Yuxiong He
+- "ZeRO-Offload: Democratizing Billion-Scale Model Training" USENIX, 2021 Jan 18
+  [paper](http://arxiv.org/abs/2101.06840v1) [code]() [pdf](./2021_01_USENIX_ZeRO-Offload--Democratizing-Billion-Scale-Model-Training.pdf) [note](./2021_01_USENIX_ZeRO-Offload--Democratizing-Billion-Scale-Model-Training_Note.md)
+  Authors: Jie Ren, Samyam Rajbhandari, Reza Yazdani Aminabadi, Olatunji Ruwase, Shuangyan Yang, Minjia Zhang, Dong Li, Yuxiong He
+- "ZeRO-Infinity: Breaking the GPU Memory Wall for Extreme Scale Deep Learning" ICHPC, 2021 Apr 16
+  [paper](http://arxiv.org/abs/2104.07857v1) [code]() [pdf](./2021_04_ICHPC_ZeRO-Infinity--Breaking-the-GPU-Memory-Wall-for-Extreme-Scale-Deep-Learning.pdf) [note](./2021_04_ICHPC_ZeRO-Infinity--Breaking-the-GPU-Memory-Wall-for-Extreme-Scale-Deep-Learning_Note.md)
+  Authors: Samyam Rajbhandari, Olatunji Ruwase, Jeff Rasley, Shaden Smith, Yuxiong He
+
+
+
+24.09.03
+
+- "ControlNeXt: Powerful and Efficient Control for Image and Video Generation" Arxiv, 2024 Aug 12
+[paper](http://arxiv.org/abs/2408.06070v2) [code]() [pdf](./2024_08_Arxiv_ControlNeXt--Powerful-and-Efficient-Control-for-Image-and-Video-Generation.pdf) [note](./2024_08_Arxiv_ControlNeXt--Powerful-and-Efficient-Control-for-Image-and-Video-Generation_Note.md)
+Authors: Bohao Peng, Jian Wang, Yuechen Zhang, Wenbo Li, Ming-Chang Yang, Jiaya Jia
+
+
+
+- Follow-Your-Canvas: Higher-Resolution Video Outpainting with Extensive Content Generation
+
+- SOLVING VIDEO INVERSE PROBLEMS USING IMAGE DIFFUSION MODELS
+  [web](https://solving-video-inverse.github.io/main/)
+
+
+
+- "Sapiens: Foundation for Human Vision Models"
+
+提取深度信息
+
+- "PuLID: Pure and Lightning ID Customization via Contrastive Alignment"
+  [paper](https://arxiv.org/pdf/2404.16022v1)
+
+1. ID 怎么融合
+2. 对比学习 loss
+3. ID weight 实现控制程度？
+
+
+
+- "Enhanced Control for Diffusion Bridge in Image Restoration" Arxiv, 2024 Aug 29
+  [paper](http://arxiv.org/abs/2408.16303v1) [code](https://github.com/Hammour-steak/ECDB.) [pdf](./2024_08_Arxiv_Enhanced-Control-for-Diffusion-Bridge-in-Image-Restoration.pdf) [note](./2024_08_Arxiv_Enhanced-Control-for-Diffusion-Bridge-in-Image-Restoration_Note.md)
+  Authors: Conghan Yue, Zhengwei Peng, Junlong Ma, Dongyu Zhang
+  
+- LVCD: Reference-based Lineart Video Colorization with Diffusion Models
+
+- "OmniGen: Unified Image Generation"
+
+  [paper](https://arxiv.org/pdf/2409.11340v1)
+
+
+
+**240925**
+
+- "Repurposing Diffusion-Based Image Generators for Monocular Depth Estimation" CVPR-oral, 2023 Dec 4, `Marigold`
+  [paper](http://arxiv.org/abs/2312.02145v2) [code](https://github.com/prs-eth/Marigold) [web](https://marigoldmonodepth.github.io) [pdf](./2023_12_CVPR-oral_Repurposing-Diffusion-Based-Image-Generators-for-Monocular-Depth-Estimation.pdf) [note](./2023_12_CVPR_Repurposing-Diffusion-Based-Image-Generators-for-Monocular-Depth-Estimation_Note.md)
+  Authors: Bingxin Ke, Anton Obukhov, Shengyu Huang, Nando Metzger, Rodrigo Caye Daudt, Konrad Schindler
+- "Fine-Tuning Image-Conditional Diffusion Models is Easier than You Think" Arxiv, 2024 Sep 17
+  [paper](http://arxiv.org/abs/2409.11355v1) [code]() [pdf](./2024_09_Arxiv_Fine-Tuning-Image-Conditional-Diffusion-Models-is-Easier-than-You-Think.pdf) [note](./2024_09_Arxiv_Fine-Tuning-Image-Conditional-Diffusion-Models-is-Easier-than-You-Think_Note.md)
+  Authors: Gonzalo Martin Garcia, Karim Abou Zeid, Christian Schmidt, Daan de Geus, Alexander Hermans, Bastian Leibe
+
+diffusion depth estimator
+
+
+
+- "StoryMaker: Towards Holistic Consistent Characters in Text-to-image Generation" 
+  [paper](https://arxiv.org/abs/2409.12576v1)
+
+关注下怎么做 attn loss?? 用于 diffusion 训练
+
+- "Oryx MLLM: On-Demand Spatial-Temporal Understanding at Arbitrary Resolution" Arxiv, 2024 Sep 19
+  [paper](http://arxiv.org/abs/2409.12961v1) [code](https://github.com/Oryx-mllm/Oryx) [web](https://github.com/Oryx-mllm/Oryx) [pdf](./2024_09_Arxiv_Oryx-MLLM--On-Demand-Spatial-Temporal-Understanding-at-Arbitrary-Resolution.pdf) [note](./2024_09_Arxiv_Oryx-MLLM--On-Demand-Spatial-Temporal-Understanding-at-Arbitrary-Resolution_Note.md)
+  Authors: Zuyan Liu, Yuhao Dong, Ziwei Liu, Winston Hu, Jiwen Lu, Yongming Rao
+
+video caption
+
+
+
+
+
+- "Breaking reCAPTCHAv2" COMPSAC, 2024 Sep 13
+  [paper](http://arxiv.org/abs/2409.08831v1) [code](https://github.com/aplesner/Breaking-reCAPTCHAv2) [pdf](./2024_09_COMPSAC_Breaking-reCAPTCHAv2.pdf) [note](./2024_09_COMPSAC_Breaking-reCAPTCHAv2_Note.md)
+  Authors: Andreas Plesner, Tobias Vontobel, Roger Wattenhofer (ETH)
+
+1. 用现有算法解决 google bot test 的实验报告；对于 Type2 给一张图选含有物体的 patch：**直接用 YoloV8 得到分割图，去各个 patch 检查重叠；**
+2. Bezier Curve 模拟鼠标自然轨迹，能减少 google 识别为 bot 概率 :joy:
+
+
+
+- "Colorful Diffuse Intrinsic Image Decomposition in the Wild" Arxiv, 2024 Sep 20
+  [paper](http://arxiv.org/abs/2409.13690v1) [code]() [pdf](./2024_09_Arxiv_Colorful-Diffuse-Intrinsic-Image-Decomposition-in-the-Wild.pdf) [note](./2024_09_Arxiv_Colorful-Diffuse-Intrinsic-Image-Decomposition-in-the-Wild_Note.md)
+  Authors: Chris Careaga, Yağız Aksoy
+- "Beyond FVD: Enhanced Evaluation Metrics for Video Generation Quality"
+
+
+
+24.10.08
+
+- "Controllable Image Generation with Autoregressive Models"
+- "Depth Pro: Sharp Monocular Metric Depth in Less Than a Second" By Apple
+  [paper](https://arxiv.org/abs/2410.02073v1)
+- "LVCD: Reference-based Lineart Video Colorization with Diffusion Models" SIGGRAPH, 2024 Sep 19
+  [paper](http://arxiv.org/abs/2409.12960v1) [code](https://github.com/luckyhzt/LVCD) [pdf](./2024_09_SIGGRAPH_LVCD--Reference-based-Lineart-Video-Colorization-with-Diffusion-Models.pdf) [note](./2024_09_SIGGRAPH_LVCD--Reference-based-Lineart-Video-Colorization-with-Diffusion-Models_Note.md)
+  Authors: Zhitong Huang, Mohan Zhang, Jing Liao
+
+看下 T 上的相对位置编码咋搞？
+
+
+
+- "Minimalist Vision with Freeform Pixels" ECCV_bestpaper, 2024 Mar 8
+  [paper](https://www.ecva.net/papers/eccv_2024/papers_ECCV/papers/08113.pdf) [video](https://cave.cs.columbia.edu/old/projects/mincam_2024/videos/ECCV24_mincam.mp4) [web](https://cave.cs.columbia.edu/projects/categories/project?cid=Computational+Imaging&pid=Minimalist+Vision+with+Freeform+Pixels) [pdf](./2024_03_ECCV_bestpaper_Minimalist-Vision-with-Freeform-Pixels.pdf) [note](./2024_03_ECCV_bestpaper_Minimalist-Vision-with-Freeform-Pixels_Note.md)
+  Authors: Caroline Rae, Shree K. Nayar
+- "Towards World Simulator: Crafting Physical Commonsense-Based Benchmark for Video Generation" 
+  [paper](https://arxiv.org/pdf/2410.05363v1)
+
+
+
+- "NaRCan: Natural Refined Canonical Image with Integration of Diffusion Prior for Video Editing" 
+  [paper](https://arxiv.org/pdf/2406.06523v1)
+
+使用深度信息去合成新视角图像
+
+
+
+- "SAM2Long: Enhancing SAM 2 for Long Video Segmentation with a Training-Free Memory Tree" Arxiv, 2024 Oct 21
+  [paper](http://arxiv.org/abs/2410.16268v1) [code](https://github.com/Mark12Ding/SAM2Long) [pdf](./2024_10_Arxiv_SAM2Long--Enhancing-SAM-2-for-Long-Video-Segmentation-with-a-Training-Free-Memory-Tree.pdf) [note](./2024_10_Arxiv_SAM2Long--Enhancing-SAM-2-for-Long-Video-Segmentation-with-a-Training-Free-Memory-Tree_Note.md)
+  Authors: Shuangrui Ding, Rui Qian, Xiaoyi Dong, Pan Zhang, Yuhang Zang, Yuhang Cao, Yuwei Guo, Dahua Lin, Jiaqi Wang
+
+视频物体分割，参考一下 memory tree
+
+
+
+- "Lumiere: A Space-Time Diffusion Model for Video Generation" Arxiv, 2024 Jan 23
+  [paper](http://arxiv.org/abs/2401.12945v2) [code](https://lumiere-video.github.io/) [pdf](./2024_01_Arxiv_Lumiere--A-Space-Time-Diffusion-Model-for-Video-Generation.pdf) [note](./2024_01_Arxiv_Lumiere--A-Space-Time-Diffusion-Model-for-Video-Generation_Note.md)
+  Authors: Omer Bar-Tal, Hila Chefer, Omer Tov, Charles Herrmann, Roni Paiss, Shiran Zada, Ariel Ephrat, Junhwa Hur, Guanghui Liu, Amit Raj, Yuanzhen Li, Michael Rubinstein, Tomer Michaeli, Oliver Wang, Deqing Sun, Tali Dekel, Inbar Mosseri
+
+一次生成所有 T 帧，UNet 对 Temporal 和 spatial 都做 downsample 和upsample，加 1D temporal Conv 和 1D attn（只在最小的 scale 做 attn）；只有 user study SOTA 很勉强 & 需要 T 帧一次生成，**显存要求很高（文章没说用啥训的）**
+
+
+
+
+
+- "IN-CONTEXT LORA FOR DIFFUSION TRANSFORMERS"
+
+能生成 film story 4K 宽屏图像
 
 
 
@@ -4747,12 +5497,33 @@ predict camera pose
 
 3. 主线方向，和视频相关方向都要看，只不过要学会某些进行略读。不要局限于技术细节，识别哪些可以暂时跳过，记录下来后面看。
 
+
+
 ## Low-level All-stars
 
 - [Chao Dong](https://scholar.google.com/citations?hl=zh-CN&user=FQgZpQoAAAAJ&view_op=list_works&sortby=pubdate) 中科大
 - [Xintao Wang](https://scholar.google.com/citations?hl=zh-CN&user=OSDCB0UAAAAJ&view_op=list_works&sortby=pubdate) Kuaishou
 - [Chen Change Loy](https://scholar.google.com/citations?user=559LF80AAAAJ&hl=zh-CN&oi=ao) NTU
 - [Zhangkai NI](https://scholar.google.com/citations?hl=zh-CN&user=68IcrE4AAAAJ&view_op=list_works&sortby=pubdate) TJ
+
+- lujianqing，zhangmingxuan，chengqifeng， zhenglei 老师：low level
+- [Daniel Cohen-Or](https://danielcohenor.com/publications/)
+
+
+
+### 3D
+
+- Jia-Bin Huang, Meta & `University of Maryland, College Park`
+
+  https://jbhuang0604.github.io/
+
+PHD 能去 meta, adobe 实习
+
+> 1. https://texturedreamer.github.io/
+
+
+
+
 
 
 
@@ -5062,6 +5833,3 @@ predict camera pose
 >   The ultimate goal is to reproduce all of the artifacts described here https://bavc.github.io/avaa/tags.html#video :star: >> Video artifact 社区标准
 >
 >   - [How to compile using Makefile.am](https://www.baeldung.com/linux/makefile-am-vs-in)
->
-
-v	ba

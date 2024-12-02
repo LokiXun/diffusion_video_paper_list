@@ -31,7 +31,9 @@ RealOld 200个老照片，**有 Expert 修复过的 GT！**
 
 
 
-- "MLRN: A multi-view local reconstruction network for single image restoration"
+
+
+- "MLRN: A multi-view local reconstruction network for single image restoration" IPM, 2024 May
   [paper](https://www.sciencedirect.com/science/article/pii/S0306457324000608)
 
 
@@ -49,43 +51,105 @@ RealOld 200个老照片，**有 Expert 修复过的 GT！**
 
 
 
-## Old film restoration
-
-- "DeOldify" open-sourced toolbox to restore image and video
-  [code](https://github.com/jantic/DeOldify)
-
-strong baseline in multi papers
 
 
+### scratch detect
+
+- "Scratch detection of archival films: modeling and trajectory calculation"
+  [paper](https://link.springer.com/content/pdf/10.1186/s40494-023-01119-8.pdf)
+
+
+
+
+
+## Old film restoration :star:
+
+- Q：补充哪些数据集？
+
+TODO
+
+
+
+- Q：测试哪些方法？
+
+算法
+
+```
+DeOldify, DeepRemaster(SIGGRAPH2019), [BasicVSR++(CVPR2021),] RTN(CVPR2022), RVRT(NIPS2022), TAPE(WACV2023), RRTN(WACV2024), 
+DeepEnhancer(ICMR2024) 测试灰度图
+```
+
+商用软件自动修复
+
+- DeOldify
+
+- MTI https://mtifilm.com/software/drs-nova/
+
+  - Cortex
+
+  > 展示的视频仍然有噪声 Watch a full before/after video
+  
+- VIVA pro https://algosoft-tech.com/pro
+
+  ```
+  https://www.youtube.com/watch?v=x4JjFFiCn9I
+  ```
+
+- DIAMANT
+
+手工（GT）修复 1-2 个
+
+```
+TODO: 联系袁哥
+```
+
+
+
+
+
+### related work
 
 - "DeepRemaster: Temporal Source-Reference Attention Networks for Comprehensive Video Enhancement" SIGGRAPH, 2019 Nov :statue_of_liberty:
   [paper](https://arxiv.org/abs/2009.08692) [website](http://iizuka.cs.tsukuba.ac.jp/projects/remastering/en/index.html) [note](./2019_SIGGRAPH_DeepRemaster-Temporal-Source-Reference-Attention-Networks-for-Comprehensive-Video-Enhancement_Note.md)
 
 
 
-- "Bringing Old Films Back to Life" CVPR, 2022 Mar :statue_of_liberty:
-  [paper](https://arxiv.org/abs/2203.17276) [code](https://github.com/raywzy/Bringing-Old-Films-Back-to-Life) [website](http://raywzy.com/Old_Film/) [note](./2022_CVPR_Bringing-Old-Films-Back-to-Life_Note.md)
+- "BasicVSR++: Improving video super-resolution with enhanced propagation and alignment" CVPR, 2021 Apr 🗿 
+  [paper](https://arxiv.org/abs/2104.13371) [code](https://github.com/open-mmlab/mmagic/blob/main/configs/basicvsr_pp/README.md) [note](./2021_04_CVPR_BasicVSR++--Improving-Video-Super-Resolution-with-Enhanced-Propagation-and-Alignment_Note.md)
 
 
 
-- "Blind Video Deflickering by Neural Filtering with a Flawed Atlas" CVPR, 2023 Mar, `NFFA`,:statue_of_liberty:
-  [paper](https://arxiv.org/abs/2303.08120) [code](https://github.com/ChenyangLEI/All-In-One-Deflicker?utm_source=catalyzex.com) [website](https://chenyanglei.github.io/deflicker/) [note](./2023_05_CVPR_Blind-Video-Deflickering-by-Neural-Filtering-with-a-Flawed-Atlas_Note.md)
-
-**用 Nerf 类似的 atlas 处理视频一致性问题**
-
-有公布数据  <a name="Blind flickering Dataset"></a> 60 * old_movie, 大多为 350 帧图像; 21* old_cartoon, 大多为 50-100 帧;
-用 [RE:VISION. De:flicker](https://revisionfx.com/products/deflicker/) 去用软件人工修复（存在新手修的质量差的问题）
+- "Bringing Old Films Back to Life" CVPR, 2022 Mar 31, `RTN` :fire:
+  [paper](http://arxiv.org/abs/2203.17276v1) [code](https://github.com/raywzy/Bringing-Old-Films-Back-to-Life) [website](http://raywzy.com/Old_Film/) [pdf](./2022_03_CVPR_Bringing-Old-Films-Back-to-Life.pdf) [note](./2022_03_CVPR_Bringing-Old-Films-Back-to-Life_Note.md)
+  Authors: Ziyu Wan, Bo Zhang, Dongdong Chen, Jing Liao
 
 
 
-- "Restoring Degraded Old Films with Recursive Recurrent Transformer Networks" WACV, 2024
-  [paper](https://openaccess.thecvf.com/content/WACV2024/papers/Lin_Restoring_Degraded_Old_Films_With_Recursive_Recurrent_Transformer_Networks_WACV_2024_paper.pdf) [code](https://github.com/mountln/RRTN-old-film-restoration) [pdf](2024_01_WACV_Restoring_Degraded_Old_Films_With_Recursive_Recurrent_Transformer_Networks.pdf)
+- "Recurrent Video Restoration Transformer with Guided Deformable Attention" NeurlPS, 2022 June, **RVRT** :statue_of_liberty:
+  [paper](https://arxiv.org/abs/2206.02146) [code](https://github.com/JingyunLiang/RVRT?utm_source=catalyzex.com) [note](./2022_06_NeurIPS_RVRT_Recurrent-Video-Restoration-Transformer-with-Guided-Deformable-Attention_Note.md)
+
+
+
+- "Reference-based Restoration of Digitized Analog Videotapes" WACV, 2023 Oct, TAPE  :star:
+  [paper](http://arxiv.org/abs/2310.14926v2) [code](https://github.com/miccunifi/TAPE) [note](./2023_10_WACV_Reference-based-Restoration-of-Digitized-Analog-Videotapes_Note.md) Authors: Lorenzo Agnolucci, Leonardo Galteri, Marco Bertini, Alberto Del Bimbo
+
+VHS 修复，可训练
+
+
+
+- "Restoring Degraded Old Films With Recursive Recurrent Transformer Networks" WACV, 2024 Jan 3, `RRTN` :star:
+  [paper](https://openaccess.thecvf.com/content/WACV2024/html/Lin_Restoring_Degraded_Old_Films_With_Recursive_Recurrent_Transformer_Networks_WACV_2024_paper.html) [code](https://github.com/mountln/RRTN-old-film-restoration) [pdf](./2024_01_WACV_Restoring-Degraded-Old-Films-With-Recursive-Recurrent-Transformer-Networks.pdf) [note](./2024_01_WACV_Restoring-Degraded-Old-Films-With-Recursive-Recurrent-Transformer-Networks_Note.md)
+  Authors: Shan Lin,  Edgar Simo-Serra
+
+可训练
 
 
 
 - "Unsupervised Model-Based Learning for Simultaneous Video Deflickering and Deblotching" WACV, 2024, `LFISTA`
 
   [paper](https://openaccess.thecvf.com/content/WACV2024/papers/Fulari_Unsupervised_Model-Based_Learning_for_Simultaneous_Video_Deflickering_and_Deblotching_WACV_2024_paper.pdf) [pdf](2024_01_WACV_Unsupervised_Model-Based_Learning_for_Simultaneous_Video_Deflickering_and_Deblotching.pdf)
+
+无代码
 
 ![LFISTA_overview.png](docs/survey_old_film_restoration/LFISTA_overview.png)
 
@@ -97,13 +161,92 @@ strong baseline in multi papers
 
 
 
-- "Restoring Degraded Old Films with Recursive Recurrent Transformer Networks" WACV, 2024 
-  [paper](https://openaccess.thecvf.com/content/WACV2024/papers/Lin_Restoring_Degraded_Old_Films_With_Recursive_Recurrent_Transformer_Networks_WACV_2024_paper.pdf) [code](https://github.com/mountln/RRTN-old-film-restoration) [pdf](2024_01_WACV_Restoring_Degraded_Old_Films_With_Recursive_Recurrent_Transformer_Networks.pdf)
+- "DeepEnhancer: Temporally Consistent Focal Transformer for Comprehensive Video Enhancement" ICMR, 2024 Jun 07
+
+[paper](https://dl.acm.org/doi/pdf/10.1145/3652583.3658031) [code](https://github.com/jiangqin567/DeepEnhancer/issues/1) [pdf](./2024_ICMR_DeepEnhancer.pdf)
+
+参考本文的 related work 做实验！ :star: 无训练 code，但有灰度修复的模型！
+
+![DeepEnhancer](docs/survey_old_film_restoration/DeepEnhancer.png)
 
 
 
-- "Scratch detection of archival films: modeling and trajectory calculation"
-  [paper](https://link.springer.com/content/pdf/10.1186/s40494-023-01119-8.pdf)
+
+
+### commercial software :zap:
+
+- "DeOldify" open-sourced toolbox to restore image and video
+  [code](https://github.com/jantic/DeOldify)
+
+strong baseline in multi papers
+
+
+
+
+
+### Color
+
+- "ColorMNet: A Memory-based Deep Spatial-Temporal Feature Propagation Network for Video Colorization" 2404
+
+https://arxiv.org/pdf/2404.06251
+
+
+
+
+
+- [Video Colorization Based on Variational Autoencoder](https://www.mdpi.com/2079-9292/13/12/2412), "Electronics"  **16 May 2024**
+
+
+
+- [HyperColorization: propagating spatially sparse noisy spectral clues for reconstructing hyperspectral images](https://opg.optica.org/abstract.cfm?uri=oe-32-7-10761)
+
+
+
+
+
+### flickering
+
+- "Blind Video Deflickering by Neural Filtering with a Flawed Atlas" CVPR, 2023 Mar, `NFFA`,:statue_of_liberty:
+  [paper](https://arxiv.org/abs/2303.08120) [code](https://github.com/ChenyangLEI/All-In-One-Deflicker?utm_source=catalyzex.com) [website](https://chenyanglei.github.io/deflicker/) [note](./2023_05_CVPR_Blind-Video-Deflickering-by-Neural-Filtering-with-a-Flawed-Atlas_Note.md)
+
+**用 Nerf 类似的 atlas 处理视频一致性问题**
+
+有公布数据  <a name="Blind flickering Dataset"></a> 60 * old_movie, 大多为 350 帧图像; 21* old_cartoon, 大多为 50-100 帧;
+用 [RE:VISION. De:flicker](https://revisionfx.com/products/deflicker/) 去用软件人工修复（存在新手修的质量差的问题）
+
+
+
+- [BlazeBVD: Make Scale-Time Equalization Great Again for Blind Video Deflickering](https://arxiv.org/abs/2403.06243)
+
+
+
+
+
+### metrics
+
+> [survey_IQA.md](./survey_IQA.md)
+
+- Q：展示哪些 metrics?
+
+reference
+
+```
+PSNR↑ SSIM↑ LPIPS  DISTS
+```
+
+No-reference
+
+```
+BRISQUE↓ NIQE
+```
+
+video temporal consistency
+
+```
+
+```
+
+
 
 
 
@@ -114,16 +257,20 @@ strong baseline in multi papers
 
 
 
+
+
+
+
 ## VHS
 
 > analog video restoration
 
-- "BasicVSR++: Improving video super-resolution with enhanced propagation and alignment" CVPR, 2021 Apr 🗿 
-  [paper](https://arxiv.org/abs/2104.13371) [code](https://github.com/open-mmlab/mmagic/blob/main/configs/basicvsr_pp/README.md) [note](./2021_04_CVPR_BasicVSR++--Improving-Video-Super-Resolution-with-Enhanced-Propagation-and-Alignment_Note.md)
--  "Memory-Augmented Non-Local Attention for Video Super-Resolution" CVPR, 2021 Aug, **MANA** [paper](https://arxiv.org/abs/2108.11048) [code]()
--  "Multi-Scale Memory-Based Video Deblurring" CVPR, 2022 Apr 
+
+
+- "Memory-Augmented Non-Local Attention for Video Super-Resolution" CVPR, 2021 Aug, **MANA** [paper](https://arxiv.org/abs/2108.11048) [code]()
+- "Multi-Scale Memory-Based Video Deblurring" CVPR, 2022 Apr 
   [paper](https://arxiv.org/abs/2204.02977v1) [code](https://github.com/jibo27/memdeblur)
--  "Restoration of Analog Videos Using Swin-UNet" ACM-ICM, 2022 Oct [paper](https://arxiv.org/abs/2311.04261) [ACM-paper](https://dl.acm.org/doi/10.1145/3503161.3547730) [code](https://github.com/miccunifi/analog-video-restoration)
+- "Restoration of Analog Videos Using Swin-UNet" ACM-ICM, 2022 Oct [paper](https://arxiv.org/abs/2311.04261) [ACM-paper](https://dl.acm.org/doi/10.1145/3503161.3547730) [code](https://github.com/miccunifi/analog-video-restoration)
 
 
 
@@ -138,6 +285,8 @@ VHS 类似的噪声合成数据 :warning:
 
 
 
+- [BlazeBVD: Make Scale-Time Equalization Great Again for Blind Video Deflickering](https://arxiv.org/abs/2403.06243)
+
 
 
 ## VideoSR
@@ -146,6 +295,106 @@ VHS 类似的噪声合成数据 :warning:
   [paper](https://arxiv.org/abs/2312.07823)
 
 
+
+
+
+## scratch detection
+
+- "Robust Automatic Line Scratch Detection in Films" TIP, 2014
+  [paper](https://hal.science/hal-00927007/file/Scratch_detection_journal_revised.pdf)
+
+Line scratch detection in old films
+
+
+
+- "Mobile phone screen surface scratch detection based on optimized YOLOv5 model (OYm)" TIP, 2022 Jul 14 
+  [paper](https://ietresearch.onlinelibrary.wiley.com/doi/pdf/10.1049/ipr2.12718)
+
+
+
+- "Line Scratch Detection in Old Motion Picture"
+  [paper]()
+
+
+
+
+
+- "IMPROVED-SDROM filtering for scratches removal from images" 
+  [paper](https://link.springer.com/article/10.1007/s11042-020-09224-7)
+
+
+
+
+
+- "Learning Defects in Old Movies from Manually Assisted Restoration" 2020
+  [paper](https://hal.science/hal-02965296/document)
+
+
+
+- "Scratch detection of archival flms: modeling and trajectory calculation" HS, 2023 Dec 16
+  [paper](https://link.springer.com/content/pdf/10.1186/s40494-023-01119-8.pdf)
+
+> https://www.researchgate.net/publication/377081561_Scratch_detection_of_archival_films_modeling_and_trajectory_calculation/references
+
+![fig2](docs/survey_old_film_restoration/fig2.png)
+
+
+
+
+
+
+
+## detail texture :sweat_drops:
+
+- "Concept Sliders: LoRA Adaptors for Precise Control in Diffusion Models" Arxiv, 2023 Nov 20 :star:
+  [paper](http://arxiv.org/abs/2311.12092v2) [web](https://sliders.baulab.info/) [code](https://github.com/rohitgandikota/sliders) [pdf](./2023_11_Arxiv_Concept-Sliders--LoRA-Adaptors-for-Precise-Control-in-Diffusion-Models.pdf) [note](./2023_11_Arxiv_Concept-Sliders--LoRA-Adaptors-for-Precise-Control-in-Diffusion-Models_Note.md)
+  Authors: Rohit Gandikota, Joanna Materzynska, Tingrui Zhou, Antonio Torralba, David Bau
+
+
+
+- "Interpreting the Weight Space of Customized Diffusion Models" Arxiv, 2024 Jun 13
+  [paper](http://arxiv.org/abs/2406.09413v2) [code]() [pdf](./2024_06_Arxiv_Interpreting-the-Weight-Space-of-Customized-Diffusion-Models.pdf) [note](./2024_06_Arxiv_Interpreting-the-Weight-Space-of-Customized-Diffusion-Models_Note.md)
+  Authors: Amil Dravid, Yossi Gandelsman, Kuan-Chieh Wang, Rameen Abdal, Gordon Wetzstein, Alexei A. Efros, Kfir Aberman
+
+
+
+> 参考蒸馏方法搞一个模块，生成纹理提升 PSNR
+
+- "TextureDreamer: Image-guided Texture Synthesis through Geometry-aware Diffusion" CVPR, 2024 Jan 17
+  [paper](http://arxiv.org/abs/2401.09416v1) [code]() [pdf](./2024_01_CVPR_TextureDreamer--Image-guided-Texture-Synthesis-through-Geometry-aware-Diffusion.pdf) [note](./2024_01_CVPR_TextureDreamer--Image-guided-Texture-Synthesis-through-Geometry-aware-Diffusion_Note.md)
+  Authors: Yu-Ying Yeh, Jia-Bin Huang, Changil Kim, Lei Xiao, Thu Nguyen-Phuoc, Numair Khan, Cheng Zhang, Manmohan Chandraker, Carl S Marshall, Zhao Dong, Zhengqin Li
+
+参考 https://texturedreamer.github.io/ 视频，学习一下如何一步步从 baseline 改进一次后，发现还有问题逐步搭建新的模块 :star:
+
+- Q：纹理是啥？
+
+albedo，metallic，roughness
+
+<img src="docs/2024_01_CVPR_TextureDreamer--Image-guided-Texture-Synthesis-through-Geometry-aware-Diffusion_Note/texture_map.png" alt="texture_map" style="zoom:33%;" />
+
+
+
+- "VideoGigaGAN: Towards Detail-rich Video Super-Resolution"
+  [paper](https://arxiv.org/pdf/2404.12388)
+
+
+
+
+
+
+
+## frequency domain
+
+- "Exploring Spatial-Temporal Multi-Frequency Analysis for High-Fidelity and Temporal-Consistency Video Prediction"
+
+  https://openaccess.thecvf.com/content_CVPR_2020/papers/Jin_Exploring_Spatial-Temporal_Multi-Frequency_Analysis_for_High-Fidelity_and_Temporal-Consistency_Video_Prediction_CVPR_2020_paper.pdf
+
+- "Turning Frequency to Resolution: Video Super-resolution via Event Cameras"
+
+  https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Turning_Frequency_to_Resolution_Video_Super-Resolution_via_Event_Cameras_CVPR_2021_paper.pdf
+
+- "Temporal Wavelet Transform-Based Low-Complexity Perceptual Quality Enhancement of Compressed Video"
+  [paper](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10254565)
 
 
 
@@ -431,3 +680,16 @@ TODO
 x86_64-pc-windows-msvc-qsv2flv.exe -v shimianmaifu_1989_480P.qsv shimianmaifu_1989_480P.mp4
 ```
 
+
+
+# paper
+
+Old films bear precious memories of multiple generations. However, there are large amount of old films are suffering from various irreversible degradations which cost professionals huge burdens to restore them.
+
+In this paper, we propose a restoration framework, called \textit{Film Reviving Diffusion Model(FRDM)}, to assist professionals to accelerate the restoration process.
+
+We explores video diffusion's generation prior to restore the films' scratches and improve the visual quality.
+Also, we collects an evaluation dataset to help further works evaluate on the same page.
+
+Through qualitative and quantitative evaluations, our approach demonstrates superior performance compared with existing open-sourced methods. 
+The code, dataset and model are available at 
