@@ -1,12 +1,18 @@
 # Survey IQA
 
 > https://github.com/chaofengc/Awesome-Image-Quality-Assessment
+>
+> https://github.com/chaofengc/IQA-PyTorch
+>
+> https://github.com/ziqihuangg/Awesome-Evaluation-of-Visual-Generation
 
 - Objective: Summarize all the image/video quality assessment metrics.
 
 
 
 ## Image
+
+
 
 ### Full-reference
 
@@ -260,6 +266,11 @@ def calc_niqe(img: torch.Tensor):
 
 
 
+- "ARNIQA: Learning Distortion Manifold for Image Quality Assessment" WACV-oral, 2023 Oct 20
+  [paper](https://arxiv.org/abs/2310.14918)
+
+
+
 - "Quality-Aware Image-Text Alignment for Real-World Image Quality Assessment" Arxiv, 2024 Mar 17
   [paper](http://arxiv.org/abs/2403.11176v1) [code](https://github.com/miccunifi/QualiCLIP.) [pdf](./2024_03_Arxiv_Quality-Aware-Image-Text-Alignment-for-Real-World-Image-Quality-Assessment.pdf) [note](./2024_03_Arxiv_Quality-Aware-Image-Text-Alignment-for-Real-World-Image-Quality-Assessment_Note.md)
   Authors: Lorenzo Agnolucci, Leonardo Galteri, Marco Bertini
@@ -292,6 +303,10 @@ def calc_niqe(img: torch.Tensor):
   [paper](http://arxiv.org/abs/2311.17982v1) [code]() [pdf](./2023_11_CVPR-highlight_VBench--Comprehensive-Benchmark-Suite-for-Video-Generative-Models.pdf) [note](./2023_11_CVPR-highlight_VBench--Comprehensive-Benchmark-Suite-for-Video-Generative-Models_Note.md)
   Authors: Ziqi Huang, Yinan He, Jiashuo Yu, Fan Zhang, Chenyang Si, Yuming Jiang, Yuanhan Zhang, Tianxing Wu, Qingyang Jin, Nattapol Chanpaisit, Yaohui Wang, Xinyuan Chen, Limin Wang, Dahua Lin, Yu Qiao, Ziwei Liu
 
+![img](https://github.com/Vchitect/VBench/raw/master/asset/radar-open.jpg)
+
+
+
 
 
 
@@ -307,4 +322,13 @@ def calc_niqe(img: torch.Tensor):
 - "A Survey of AI-Generated Video Evaluation" Arxiv, 2024 Oct 24
   [paper](http://arxiv.org/abs/2410.19884v1) [code]() [pdf](./2024_10_Arxiv_A-Survey-of-AI-Generated-Video-Evaluation.pdf) [note](./2024_10_Arxiv_A-Survey-of-AI-Generated-Video-Evaluation_Note.md)
   Authors: Xiao Liu, Xinhao Xiang, Zizhong Li, Yongheng Wang, Zhuoheng Li, Zhuosheng Liu, Weidi Zhang, Weiqi Ye, Jiawei Zhang
+
+
+
+
+
+- "VBench++: Comprehensive and Versatile Benchmark Suite for Video Generative Models" 
+  [paper](https://arxiv.org/abs/2411.13503)
+
+
 

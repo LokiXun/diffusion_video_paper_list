@@ -706,6 +706,23 @@ show that the generation scheme can be recomposed as two nested diffusion proces
 
 
 
+
+
+- "On the Scalability of Diffusion-based Text-to-Image Generation" CVPR, 2024 Apr 03 
+  [paper](https://arxiv.org/pdf/2404.02883)
+
+> Finally, we provide scaling functions to predict the text-image alignment performance as functions of the scale of model size, compute and dataset size
+
+数据集增大2倍能增加**训练收敛速度**！
+
+> the combined scaling with both SDXL UNet and enlarged dataset significantly increases the performance and speeds up the convergence of TIFA score by 6×.
+
+![unet_scaling_fig1](docs/2024_12_Arxiv_HunyuanVideo--A-Systematic-Framework-For-Large-Video-Generative-Models_Note/unet_scaling_fig1.png)
+
+
+
+
+
 ### findings
 
 - [x] "DigGAN: Discriminator gradIent Gap Regularization for GAN Training with Limited Data" NeurIPS, 2022 Nov :star:
@@ -722,8 +739,9 @@ show that the generation scheme can be recomposed as two nested diffusion proces
 
 
 
-- [x] "FreeU: Free Lunch in Diffusion U-Net" CVPR, 2023 Sep
-  [paper](https://arxiv.org/abs/2309.11497)
+- [x] "FreeU: Free Lunch in Diffusion U-Net" CVPR, 2023 Sep 20
+  [paper](http://arxiv.org/abs/2309.11497v2) [code](https://chenyangsi.top/FreeU/.) [pdf](./2023_09_CVPR_FreeU--Free-Lunch-in-Diffusion-U-Net.pdf) [note](./2023_09_CVPR_FreeU--Free-Lunch-in-Diffusion-U-Net_Note.md)
+  Authors: Chenyang Si, Ziqi Huang, Yuming Jiang, Ziwei Liu
 
 
 > improves diffusion model sample quality at no costs: no training, no additional parameter introduced, and no increase in memory or sampling time.
@@ -732,8 +750,9 @@ show that the generation scheme can be recomposed as two nested diffusion proces
 
 
 
-- [x] "FreeInit: Bridging Initialization Gap in Video Diffusion Models" CVPR, 2023 Dec
-  [paper](https://arxiv.org/abs/2312.07537) [code](https://github.com/TianxingWu/FreeInit/blob/master/freeinit_utils.py#L98)
+- [x] "FreeInit: Bridging Initialization Gap in Video Diffusion Models" ECCV, 2023 Dec 12
+  [paper](http://arxiv.org/abs/2312.07537v2) [code]() [pdf](./2023_12_ECCV_FreeInit--Bridging-Initialization-Gap-in-Video-Diffusion-Models.pdf) [note](./2023_12_ECCV_FreeInit--Bridging-Initialization-Gap-in-Video-Diffusion-Models_Note.md)
+  Authors: Tianxing Wu, Chenyang Si, Yuming Jiang, Ziqi Huang, Ziwei Liu
 
 
 Video Diffusion 噪声图 $z_t$ 的**低频部分维持了视频的时序一致性。**
@@ -744,11 +763,11 @@ text2video inference 时候基于随机选取的高斯噪声开始，这里面�
 
 对 Video Diffusion 的 noise $z_T$ 用 FFT 分解为低频、高频信息，逐步去掉高频信息后，发现生成的视频主体类似，**生成内容的时序一致性由视频本身的低频信息决定**
 
-![image-20231218220023374](docs/README/FreeInit_low_freq_info.png)
-
 Framework
 
-![image-20231218215933461](docs/README/FreeInit_framework.png)
+![fig7](docs/2023_12_ECCV_FreeInit--Bridging-Initialization-Gap-in-Video-Diffusion-Models_Note/fig7.png)
+
+
 
 
 
@@ -1174,7 +1193,29 @@ Authors: Chris Careaga, Yağız Aksoy
 
 
 
-## 3D
+
+
+### VAE
+
+- "CV-VAE: A Compatible Video VAE for Latent Generative Video Models" NIPS, 2024 May 30
+  [paper](http://arxiv.org/abs/2405.20279v2) [code](https://github.com/AILab-CVC/CV-VAE) [pdf](./2024_05_NIPS_CV-VAE--A-Compatible-Video-VAE-for-Latent-Generative-Video-Models.pdf) [note](./2024_05_NIPS_CV-VAE--A-Compatible-Video-VAE-for-Latent-Generative-Video-Models_Note.md)
+  Authors: Sijie Zhao, Yong Zhang, Xiaodong Cun, Shaoshu Yang, Muyao Niu, Xiaoyu Li, Wenbo Hu, Ying Shan
+
+
+
+- "WF-VAE: Enhancing Video VAE by Wavelet-Driven Energy Flow for Latent Video Diffusion Model" Arxiv, 2024 Nov 26
+  [paper](http://arxiv.org/abs/2411.17459v2) [code](https://github.com/PKU-YuanGroup/WF-VAE.) [pdf](./2024_11_Arxiv_WF-VAE--Enhancing-Video-VAE-by-Wavelet-Driven-Energy-Flow-for-Latent-Video-Diffusion-Model.pdf) [note](./2024_11_Arxiv_WF-VAE--Enhancing-Video-VAE-by-Wavelet-Driven-Energy-Flow-for-Latent-Video-Diffusion-Model_Note.md)
+  Authors: Zongjian Li, Bin Lin, Yang Ye, Liuhan Chen, Xinhua Cheng, Shenghai Yuan, Li Yuan
+
+效果和 SOTA `CogVideoX-VAE` 接近
+
+![tb1](docs/2024_11_Arxiv_WF-VAE--Enhancing-Video-VAE-by-Wavelet-Driven-Energy-Flow-for-Latent-Video-Diffusion-Model_Note/tb1.png)
+
+
+
+
+
+## 3D :3rd_place_medal:
 
 - SV3D https://huggingface.co/stabilityai/sv3d
 
@@ -1225,9 +1266,17 @@ Understanding the underlying 3D world of 2D images, existing challenge:
 
 
 
-### novel-view
+### depth
 
-- "Depth Pro: Sharp Monocular Metric Depth in Less Than a Second" By Apple
+- depth anything v2
+
+https://github.com/DepthAnything/Depth-Anything-V2?tab=readme-ov-file
+
+
+
+
+
+- "Depth Pro: Sharp Monocular Metric Depth in Less Than a Second" Arxiv, 2024 Oct, By Apple 
   [paper](https://arxiv.org/abs/2410.02073v1)
 
 深度估计，做新视角合成的纹理更好！
@@ -1236,11 +1285,71 @@ Understanding the underlying 3D world of 2D images, existing challenge:
 
 ### reference
 
+- "SceneTex: High-Quality Texture Synthesis for Indoor Scenes via Diffusion Priors" CVPR
+  [paper](https://arxiv.org/abs/2311.17261)
+
+大图纹理，每次取小 patch 生成纹理
+
+
+
+- "Paint-it: Text-to-Texture Synthesis via Deep Convolutional Texture Map Optimization and Physically-Based Rendering" CVPR
+  [paper](https://arxiv.org/pdf/2312.11360)
+
+
+
 - "TextureDreamer: Image-guided Texture Synthesis through Geometry-aware Diffusion" CVPR, 2024 Jan 17
   [paper](http://arxiv.org/abs/2401.09416v1) [code]() [pdf](./2024_01_CVPR_TextureDreamer--Image-guided-Texture-Synthesis-through-Geometry-aware-Diffusion.pdf) [note](./2024_01_CVPR_TextureDreamer--Image-guided-Texture-Synthesis-through-Geometry-aware-Diffusion_Note.md)
   Authors: Yu-Ying Yeh, Jia-Bin Huang, Changil Kim, Lei Xiao, Thu Nguyen-Phuoc, Numair Khan, Cheng Zhang, Manmohan Chandraker, Carl S Marshall, Zhao Dong, Zhengqin Li
 
 参考 https://texturedreamer.github.io/ 视频，学习一下如何一步步从 baseline 改进一次后，发现还有问题逐步搭建新的模块 :star:
+
+
+
+### Rendering 渲染:low_brightness:
+
+- "SwitchLight: Co-design of Physics-driven Architecture and Pre-training Framework for Human Portrait Relighting" CVPR, 2024 Feb 29
+  [paper](http://arxiv.org/abs/2402.18848v1) [code]() [pdf](./2024_02_CVPR_SwitchLight--Co-design-of-Physics-driven-Architecture-and-Pre-training-Framework-for-Human-Portrait-Relighting.pdf) [note](./2024_02_CVPR_SwitchLight--Co-design-of-Physics-driven-Architecture-and-Pre-training-Framework-for-Human-Portrait-Relighting_Note.md)
+  Authors: Hoon Kim, Minje Jang, Wonjun Yoon, Jisoo Lee, Donghyun Na, Sanghyun Woo
+
+
+
+
+
+### 4D restoration
+
+利用 3D / 4D 构造每个物体的一个表示，其一致性贯穿整个视频
+
+1. Temporal 一致性，闪烁降低；
+2. 实现多个场景的一致性
+3. 粗糙模型
+4. 细节区域细化，把 3D 物体抠出来细化
+
+- Q：训练成本很大，能否抽离出来单个物体进行修复？
+- Q：能否找一个粗糙的模型，然后去细化纹理？
+
+
+
+
+
+- https://sv4d.github.io/
+
+
+
+- "MoSca: Dynamic Gaussian Fusion from Casual Videos via 4D Motion Scaffolds" 
+  [paper](https://arxiv.org/pdf/2405.17421) [web](https://www.cis.upenn.edu/~leijh/projects/mosca/)
+
+
+
+- "DimensionX: Create Any 3D and 4D Scenes from a Single Image with Controllable Video Diffusion"
+  https://chenshuo20.github.io/DimensionX/
+
+
+
+
+
+## QualityAssessment
+
+[survey_IQA.md](./survey_IQA.md)
 
 
 
@@ -1478,6 +1587,14 @@ DoubleDIP 把各种 low-level 任务看作**图层分解任务**，**将图像�
 
 ### detail texture :sweat_drops:
 
+- "Common Diffusion Noise Schedules and Sample Steps are Flawed" WACV, 2023 May 15
+  [paper](http://arxiv.org/abs/2305.08891v4) [code]() [pdf](./2023_05_WACV_Common-Diffusion-Noise-Schedules-and-Sample-Steps-are-Flawed.pdf) [note](./2023_05_WACV_Common-Diffusion-Noise-Schedules-and-Sample-Steps-are-Flawed_Note.md)
+  Authors: Shanchuan Lin, Bingchen Liu, Jiashi Li, Xiao Yang
+
+> https://vscode.dev/github/lzhxmu/AccDiffusion/blob/main/accdiffusion_sdxl.py#L1434
+
+
+
 - "Concept Sliders: LoRA Adaptors for Precise Control in Diffusion Models" Arxiv, 2023 Nov 20 :star:
   [paper](http://arxiv.org/abs/2311.12092v2) [web](https://sliders.baulab.info/) [code](https://github.com/rohitgandikota/sliders) [pdf](./2023_11_Arxiv_Concept-Sliders--LoRA-Adaptors-for-Precise-Control-in-Diffusion-Models.pdf) [note](./2023_11_Arxiv_Concept-Sliders--LoRA-Adaptors-for-Precise-Control-in-Diffusion-Models_Note.md)
   Authors: Rohit Gandikota, Joanna Materzynska, Tingrui Zhou, Antonio Torralba, David Bau
@@ -1498,8 +1615,101 @@ DoubleDIP 把各种 low-level 任务看作**图层分解任务**，**将图像�
 
 
 
-- "VideoGigaGAN: Towards Detail-rich Video Super-Resolution"
-  [paper](https://arxiv.org/pdf/2404.12388)
+- "VideoGigaGAN: Towards Detail-rich Video Super-Resolution" ECCV, 2024 Apr 18 
+  [paper](http://arxiv.org/abs/2404.12388v2) [code](https://github.com/danaigc/videoGigaGanHub) :warning: [web](https://videogigagan.github.io/) [pdf](./2024_04_ECCV_VideoGigaGAN--Towards-Detail-rich-Video-Super-Resolution.pdf) [note](./2024_04_ECCV_VideoGigaGAN--Towards-Detail-rich-Video-Super-Resolution_Note.md)
+  Authors: Yiran Xu, Taesung Park, Richard Zhang, Yang Zhou, Eli Shechtman, Feng Liu, Jia-Bin Huang, Difan Liu(Adobe)
+
+
+
+#### frequency domain :radio:
+
+> - Q：diffusion VAE 融合多个 patch，画面糊掉了？
+>
+> diffusion 去噪本身就会降低高频，再加个 Avg 平滑模型，结果就更模糊（高频段更低）
+>
+> **从频域补充细节**
+
+
+
+- "JPEG Artifact Correction using Denoising Diffusion Restoration Models" Arxiv, 2022 Sep 23
+  [paper](http://arxiv.org/abs/2209.11888v2) [code]() [pdf](./2022_09_Arxiv_JPEG-Artifact-Correction-using-Denoising-Diffusion-Restoration-Models.pdf) [note](./2022_09_Arxiv_JPEG-Artifact-Correction-using-Denoising-Diffusion-Restoration-Models_Note.md)
+  Authors: Bahjat Kawar, Jiaming Song, Stefano Ermon, Michael Elad
+
+
+
+
+
+- "Wavelet-based Fourier Information Interaction with Frequency Diffusion Adjustment for Underwater Image Restoration" CVPR, 2023 Nov 28
+  [paper](http://arxiv.org/abs/2311.16845v1) [code](https://github.com/ChenzhaoNju/WF-Diff) [pdf](./2023_11_CVPR_Wavelet-based-Fourier-Information-Interaction-with-Frequency-Diffusion-Adjustment-for-Underwater-Image-Restoration.pdf) [note](./2023_11_CVPR_Wavelet-based-Fourier-Information-Interaction-with-Frequency-Diffusion-Adjustment-for-Underwater-Image-Restoration_Note.md)
+  Authors: Chen Zhao, Weiling Cai, Chenyu Dong, Chengwei Hu
+
+- "Learning A Physical-aware Diffusion Model Based on Transformer for Underwater Image Enhancement"
+  [paper](https://arxiv.org/abs/2403.01497)
+
+
+
+
+
+- "FreeU: Free Lunch in Diffusion U-Net" CVPR-oral, 2023 Sep 20 :star:
+  [paper](http://arxiv.org/abs/2309.11497v2) [code](https://chenyangsi.top/FreeU/) [pdf](./2023_09_CVPR_FreeU--Free-Lunch-in-Diffusion-U-Net.pdf) [note](./2023_09_CVPR_FreeU--Free-Lunch-in-Diffusion-U-Net_Note.md)
+  Authors: Chenyang Si, Ziqi Huang, Yuming Jiang, Ziwei Liu
+
+发现 diffusion 去噪过程，高频分量逐渐消失。。
+
+
+
+- "FreeInit: Bridging Initialization Gap in Video Diffusion Models" ECCV, 2023 Dec 12
+  [paper](http://arxiv.org/abs/2312.07537v2) [code](https://github.com/TianxingWu/FreeInit/blob/master/freeinit_utils.py#L98) [pdf](./2023_12_ECCV_FreeInit--Bridging-Initialization-Gap-in-Video-Diffusion-Models.pdf) [note](./2023_12_ECCV_FreeInit--Bridging-Initialization-Gap-in-Video-Diffusion-Models_Note.md)
+  Authors: Tianxing Wu, Chenyang Si, Yuming Jiang, Ziqi Huang, Ziwei Liu
+
+1. 发现原始随机生成的 noise 高频特征很杂乱，先推理一波取低频特征，再随机加上高频特征单独恢复
+2. 参考 3D-FFT 代码 :star:
+
+
+
+- "FRAG: Frequency Adapting Group for Diffusion Video Editing" ICML, 2024 Jun 10
+  [paper](http://arxiv.org/abs/2406.06044v1) [code](https://github.com/dbstjswo505/FRAG) [pdf](./2024_06_Arxiv_FRAG--Frequency-Adapting-Group-for-Diffusion-Video-Editing.pdf) [note](./2024_06_Arxiv_FRAG--Frequency-Adapting-Group-for-Diffusion-Video-Editing_Note.md)
+  Authors: Sunjae Yoon, Gwanhyeong Koo, Geonwoo Kim, Chang D. Yoo
+
+视频编辑 + 从原始视频提取高频特征
+
+
+
+- "DreamPolish: Domain Score Distillation With Progressive Geometry Generation" Arxiv, 2024 Nov 3
+  [paper](http://arxiv.org/abs/2411.01602v1) [code]() [pdf](./2024_11_Arxiv_DreamPolish--Domain-Score-Distillation-With-Progressive-Geometry-Generation.pdf) [note](./2024_11_Arxiv_DreamPolish--Domain-Score-Distillation-With-Progressive-Geometry-Generation_Note.md)
+  Authors: Yean Cheng, Ziqi Cai, Ming Ding, Wendi Zheng, Shiyu Huang, Yuxiao Dong, Jie Tang, Boxin Shi
+
+
+
+- "Identity-Preserving Text-to-Video Generation by Frequency Decomposition" Arxiv, 2024 Nov 26
+  [paper](http://arxiv.org/abs/2411.17440v1) [code](https://github.com/PKU-YuanGroup/ConsisID) [web](https://pku-yuangroup.github.io/ConsisID/) [pdf](./2024_11_Arxiv_Identity-Preserving-Text-to-Video-Generation-by-Frequency-Decomposition.pdf) [note](./2024_11_Arxiv_Identity-Preserving-Text-to-Video-Generation-by-Frequency-Decomposition_Note.md)
+  Authors: Shenghai Yuan, Jinfa Huang, Xianyi He, Yunyuan Ge, Yujun Shi, Liuhan Chen, Jiebo Luo, Li Yuan
+
+![fig2](docs/2024_11_Arxiv_Identity-Preserving-Text-to-Video-Generation-by-Frequency-Decomposition_Note/fig2.png)
+
+自己定义人脸高频特征 ArcFace + CLIP Image Embedding.... 额外加入人脸关键点作为低频特征去强调一下
+
+
+
+
+
+- "FAM Diffusion: Frequency and Attention Modulation for High-Resolution Image Generation with Stable Diffusion" Arxiv, 2024 Nov 27
+  [paper](http://arxiv.org/abs/2411.18552v1) [code]() [pdf](./2024_11_Arxiv_FAM-Diffusion--Frequency-and-Attention-Modulation-for-High-Resolution-Image-Generation-with-Stable-Diffusion.pdf) [note](./2024_11_Arxiv_FAM-Diffusion--Frequency-and-Attention-Modulation-for-High-Resolution-Image-Generation-with-Stable-Diffusion_Note.md)
+  Authors: Haosen Yang, Adrian Bulat, Isma Hadji, Hai X. Pham, Xiatian Zhu, Georgios Tzimiropoulos, Brais Martinez
+
+
+
+
+
+- "Refine-by-Align: Reference-Guided Artifacts Refinement through Semantic Alignment" Arxiv, 2024 Nov 30
+  [paper](http://arxiv.org/abs/2412.00306v1) [code]() [pdf](./2024_11_Arxiv_Refine-by-Align--Reference-Guided-Artifacts-Refinement-through-Semantic-Alignment.pdf) [note](./2024_11_Arxiv_Refine-by-Align--Reference-Guided-Artifacts-Refinement-through-Semantic-Alignment_Note.md)
+  Authors: Yizhi Song, Liu He, Zhifei Zhang, Soo Ye Kim, He Zhang, Wei Xiong, Zhe Lin, Brian Price, Scott Cohen, Jianming Zhang, Daniel Aliaga
+
+
+
+- "Sharp-It: A Multi-view to Multi-view Diffusion Model for 3D Synthesis and Manipulation" Arxiv, 2024 Dec 3
+  [paper](http://arxiv.org/abs/2412.02631v1) [code]() [pdf](./2024_12_Arxiv_Sharp-It--A-Multi-view-to-Multi-view-Diffusion-Model-for-3D-Synthesis-and-Manipulation.pdf) [note](./2024_12_Arxiv_Sharp-It--A-Multi-view-to-Multi-view-Diffusion-Model-for-3D-Synthesis-and-Manipulation_Note.md)
+  Authors: Yiftach Edelstein, Or Patashnik, Dana Cohen-Bar, Lihi Zelnik-Manor
 
 
 
@@ -1633,7 +1843,7 @@ DoubleDIP 把各种 low-level 任务看作**图层分解任务**，**将图像�
   Authors: Yuang Ai, Xiaoqiang Zhou, Huaibo Huang, Xiaotian Han, Zhengyu Chen, Quanzeng You, Hongxia Yang
 
 1. 本文还是参考 Real-ESRGAN 类似的合成数据方式，但着重探索于 **HQ 数据的版权问题**。**提出一个数据合成 pipeline**，去合成数据避免版权问题
-2. 训练 DiT, 提出 MoAM 模块，**识别退化类型，用于 IR 修复；**
+2. 训练 DiT, 提出 MoAM 模块，**去识别退化类型，降低修复难度（之前 IR 工作都是 task specific)；**
 
 ![fig3](docs/2024_10_NIPS_DreamClear--High-Capacity-Real-World-Image-Restoration-with-Privacy-Safe-Dataset-Curation_Note/fig3.png)
 
@@ -1656,6 +1866,26 @@ DoubleDIP 把各种 low-level 任务看作**图层分解任务**，**将图像�
 > - 可以尝试作为新的研究方向
 >
 >   > we also try to understand and interpret these models’ behaviors to inspire the future direction
+
+
+
+
+
+- "DR-BFR: Degradation Representation with Diffusion Models for Blind Face Restoration" Arxiv, 2024 Nov 15
+  [paper](http://arxiv.org/abs/2411.10508v1) [code]() [pdf](./2024_11_Arxiv_DR-BFR--Degradation-Representation-with-Diffusion-Models-for-Blind-Face-Restoration.pdf) [note](./2024_11_Arxiv_DR-BFR--Degradation-Representation-with-Diffusion-Models-for-Blind-Face-Restoration_Note.md)
+  Authors: Xinmin Qiu, Bonan Li, Zicheng Zhang, Congying Han, Tiande Guo
+
+![fig3](docs/2024_11_Arxiv_DR-BFR--Degradation-Representation-with-Diffusion-Models-for-Blind-Face-Restoration_Note/fig3.png)
+
+**可以去用这里的特征 优化 DiffBIR 的 Conv Block**，优化 LQ 的特征提取。
+
+DiffBIR 的 ConvBlocks 和 RGB 做 loss 我们实验发现对于修复几乎没效果，最多 1：1 还原 LQ，但还会降低质量，只能起到加速的目的
+
+> Degradation Representation (DR) and content features from LQ images
+
+先用 LQ 重建 + 对比学习方式学习描述退化的特征，提前训练好。这个退化特征作为额外的 condition 输入 diffusion cross-attn。
+
+细节生成能力更好，就是**降低网络对于识别退化的负担**，用更多精力学习细节生成，**但细节的一致性都混在模型里面不一定能够很好。主观指标高比 DiffBIR 高，但还要搞一个新的 cross-attn module**；
 
 
 
@@ -1998,7 +2228,7 @@ Self-atten QKV 特征都单独过 SE 空间注意力 + Deformable 偏移（自�
 
 
 
-### block-based :meat_on_bone:
+### block-artifact :meat_on_bone:
 
 > https://github.com/GuoLanqing/Awesome-High-Resolution-Diffusion
 
@@ -2043,6 +2273,12 @@ Self-atten QKV 特征都单独过 SE 空间注意力 + Deformable 偏移（自�
 2. 生成高清细节，比生成低分辨率结构更简单。**因此对于高分辨率的 patch 不想用这么多资源**
 
 ![fig2](docs/2024_06_CVPR_Hierarchical-Patch-Diffusion-Models-for-High-Resolution-Video-Generation_Note/fig2.png)
+
+
+
+- "DemoFusion: Democratising High-Resolution Image Generation With No" CVPR, 2023 Nov 24
+  [paper](http://arxiv.org/abs/2311.16973v2) [code](https://github.com/PRIS-CV/DemoFusion) [web](https://ruoyidu.github.io/demofusion/demofusion.html) [pdf](./2023_11_CVPR_DemoFusion--Democratising-High-Resolution-Image-Generation-With-No.pdf) [note](./2023_11_CVPR_DemoFusion--Democratising-High-Resolution-Image-Generation-With-No_Note.md)
+  Authors: Ruoyi Du, Dongliang Chang, Timothy Hospedales, Yi-Zhe Song, Zhanyu Ma
 
 
 
@@ -2097,6 +2333,16 @@ Authors: Muyang Li, Tianle Cai, Jiaxin Cao, Qinsheng Zhang, Han Cai, Junjie Bai,
 ![fig3](docs/2024_02_CVPR_DistriFusion--Distributed-Parallel-Inference-for-High-Resolution-Diffusion-Models_Note/fig3.png)
 
 
+
+- "WF-VAE: Enhancing Video VAE by Wavelet-Driven Energy Flow for Latent Video Diffusion Model" Arxiv, 2024 Nov 26
+  [paper](http://arxiv.org/abs/2411.17459v2) [code](https://github.com/PKU-YuanGroup/WF-VAE.) [pdf](./2024_11_Arxiv_WF-VAE--Enhancing-Video-VAE-by-Wavelet-Driven-Energy-Flow-for-Latent-Video-Diffusion-Model.pdf) [note](./2024_11_Arxiv_WF-VAE--Enhancing-Video-VAE-by-Wavelet-Driven-Energy-Flow-for-Latent-Video-Diffusion-Model_Note.md)
+  Authors: Zongjian Li, Bin Lin, Yang Ye, Liuhan Chen, Xinhua Cheng, Shenghai Yuan, Li Yuan
+
+
+
+- "FAM Diffusion: Frequency and Attention Modulation for High-Resolution Image Generation with Stable Diffusion" Arxiv, 2024 Nov 27
+  [paper](http://arxiv.org/abs/2411.18552v1) [code]() [pdf](./2024_11_Arxiv_FAM-Diffusion--Frequency-and-Attention-Modulation-for-High-Resolution-Image-Generation-with-Stable-Diffusion.pdf) [note](./2024_11_Arxiv_FAM-Diffusion--Frequency-and-Attention-Modulation-for-High-Resolution-Image-Generation-with-Stable-Diffusion_Note.md)
+  Authors: Haosen Yang, Adrian Bulat, Isma Hadji, Hai X. Pham, Xiatian Zhu, Georgios Tzimiropoulos, Brais Martinez
 
 
 
@@ -2269,12 +2515,33 @@ Authors: Shangchen Zhou, Peiqing Yang, Jianyi Wang, Yihang Luo, Chen Change Loy
 ### 3D :bear:
 
 - "SuperGaussian: Repurposing Video Models for 3D Super Resolution" ECCV, 2024 Jun 2
-  [paper](http://arxiv.org/abs/2406.00609v4) [code]() [pdf](./2024_06_ECCV_SuperGaussian--Repurposing-Video-Models-for-3D-Super-Resolution.pdf) [note](./2024_06_ECCV_SuperGaussian--Repurposing-Video-Models-for-3D-Super-Resolution_Note.md)
+  [paper](http://arxiv.org/abs/2406.00609v4) [code](https://github.com/adobe-research/SuperGaussian) [pdf](./2024_06_ECCV_SuperGaussian--Repurposing-Video-Models-for-3D-Super-Resolution.pdf) [note](./2024_06_ECCV_SuperGaussian--Repurposing-Video-Models-for-3D-Super-Resolution_Note.md)
   Authors: Yuan Shen, Duygu Ceylan, Paul Guerrero, Zexiang Xu, Niloy J. Mitra, Shenlong Wang, Anna Frühstück
 
 
 
+- "DreamPolish: Domain Score Distillation With Progressive Geometry Generation" Arxiv, 2024 Nov 3
+  [paper](http://arxiv.org/abs/2411.01602v1) [code]() [pdf](./2024_11_Arxiv_DreamPolish--Domain-Score-Distillation-With-Progressive-Geometry-Generation.pdf) [note](./2024_11_Arxiv_DreamPolish--Domain-Score-Distillation-With-Progressive-Geometry-Generation_Note.md)
+  Authors: Yean Cheng, Ziqi Cai, Ming Ding, Wendi Zheng, Shiyu Huang, Yuxiao Dong, Jie Tang, Boxin Shi
 
+![fig2](docs/2024_11_Arxiv_DreamPolish--Domain-Score-Distillation-With-Progressive-Geometry-Generation_Note/fig2.png)
+
+
+
+
+
+- "Sharp-It: A Multi-view to Multi-view Diffusion Model for 3D Synthesis and Manipulation" Arxiv, 2024 Dec 3
+  [paper](http://arxiv.org/abs/2412.02631v1) [code](https://github.com/YiftachEde/Sharp-It) [web](https://yiftachede.github.io/Sharp-It/) [pdf](./2024_12_Arxiv_Sharp-It--A-Multi-view-to-Multi-view-Diffusion-Model-for-3D-Synthesis-and-Manipulation.pdf) [note](./2024_12_Arxiv_Sharp-It--A-Multi-view-to-Multi-view-Diffusion-Model-for-3D-Synthesis-and-Manipulation_Note.md)
+  Authors: Yiftach Edelstein, Or Patashnik, Dana Cohen-Bar, Lihi Zelnik-Manor（Tel Aviv University）
+
+![fig2](docs/2024_12_Arxiv_Sharp-It--A-Multi-view-to-Multi-view-Diffusion-Model-for-3D-Synthesis-and-Manipulation_Note/fig2.png)
+
+和视频很接近嘛。。。用一个粗糙的模型生成个大概，-》生成多个视角（视频多帧），有的好有的拉；重点在于**维持多个视角生成的一致性！（视频多帧的一致性）**
+
+- Q：细节怎么搞？不同 view 用不同 prompt
+- 训练消耗只要一张 A6000 48G 显存
+
+> we can apply a different prompt from the one used during the generation of the ShapE object, facilitating appearance editing that accurately preserves the original shape
 
 
 
@@ -2575,6 +2842,19 @@ Authors: Shangchen Zhou, Peiqing Yang, Jianyi Wang, Yihang Luo, Chen Change Loy
 - **Event signals 含有更多细节的纹理的特征，但需要 event camera**
 - 按 badcase 找出来分别计算指标hhh
 - 参考实验设计 :star:
+
+
+
+## OCR / VDU
+
+> visual document understanding (VDU)
+
+- InternVL2-26B
+- "Visually Guided Generative Text-Layout Pre-training for Document Intelligence" Arxiv, 2024 Mar 25, `ViTLP`
+  [paper](http://arxiv.org/abs/2403.16516v2) [code](https://github.com/Veason-silverbullet/ViTLP) [pdf](./2024_03_Arxiv_Visually-Guided-Generative-Text-Layout-Pre-training-for-Document-Intelligence.pdf) [note](./2024_03_Arxiv_Visually-Guided-Generative-Text-Layout-Pre-training-for-Document-Intelligence_Note.md)
+  Authors: Zhiming Mao, Haoli Bai, Lu Hou, Jiansheng Wei, Xin Jiang, Qun Liu, Kam-Fai Wong (CUHK + Huawei)
+
+
 
 
 
