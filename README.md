@@ -1107,6 +1107,10 @@ Framework
 
 ### Img2Video
 
+- [survey_comics_generate_video.md](./survey_comics_generate_video.md)
+
+
+
 - [ ] "Understanding Object Dynamics for Interactive Image-to-Video Synthesis" Arxiv, 2021 Jun
   [paper](http://arxiv.org/abs/2106.11303v1) [code](https://bit.ly/3cxfA2L) 
   
@@ -1639,6 +1643,16 @@ DoubleDIP 把各种 low-level 任务看作**图层分解任务**，**将图像�
 
 
 
+- "Low-Light Image Enhancement with Wavelet-based Diffusion Models" siggraph-asia, 2023 Jun 1 :star:
+  [paper](http://arxiv.org/abs/2306.00306v3) [code](https://github.com/JianghaiSCU/Diffusion-Low-Light) [pdf](./2023_06_siggraph-asia_Low-Light-Image-Enhancement-with-Wavelet-based-Diffusion-Models) [note](./2023_06_siggraph-asia_Low-Light-Image-Enhancement-with-Wavelet-based-Diffusion-Models_Note.md)
+  Authors: Hai Jiang, Ao Luo, Songchen Han, Haoqiang Fan, Shuaicheng Liu
+
+设计 wavelet transformation 频域融合模块，减少高频纹理 artifact！:star:
+
+
+
+
+
 - "Wavelet-based Fourier Information Interaction with Frequency Diffusion Adjustment for Underwater Image Restoration" CVPR, 2023 Nov 28
   [paper](http://arxiv.org/abs/2311.16845v1) [code](https://github.com/ChenzhaoNju/WF-Diff) [pdf](./2023_11_CVPR_Wavelet-based-Fourier-Information-Interaction-with-Frequency-Diffusion-Adjustment-for-Underwater-Image-Restoration.pdf) [note](./2023_11_CVPR_Wavelet-based-Fourier-Information-Interaction-with-Frequency-Diffusion-Adjustment-for-Underwater-Image-Restoration_Note.md)
   Authors: Chen Zhao, Weiling Cai, Chenyu Dong, Chengwei Hu
@@ -1656,6 +1670,10 @@ DoubleDIP 把各种 low-level 任务看作**图层分解任务**，**将图像�
 
 发现 diffusion 去噪过程，高频分量逐渐消失。。
 
+![fig4](docs/2023_09_CVPR_FreeU--Free-Lunch-in-Diffusion-U-Net_Note/fig4.png)
+
+
+
 
 
 - "FreeInit: Bridging Initialization Gap in Video Diffusion Models" ECCV, 2023 Dec 12
@@ -1664,6 +1682,10 @@ DoubleDIP 把各种 low-level 任务看作**图层分解任务**，**将图像�
 
 1. 发现原始随机生成的 noise 高频特征很杂乱，先推理一波取低频特征，再随机加上高频特征单独恢复
 2. 参考 3D-FFT 代码 :star:
+
+![fig7](docs/2023_12_ECCV_FreeInit--Bridging-Initialization-Gap-in-Video-Diffusion-Models_Note/fig7.png)
+
+
 
 
 
@@ -1691,11 +1713,18 @@ DoubleDIP 把各种 low-level 任务看作**图层分解任务**，**将图像�
 
 
 
+- "WF-VAE: Enhancing Video VAE by Wavelet-Driven Energy Flow for Latent Video Diffusion Model" 
+  [paper](https://arxiv.org/pdf/2411.17459)
+
+
+
 
 
 - "FAM Diffusion: Frequency and Attention Modulation for High-Resolution Image Generation with Stable Diffusion" Arxiv, 2024 Nov 27
   [paper](http://arxiv.org/abs/2411.18552v1) [code]() [pdf](./2024_11_Arxiv_FAM-Diffusion--Frequency-and-Attention-Modulation-for-High-Resolution-Image-Generation-with-Stable-Diffusion.pdf) [note](./2024_11_Arxiv_FAM-Diffusion--Frequency-and-Attention-Modulation-for-High-Resolution-Image-Generation-with-Stable-Diffusion_Note.md)
   Authors: Haosen Yang, Adrian Bulat, Isma Hadji, Hai X. Pham, Xiatian Zhu, Georgios Tzimiropoulos, Brais Martinez
+
+![fig2](docs/2024_11_Arxiv_FAM-Diffusion--Frequency-and-Attention-Modulation-for-High-Resolution-Image-Generation-with-Stable-Diffusion_Note/fig2.png)
 
 
 
@@ -1710,6 +1739,27 @@ DoubleDIP 把各种 low-level 任务看作**图层分解任务**，**将图像�
 - "Sharp-It: A Multi-view to Multi-view Diffusion Model for 3D Synthesis and Manipulation" Arxiv, 2024 Dec 3
   [paper](http://arxiv.org/abs/2412.02631v1) [code]() [pdf](./2024_12_Arxiv_Sharp-It--A-Multi-view-to-Multi-view-Diffusion-Model-for-3D-Synthesis-and-Manipulation.pdf) [note](./2024_12_Arxiv_Sharp-It--A-Multi-view-to-Multi-view-Diffusion-Model-for-3D-Synthesis-and-Manipulation_Note.md)
   Authors: Yiftach Edelstein, Or Patashnik, Dana Cohen-Bar, Lihi Zelnik-Manor
+
+
+
+- "FreqMark: Invisible Image Watermarking via Frequency Based Optimization in Latent Space" 
+  [paper](https://arxiv.org/pdf/2410.20824)
+
+
+
+
+
+Low-Light 暗部区域细节不清晰，类似的问题 :star:
+
+- "DMFourLLIE: Dual-Stage and Multi-Branch Fourier Network for Low-Light Image Enhancement" ACM-MM-oral, 2024 Dec 1
+  [paper](http://arxiv.org/abs/2412.00683v1) [code](https://github.com/bywlzts/DMFourLLIE) [pdf](./2024_12_ACM-MM-oral_DMFourLLIE--Dual-Stage-and-Multi-Branch-Fourier-Network-for-Low-Light-Image-Enhancement.pdf) [note](./2024_12_ACM-MM-oral_DMFourLLIE--Dual-Stage-and-Multi-Branch-Fourier-Network-for-Low-Light-Image-Enhancement_Note.md)
+  Authors: Tongshun Zhang, Pingping Liu, Ming Zhao, Haotian Lv
+
+
+
+- "Learning Differential Pyramid Representation for Tone Mapping" Arxiv, 2024 Dec 2
+  [paper](http://arxiv.org/abs/2412.01463v1) [code](https://xxxxxx2024.github.io/DPRNet/.) [pdf](./2024_12_Arxiv_Learning-Differential-Pyramid-Representation-for-Tone-Mapping.pdf) [note](./2024_12_Arxiv_Learning-Differential-Pyramid-Representation-for-Tone-Mapping_Note.md)
+  Authors: Qirui Yang, Yinbo Li, Peng-Tao Jiang, Qihua Cheng, Biting Yu, Yihao Liu, Huanjing Yue, Jingyu Yang
 
 
 
@@ -2069,9 +2119,114 @@ Self-atten QKV 特征都单独过 SE 空间注意力 + Deformable 偏移（自�
 
 
 
-### reference-based :star:
+### reference-based :paintbrush:
 
 [survey_comics_generate_video.md](./survey_comics_generate_video.md)
+
+
+
+
+
+## Low-Light  :first_quarter_moon:
+
+>  HDR(High-Dynamic Range), LLIE(Low-Light Image Enhancement)
+>  [paper with code rank](https://paperswithcode.com/sota/low-light-image-enhancement-on-lol)
+
+- [ ] "Invertible Denoising Network: A Light Solution for Real Noise Removal" CVPR, 2021 Apr
+  [paper](https://arxiv.org/abs/2104.10546) [code](https://github.com/Yang-Liu1082/InvDN?utm_source=catalyzex.com)
+
+  > LLI 使用小波变换提取低频高频特征，对高频信息映射到高斯分布，对高频重新采样，再恢复
+
+- [ ] "Toward Fast, Flexible, and Robust Low-Light Image Enhancement" CVPR(oral), 2022 Apr, **SCI**
+  [paper](https://arxiv.org/abs/2204.10137) [code](https://github.com/vis-opt-group/SCI)
+
+- [ ] "BokehMe: When Neural Rendering Meets Classical Rendering" CVPR oral, 2022 Jun
+  [paper](https://arxiv.org/abs/2206.12614v1) [website](https://juewenpeng.github.io/BokehMe/)
+
+  > 对图像实现**可控的**模糊，调整焦距，光圈等效果。发布了数据集
+
+- [x] "DNF: Decouple and Feedback Network for Seeing in the Dark" CVPR Highlight, 2023
+  [paper](https://openaccess.thecvf.com/content/CVPR2023/html/Jin_DNF_Decouple_and_Feedback_Network_for_Seeing_in_the_Dark_CVPR_2023_paper.html) [code](https://github.com/Srameo/DNF)
+  [note](./2023_00_CVPR_DNF--Decouple-and-Feedback-Network-for-Seeing-in-the-Dark_Note.md)
+
+  > Single stage(RAW space 的噪声映射到未知分布的 color space) & multi-stage (多阶段 pipeline 存在累积 loss ) 的问题
+  >
+  > **domain-specific decoupled & feedback info** : 分解为 noisy-to-clean and RAW-to-sRGB 任务。将 Denoise Decoder 的中间特征，经过 GFM 模块过滤后，返回去融合到 Encoder 中。
+  >
+  > 同一个 Encoder 融合 denoise 的中间特征进行 colorization **代替使用去噪不准确的结果作为输入**。用一个 **RSM 模块调节是否加入残差跳连**，区分 noise 和 signal （denoise, color）
+
+- [ ] "Iterative Prompt Learning for Unsupervised Backlit Image Enhancement" ICCV, 2023 Mar, :star: **CLIP-LIT**
+  [paper](https://arxiv.org/abs/2303.17569) [code](https://github.com/ZhexinLiang/CLIP-LIT) [website](https://zhexinliang.github.io/CLIP_LIT_page/) 8.10
+
+  > **引入 CLIP 文本特征的先验**，能够有助于低光增强，能用于视频
+
+- [x] "Inverting the Imaging Process by Learning an Implicit Camera Model" CVPR, 2023, Apr
+  [paper](https://arxiv.org/abs/2304.12748) [website](https://xhuangcv.github.io/neucam/) :warning:
+  [note](./2023_CVPR_Inverting-the-Imaging-Process-by-Learning-an-Implicit-Camera-Model_Note.md)
+
+  > Represent the visual signal using implicit coordinate-based neural networks is recent trend in CV. Existing methods directly conider using the whole NN to represent the scene, and **not consider the camera separately.**
+  > The paper **proposed a new implicit camera model (using implicit neural network)** to represent the physical imaging process. 使用 NeRF 单独模拟相机模型和 scene，实现解耦，增加可调节能力
+
+- [ ] "DC2: Dual-Camera Defocus Control by Learning to Refocus" CVPR, 2023 Apr
+  [website](https://defocus-control.github.io/)
+
+  > **image refocus** requires deblurring and blurring different regions of the image at the same time, that means that image refocus is at least as hard as DoF Control
+
+- [ ] "Low-Light Image Enhancement with Wavelet-based Diffusion Models" Arxiv, 2023 Jun
+  [paper](https://arxiv.org/abs/2306.00306) [pdf](./2023_06_Arxiv_DiffLL_Low-Light-Image-Enhancement-with-Wavelet-based-Diffusion-Models.pdf)
+
+- [ ] "Lighting Every Darkness in Two Pairs: A Calibration-Free Pipeline for RAW Denoising" ICCV, 2023 Aug :statue_of_liberty: :star:
+  [paper](https://arxiv.org/abs/2308.03448) [code](https://github.com/Srameo/LED) [blog_explanation](https://zhuanlan.zhihu.com/p/648242095)
+
+  > 极简标定流程下的 **RAW 去噪** & **少量配对数据（6对）和快速微调**即可适应目标相机, **0.2% 原来训练时间**实现 SOTA
+  > [blog 相机标定基础知识](https://zhuanlan.zhihu.com/p/397873289)
+
+- [ ] "Efficient Multi-exposure Image Fusion via Filter-dominated Fusion and Gradient-driven Unsupervised Learning, Supplementary Material"
+  [paper](https://openaccess.thecvf.com/content/CVPR2023W/MIPI/supplemental/Zheng_Efficient_Multi-Exposure_Image_CVPRW_2023_supplemental.pdf)
+
+  > HDR
+  >
+  > - `SpatialCrossAttention` module 两个 feature 互相加权一下
+  >   两个 feature `x1,x2` , 先 concat 过 Conv 压缩通道再还原原来通道数，chunk 出来再和原来 `x1,x2` 相乘
+  >
+  > - L1 **梯度 Loss**: 梯度最大值相减 L1，抑制伪影的产生
+  >
+  >   I0 LDR 梯度亮处很清晰，HDR 暗处很清晰，组合一下
+
+- [ ] "TransMEF: A Transformer"
+  [paper]()
+
+  > 多曝光融合：伪影
+  >
+  > 自监督方式：GT 图**构造不同的噪声**，构造低质量图
+
+- [ ] "Multi-Exposure Image Fusion via Deformable Self-attention"
+
+  > deformable attention in feature fusion
+
+- [x] "Alignment-free HDR Deghosting with Semantics Consistent" Arxiv, 2023 May :warning:
+  [paper](https://arxiv.org/abs/2305.18135) [website](https://steven-tel.github.io/sctnet/?utm_source=catalyzex.com)
+
+  > 融合 3 个曝光图（内容有差距，例如人在移动）的特征 $f_1, f_2,f_3$ 特征过 `Transformer 融合一下 + chunk 分解回去` **代替原来 Transformer 进行 alignment 方式**
+  >
+  > 可以参考多个曝光不同位置的图，如何 alignment
+
+- [ ] "CLE Diffusion: Controllable Light Enhancement Diffusion Model"
+  [code](https://github.com/YuyangYin/CLEDiffusion)
+
+
+
+
+
+- "Low-Light Image Enhancement with Wavelet-based Diffusion Models" siggraph-asia, 2023 Jun 1, `DiffLL` :star:
+  [paper](http://arxiv.org/abs/2306.00306v3) [web](https://dl.acm.org/doi/10.1145/3618373) [code](https://github.com/JianghaiSCU/Diffusion-Low-Light.) [pdf](./2023_06_siggraph-asia_Low-Light-Image-Enhancement-with-Wavelet-based-Diffusion-Models.pdf) [note](./2023_06_siggraph-asia_Low-Light-Image-Enhancement-with-Wavelet-based-Diffusion-Models_Note.md)
+  Authors: Hai Jiang, Ao Luo, Songchen Han, Haoqiang Fan, Shuaicheng Liu (Megvii)
+
+
+
+- "LightenDiffusion: Unsupervised Low-Light Image Enhancement with Latent-Retinex Diffusion Models" ECCV, 2024 Jul 12
+  [paper](http://arxiv.org/abs/2407.08939v1) [code](https://github.com/JianghaiSCU/LightenDiffusion.) [pdf](./2024_07_ECCV_LightenDiffusion--Unsupervised-Low-Light-Image-Enhancement-with-Latent-Retinex-Diffusion-Models.pdf) [note](./2024_07_ECCV_LightenDiffusion--Unsupervised-Low-Light-Image-Enhancement-with-Latent-Retinex-Diffusion-Models_Note.md)
+  Authors: Hai Jiang, Ao Luo, Xiaohong Liu, Songchen Han, Shuaicheng Liu (Megvii)
 
 
 
@@ -2279,6 +2434,8 @@ Self-atten QKV 特征都单独过 SE 空间注意力 + Deformable 偏移（自�
 - "DemoFusion: Democratising High-Resolution Image Generation With No" CVPR, 2023 Nov 24
   [paper](http://arxiv.org/abs/2311.16973v2) [code](https://github.com/PRIS-CV/DemoFusion) [web](https://ruoyidu.github.io/demofusion/demofusion.html) [pdf](./2023_11_CVPR_DemoFusion--Democratising-High-Resolution-Image-Generation-With-No.pdf) [note](./2023_11_CVPR_DemoFusion--Democratising-High-Resolution-Image-Generation-With-No_Note.md)
   Authors: Ruoyi Du, Dongliang Chang, Timothy Hospedales, Yi-Zhe Song, Zhanyu Ma
+
+![fig3](docs/2023_11_CVPR_DemoFusion--Democratising-High-Resolution-Image-Generation-With-No_Note/fig3.png)
 
 
 
@@ -3236,94 +3393,6 @@ diffusion 模型轻量化，显存降低 x4 倍
 
 
 
-
-## **HDR,LLIE** :low_brightness:
-
->  HDR(High-Dynamic Range), LLIE(Low-Light Image Enhancement)
->  [paper with code rank](https://paperswithcode.com/sota/low-light-image-enhancement-on-lol)
-
-- [ ] "Invertible Denoising Network: A Light Solution for Real Noise Removal" CVPR, 2021 Apr
-  [paper](https://arxiv.org/abs/2104.10546) [code](https://github.com/Yang-Liu1082/InvDN?utm_source=catalyzex.com)
-
-  > LLI 使用小波变换提取低频高频特征，对高频信息映射到高斯分布，对高频重新采样，再恢复
-  
-- [ ] "Toward Fast, Flexible, and Robust Low-Light Image Enhancement" CVPR(oral), 2022 Apr, **SCI**
-  [paper](https://arxiv.org/abs/2204.10137) [code](https://github.com/vis-opt-group/SCI)
-
-- [ ] "BokehMe: When Neural Rendering Meets Classical Rendering" CVPR oral, 2022 Jun
-  [paper](https://arxiv.org/abs/2206.12614v1) [website](https://juewenpeng.github.io/BokehMe/)
-
-  > 对图像实现**可控的**模糊，调整焦距，光圈等效果。发布了数据集
-
-- [x] "DNF: Decouple and Feedback Network for Seeing in the Dark" CVPR Highlight, 2023
-  [paper](https://openaccess.thecvf.com/content/CVPR2023/html/Jin_DNF_Decouple_and_Feedback_Network_for_Seeing_in_the_Dark_CVPR_2023_paper.html) [code](https://github.com/Srameo/DNF)
-  [note](./2023_00_CVPR_DNF--Decouple-and-Feedback-Network-for-Seeing-in-the-Dark_Note.md)
-
-  > Single stage(RAW space 的噪声映射到未知分布的 color space) & multi-stage (多阶段 pipeline 存在累积 loss ) 的问题
-  >
-  > **domain-specific decoupled & feedback info** : 分解为 noisy-to-clean and RAW-to-sRGB 任务。将 Denoise Decoder 的中间特征，经过 GFM 模块过滤后，返回去融合到 Encoder 中。
-  >
-  > 同一个 Encoder 融合 denoise 的中间特征进行 colorization **代替使用去噪不准确的结果作为输入**。用一个 **RSM 模块调节是否加入残差跳连**，区分 noise 和 signal （denoise, color）
-
-- [ ] "Iterative Prompt Learning for Unsupervised Backlit Image Enhancement" ICCV, 2023 Mar, :star: **CLIP-LIT**
-  [paper](https://arxiv.org/abs/2303.17569) [code](https://github.com/ZhexinLiang/CLIP-LIT) [website](https://zhexinliang.github.io/CLIP_LIT_page/) 8.10
-
-  > **引入 CLIP 文本特征的先验**，能够有助于低光增强，能用于视频
-
-- [x] "Inverting the Imaging Process by Learning an Implicit Camera Model" CVPR, 2023, Apr
-  [paper](https://arxiv.org/abs/2304.12748) [website](https://xhuangcv.github.io/neucam/) :warning:
-  [note](./2023_CVPR_Inverting-the-Imaging-Process-by-Learning-an-Implicit-Camera-Model_Note.md)
-
-  > Represent the visual signal using implicit coordinate-based neural networks is recent trend in CV. Existing methods directly conider using the whole NN to represent the scene, and **not consider the camera separately.**
-  > The paper **proposed a new implicit camera model (using implicit neural network)** to represent the physical imaging process. 使用 NeRF 单独模拟相机模型和 scene，实现解耦，增加可调节能力
-
-- [ ] "DC2: Dual-Camera Defocus Control by Learning to Refocus" CVPR, 2023 Apr
-  [website](https://defocus-control.github.io/)
-
-  > **image refocus** requires deblurring and blurring different regions of the image at the same time, that means that image refocus is at least as hard as DoF Control
-
-- [ ] "Low-Light Image Enhancement with Wavelet-based Diffusion Models" Arxiv, 2023 Jun
-  [paper](https://arxiv.org/abs/2306.00306)
-  [pdf](./2023_06_Arxiv_DiffLL_Low-Light-Image-Enhancement-with-Wavelet-based-Diffusion-Models.pdf)
-
-- [ ] "Lighting Every Darkness in Two Pairs: A Calibration-Free Pipeline for RAW Denoising" ICCV, 2023 Aug :statue_of_liberty: :star:
-  [paper](https://arxiv.org/abs/2308.03448) [code](https://github.com/Srameo/LED) [blog_explanation](https://zhuanlan.zhihu.com/p/648242095)
-
-  > 极简标定流程下的 **RAW 去噪** & **少量配对数据（6对）和快速微调**即可适应目标相机, **0.2% 原来训练时间**实现 SOTA
-  > [blog 相机标定基础知识](https://zhuanlan.zhihu.com/p/397873289)
-  
-- [ ] "Efficient Multi-exposure Image Fusion via Filter-dominated Fusion and Gradient-driven Unsupervised Learning, Supplementary Material"
-  [paper](https://openaccess.thecvf.com/content/CVPR2023W/MIPI/supplemental/Zheng_Efficient_Multi-Exposure_Image_CVPRW_2023_supplemental.pdf)
-
-  > HDR
-  >
-  > - `SpatialCrossAttention` module 两个 feature 互相加权一下
-  >   两个 feature `x1,x2` , 先 concat 过 Conv 压缩通道再还原原来通道数，chunk 出来再和原来 `x1,x2` 相乘
-  >
-  > - L1 **梯度 Loss**: 梯度最大值相减 L1，抑制伪影的产生
-  >
-  >   I0 LDR 梯度亮处很清晰，HDR 暗处很清晰，组合一下
-
-- [ ] "TransMEF: A Transformer"
-  [paper]()
-
-  > 多曝光融合：伪影
-  >
-  > 自监督方式：GT 图**构造不同的噪声**，构造低质量图
-
-- [ ] "Multi-Exposure Image Fusion via Deformable Self-attention"
-
-  > deformable attention in feature fusion
-
-- [x] "Alignment-free HDR Deghosting with Semantics Consistent" Arxiv, 2023 May :warning:
-  [paper](https://arxiv.org/abs/2305.18135) [website](https://steven-tel.github.io/sctnet/?utm_source=catalyzex.com)
-
-  > 融合 3 个曝光图（内容有差距，例如人在移动）的特征 $f_1, f_2,f_3$ 特征过 `Transformer 融合一下 + chunk 分解回去` **代替原来 Transformer 进行 alignment 方式**
-  >
-  > 可以参考多个曝光不同位置的图，如何 alignment
-  
-- [ ] "CLE Diffusion: Controllable Light Enhancement Diffusion Model"
-  [code](https://github.com/YuyangYin/CLEDiffusion)
 
 
 
@@ -6112,4 +6181,4 @@ PHD 能去 meta, adobe 实习
 >
 >   The ultimate goal is to reproduce all of the artifacts described here https://bavc.github.io/avaa/tags.html#video :star: >> Video artifact 社区标准
 >
->   - [How to compile using Makefile.am](https://www.baeldung.com/linux/makefile-am-vs-in)
+>   - [How to compile using Makefile.am](https://www.baeldung.com/linux/makefile-am-vs-in
