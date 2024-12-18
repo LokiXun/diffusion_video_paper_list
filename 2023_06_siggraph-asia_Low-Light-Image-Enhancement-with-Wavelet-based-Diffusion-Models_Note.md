@@ -158,6 +158,74 @@ DM 只要处理最小尺度的低频分量 A，然后用 HFRM 修高频逐渐叠
 
 ![eq10](docs/2023_06_TOG_Low-Light-Image-Enhancement-with-Wavelet-based-Diffusion-Models_Note/eq10.png)
 
+#### Code
+
+DWT
+
+> https://github.com/JianghaiSCU/Diffusion-Low-Light/blob/main/models/wavelet.py#L50
+
+```python
+def dwt_init(x):
+
+    x01 = x[:, :, 0::2, :] / 2
+    x02 = x[:, :, 1::2, :] / 2
+    x1 = x01[:, :, :, 0::2]
+    x2 = x02[:, :, :, 0::2]
+    x3 = x01[:, :, :, 1::2]
+    x4 = x02[:, :, :, 1::2]
+    x_LL = x1 + x2 + x3 + x4
+    x_HL = -x1 - x2 + x3 + x4
+    x_LH = -x1 + x2 - x3 + x4
+    x_HH = x1 - x2 - x3 + x4
+
+    return torch.cat((x_LL, x_HL, x_LH, x_HH), 0)
+```
+
+间隔地去取 h, w 再组合起来作为竖向，横向特征
+
+
+
+
+
+HFRM module 输入是已经转到频域的特征
+
+> https://github.com/JianghaiSCU/Diffusion-Low-Light/blob/main/models/mods.py#L117
+
+DepthConv 搞了两层 Conv2d
+
+```python
+class Depth_conv(nn.Module):
+    def __init__(self, in_ch, out_ch):
+        super(Depth_conv, self).__init__()
+        self.depth_conv = nn.Conv2d(
+            in_channels=in_ch,
+            out_channels=in_ch,
+            kernel_size=(3, 3),
+            stride=(1, 1),
+            padding=1,
+            groups=in_ch
+        )
+        self.point_conv = nn.Conv2d(
+            in_channels=in_ch,
+            out_channels=out_ch,
+            kernel_size=(1, 1),
+            stride=(1, 1),
+            padding=0,
+            groups=1
+        )
+
+    def forward(self, input):
+        out = self.depth_conv(input)
+        out = self.point_conv(out)
+        return out
+```
+
+
+
+
+
+
+
 
 
 ### Loss :star:
@@ -183,6 +251,12 @@ DIffusion Loss + 低频特征 Loss
 ![eq12](docs/2023_06_TOG_Low-Light-Image-Enhancement-with-Wavelet-based-Diffusion-Models_Note/eq12.png)
 
 > Moreover, we utilize a content loss L𝑐𝑜𝑛𝑡𝑒𝑛𝑡 that combines L1 loss and SSIM loss [Wang et al. 2004] to minimize the content difference between the restored image ˆ𝐼 𝑙𝑜𝑤 and the reference image 𝐼ℎ𝑖𝑔ℎ
+
+
+
+
+
+
 
 
 
@@ -278,6 +352,8 @@ DIffusion Loss + 低频特征 Loss
 训练过程中加入 Denoise 融入高频的融合，能提升输出的一致性，降低随机性干扰
 
 ![fig10](docs/2023_06_TOG_Low-Light-Image-Enhancement-with-Wavelet-based-Diffusion-Models_Note/fig10.png)
+
+
 
 
 

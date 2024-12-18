@@ -739,7 +739,21 @@ show that the generation scheme can be recomposed as two nested diffusion proces
 
 
 
-- [x] "FreeU: Free Lunch in Diffusion U-Net" CVPR, 2023 Sep 20
+
+
+- "Common Diffusion Noise Schedules and Sample Steps are Flawed" WACV, 2023 May 15
+  [paper](http://arxiv.org/abs/2305.08891v4) [code]() [pdf](./2023_05_WACV_Common-Diffusion-Noise-Schedules-and-Sample-Steps-are-Flawed.pdf) [note](./2023_05_WACV_Common-Diffusion-Noise-Schedules-and-Sample-Steps-are-Flawed_Note.md)
+  Authors: Shanchuan Lin, Bingchen Liu, Jiashi Li, Xiao Yang
+
+> https://vscode.dev/github/lzhxmu/AccDiffusion/blob/main/accdiffusion_sdxl.py#L1434
+
+Diffusion Inference Fixing
+
+
+
+
+
+- "FreeU: Free Lunch in Diffusion U-Net" CVPR, 2023 Sep 20
   [paper](http://arxiv.org/abs/2309.11497v2) [code](https://chenyangsi.top/FreeU/.) [pdf](./2023_09_CVPR_FreeU--Free-Lunch-in-Diffusion-U-Net.pdf) [note](./2023_09_CVPR_FreeU--Free-Lunch-in-Diffusion-U-Net_Note.md)
   Authors: Chenyang Si, Ziqi Huang, Yuming Jiang, Ziwei Liu
 
@@ -750,7 +764,9 @@ show that the generation scheme can be recomposed as two nested diffusion proces
 
 
 
-- [x] "FreeInit: Bridging Initialization Gap in Video Diffusion Models" ECCV, 2023 Dec 12
+
+
+- "FreeInit: Bridging Initialization Gap in Video Diffusion Models" ECCV, 2023 Dec 12
   [paper](http://arxiv.org/abs/2312.07537v2) [code]() [pdf](./2023_12_ECCV_FreeInit--Bridging-Initialization-Gap-in-Video-Diffusion-Models.pdf) [note](./2023_12_ECCV_FreeInit--Bridging-Initialization-Gap-in-Video-Diffusion-Models_Note.md)
   Authors: Tianxing Wu, Chenyang Si, Yuming Jiang, Ziqi Huang, Ziwei Liu
 
@@ -788,10 +804,34 @@ Framework
 
 
 
+
+
 - "Prompt-to-Prompt Image Editing with Cross Attention Control" 
   [code](https://github.com/google/prompt-to-prompt/)
 
 发现 cross attn 决定了 layout
+
+
+
+
+
+- "InstantStyle: Free Lunch towards Style-Preserving in Text-to-Image Generation" Arxiv, 2024 Apr 3 :star:
+  [paper](http://arxiv.org/abs/2404.02733v2) [code](https://github.com/InstantStyle/InstantStyle.) [pdf](./2024_04_Arxiv_InstantStyle--Free-Lunch-towards-Style-Preserving-in-Text-to-Image-Generation.pdf) [note](./2024_04_Arxiv_InstantStyle--Free-Lunch-towards-Style-Preserving-in-Text-to-Image-Generation_Note.md)
+  Authors: Haofan Wang, Matteo Spinelli, Qixun Wang, Xu Bai, Zekui Qin, Anthony Chen
+
+- **DDIM inversion 会出现细节丢失的问题 :star:，对 style 的保留倒是很好**
+
+  > For real world image (left), DDIM inversion reconstruction (right) is inadequate to retain fine-grained details, which can be necessary for styles.
+
+  ![fig3](docs/2024_04_Arxiv_InstantStyle--Free-Lunch-towards-Style-Preserving-in-Text-to-Image-Generation_Note/fig3.png)
+
+- 发现 UNet 有 2 个 block 对于 layout 的生成作用很显著
+
+  > We are surprised to find that `up blocks.0.attentions.1` and `down blocks.2.attentions.1` are the most representative layers, controlling style and spatial layout respectively. 
+
+  ![fig7](docs/2024_04_Arxiv_InstantStyle--Free-Lunch-towards-Style-Preserving-in-Text-to-Image-Generation_Note/fig7.png)
+
+
 
 
 
@@ -1296,8 +1336,22 @@ https://github.com/DepthAnything/Depth-Anything-V2?tab=readme-ov-file
 
 
 
-- "Paint-it: Text-to-Texture Synthesis via Deep Convolutional Texture Map Optimization and Physically-Based Rendering" CVPR
+- "Paint-it: Text-to-Texture Synthesis via Deep Convolutional Texture Map Optimization and Physically-Based Rendering" CVPR, 2023 Dec
   [paper](https://arxiv.org/pdf/2312.11360)
+
+
+
+
+
+- "MVDiffusion: Enabling Holistic Multi-view Image Generation with Correspondence-Aware Diffusion" NIPS-spotlight, 2023 Jul 3
+  [paper](http://arxiv.org/abs/2307.01097v7) [code](https://github.com/Tangshitao/MVDiffusion) [pdf](./2023_07_NIPS_MVDiffusion--Enabling-Holistic-Multi-view-Image-Generation-with-Correspondence-Aware-Diffusion.pdf) [note](./2023_07_NIPS_MVDiffusion--Enabling-Holistic-Multi-view-Image-Generation-with-Correspondence-Aware-Diffusion_Note.md)
+  Authors: Shitao Tang, Fuyang Zhang, Jiacheng Chen, Peng Wang, Yasutaka Furukawa
+
+![fig2](docs/2023_07_NIPS_MVDiffusion--Enabling-Holistic-Multi-view-Image-Generation-with-Correspondence-Aware-Diffusion_Note/fig2.png)
+
+Weight-sharing Unet 实现多个 View 的融合！多个 view 生成 panaroma 图像
+
+
 
 
 
@@ -1306,6 +1360,27 @@ https://github.com/DepthAnything/Depth-Anything-V2?tab=readme-ov-file
   Authors: Yu-Ying Yeh, Jia-Bin Huang, Changil Kim, Lei Xiao, Thu Nguyen-Phuoc, Numair Khan, Cheng Zhang, Manmohan Chandraker, Carl S Marshall, Zhao Dong, Zhengqin Li
 
 参考 https://texturedreamer.github.io/ 视频，学习一下如何一步步从 baseline 改进一次后，发现还有问题逐步搭建新的模块 :star:
+
+
+
+
+
+- "StyleTex: Style Image-Guided Texture Generation for 3D Models" SIGGRAPH, 2024 Nov 1
+  [paper](http://arxiv.org/abs/2411.00399v1) [code]() [pdf](./2024_11_SIGGRAPH_StyleTex--Style-Image-Guided-Texture-Generation-for-3D-Models.pdf) [note](./2024_11_SIGGRAPH_StyleTex--Style-Image-Guided-Texture-Generation-for-3D-Models_Note.md)
+  Authors: Zhiyu Xie, Yuqing Zhang, Xiangjun Tang, Yiqian Wu, Dehan Chen, Gongsheng Li, Xaogang Jin
+
+![fig2](docs/2024_11_SIGGRAPH_StyleTex--Style-Image-Guided-Texture-Generation-for-3D-Models_Note/fig2.png)
+
+1. 设计一个正交分解公式，去把 CLIP 特征中的内容特征删掉，**只保留 style 特征**
+2. **先前工作发现Unet Cross-attn 指定层负责 style 的生成**，选取指定层，注入 reference style 特征
+3. 生成 texture 好坏，若 texture 里面没有物体信息就很 ok
+
+
+
+- "Multi-view Image Diffusion via Coordinate Noise and Fourier Attention" 
+  [paper](https://arxiv.org/pdf/2412.03756)
+
+
 
 
 
@@ -1623,6 +1698,14 @@ DoubleDIP 把各种 low-level 任务看作**图层分解任务**，**将图像�
   [paper](http://arxiv.org/abs/2404.12388v2) [code](https://github.com/danaigc/videoGigaGanHub) :warning: [web](https://videogigagan.github.io/) [pdf](./2024_04_ECCV_VideoGigaGAN--Towards-Detail-rich-Video-Super-Resolution.pdf) [note](./2024_04_ECCV_VideoGigaGAN--Towards-Detail-rich-Video-Super-Resolution_Note.md)
   Authors: Yiran Xu, Taesung Park, Richard Zhang, Yang Zhou, Eli Shechtman, Feng Liu, Jia-Bin Huang, Difan Liu(Adobe)
 
+利用 Image GigaGAN 先验
+
+
+
+- "SeeClear: Semantic Distillation Enhances Pixel Condensation for Video Super-Resolution" NIPS, 2024 Oct 8
+  [paper](http://arxiv.org/abs/2410.05799v4) [code](https://github.com/Tang1705/SeeClear-NeurIPS24) [pdf](./2024_10_NIPS_SeeClear--Semantic-Distillation-Enhances-Pixel-Condensation-for-Video-Super-Resolution.pdf) [note](./2024_10_NIPS_SeeClear--Semantic-Distillation-Enhances-Pixel-Condensation-for-Video-Super-Resolution_Note.md)
+  Authors: Qi Tang, Yao Zhao, Meiqin Liu, Chao Yao
+
 
 
 #### frequency domain :radio:
@@ -1632,8 +1715,6 @@ DoubleDIP 把各种 low-level 任务看作**图层分解任务**，**将图像�
 > diffusion 去噪本身就会降低高频，再加个 Avg 平滑模型，结果就更模糊（高频段更低）
 >
 > **从频域补充细节**
-
-
 
 - "JPEG Artifact Correction using Denoising Diffusion Restoration Models" Arxiv, 2022 Sep 23
   [paper](http://arxiv.org/abs/2209.11888v2) [code]() [pdf](./2022_09_Arxiv_JPEG-Artifact-Correction-using-Denoising-Diffusion-Restoration-Models.pdf) [note](./2022_09_Arxiv_JPEG-Artifact-Correction-using-Denoising-Diffusion-Restoration-Models_Note.md)
@@ -1648,6 +1729,8 @@ DoubleDIP 把各种 low-level 任务看作**图层分解任务**，**将图像�
   Authors: Hai Jiang, Ao Luo, Songchen Han, Haoqiang Fan, Shuaicheng Liu
 
 设计 wavelet transformation 频域融合模块，减少高频纹理 artifact！:star:
+
+![fig3](docs/2023_06_TOG_Low-Light-Image-Enhancement-with-Wavelet-based-Diffusion-Models_Note/fig3.png)
 
 
 
@@ -1689,11 +1772,35 @@ DoubleDIP 把各种 low-level 任务看作**图层分解任务**，**将图像�
 
 
 
+- "When Fast Fourier Transform Meets Transformer for Image Restoration" ECCV, 2024 Mar 1 :star: 
+  [paper](https://www.ecva.net/papers/eccv_2024/papers_ECCV/papers/06190.pdf) [code](https://github.com/deng-ai-lab/SFHformer) [pdf](./2024_03_ECCV_When-Fast-Fourier-Transform-Meets-Transformer-for-Image-Restoration.pdf) [note](./2024_03_ECCV_When-Fast-Fourier-Transform-Meets-Transformer-for-Image-Restoration_Note.md)
+  Authors: Xingyu Jiang, Xiuhui Zhang, Ning Gao, Yue Deng
+
+
+
+
+
 - "FRAG: Frequency Adapting Group for Diffusion Video Editing" ICML, 2024 Jun 10
   [paper](http://arxiv.org/abs/2406.06044v1) [code](https://github.com/dbstjswo505/FRAG) [pdf](./2024_06_Arxiv_FRAG--Frequency-Adapting-Group-for-Diffusion-Video-Editing.pdf) [note](./2024_06_Arxiv_FRAG--Frequency-Adapting-Group-for-Diffusion-Video-Editing_Note.md)
   Authors: Sunjae Yoon, Gwanhyeong Koo, Geonwoo Kim, Chang D. Yoo
 
 视频编辑 + 从原始视频提取高频特征
+
+![fig4](docs/2024_06_Arxiv_FRAG--Frequency-Adapting-Group-for-Diffusion-Video-Editing_Note/fig4.png)
+
+
+
+
+
+- "Rethinking Video Deblurring with Wavelet-Aware Dynamic Transformer and Diffusion Model" ECCV, 2024 Aug 24
+  [paper](http://arxiv.org/abs/2408.13459v1) [code]() [pdf](./2024_08_ECCV_Rethinking-Video-Deblurring-with-Wavelet-Aware-Dynamic-Transformer-and-Diffusion-Model.pdf) [note](./2024_08_ECCV_Rethinking-Video-Deblurring-with-Wavelet-Aware-Dynamic-Transformer-and-Diffusion-Model_Note.md)
+  Authors: Chen Rao, Guangyuan Li, Zehua Lan, Jiakai Sun, Junsheng Luan, Wei Xing, Lei Zhao, Huaizhong Lin, Jianfeng Dong, Dalong Zhang
+
+![fig1](docs/2024_08_ECCV_Rethinking-Video-Deblurring-with-Wavelet-Aware-Dynamic-Transformer-and-Diffusion-Model_Note/fig1.png)
+
+去噪到 z0 加一个 Wavelet Attention Blocks (Attn +FFN)
+
+![fig2](docs/2024_08_ECCV_Rethinking-Video-Deblurring-with-Wavelet-Aware-Dynamic-Transformer-and-Diffusion-Model_Note/fig2.png)
 
 
 
@@ -1703,18 +1810,30 @@ DoubleDIP 把各种 low-level 任务看作**图层分解任务**，**将图像�
 
 
 
-- "Identity-Preserving Text-to-Video Generation by Frequency Decomposition" Arxiv, 2024 Nov 26
-  [paper](http://arxiv.org/abs/2411.17440v1) [code](https://github.com/PKU-YuanGroup/ConsisID) [web](https://pku-yuangroup.github.io/ConsisID/) [pdf](./2024_11_Arxiv_Identity-Preserving-Text-to-Video-Generation-by-Frequency-Decomposition.pdf) [note](./2024_11_Arxiv_Identity-Preserving-Text-to-Video-Generation-by-Frequency-Decomposition_Note.md)
-  Authors: Shenghai Yuan, Jinfa Huang, Xianyi He, Yunyuan Ge, Yujun Shi, Liuhan Chen, Jiebo Luo, Li Yuan
-
-![fig2](docs/2024_11_Arxiv_Identity-Preserving-Text-to-Video-Generation-by-Frequency-Decomposition_Note/fig2.png)
-
-自己定义人脸高频特征 ArcFace + CLIP Image Embedding.... 额外加入人脸关键点作为低频特征去强调一下
-
-
-
 - "WF-VAE: Enhancing Video VAE by Wavelet-Driven Energy Flow for Latent Video Diffusion Model" 
   [paper](https://arxiv.org/pdf/2411.17459)
+
+
+
+
+
+- "FouriScale: A Frequency Perspective on Training-Free High-Resolution Image Synthesis" ECCV, 2024 Mar 19
+  [paper](http://arxiv.org/abs/2403.12963v1) [code](https://github.com/LeonHLJ/FouriScale.) [pdf](./2024_03_ECCV_FouriScale--A-Frequency-Perspective-on-Training-Free-High-Resolution-Image-Synthesis.pdf) [note](./2024_03_ECCV_FouriScale--A-Frequency-Perspective-on-Training-Free-High-Resolution-Image-Synthesis_Note.md)
+  Authors: Linjiang Huang, Rongyao Fang, Aiping Zhang, Guanglu Song, Si Liu, Yu Liu, Hongsheng Li
+
+![fig2](docs/2024_03_ECCV_FouriScale--A-Frequency-Perspective-on-Training-Free-High-Resolution-Image-Synthesis_Note/fig2.png)
+
+
+
+
+
+- "FreqMark: Invisible Image Watermarking via Frequency Based Optimization in Latent Space" Arxiv, 2024 Oct 28
+  [paper](http://arxiv.org/abs/2410.20824v1) [code]() [pdf](./2024_10_Arxiv_FreqMark--Invisible-Image-Watermarking-via-Frequency-Based-Optimization-in-Latent-Space.pdf) [note](./2024_10_Arxiv_FreqMark--Invisible-Image-Watermarking-via-Frequency-Based-Optimization-in-Latent-Space_Note.md)
+  Authors: Yiyang Guo, Ruizhe Li, Mude Hui, Hanzhong Guo, Chen Zhang, Chuangjian Cai, Le Wan, Shangfei Wang
+
+![fig2](docs/2024_10_Arxiv_FreqMark--Invisible-Image-Watermarking-via-Frequency-Based-Optimization-in-Latent-Space_Note/fig2.png)
+
+图像得到 VAE 特征，做 FFT 转到频域去加水印信息，再整个逆回来；Latent FFT 仍然有语义哦！加密信息是加在主要物体上！
 
 
 
@@ -1730,20 +1849,29 @@ DoubleDIP 把各种 low-level 任务看作**图层分解任务**，**将图像�
 
 
 
+- "Identity-Preserving Text-to-Video Generation by Frequency Decomposition" Arxiv, 2024 Nov 26
+  [paper](http://arxiv.org/abs/2411.17440v1) [code](https://github.com/PKU-YuanGroup/ConsisID) [web](https://pku-yuangroup.github.io/ConsisID/) [pdf](./2024_11_Arxiv_Identity-Preserving-Text-to-Video-Generation-by-Frequency-Decomposition.pdf) [note](./2024_11_Arxiv_Identity-Preserving-Text-to-Video-Generation-by-Frequency-Decomposition_Note.md)
+  Authors: Shenghai Yuan, Jinfa Huang, Xianyi He, Yunyuan Ge, Yujun Shi, Liuhan Chen, Jiebo Luo, Li Yuan
+
+![fig2](docs/2024_11_Arxiv_Identity-Preserving-Text-to-Video-Generation-by-Frequency-Decomposition_Note/fig2.png)
+
+自己定义人脸高频特征 ArcFace + CLIP Image Embedding.... 额外加入人脸关键点作为低频特征去强调一下
+
+
+
+
+
 - "Refine-by-Align: Reference-Guided Artifacts Refinement through Semantic Alignment" Arxiv, 2024 Nov 30
   [paper](http://arxiv.org/abs/2412.00306v1) [code]() [pdf](./2024_11_Arxiv_Refine-by-Align--Reference-Guided-Artifacts-Refinement-through-Semantic-Alignment.pdf) [note](./2024_11_Arxiv_Refine-by-Align--Reference-Guided-Artifacts-Refinement-through-Semantic-Alignment_Note.md)
   Authors: Yizhi Song, Liu He, Zhifei Zhang, Soo Ye Kim, He Zhang, Wei Xiong, Zhe Lin, Brian Price, Scott Cohen, Jianming Zhang, Daniel Aliaga
 
 
 
+
+
 - "Sharp-It: A Multi-view to Multi-view Diffusion Model for 3D Synthesis and Manipulation" Arxiv, 2024 Dec 3
   [paper](http://arxiv.org/abs/2412.02631v1) [code]() [pdf](./2024_12_Arxiv_Sharp-It--A-Multi-view-to-Multi-view-Diffusion-Model-for-3D-Synthesis-and-Manipulation.pdf) [note](./2024_12_Arxiv_Sharp-It--A-Multi-view-to-Multi-view-Diffusion-Model-for-3D-Synthesis-and-Manipulation_Note.md)
   Authors: Yiftach Edelstein, Or Patashnik, Dana Cohen-Bar, Lihi Zelnik-Manor
-
-
-
-- "FreqMark: Invisible Image Watermarking via Frequency Based Optimization in Latent Space" 
-  [paper](https://arxiv.org/pdf/2410.20824)
 
 
 
@@ -1762,6 +1890,52 @@ Low-Light 暗部区域细节不清晰，类似的问题 :star:
   Authors: Qirui Yang, Yinbo Li, Peng-Tao Jiang, Qihua Cheng, Biting Yu, Yihao Liu, Huanjing Yue, Jingyu Yang
 
 
+
+
+
+- "Wavelet-based Mamba with Fourier Adjustment for Low-light Image Enhancement" Arxiv, 2024 Oct 27 :star:
+  [paper](http://arxiv.org/abs/2410.20314v1) [code](https://github.com/mcpaulgeorge/WalMaFa.) [pdf](./2024_10_Arxiv_Wavelet-based-Mamba-with-Fourier-Adjustment-for-Low-light-Image-Enhancement.pdf) [note](./2024_10_Arxiv_Wavelet-based-Mamba-with-Fourier-Adjustment-for-Low-light-Image-Enhancement_Note.md)
+  Authors: Junhao Tan, Songwen Pei, Wei Qin, Bo Fu, Ximing Li, Libo Huang
+
+![fig4](docs/2024_10_Arxiv_Wavelet-based-Mamba-with-Fourier-Adjustment-for-Low-light-Image-Enhancement_Note/fig4.png)
+
+
+
+
+
+- "DiffFNO: Diffusion Fourier Neural Operator" Arxiv, 2024 Nov 15
+  [paper](http://arxiv.org/abs/2411.09911v1) [code]() [pdf](./2024_11_Arxiv_DiffFNO--Diffusion-Fourier-Neural-Operator.pdf) [note](./2024_11_Arxiv_DiffFNO--Diffusion-Fourier-Neural-Operator_Note.md)
+  Authors: Xiaoyi Liu, Hao Tang
+
+![fig2](docs/2024_11_Arxiv_DiffFNO--Diffusion-Fourier-Neural-Operator_Note/fig2.png)
+
+
+
+
+
+- "Towards More Accurate Fake Detection on Images Generated from Advanced Generative and Neural Rendering Models" Arxiv, 2024 Nov 13, `FFiT` 
+  [paper](http://arxiv.org/abs/2411.08642v1) [code]() [pdf](./2024_11_Arxiv_Towards-More-Accurate-Fake-Detection-on-Images-Generated-from-Advanced-Generative-and-Neural-Rendering-Models.pdf) [note](./2024_11_Arxiv_Towards-More-Accurate-Fake-Detection-on-Images-Generated-from-Advanced-Generative-and-Neural-Rendering-Models_Note.md)
+  Authors: Chengdong Dong, Vijayakumar Bhagavatula, Zhenyu Zhou, Ajay Kumar(CMU)
+
+![fig1](docs/2024_11_Arxiv_Towards-More-Accurate-Fake-Detection-on-Images-Generated-from-Advanced-Generative-and-Neural-Rendering-Models_Note/fig1.png)
+
+使用 MAE-pretrain ，频域信息损失很明显
+
+
+
+##### selective frequency
+
+- "Efficient Frequency Domain-based Transformers for High-Quality Image Deblurring" CVPR, 2022 Nov 22, `FFTformer`
+  [paper](http://arxiv.org/abs/2211.12250v1) [code](https://github.com/kkkls/FFTformer) [pdf](./2022_11_CVPR_Efficient-Frequency-Domain-based-Transformers-for-High-Quality-Image-Deblurring.pdf) [note](./2022_11_CVPR_Efficient-Frequency-Domain-based-Transformers-for-High-Quality-Image-Deblurring_Note.md)
+  Authors: Lingshun Kong, Jiangxin Dong, Mingqiang Li, Jianjun Ge, Jinshan Pan
+
+
+
+- "F2former: When Fractional Fourier Meets Deep Wiener Deconvolution and Selective Frequency Transformer for Image Deblurring" Arxiv, 2024 Sep 3
+  [paper](http://arxiv.org/abs/2409.02056v1) [code]() [pdf](./2024_09_Arxiv_F2former--When-Fractional-Fourier-Meets-Deep-Wiener-Deconvolution-and-Selective-Frequency-Transformer-for-Image-Deblurring.pdf) [note](./2024_09_Arxiv_F2former--When-Fractional-Fourier-Meets-Deep-Wiener-Deconvolution-and-Selective-Frequency-Transformer-for-Image-Deblurring_Note.md)
+  Authors: Subhajit Paul, Sahil Kumawat, Ashutosh Gupta, Deepak Mishra
+
+![fig3](docs/2024_09_Arxiv_F2former--When-Fractional-Fourier-Meets-Deep-Wiener-Deconvolution-and-Selective-Frequency-Transformer-for-Image-Deblurring_Note/fig3.png)
 
 
 
@@ -2074,6 +2248,14 @@ UNet 结构不变，每个 block 换为 Transformer block. 两个 Attention，�
 使用主干网络 Encoder-Decoder 的主干网络（Restormer），在每个 scale 开头加上 diffusion 的先验特征，当作 KV 融入主干网络（提出的 HIM block）；两阶段训练，stage1 先训练用于 diffusion 的图像编码器 LE Encoder, 不训diffusion 把特征 z 输入主干网络，在图像空间约束；stage2 zT 的编码器不训，训练 condition 的编码器 + diffusion + HIM
 
 ![image-20240201224224105](docs/2023_05_NIPS_Hierarchical-Integration-Diffusion-Model-for-Realistic-Image-Deblurring_Note/HI-Diff_framework.png)
+
+
+
+
+
+- "Rethinking Video Deblurring with Wavelet-Aware Dynamic Transformer and Diffusion Model" ECCV, 2024 Aug 24
+  [paper](http://arxiv.org/abs/2408.13459v1) [code]() [pdf](./2024_08_ECCV_Rethinking-Video-Deblurring-with-Wavelet-Aware-Dynamic-Transformer-and-Diffusion-Model.pdf) [note](./2024_08_ECCV_Rethinking-Video-Deblurring-with-Wavelet-Aware-Dynamic-Transformer-and-Diffusion-Model_Note.md)
+  Authors: Chen Rao, Guangyuan Li, Zehua Lan, Jiakai Sun, Junsheng Luan, Wei Xing, Lei Zhao, Huaizhong Lin, Jianfeng Dong, Dalong Zhang
 
 
 
@@ -2497,9 +2679,23 @@ Authors: Muyang Li, Tianle Cai, Jiaxin Cao, Qinsheng Zhang, Han Cai, Junjie Bai,
 
 
 
+
+
+- "FouriScale: A Frequency Perspective on Training-Free High-Resolution Image Synthesis" ECCV, 2024 Mar 19
+  [paper](http://arxiv.org/abs/2403.12963v1) [code](https://github.com/LeonHLJ/FouriScale.) [pdf](./2024_03_ECCV_FouriScale--A-Frequency-Perspective-on-Training-Free-High-Resolution-Image-Synthesis.pdf) [note](./2024_03_ECCV_FouriScale--A-Frequency-Perspective-on-Training-Free-High-Resolution-Image-Synthesis_Note.md)
+  Authors: Linjiang Huang, Rongyao Fang, Aiping Zhang, Guanglu Song, Si Liu, Yu Liu, Hongsheng Li
+
+![fig2](docs/2024_03_ECCV_FouriScale--A-Frequency-Perspective-on-Training-Free-High-Resolution-Image-Synthesis_Note/fig2.png)
+
+
+
 - "FAM Diffusion: Frequency and Attention Modulation for High-Resolution Image Generation with Stable Diffusion" Arxiv, 2024 Nov 27
   [paper](http://arxiv.org/abs/2411.18552v1) [code]() [pdf](./2024_11_Arxiv_FAM-Diffusion--Frequency-and-Attention-Modulation-for-High-Resolution-Image-Generation-with-Stable-Diffusion.pdf) [note](./2024_11_Arxiv_FAM-Diffusion--Frequency-and-Attention-Modulation-for-High-Resolution-Image-Generation-with-Stable-Diffusion_Note.md)
   Authors: Haosen Yang, Adrian Bulat, Isma Hadji, Hai X. Pham, Xiatian Zhu, Georgios Tzimiropoulos, Brais Martinez
+
+![fig2](docs/2024_11_Arxiv_FAM-Diffusion--Frequency-and-Attention-Modulation-for-High-Resolution-Image-Generation-with-Stable-Diffusion_Note/fig2.png)
+
+
 
 
 

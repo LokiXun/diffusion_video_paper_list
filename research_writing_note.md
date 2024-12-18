@@ -392,7 +392,23 @@ related work 可以用一般过去时。
   - 配色表
   - 属性图，表格
 
+### drawio 图标不足
 
+- 找图标
+
+https://icones.js.org/collection/all?s=loader&icon=system-uicons:loader
+
+https://lucide.dev/icons/rotate-ccw
+
+https://www.jyshare.com/more/svgeditor/
+
+- 插入 SVG url
+
+https://www.drawio.com/doc/faq/arrange-insert-menu
+
+- Q: SVG 有想去掉一部分？
+
+https://www.jyshare.com/more/svgeditor/
 
 
 
@@ -520,3 +536,26 @@ B595BF
 ## 论文写作课程
 
 > [course](https://tongxuetang.tongji.edu.cn/course/1445/task/5018/show#)
+
+## github webpage
+
+播放视频，放 gif，github 没法渲染 MP4 
+
+https://raw.githubusercontent.com/guoyww/AnimateDiff/main/README.md
+
+https://github.com/LokiXun/diffusion_video_paper_list/blob/master/old_movie_restoration_progress.md
+
+<table class="center">
+	<tr style="line-height: 0">
+    <td width=25% style="border: none; text-align: center">Input Scribble</td>
+    <td width=25% style="border: none; text-align: center">Output</td>
+    <td width=25% style="border: none; text-align: center">Input Scribbles</td>
+    <td width=25% style="border: none; text-align: center">Output</td>
+    </tr>
+    <tr>
+      <td width=25% style="border: none"><img src="__assets__/demos/scribble/scribble_1.png" style="width:100%"></td>
+      <td width=25% style="border: none"><img src="__assets__/animations/v3/sketch_boy.gif" style="width:100%"></td>
+      <td width=25% style="border: none"><img src="__assets__/demos/scribble/scribble_2_readme.png" style="width:100%"></td>
+      <td width=25% style="border: none"><img src="__assets__/animations/v3/sketch_city.gif" style="width:100%"></td>
+    </tr>
+</table>
