@@ -63,7 +63,13 @@ PW Conv 把通道数翻倍，然后通道上 split 分成 spatial 特征 & frequ
 
 ### Spatial-domain Branch
 
-直接看代码 + 图足够了
+直接看后面代码 + 图足够了
+
+就是通道 split 开用两个不同 stride 的卷积分别提取特征，再在 C 拼接起来恢复通道数
+
+![eq1](docs/2024_03_ECCV_When-Fast-Fourier-Transform-Meets-Transformer-for-Image-Restoration_Note/eq1.png)
+
+
 
 ### Frequency-domain Branch
 
@@ -73,7 +79,7 @@ PW Conv 把通道数翻倍，然后通道上 split 分成 spatial 特征 & frequ
 
 提出对每个 frequency component 加  FCPE 频域位置编码；提出 frequency dynamic convolution (FDC)
 
-> we introduce two core components. Firstly, we implement **frequency-conditional positional encoding (FCPE)**, which assigns a distinct identity to each frequency component. Secondly, we introduce **frequency dynamic convolution (FDC)**, allowing flexible modeling based on the input of each frequency component. These designs utilize tailored processing methodologies to effectively leverage the unique characteristics of **each frequency component.**
+> we introduce two core components. *Firstly, we implement **frequency-conditional positional encoding (FCPE)**, which assigns a distinct identity to each frequency component. Secondly, we introduce **frequency dynamic convolution (FDC)**, allowing flexible modeling based on the input of each frequency component. These designs utilize tailored processing methodologies to effectively leverage the unique characteristics of **each frequency component.**
 
 
 
@@ -114,7 +120,45 @@ PW Conv 把通道数翻倍，然后通道上 split 分成 spatial 特征 & frequ
 
 
 
+### FFN
 
+- 搞了两个可学习参数作为 residual 权重
+
+split 为 3 个特征分别用不同卷积核的卷积，concat 起来再过一层卷积调整通道
+
+```python
+class Block(nn.Module):
+    def __init__(
+            self,
+            dim,
+            norm_layer=nn.BatchNorm2d,
+            token_mixer=Mixer,
+    ):
+        super(Block, self).__init__()
+        self.dim = dim
+        self.norm1 = norm_layer(dim)
+        self.norm2 = norm_layer(dim)
+        self.mixer = token_mixer(dim=self.dim)
+        self.ffn = FFN(dim=self.dim)
+
+        self.beta = nn.Parameter(torch.zeros((1, dim, 1, 1)), requires_grad=True)
+        self.gamma = nn.Parameter(torch.zeros((1, dim, 1, 1)), requires_grad=True)
+
+    def forward(self, x):
+        copy = x
+        x = self.norm1(x)
+        x = self.mixer(x)
+        x = x * self.beta + copy
+
+        copy = x
+        x = self.norm2(x)
+        x = self.ffn(x)
+        x = x * self.gamma + copy
+
+        return x
+```
+
+![fig2](docs/2024_03_ECCV_When-Fast-Fourier-Transform-Meets-Transformer-for-Image-Restoration_Note/fig2.png)
 
 
 
@@ -172,6 +216,8 @@ def train(train_loader, network, criterion, optimizer):
 
 
 ### Code
+
+> 3D FFT https://cryoemprinciples.yale.edu/sites/default/files/files/4%20Fourier2D-3D.pdf
 
 ![fig2](docs/2024_03_ECCV_When-Fast-Fourier-Transform-Meets-Transformer-for-Image-Restoration_Note/fig2.png)
 
@@ -363,7 +409,6 @@ torch.Size([1, 4, 6, 64, 64])  # b c t h w
 >>> a=torch.fft.rfftn(t, norm='ortho', dim=(-3,-2,-1))
 >>> a.shape
 torch.Size([1, 4, 6, 64, 33])
-
 >>> torch.real(a).shape
 torch.Size([1, 4, 6, 64, 33])
 >>> torch.imag(a).shape
@@ -371,6 +416,21 @@ torch.Size([1, 4, 6, 64, 33]
 >>> t2=torch.fft.irfftn(a, norm='ortho', dim=(-3,-2,-1))
 >>> t2.shape
 torch.Size([1, 4, 6, 64, 64])
+
+
+# Unet feature shape like example
+>>> a.shape
+torch.Size([1, 640, 6, 16, 16])
+>>> b=torch.fft.rfftn(a,norm='ortho', dim=(-3,-2,-1))
+>>> b.shape
+torch.Size([1, 640, 6, 16, 9])
+>>> torch.real(b).shape
+torch.Size([1, 640, 6, 16, 9])
+>>> torch.imag(b).shape
+torch.Size([1, 640, 6, 16, 9])
+>>> c=torch.fft.irfftn(b, norm='ortho', dim=(-3,-2,-1))
+>>> c.shape
+torch.Size([1, 640, 6, 16, 16])
 ```
 
 
@@ -381,9 +441,59 @@ torch.Size([1, 4, 6, 64, 64])
 
 ## setting
 
+- All experiments are implemented by PyTorch [59] 1.7.1 with four NVIDIA 3090 GPUs
+
+
+
 ## Experiment
 
 > ablation study 看那个模块有效，总结一下
+
+在多个任务上展示结果
+
+
+
+- synthetic and real-world dehazing
+
+居然只有 3M 参数
+
+![fig3](docs/2024_03_ECCV_When-Fast-Fourier-Transform-Meets-Transformer-for-Image-Restoration_Note/fig3.png)
+
+
+
+
+
+![tb2](docs/2024_03_ECCV_When-Fast-Fourier-Transform-Meets-Transformer-for-Image-Restoration_Note/tb2.png)
+
+
+
+
+
+deblur 结果
+
+![fig5](docs/2024_03_ECCV_When-Fast-Fourier-Transform-Meets-Transformer-for-Image-Restoration_Note/fig5.png)
+
+
+
+
+
+![tb6-7](docs/2024_03_ECCV_When-Fast-Fourier-Transform-Meets-Transformer-for-Image-Restoration_Note/tb6-7.png)
+
+
+
+### Ablation
+
+The evaluations are conducted on the Rain200L [91] dataset trained on image patches of 256×256.
+
+![tb8](docs/2024_03_ECCV_When-Fast-Fourier-Transform-Meets-Transformer-for-Image-Restoration_Note/tb8.png)
+
+
+
+频域修复结果比 spatial 维度好一些！说明在频域修复的难度稍微小一些
+
+![tb10](docs/2024_03_ECCV_When-Fast-Fourier-Transform-Meets-Transformer-for-Image-Restoration_Note/tb10.png)
+
+
 
 ## Limitations
 

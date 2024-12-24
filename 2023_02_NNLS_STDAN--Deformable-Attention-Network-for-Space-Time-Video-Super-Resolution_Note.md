@@ -113,7 +113,7 @@ LSTFI 模块通过 **DFI 模块**提取 前向 F1->F3, 反向 F3->F1 的特征�
 
 4. 最后得到的 $p_0$  更新后的特征向量，**过 Linear 得到 residual auxiliary feature**
 
-![image-20230925134726748](C:\Users\Loki\workspace\Tongji_CV_group\docs\2023_02_NNLS_STDAN--Deformable-Attention-Network-for-Space-Time-Video-Super-Resolution_Note\image-20230925134726748.png)
+![fig5](docs/2023_02_NNLS_STDAN--Deformable-Attention-Network-for-Space-Time-Video-Super-Resolution_Note/fig5.png)
 
 - **获取当前帧 i 与参考帧 t （两帧）在空间维度融合**
 
