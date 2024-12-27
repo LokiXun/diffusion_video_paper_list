@@ -123,6 +123,13 @@ Face Enhancement 模块用 FFHQ 数据
 
 
 
+- "Learnable Global Spatio-Temporal Adaptive Aggregation for Bracketing Image Restoration and Enhancement" CVPR-W 
+  [paper](https://openaccess.thecvf.com/content/CVPR2024W/NTIRE/papers/Dai_Learnable_Global_Spatio-Temporal_Adaptive_Aggregation_for_Bracketing_Image_Restoration_and_CVPRW_2024_paper.pdf)
+
+
+
+- "Geometry Enhanced Reference-based Image Super-resolution" CVPRW
+
 
 
 ## Old video restoration :fire:
@@ -747,7 +754,10 @@ show that the generation scheme can be recomposed as two nested diffusion proces
 
 > https://vscode.dev/github/lzhxmu/AccDiffusion/blob/main/accdiffusion_sdxl.py#L1434
 
-Diffusion Inference Fixing
+- 根据公式定义去 pdb 看 schedule 和 noise 是否和公式完全一致，从本质上解决 SD 生成误差的问题
+  - offset noise 没有解决本质的训练vs推理不一致的问题，还是有可能出问题，即生成 too bright or too dark。用本文修正训练 vs 推理的问题更好
+- 验证一下，直接对同一个 x0 加不同的高斯噪声，看看去噪各个 step 的预测结果，发现确实 t=T 模型预测都一样；**通过本文方法一次修改后 t=T 的噪声没必要。。。和其余步数割裂开了。。。看几个图的不同敏感程度还是取决于加的噪声**
+- 检查 CFG scale, SNR 对于的噪声
 
 
 
@@ -830,6 +840,12 @@ Framework
   > We are surprised to find that `up blocks.0.attentions.1` and `down blocks.2.attentions.1` are the most representative layers, controlling style and spatial layout respectively. 
 
   ![fig7](docs/2024_04_Arxiv_InstantStyle--Free-Lunch-towards-Style-Preserving-in-Text-to-Image-Generation_Note/fig7.png)
+
+
+
+- "Generative Models: What Do They Know? Do They Know Things? Let's Find Out!" Arxiv, 2023 Nov 28
+  [paper](http://arxiv.org/abs/2311.17137v3) [code]() [pdf](./2023_11_Arxiv_Generative-Models--What-Do-They-Know--Do-They-Know-Things--Let's-Find-Out-.pdf) [note](./2023_11_Arxiv_Generative-Models--What-Do-They-Know--Do-They-Know-Things--Let's-Find-Out-_Note.md)
+  Authors: Xiaodan Du, Nicholas Kolkin, Greg Shakhnarovich, Anand Bhattad
 
 
 
@@ -1078,6 +1094,14 @@ Framework
 
 
 
+
+
+- "BrushEdit: All-In-One Image Inpainting and Editing" Arxiv, 2024 Dec 13
+  [paper](http://arxiv.org/abs/2412.10316v2) [code]() [web](https://liyaowei-stu.github.io/project/BrushEdit/) [pdf](./2024_12_Arxiv_BrushEdit--All-In-One-Image-Inpainting-and-Editing.pdf) [note](./2024_12_Arxiv_BrushEdit--All-In-One-Image-Inpainting-and-Editing_Note.md)
+  Authors: Yaowei Li, Yuxuan Bian, Xuan Ju, Zhaoyang Zhang, Ying Shan, Yuexian Zou, Qiang Xu
+
+
+
 #### ID
 
 - [x] "PhotoMaker: Customizing Realistic Human Photos via Stacked ID Embedding" Arxiv, 2023 Dec, `PhotoMaker`
@@ -1308,6 +1332,10 @@ Understanding the underlying 3D world of 2D images, existing challenge:
 
 
 
+- https://github.com/Genesis-Embodied-AI/Genesis 4D 物理引擎
+
+
+
 
 
 ### depth
@@ -1363,6 +1391,13 @@ Weight-sharing Unet 实现多个 View 的融合！多个 view 生成 panaroma �
 
 
 
+- "MVDiffusion++: A Dense High-resolution Multi-view Diffusion Model for Single or Sparse-view 3D Object Reconstruction" ECCV,
+  [web](https://mvdiffusion-plusplus.github.io/) [code](https://github.com/Tangshitao/MVDiffusion_plusplus) :warning:
+
+
+
+
+
 
 
 - "StyleTex: Style Image-Guided Texture Generation for 3D Models" SIGGRAPH, 2024 Nov 1
@@ -1382,9 +1417,44 @@ Weight-sharing Unet 实现多个 View 的融合！多个 view 生成 panaroma �
 
 
 
+### Novel-view
+
+- "MVDREAM: MULTI-VIEW DIFFUSION FOR 3D GENERATION" 
+  [paper](https://arxiv.org/pdf/2308.16512)
+
+
+
+
+
 
 
 ### Rendering 渲染:low_brightness:
+
+- "BokehMe: When Neural Rendering Meets Classical Rendering" CVPR-oral, 2022 Jun 25
+  [paper](http://arxiv.org/abs/2206.12614v1) [code]() [pdf](./2022_06_CVPR-oral_BokehMe--When-Neural-Rendering-Meets-Classical-Rendering.pdf) [note](./2022_06_CVPR-oral_BokehMe--When-Neural-Rendering-Meets-Classical-Rendering_Note.md)
+  Authors: Juewen Peng, Zhiguo Cao, Xianrui Luo, Hao Lu, Ke Xian, Jianming Zhang
+
+![fig12](docs/2022_06_CVPR-oral_BokehMe--When-Neural-Rendering-Meets-Classical-Rendering_Note/fig12.png)
+
+render bokeh effect 光圈虚化效果，需要给定 disparity 图（类似深度图）。分析了先前方法为什么会在边缘有误差 && 支持控制光圈形状(dilation) 保持效果。
+
+
+
+- "BokehMe++: Harmonious Fusion of Classical and Neural Rendering for Versatile Bokeh Creation" TPAMI, 2024 Dec 18
+  [paper](https://ieeexplore.ieee.org/document/10756626) [code]() [pdf](./2024_12_TPAMI_BokehMe++--Harmonious-Fusion-of-Classical-and-Neural-Rendering-for-Versatile-Bokeh-Creation.pdf) [note](./2024_12_TPAMI_BokehMe++--Harmonious-Fusion-of-Classical-and-Neural-Rendering-for-Versatile-Bokeh-Creation_Note.md)
+  Authors: Juewen Peng, Zhiguo Cao, Xianrui Luo, Ke Xian, Wenfeng Tang, Jianming Zhang
+
+![fig19-20](docs/2024_12_TPAMI_BokehMe++--Harmonious-Fusion-of-Classical-and-Neural-Rendering-for-Versatile-Bokeh-Creation_Note/fig19-20.png)
+
+支持前景 or 背景虚化。生成模型生成的背景原来虚化给错误地弄清晰了，搞模糊修复一下
+
+模型输入的 noisy disparity map 使用 DPT 生成
+
+> imperfect disparity maps predicted by DPT [1]
+
+
+
+
 
 - "SwitchLight: Co-design of Physics-driven Architecture and Pre-training Framework for Human Portrait Relighting" CVPR, 2024 Feb 29
   [paper](http://arxiv.org/abs/2402.18848v1) [code]() [pdf](./2024_02_CVPR_SwitchLight--Co-design-of-Physics-driven-Architecture-and-Pre-training-Framework-for-Human-Portrait-Relighting.pdf) [note](./2024_02_CVPR_SwitchLight--Co-design-of-Physics-driven-Architecture-and-Pre-training-Framework-for-Human-Portrait-Relighting_Note.md)
@@ -1408,6 +1478,12 @@ Weight-sharing Unet 实现多个 View 的融合！多个 view 生成 panaroma �
 
 
 
+- Temporally coherent 4D reconstruction of complex dynamic scenes 
+
+  https://openaccess.thecvf.com/content_cvpr_2016/papers/Mustafa_Temporally_Coherent_4D_CVPR_2016_paper.pdf
+
+
+
 
 
 - https://sv4d.github.io/
@@ -1415,12 +1491,73 @@ Weight-sharing Unet 实现多个 View 的融合！多个 view 生成 panaroma �
 
 
 - "MoSca: Dynamic Gaussian Fusion from Casual Videos via 4D Motion Scaffolds" 
-  [paper](https://arxiv.org/pdf/2405.17421) [web](https://www.cis.upenn.edu/~leijh/projects/mosca/)
+  [paper](https://arxiv.org/pdf/2405.17421) [web](https://www.cis.upenn.edu/~leijh/projects/mosca/) https://github.com/JiahuiLei/MoSca
 
 
 
 - "DimensionX: Create Any 3D and 4D Scenes from a Single Image with Controllable Video Diffusion"
   https://chenshuo20.github.io/DimensionX/
+
+
+
+- "EasyVolcap: Accelerating Neural Volumetric Video Research" SIGGRAPH-ASIA, 2023 Dec 11
+  [paper](http://arxiv.org/abs/2312.06575v1) [code](https://github.com/zju3dv/EasyVolcap.) [pdf](./2023_12_SIGGRAPH-ASIA_EasyVolcap--Accelerating-Neural-Volumetric-Video-Research.pdf) [note](./2023_12_SIGGRAPH-ASIA_EasyVolcap--Accelerating-Neural-Volumetric-Video-Research_Note.md)
+  Authors: Zhen Xu, Tao Xie, Sida Peng, Haotong Lin, Qing Shuai, Zhiyuan Yu, Guangzhao He, Jiaming Sun, Hujun Bao, Xiaowei Zhou
+
+4D(Volumetric video) 发射多个射线，去提取 spatial-temporal 特征 （3D）；**方法没细说。。。**
+
+- 设计**程序 framework**，涉及 CUDA & CPU 信息异步交互的加速；Memory Management
+
+![fig2](docs/2023_12_SIGGRAPH-ASIA_EasyVolcap--Accelerating-Neural-Volumetric-Video-Research_Note/fig2.png)
+
+
+
+
+
+- https://arxiv.org/pdf/2406.13527 生成 360° panorama 空间
+
+
+
+- 基于参考视频，生成 4D 物体运动；和 meta 控制儿童画很像
+
+https://arxiv.org/pdf/2405.16849
+
+> We train our task on a single NVIDIA RTX 6000 Ada machine. Our training process requires 7-8 NVIDIA RTX 6000 Ada GPU minutes per frame, with an approximate memory consumption of 24 GB.
+
+
+
+- https://primecai.github.io/generative_rendering/
+
+- Gaussians-to-Life: Text-Driven Animation of 3D Gaussian Splatting Scenes
+
+  https://arxiv.org/pdf/2411.19233 https://github.com/wimmerth/gaussians2life https://wimmerth.github.io/gaussians2life.html
+
+
+
+
+
+- "Deblur4DGS: 4D Gaussian Splatting from Blurry Monocular Video" 
+  [paper](https://arxiv.org/pdf/2412.06424)
+
+从 blurry video 重建 4D
+
+
+
+
+
+
+
+## ASR
+
+- "Lyra: An Efficient and Speech-Centric Framework for Omni-Cognition" Arxiv, 2024 Dec 12
+  [paper](http://arxiv.org/abs/2412.09501v1) [code]() [pdf](./2024_12_Arxiv_Lyra--An-Efficient-and-Speech-Centric-Framework-for-Omni-Cognition.pdf) [note](./2024_12_Arxiv_Lyra--An-Efficient-and-Speech-Centric-Framework-for-Omni-Cognition_Note.md)
+  Authors: Zhisheng Zhong, Chengyao Wang, Yuqi Liu, Senqiao Yang, Longxiang Tang, Yuechen Zhang, Jingyao Li, Tianyuan Qu, Yanwei Li, Yukang Chen, Shaozuo Yu, Sitong Wu, Eric Lo, Shu Liu, Jiaya Jia
+
+![fig2](docs/2024_12_Arxiv_Lyra--An-Efficient-and-Speech-Centric-Framework-for-Omni-Cognition_Note/fig2.png)
+
+多种模态输入，搞个语音输出
+
+
 
 
 
@@ -1776,6 +1913,8 @@ DoubleDIP 把各种 low-level 任务看作**图层分解任务**，**将图像�
   [paper](https://www.ecva.net/papers/eccv_2024/papers_ECCV/papers/06190.pdf) [code](https://github.com/deng-ai-lab/SFHformer) [pdf](./2024_03_ECCV_When-Fast-Fourier-Transform-Meets-Transformer-for-Image-Restoration.pdf) [note](./2024_03_ECCV_When-Fast-Fourier-Transform-Meets-Transformer-for-Image-Restoration_Note.md)
   Authors: Xingyu Jiang, Xiuhui Zhang, Ning Gao, Yue Deng
 
+![fig2](docs/2024_03_ECCV_When-Fast-Fourier-Transform-Meets-Transformer-for-Image-Restoration_Note/fig2.png)
+
 
 
 
@@ -1792,7 +1931,7 @@ DoubleDIP 把各种 low-level 任务看作**图层分解任务**，**将图像�
 
 
 
-- "Rethinking Video Deblurring with Wavelet-Aware Dynamic Transformer and Diffusion Model" ECCV, 2024 Aug 24
+- "Rethinking Video Deblurring with Wavelet-Aware Dynamic Transformer and Diffusion Model" ECCV, 2024 Aug 24 :star:
   [paper](http://arxiv.org/abs/2408.13459v1) [code]() [pdf](./2024_08_ECCV_Rethinking-Video-Deblurring-with-Wavelet-Aware-Dynamic-Transformer-and-Diffusion-Model.pdf) [note](./2024_08_ECCV_Rethinking-Video-Deblurring-with-Wavelet-Aware-Dynamic-Transformer-and-Diffusion-Model_Note.md)
   Authors: Chen Rao, Guangyuan Li, Zehua Lan, Jiakai Sun, Junsheng Luan, Wei Xing, Lei Zhao, Huaizhong Lin, Jianfeng Dong, Dalong Zhang
 
@@ -2734,10 +2873,29 @@ Authors: Minguk Kang, Jun-Yan Zhu, Richard Zhang, Jaesik Park, Eli Shechtman, Sy
 
 
 
+- "Arbitrary-steps Image Super-resolution via Diffusion Inversion" Arxiv, 2024 Dec 12
+  [paper](http://arxiv.org/abs/2412.09013v1) [code](https://github.com/zsyOAOA/InvSR) [pdf](./2024_12_Arxiv_Arbitrary-steps-Image-Super-resolution-via-Diffusion-Inversion.pdf) [note](./2024_12_Arxiv_Arbitrary-steps-Image-Super-resolution-via-Diffusion-Inversion_Note.md)
+  Authors: Zongsheng Yue, Kang Liao, Chen Change Loy
+
+客观指标没有 DiffBIR 好啊。。难以信服；主观指标更好
+
+- 设计 PnP 简化去噪过程中预测的噪声，去噪加速
+- 根据图像退化程度，加合适的步数
+
+![fig2](docs/2024_12_Arxiv_Arbitrary-steps-Image-Super-resolution-via-Diffusion-Inversion_Note/fig2.png)
+
+
+
+
+
+
+
 ## Video SR :mag:
 
 > [mmedit model-zoo](https://github.com/open-mmlab/mmagic#-model-zoo)
 > [paper with code: VSR](https://paperswithcode.com/sota/video-super-resolution-on-vid4-4x-upscaling-1)
+>
+> note [survey_VSR_VFI.md](./survey_VSR_VFI.md)
 
 - [ ] "Video super-resolution based on spatial-temporal recurrent residual networks"  CVIU, 2018 Mar
   [paper](https://www.sciencedirect.com/science/article/pii/S1077314217301583)
@@ -2746,15 +2904,12 @@ Authors: Minguk Kang, Jun-Yan Zhu, Richard Zhang, Jaesik Park, Eli Shechtman, Sy
   > takes not only the LR frames but also the differences of these adjacent LR frames as the input
 
 - [x] "EDVR: Video Restoration with Enhanced Deformable Convolutional Networks" CVPR NTIRE 1st, 2019 May
-
-  [paper](https://arxiv.org/abs/1905.02716) [code](https://github.com/xinntao/EDVR)
-  [note](./2019_05_CVPR-NTIRE_EDVR--Video-Restoration-with-Enhanced-Deformable-Convolutional-Networks_Note.md)
-
+  [paper](http://arxiv.org/abs/1905.02716v1) [code](https://github.com/xinntao/EDVR) [pdf](./2019_05_CVPR-NTIRE_EDVR--Video-Restoration-with-Enhanced-Deformable-Convolutional-Networks.pdf) [note](./2019_05_CVPR-NTIRE_EDVR--Video-Restoration-with-Enhanced-Deformable-Convolutional-Networks_Note.md)
+  Authors: Xintao Wang, Kelvin C. K. Chan, Ke Yu, Chao Dong, Chen Change Loy
+  
 - [x] "BasicVSR: The Search for Essential Components in Video Super-Resolution and Beyond" CVPR, 2020 Dec, **BasicVSR** :moyai:
-  [paper](http://arxiv.org/abs/2012.02181v2) [code](https://github.com/open-mmlab/mmagic/blob/main/configs/iconvsr/README.md) 
-  [note](./2020_12_CVPR_BasicVSR--The-Search-for-Essential-Components-in-Video-Super-Resolution-and-Beyond_Note.md)
-
-  > Authors: Kelvin C. K. Chan, Xintao Wang, Ke Yu, Chao Dong, Chen Change Loy
+  [paper](http://arxiv.org/abs/2012.02181v2) [code](https://github.com/open-mmlab/mmagic/blob/main/configs/iconvsr/README.md) [note](./2020_12_CVPR_BasicVSR--The-Search-for-Essential-Components-in-Video-Super-Resolution-and-Beyond_Note.md) 
+  Authors: Kelvin C. K. Chan, Xintao Wang, Ke Yu, Chao Dong, Chen Change Loy
 
 - [ ] "Video Super-Resolution Transformer" 2021 Jun
   [paper](https://arxiv.org/abs/2106.06847) [code](https://github.com/caojiezhang/VSR-Transformer)
@@ -2765,17 +2920,15 @@ Authors: Minguk Kang, Jun-Yan Zhu, Richard Zhang, Jaesik Park, Eli Shechtman, Sy
   > **memory mechanism**
 
 - [x] "BasicVSR++: Improving video super-resolution with enhanced propagation and alignment" CVPR, 2021 Apr :moyai:
-  [paper](https://arxiv.org/abs/2104.13371) [code](https://github.com/open-mmlab/mmagic/blob/main/configs/basicvsr_pp/README.md)
-  [note](./2021_04_CVPR_BasicVSR++--Improving-Video-Super-Resolution-with-Enhanced-Propagation-and-Alignment_Note.md)
-
+  [paper](https://arxiv.org/abs/2104.13371) [code](https://github.com/open-mmlab/mmagic/blob/main/configs/basicvsr_pp/README.md) [note](./2021_04_CVPR_BasicVSR++--Improving-Video-Super-Resolution-with-Enhanced-Propagation-and-Alignment_Note.md)
+  
   > Deformable Transformer
-
+  
 - [x] "Investigating Tradeoffs in Real-World Video Super-Resolution" CVPR, 2021 Nov, **RealBasicVSR**
-  [paper](https://arxiv.org/abs/2111.12704) [code](https://github.com/ckkelvinchan/RealBasicVSR)
-  [note](./2021_11_CVPR_Investigating-Tradeoffs-in-Real-World-Video-Super-Resolution_Note.md)
+  [paper](https://arxiv.org/abs/2111.12704) [code](https://github.com/ckkelvinchan/RealBasicVSR) [note](./2021_11_CVPR_Investigating-Tradeoffs-in-Real-World-Video-Super-Resolution_Note.md)
 
-  > 盲视频超分，**基于2个发现进行改进**：长时序反而会降低性能，有噪声没有特殊处理；iteration L=10 太少了会造成颜色伪影，20->30 会好一些
-  > 基于 BasicVSR 加入动态预处理模块，改进训练数据策略降低计算量
+盲视频超分，**基于2个发现进行改进**：长时序反而会降低性能，有噪声没有特殊处理；iteration L=10 太少了会造成颜色伪影，20->30 会好一些
+基于 BasicVSR 加入动态预处理模块，改进训练数据策略降低计算量
 
 - [ ] "TR-MISR: Multiimage Super-Resolution Based on Feature Fusion With Transformers" STAEOR, 2022 Jan :statue_of_liberty:
   [paper](https://ieeexplore.ieee.org/document/9684717)'
@@ -2790,18 +2943,15 @@ Authors: Minguk Kang, Jun-Yan Zhu, Richard Zhang, Jaesik Park, Eli Shechtman, Sy
   [paper](https://arxiv.org/abs/2305.06524v2) 
 
 - [x] "Recurrent Video Restoration Transformer with Guided Deformable Attention" NeurlPS, 2022 June, **RVRT** :statue_of_liberty:
-  [paper](https://arxiv.org/abs/2206.02146) [code](https://github.com/JingyunLiang/RVRT)
-  [note](./2022_06_NeurIPS_RVRT_Recurrent-Video-Restoration-Transformer-with-Guided-Deformable-Attention_Note.md)
+  [paper](https://arxiv.org/abs/2206.02146) [code](https://github.com/JingyunLiang/RVRT) [note](./2022_06_NeurIPS_RVRT_Recurrent-Video-Restoration-Transformer-with-Guided-Deformable-Attention_Note.md)
 
 - [x] "STDAN: Deformable Attention Network for Space-Time Video Super-Resolution" NNLS, 2023 Feb :statue_of_liberty:
-  [paper](https://ieeexplore.ieee.org/document/10045744) [code](https://github.com/littlewhitesea/STDAN)
-  [note](./2023_02_NNLS_STDAN--Deformable-Attention-Network-for-Space-Time-Video-Super-Resolution_Note.md)
-
+  [paper](https://ieeexplore.ieee.org/document/10045744) [code](https://github.com/littlewhitesea/STDAN) [note](./2023_02_NNLS_STDAN--Deformable-Attention-Network-for-Space-Time-Video-Super-Resolution_Note.md)
+  
   > *Deformable Attention* 视频 SR
-
+  
 - [x] "Towards High-Quality and Efficient Video Super-Resolution via Spatial-Temporal Data Overfitting" CVPR_highlight, 2023 Mar
-  [paper](http://arxiv.org/abs/2303.08331v2) [code](https://github.com/coulsonlee/STDO-CVPR2023.git)
-  [note](./2023_03_CVPR_highlight_Towards-High-Quality-and-Efficient-Video-Super-Resolution-via-Spatial-Temporal-Data-Overfitting_Note.md)
+  [paper](http://arxiv.org/abs/2303.08331v2) [code](https://github.com/coulsonlee/STDO-CVPR2023.git) [note](./2023_03_CVPR_highlight_Towards-High-Quality-and-Efficient-Video-Super-Resolution-via-Spatial-Temporal-Data-Overfitting_Note.md)
 
 
 对视频分 patch 再按 PSNR 分组再去训练
@@ -2812,14 +2962,13 @@ Authors: Minguk Kang, Jun-Yan Zhu, Richard Zhang, Jaesik Park, Eli Shechtman, Sy
   [paper](https://arxiv.org/abs/2305.02660)
 
 - [ ] "Mitigating Artifacts in Real-World Video Super-resolution Models" AAAI, 2023 Jun :warning:
-  [paper](https://arxiv.org/abs/2212.07339) [code](https://github.com/TencentARC/FastRealVSR)
-  [note](./2022_12_AAAI_Mitigating-Artifacts-in-Real-World-Video-Super-Resolution-Models_Note.md)
+  [paper](https://arxiv.org/abs/2212.07339) [code](https://github.com/TencentARC/FastRealVSR) [note](./2022_12_AAAI_Mitigating-Artifacts-in-Real-World-Video-Super-Resolution-Models_Note.md)
 
 
 
 ### Diffusion-based
 
-- [x] "Motion-Guided Latent Diffusion for Temporally Consistent Real-world Video Super-resolution" Arxiv, 2023 Dec, `MGLD-VSR`
+- [x] "Motion-Guided Latent Diffusion for Temporally Consistent Real-world Video Super-resolution" ECCV, 2023 Dec, `MGLD-VSR`
   [paper](http://arxiv.org/abs/2312.00853v1) [code](https://github.com/IanYeung/MGLD-VSR) [note](2023_12_Arxiv_Motion-Guided-Latent-Diffusion-for-Temporally-Consistent-Real-world-Video-Super-resolution_Note.md) [pdf](./2023_12_Arxiv_Motion-Guided-Latent-Diffusion-for-Temporally-Consistent-Real-world-Video-Super-resolution.pdf)
   Authors: Xi Yang, Chenhang He, Jianqi Ma, Lei Zhang
 
@@ -2829,7 +2978,7 @@ Authors: Minguk Kang, Jun-Yan Zhu, Richard Zhang, Jaesik Park, Eli Shechtman, Sy
 
 
 
-- "Upscale-A-Video: Temporal-Consistent Diffusion Model for Real-World Video Super-Resolution" Arxiv, 2023 Dec, `Upscale-A-Video`
+- "Upscale-A-Video: Temporal-Consistent Diffusion Model for Real-World Video Super-Resolution" CVPR, 2023 Dec, `Upscale-A-Video`
 [paper](http://arxiv.org/abs/2312.06640v1) [code](https://github.com/sczhou/Upscale-A-Video) [website](https://shangchenzhou.com/projects/upscale-a-video/) [pdf](./2023_12_CVPR_Upscale-A-Video--Temporal-Consistent-Diffusion-Model-for-Real-World-Video-Super-Resolution.pdf)
 Authors: Shangchen Zhou, Peiqing Yang, Jianyi Wang, Yihang Luo, Chen Change Loy
 
@@ -3359,19 +3508,17 @@ Authors: Shangchen Zhou, Peiqing Yang, Jianyi Wang, Yihang Luo, Chen Change Loy
     [paper](https://arxiv.org/abs/2106.01863) [code](https://github.com/yumingj/C2-Matching)
     
   - [x] "Reference-based Image Super-Resolution with Deformable Attention Transformer" ECCV, 2022 Jul, DATSR :statue_of_liberty:
-    [paper](https://arxiv.org/abs/2207.11938) [code](https://github.com/caojiezhang/DATSR)
-    [note](./2022_07_ECCV_Reference-based-Image-Super-Resolution-with-Deformable-Attention-Transformer_Note.md)
+    [paper](https://arxiv.org/abs/2207.11938) [code](https://github.com/caojiezhang/DATSR) [note](./2022_07_ECCV_Reference-based-Image-Super-Resolution-with-Deformable-Attention-Transformer_Note.md)
     
   - [ ] "DARTS: Double Attention Reference-based Transformer for Super-resolution" Arxiv, 2023 Jul
     [paper](https://arxiv.org/abs/2307.08837) [code](https://github.com/bia006/DARTS)
 
 
 - [ ] "Dual-Camera Super-Resolution with Aligned Attention Modules" ICCV oral, 2021 Sep, DCSR
-  [paper](https://arxiv.org/abs/2109.01349) [code](https://github.com/Tengfei-Wang/DCSR)
-  [note](./2021_09_ICCV_oral_Dual-Camera-Super-Resolution-with-Aligned-Attention-Modules_Note.md)
-
+  [paper](https://arxiv.org/abs/2109.01349) [code](https://github.com/Tengfei-Wang/DCSR) [note](./2021_09_ICCV_oral_Dual-Camera-Super-Resolution-with-Aligned-Attention-Modules_Note.md)
+  
   > reference images 按相似度筛选提取信息
-
+  
 - [ ] "EFENet: Reference-based Video Super-Resolution with Enhanced Flow Estimation" 
   [paper]() [code](https://github.com/indigopurple/efenet)
 
@@ -3440,6 +3587,68 @@ Authors: Shangchen Zhou, Peiqing Yang, Jianyi Wang, Yihang Luo, Chen Change Loy
 
 
 
+## IQA
+
+> :grey_question: what is IQA [CVPR IQA 博客](https://zhuanlan.zhihu.com/p/154017806)
+> IQA(image quality assessment) Task target: quantification of human perception of image quality
+>
+> - Application
+>   想对某一项视觉任务评估图像能否满足需要，比如针对人脸识别的质量评价，看一幅图像是否应该拒绝还是输入到人脸识别系统中；texture classification；texture retrieval （texture similarity）；texture recovery
+> - 对于图像下游任务：denoising, deblurring, super-resolution, compression，能够提升图像质
+> - Full Reference, No-reference 
+>
+> https://github.com/chaofengc/Awesome-Image-Quality-Assessment
+
+- [survey_IQA.md](./survey_IQA.md)
+
+
+
+- [x] "Image Quality Assessment: Unifying Structure and Texture Similarity" TPAMI, 2020 Dec, DISTS
+  [paper](https://ieeexplore.ieee.org/abstract/document/9298952) [note](./2020_TPAMI_DISTS_Image-Quality-Assessment-Unifying-Structure-and-Texture-Similarity_Note.md)
+
+针对有明显纹理的原图，让模型对 JPEG 压缩后、resample 的图像打分（实际上肉眼看上去 JPEG 更加模糊），之前方法对于 JPEG 图像质量评分错误地高于 resample 图。
+
+
+
+- [x] "Re-IQA: Unsupervised Learning for Image Quality Assessment in the Wild" CVPR, 2023 Apr
+  [paper](https://arxiv.org/abs/2304.00451) [pdf](./2023_CVPR_Re-IQA-Unsupervised-Learning-for-Image-Quality-Assessment-in-the-Wild.pdf)
+
+  > 一种 NR-IQA 算法，使用对比学习的方式，使用 2 个 Res50 去学习 content & image-quality-aware features. 最后加一个 regressor 输出 image quality scores.
+  > 对于 quality feature 一路，模仿 MoCoV2 ，修改了构造正负样本的方式进行训练。
+  >
+  > - `Full-reference IQA` 方法 对于 images in the wild 场景，没有 reference 应用受限
+  >
+  >   FR-IQA 需要参考图像（undistorted） & distorted 图像，一起才能输出评分。
+  >
+  > - high-level content representation using MoCoV2
+  >
+  >   2 crops from same image -> similar scores, but not the case for some human viewers.
+
+- [ ] "Half of an image is enough for quality assessment"
+
+- [ ] "MaxVQA"
+
+  > - FastIQA 提取视频 VQA 特征，没考虑失真信息
+  >
+  >   **[FAST-VQA-and-FasterVQA](https://github.com/VQAssessment/FAST-VQA-and-FasterVQA)**
+
+- [x] "REQA: Coarse-to-fine Assessment of Image Quality to Alleviate the Range Effect" CVPR&IVP, 2022 Sep
+  [paper](https://arxiv.org/abs/2209.01760) [code](https://github.com/huofushuo/REQA)
+
+  > Blind image quality assessment (BIQA) of User Generated Content (UGC) suffers from the range effect 发现：
+  > overall quality range, mean opinion score (MOS) and predicted MOS (pMOS) are well correlated while focusing on a particular range, the correlation is lower
+  >
+  > 1. utilize global context features and local detailed features for the multi-scale distortion perception
+  > 2. Feedback Mechanism
+  >
+  > 统计发现 mos 分布具有一定的特性，然后针对性设计了 curriculum learning 提升性能
+  >
+  > ![image-20231220135030484](docs/README/REQA_framework.png)
+
+
+
+
+
 ## Quantization :cloud_with_lightning:
 
 - "SVDQuant: Absorbing Outliers by Low-Rank Components for 4-Bit Diffusion Models" Arxiv, 2024 Nov 7
@@ -3490,10 +3699,10 @@ diffusion 模型轻量化，显存降低 x4 倍
   > **2D deformable attention**
 
 - [ ] "Rethinking Alignment in Video Super-Resolution Transformers" NIPS, 2022 Jul
-  [paper](https://arxiv.org/abs/2207.08494) [code](https://github.com/XPixelGroup/RethinkVSRAlignment)
-  [note](./2022_07_NIPS_Rethinking-Alignment-in-Video-Super-Resolution-Transformers_Note.md)
+  [paper](https://arxiv.org/abs/2207.08494) [code](https://github.com/XPixelGroup/RethinkVSRAlignment) [note](./2022_07_NIPS_Rethinking-Alignment-in-Video-Super-Resolution-Transformers_Note.md)
+  
 
-  > 探索 deformable，optical flow 用来 warp 的优缺点和使用场景 :+1:
+探索 deformable，optical flow 用来 warp 的优缺点和使用场景 :+1:
 
 - [ ] "Blur Interpolation Transformer for Real-World Motion from Blur" CVPR, 2022 Nov
   [paper](https://arxiv.org/abs/2211.11423) [code](https://github.com/zzh-tech/BiT)
@@ -3510,7 +3719,7 @@ diffusion 模型轻量化，显存降低 x4 倍
 
 - [x] "Recurrent Video Restoration Transformer with Guided Deformable Attention" NeurlPS, 2022 June, **RVRT** :statue_of_liberty:
   [paper](https://arxiv.org/abs/2206.02146) [code](https://github.com/JingyunLiang/RVRT?utm_source=catalyzex.com) [note](./2022_06_NeurIPS_RVRT_Recurrent-Video-Restoration-Transformer-with-Guided-Deformable-Attention_Note.md)
-  
+
 - [ ] "Dual-Camera Super-Resolution with Aligned Attention Modules" ICCV oral, 2021 Sep, DCSR
   [paper](https://arxiv.org/abs/2109.01349) [code](https://github.com/Tengfei-Wang/DCSR)
   [note](./2021_09_ICCV_oral_Dual-Camera-Super-Resolution-with-Aligned-Attention-Modules_Note.md)
@@ -4281,62 +4490,6 @@ $$
   https://github.com/neuraloperator/neuraloperator
 
 
-
-
-
-## IQA
-
-> :grey_question: what is IQA [CVPR IQA 博客](https://zhuanlan.zhihu.com/p/154017806)
-> IQA(image quality assessment) Task target: quantification of human perception of image quality
->
-> - Application
->   想对某一项视觉任务评估图像能否满足需要，比如针对人脸识别的质量评价，看一幅图像是否应该拒绝还是输入到人脸识别系统中；texture classification；texture retrieval （texture similarity）；texture recovery
-> - 对于图像下游任务：denoising, deblurring, super-resolution, compression，能够提升图像质
-> - Full Reference, No-reference 
->
-> https://github.com/chaofengc/Awesome-Image-Quality-Assessment
-
-- [x] "Image Quality Assessment: Unifying Structure and Texture Similarity" TPAMI, 2020 Dec, DISTS
-  [paper](https://ieeexplore.ieee.org/abstract/document/9298952) [note](./2020_TPAMI_DISTS_Image-Quality-Assessment-Unifying-Structure-and-Texture-Similarity_Note.md)
-
-针对有明显纹理的原图，让模型对 JPEG 压缩后、resample 的图像打分（实际上肉眼看上去 JPEG 更加模糊），之前方法对于 JPEG 图像质量评分错误地高于 resample 图。
-
-
-
-- [x] "Re-IQA: Unsupervised Learning for Image Quality Assessment in the Wild" CVPR, 2023 Apr
-  [paper](https://arxiv.org/abs/2304.00451) [pdf](./2023_CVPR_Re-IQA-Unsupervised-Learning-for-Image-Quality-Assessment-in-the-Wild.pdf)
-  
-  > 一种 NR-IQA 算法，使用对比学习的方式，使用 2 个 Res50 去学习 content & image-quality-aware features. 最后加一个 regressor 输出 image quality scores.
-  > 对于 quality feature 一路，模仿 MoCoV2 ，修改了构造正负样本的方式进行训练。
-  >
-  > - `Full-reference IQA` 方法 对于 images in the wild 场景，没有 reference 应用受限
-  >
-  >   FR-IQA 需要参考图像（undistorted） & distorted 图像，一起才能输出评分。
-  >
-  > - high-level content representation using MoCoV2
-  >
-  >   2 crops from same image -> similar scores, but not the case for some human viewers.
-  
-- [ ] "Half of an image is enough for quality assessment"
-
-- [ ] "MaxVQA"
-
-  > - FastIQA 提取视频 VQA 特征，没考虑失真信息
-  >
-  >   **[FAST-VQA-and-FasterVQA](https://github.com/VQAssessment/FAST-VQA-and-FasterVQA)**
-
-- [x] "REQA: Coarse-to-fine Assessment of Image Quality to Alleviate the Range Effect" CVPR&IVP, 2022 Sep
-  [paper](https://arxiv.org/abs/2209.01760) [code](https://github.com/huofushuo/REQA)
-
-  > Blind image quality assessment (BIQA) of User Generated Content (UGC) suffers from the range effect 发现：
-  >  overall quality range, mean opinion score (MOS) and predicted MOS (pMOS) are well correlated while focusing on a particular range, the correlation is lower
-  >
-  > 1. utilize global context features and local detailed features for the multi-scale distortion perception
-  > 2. Feedback Mechanism
-  >
-  > 统计发现 mos 分布具有一定的特性，然后针对性设计了 curriculum learning 提升性能
-  >
-  > ![image-20231220135030484](docs/README/REQA_framework.png)
 
 
 

@@ -11,6 +11,213 @@
 
 
 
+## data & ckpt & metrics
+
+> RVRT 仓库整理了很多 test-set 可以直接下
+>
+> https://github.com/JingyunLiang/VRT/releases
+
+- VSR Synthetic Data
+
+  - REDS
+
+    > https://seungjunnah.github.io/Datasets/reds.html
+    >
+    > https://github.com/KAIST-VICLab/FMA-Net?tab=readme-ov-file#data-preprocessing 
+    >
+    > Also, to evaluate generalization performance, we employ the GoPro [51] and YouTube datasets as test sets alongside REDS4
+    >
+    > **1Clips 000, 011, 015, 020 of the REDS training set :star:**
+
+  - Vimeo90K
+
+  - Vid4
+
+    > https://github.com/shangwei5/ST-AVSR?tab=readme-ov-file#datasets
+
+  - UMD10
+
+    > https://github.com/ckkelvinchan/RealBasicVSR?tab=readme-ov-file#videolq-dataset
+
+- deblur
+
+  - GoPro
+
+    > https://seungjunnah.github.io/Datasets/gopro
+
+  - DVD
+
+    > https://github.com/JingyunLiang/VRT/releases
+
+- denoise
+
+  - Davis
+
+    > https://github.com/JingyunLiang/VRT/releases
+
+  - Set8
+
+    > https://github.com/JingyunLiang/VRT/releases
+
+
+
+- RealWorld Data(Diffusion SR)
+
+  - YouHQ, 1920x1090 :star:，含有物体主题镜头，背景虚化 :+1:
+
+    > from Upscale-A-Video
+    >
+    > https://github.com/sczhou/Upscale-A-Video?tab=readme-ov-file#%EF%B8%8F-youhq-dataset
+
+  - VideoLQ，质量很垃圾。。。<=640x360
+
+    > https://github.com/ckkelvinchan/RealBasicVSR?tab=readme-ov-file#videolq-dataset
+
+- [ ] MovieNet Movie Clips
+
+
+
+- ReferenceVSR
+
+
+
+
+
+
+
+### **metrics**
+
+> [survey_IQA.md](./survey_IQA.md)
+
+- 模型运行性能
+
+  - Params(M), Runtime(s)
+
+- Full-Reference
+
+  - PSNR(RGB or Y), SSIM
+
+
+  > https://github.com/KAIST-VICLab/FMA-Net/blob/337bb45f56b1e550073eaa0dfaee199395a3606f/utils.py#L351
+
+  - LPIPS
+  - DISTS
+
+
+
+
+- No-reference
+
+  - QualiCLIP :star:
+
+  - ARNIQA
+
+  - MUSIQ :+1: (Upscale-A-Video)
+
+  - CLIP-IQA :+1: :+1: (Upscale-A-Video)
+
+  - DOVER (VQA) :+1: :+1: (Upscale-A-Video)
+
+    > "Exploring Video Quality Assessment on User Generated Contents from Aesthetic and Technical Perspectives" ICCV2023, `DOVER`
+    > [paper](https://arxiv.org/pdf/2211.04894) [code](https://github.com/VQAssessment/FAST-VQA-and-FasterVQA?tab=readme-ov-file)
+
+  - BRISQUE，没有 DOVER 准 & 扭曲情况下效果很垃圾
+  - NIQE，先别用了，很垃圾
+
+
+
+- Video Temporal metrics
+
+  - toF
+
+    > FMA-Net code 
+    > https://github.com/KAIST-VICLab/FMA-Net/blob/337bb45f56b1e550073eaa0dfaee199395a3606f/utils.py#L351
+
+  - warping error
+
+    > "Learning blind video temporal consistency" ECCV, 2018
+
+  - 视频每帧同一位置取一条线，在 t 上拼起来
+
+  - DOVER (VQA NR)
+
+    > "Exploring Video Quality Assessment on User Generated Contents from Aesthetic and Technical Perspectives" ICCV2023, `DOVER`
+    > [paper](https://arxiv.org/pdf/2211.04894) [code](https://github.com/VQAssessment/FAST-VQA-and-FasterVQA?tab=readme-ov-file)
+
+
+
+
+
+REDS4
+
+|                                                | Params(M) | time(s/f) | PSNR(RGB) | PSNR(Y) | SSIM↑   | LPIPS ↓ | FID  | DISTS↓ | toF↓   | WE↓  |
+| ---------------------------------------------- | --------- | --------- | --------- | ------- | ------- | ------- | ---- | ------ | ------ | ---- |
+| BasicVSR++(CVPR2022)                           |           |           |           |         |         |         |      |        |        |      |
+| RealBasicVSR(CVPR2022)                         |           |           |           |         |         |         |      |        |        |      |
+| RVRT(NIPS2022)                                 |           |           |           |         |         |         |      |        |        |      |
+| PSRT(NIPS2022)                                 |           |           |           |         |         |         |      |        |        |      |
+| MGLD-VSR(ECCV2024)                             |           |           |           |         |         |         |      |        |        |      |
+| Upscale-A-Video(CVPR2024)                      |           |           |           |         |         |         |      |        |        |      |
+| FAM-Net(CVPR2024) <br />:warning: 没生成首尾帧 | 9.766503  |           | 28.87683  | 30.2705 | 0.83172 |         |      |        | 1.9148 |      |
+
+- Q：DISTS 会把 min_side rescale 到 256?
+
+
+
+
+
+### **ckpts**
+
+- RealBasicVSR, CVPR2022
+
+  > https://github.com/ckkelvinchan/RealBasicVSR?tab=readme-ov-file#videolq-dataset
+
+  ```
+  /ailab-train/cv/xunrongji/pretrained/RealBasicVSR
+  ```
+
+- BasicVSR++, CVPR2022
+
+- RVRT
+
+  ```
+  /ailab-train/cv/datas_sets/RVRT_test_data
+  ```
+
+- PSRT
+
+  ```
+  /ailab-train/cv/xunrongji/video_enhance/RethinkVSRAlignment/checkpoints
+  ```
+
+- Upscale-A-Video
+
+  ```
+  /ailab-train/cv/shirunhua/Upscale-A-Video
+  ```
+
+- MGLD-VSR https://github.com/IanYeung/MGLD-VSR?tab=readme-ov-file#testing
+
+  - SD2.1  https://huggingface.co/stabilityai/stable-diffusion-2-1-base
+
+- FAM-Net, `CVPR2024`
+
+  ```
+  /ailab-train/cv/xunrongji/video_enhance/FMA-Net-main/checkpoints
+  ```
+
+- ST-AVSR, `ECCV2024`
+
+  > https://github.com/shangwei5/ST-AVSR?tab=readme-ov-file#download-pre-trained-model
+
+  ```
+  /ailab-train/cv/xunrongji/pretrained/ST-AVSR
+  ```
+
+  
+
+
+
 
 
 ## all-in-focus
@@ -40,6 +247,11 @@ render bokeh effect 光圈虚化效果，需要给定 disparity 图（类似深�
   Authors: Xintao Wang, Kelvin C. K. Chan, Ke Yu, Chao Dong, Chen Change Loy
 
 ![image-20231115205018174](docs/2019_05_CVPR-NTIRE_EDVR--Video-Restoration-with-Enhanced-Deformable-Convolutional-Networks_Note/EDCR_framework.png)
+
+
+
+- "Progressive fusion video super-resolution net work via exploiting non-local spatio-temporal correlations" ICCV, 2019, `PNFL` 
+  [code](https://github.com/psychopa4/PFNL?tab=readme-ov-file)
 
 
 
@@ -77,8 +289,9 @@ render bokeh effect 光圈虚化效果，需要给定 disparity 图（类似深�
 
 
 
-- "Rethinking Alignment in Video Super-Resolution Transformers" NIPS, 2022 Jul,`PSRT` :star:
-  [paper](https://arxiv.org/abs/2207.08494) [code](https://github.com/XPixelGroup/RethinkVSRAlignment) [note](./2022_07_NIPS_Rethinking-Alignment-in-Video-Super-Resolution-Transformers_Note.md)
+- "Rethinking Alignment in Video Super-Resolution Transformers" NIPS, 2022 Jul 18, `PSRT` :star:
+  [paper](http://arxiv.org/abs/2207.08494v2) [code](https://github.com/XPixelGroup/RethinkVSRAlignment) [pdf](./2022_07_NIPS_Rethinking-Alignment-in-Video-Super-Resolution-Transformers.pdf) [note](./2022_07_NIPS_Rethinking-Alignment-in-Video-Super-Resolution-Transformers_Note.md)
+  Authors: Shuwei Shi, Jinjin Gu, Liangbin Xie, Xintao Wang, Yujiu Yang, Chao Dong
 
 发现光流 warp 不适合 VSR 任务，光流存在很多噪声，**改成用 attention 去做对齐**
 
@@ -127,7 +340,7 @@ Deformable Transformer 用到 video 上面，逐帧搞 deformable
 
 
 - "Upscale-A-Video: Temporal-Consistent Diffusion Model for Real-World Video Super-Resolution" CVPR, 2023 Dec, `Upscale-A-Video`
-  [paper](http://arxiv.org/abs/2312.06640v1) [code](https://github.com/sczhou/Upscale-A-Video) [website](https://shangchenzhou.com/projects/upscale-a-video/) [pdf](./2023_12_CVPR_Upscale-A-Video--Temporal-Consistent-Diffusion-Model-for-Real-World-Video-Super-Resolution.pdf)
+  [paper](http://arxiv.org/abs/2312.06640v1) [code](https://github.com/sczhou/Upscale-A-Video) [website](https://shangchenzhou.com/projects/upscale-a-video/) [pdf](./2023_12_CVPR_Upscale-A-Video--Temporal-Consistent-Diffusion-Model-for-Real-World-Video-Super-Resolution.pdf) [note](./2023_12_CVPR_Upscale-A-Video--Temporal-Consistent-Diffusion-Model-for-Real-World-Video-Super-Resolution_Note.md)
   Authors: Shangchen Zhou, Peiqing Yang, Jianyi Wang, Yihang Luo, Chen Change Loy
 
 ![image-20231220135955447](docs/2023_12_CVPR_Upscale-A-Video--Temporal-Consistent-Diffusion-Model-for-Real-World-Video-Super-Resolution_Note/Upscale-A-Video_framework.png)
@@ -144,7 +357,7 @@ Deformable Transformer 用到 video 上面，逐帧搞 deformable
 
 
 
-- "FMA-Net: Flow-Guided Dynamic Filtering and Iterative Feature Refinement with Multi-Attention for Joint Video Super-Resolution and Deblurring" CVPR-oral, 2024 Jan 8
+- "FMA-Net: Flow-Guided Dynamic Filtering and Iterative Feature Refinement with Multi-Attention for Joint Video Super-Resolution and Deblurring" CVPR-oral, 2024 Jan 8 :star: 
   [paper](http://arxiv.org/abs/2401.03707v2) [code](https://kaist-viclab.github.io/fmanet-site) [pdf](./2024_01_CVPR-oral_FMA-Net--Flow-Guided-Dynamic-Filtering-and-Iterative-Feature-Refinement-with-Multi-Attention-for-Joint-Video-Super-Resolution-and-Deblurring.pdf) [note](./2024_01_CVPR-oral_FMA-Net--Flow-Guided-Dynamic-Filtering-and-Iterative-Feature-Refinement-with-Multi-Attention-for-Joint-Video-Super-Resolution-and-Deblurring_Note.md)
   Authors: Geunhyuk Youk, Jihyong Oh, Munchurl Kim
 
@@ -161,6 +374,10 @@ Deformable Transformer 用到 video 上面，逐帧搞 deformable
 - 对比 4 个方法 ok 了
 
   ![tb2](docs/2024_01_CVPR-oral_FMA-Net--Flow-Guided-Dynamic-Filtering-and-Iterative-Feature-Refinement-with-Multi-Attention-for-Joint-Video-Super-Resolution-and-Deblurring_Note/tb2.png)
+  
+- 测试代码很简洁，赏心悦目 :bear:
+
+
 
 
 
@@ -203,15 +420,15 @@ Deformable Transformer 用到 video 上面，逐帧搞 deformable
 
 
 - "DaBiT: Depth and Blur informed Transformer for Joint Refocusing and Super-Resolution" Arxiv, 2024 Jul 1
-  [paper](http://arxiv.org/abs/2407.01230v2) [code](https://github.com/crispianm/DaBiT) [pdf](./2024_07_Arxiv_DaBiT--Depth-and-Blur-informed-Transformer-for-Joint-Refocusing-and-Super-Resolution.pdf) [note](./2024_07_Arxiv_DaBiT--Depth-and-Blur-informed-Transformer-for-Joint-Refocusing-and-Super-Resolution_Note.md)
+  [paper](http://arxiv.org/abs/2407.01230v2) [code](https://github.com/crispianm/DaBiT) [pdf](./2024_07_Arxiv_DaBiT--Depth-and-Blur-informed-Transformer-for-Joint-Refocusing-and-Super-Resolution.pdf) [note](./2024_07_Arxiv_DaBiT--Depth-and-Blur-informed-Transformer-for-Joint-Refocusing-and-Super-Resolution_Note.md) :warning:
   Authors: Crispian Morris, Nantheera Anantrasirichai, Fan Zhang, David Bull
 
 
 
 
 
-- "Arbitrary-Scale Video Super-Resolution with Structural and Textural Priors" ECCV, 2024 Jul 13
-  [paper](http://arxiv.org/abs/2407.09919v1) [code](https://github.com/shangwei5/ST-AVSR.) [pdf](./2024_07_ECCV_Arbitrary-Scale-Video-Super-Resolution-with-Structural-and-Textural-Priors.pdf) [note](./2024_07_ECCV_Arbitrary-Scale-Video-Super-Resolution-with-Structural-and-Textural-Priors_Note.md)
+- "Arbitrary-Scale Video Super-Resolution with Structural and Textural Priors" ECCV, 2024 Jul 13, `ST-AVSR`
+  [paper](http://arxiv.org/abs/2407.09919v1) [code](https://github.com/shangwei5/ST-AVSR) [pdf](./2024_07_ECCV_Arbitrary-Scale-Video-Super-Resolution-with-Structural-and-Textural-Priors.pdf) [note](./2024_07_ECCV_Arbitrary-Scale-Video-Super-Resolution-with-Structural-and-Textural-Priors_Note.md)
   Authors: Wei Shang, Dongwei Ren, Wanying Zhang, Yuming Fang, Wangmeng Zuo, Kede Ma
 
 
@@ -219,7 +436,7 @@ Deformable Transformer 用到 video 上面，逐帧搞 deformable
 
 
 - "RealViformer: Investigating Attention for Real-World Video Super-Resolution" ECCV, 2024 Jul 19
-  [paper](http://arxiv.org/abs/2407.13987v1) [code](https://github.com/Yuehan717/RealViformer.) [pdf](./2024_07_ECCV_RealViformer--Investigating-Attention-for-Real-World-Video-Super-Resolution.pdf) [note](./2024_07_ECCV_RealViformer--Investigating-Attention-for-Real-World-Video-Super-Resolution_Note.md)
+  [paper](http://arxiv.org/abs/2407.13987v1) [code](https://github.com/Yuehan717/RealViformer) [pdf](./2024_07_ECCV_RealViformer--Investigating-Attention-for-Real-World-Video-Super-Resolution.pdf) [note](./2024_07_ECCV_RealViformer--Investigating-Attention-for-Real-World-Video-Super-Resolution_Note.md)
   Authors: Yuehan Zhang, Angela Yao
 
 
@@ -254,7 +471,7 @@ Deformable Transformer 用到 video 上面，逐帧搞 deformable
 
 
 - "Upscale-A-Video: Temporal-Consistent Diffusion Model for Real-World Video Super-Resolution" CVPR, 2023 Dec, `Upscale-A-Video`
-  [paper](http://arxiv.org/abs/2312.06640v1) [code](https://github.com/sczhou/Upscale-A-Video) [website](https://shangchenzhou.com/projects/upscale-a-video/) [pdf](./2023_12_CVPR_Upscale-A-Video--Temporal-Consistent-Diffusion-Model-for-Real-World-Video-Super-Resolution.pdf)
+  [paper](http://arxiv.org/abs/2312.06640v1) [code](https://github.com/sczhou/Upscale-A-Video) [website](https://shangchenzhou.com/projects/upscale-a-video/) [pdf](./2023_12_CVPR_Upscale-A-Video--Temporal-Consistent-Diffusion-Model-for-Real-World-Video-Super-Resolution.pdf) [note](./2023_12_CVPR_Upscale-A-Video--Temporal-Consistent-Diffusion-Model-for-Real-World-Video-Super-Resolution_Note.md)
   Authors: Shangchen Zhou, Peiqing Yang, Jianyi Wang, Yihang Luo, Chen Change Loy
 
 ![image-20231220135955447](docs/2023_12_CVPR_Upscale-A-Video--Temporal-Consistent-Diffusion-Model-for-Real-World-Video-Super-Resolution_Note/Upscale-A-Video_framework.png)
@@ -300,8 +517,6 @@ Deformable Transformer 用到 video 上面，逐帧搞 deformable
 - "Sequence Matters: Harnessing Video Models in 3D Super-Resolution" AAAI, 2024 Dec 16
   [paper](http://arxiv.org/abs/2412.11525v3) [code](https://ko-lani.github.io/Sequence-Matters) [pdf](./2024_12_AAAI_Sequence-Matters--Harnessing-Video-Models-in-3D-Super-Resolution.pdf) [note](./2024_12_AAAI_Sequence-Matters--Harnessing-Video-Models-in-3D-Super-Resolution_Note.md)
   Authors: Hyun-kyu Ko, Dongheok Park, Youngin Park, Byeonghyeon Lee, Juhee Han, Eunbyung Park
-
-
 
 
 
@@ -354,6 +569,86 @@ Dynamic Filter Network 预测退化特征，融入 deblur/SR
 - "FMA-Net: Flow-Guided Dynamic Filtering and Iterative Feature Refinement with Multi-Attention for Joint Video Super-Resolution and Deblurring" CVPR-oral, 2024 Jan 8
   [paper](http://arxiv.org/abs/2401.03707v2) [code](https://kaist-viclab.github.io/fmanet-site) [pdf](./2024_01_CVPR-oral_FMA-Net--Flow-Guided-Dynamic-Filtering-and-Iterative-Feature-Refinement-with-Multi-Attention-for-Joint-Video-Super-Resolution-and-Deblurring.pdf) [note](./2024_01_CVPR-oral_FMA-Net--Flow-Guided-Dynamic-Filtering-and-Iterative-Feature-Refinement-with-Multi-Attention-for-Joint-Video-Super-Resolution-and-Deblurring_Note.md)
   Authors: Geunhyuk Youk, Jihyong Oh, Munchurl Kim
+
+
+
+## Reference-VSR
+
+- "TDAN: Temporally Deformable Alignment Network for Video Super-Resolution" CVPR, 2018 Dec
+  [paper](https://arxiv.org/abs/1812.02898)
+
+
+
+- "EFENet: Reference-based Video Super-Resolution with Enhanced Flow Estimation" CICAI, 2021 Oct
+  [paper](https://arxiv.org/pdf/2110.07797)
+
+
+
+- "Reference-based Video Super-Resolution Using Multi-Camera Video Triplets" CVPR2022, 2021 Oct 
+  [paper](https://arxiv.org/pdf/2110.07797) [code](https://github.com/haewonc/ERVSR)
+
+
+
+- "NeuriCam: Key-Frame Video Super-Resolution and Colorization for IoT Cameras" MobiCom-2023,
+  [paper](https://arxiv.org/abs/2207.12496)
+
+
+
+- "Reference-Based Image and Video Super-Resolution via C2-Matching" TPAMI, 2023 Dec 21
+  [paper](https://ieeexplore.ieee.org/abstract/document/9996154)
+
+
+
+- "Efficient Reference-based Video Super-Resolution (ERVSR): Single Reference Image Is All You Need" WACV, 2023
+  [paper](https://openaccess.thecvf.com/content/WACV2023/papers/Kim_Efficient_Reference-Based_Video_Super-Resolution_ERVSR_Single_Reference_Image_Is_All_WACV_2023_paper.pdf) [code](https://github.com/haewonc/ERVSR)
+
+
+
+
+
+- "Self-Supervised Learning for Real-World Super-Resolution from Dual Zoomed Observations" ECCV, 2022 Mar, 
+  [paper](https://arxiv.org/abs/2203.01325)
+- "Self-Supervised Learning for Real-World Super-Resolution from Dual and Multiple Zoomed Observations" TPAMI, 2024 May, :star:
+  [paper](https://arxiv.org/pdf/2405.02171) [code](https://github.com/cszhilu1998/SelfDZSR_PlusPlus)
+
+
+
+- "Reference-based Burst Super-resolution" ACMM 
+  [paper](https://dl.acm.org/doi/pdf/10.1145/3664647.3681447) [code](https://github.com/SeonggwanKo/RefBSR)
+
+
+
+- "PERSONALIZED REPRESENTATION FROM PERSONALIZED GENERATION" 
+  [paper](https://arxiv.org/pdf/2412.16156v1) 
+
+
+
+### Image
+
+- "Robust Reference-based Super-Resolution via C2-Matching" CVPR, 2021 Jun, C2-Matching :statue_of_liberty:
+  [paper](https://arxiv.org/abs/2106.01863) [code](https://github.com/yumingj/C2-Matching)
+
+
+
+- "Dual-Camera Super-Resolution with Aligned Attention Modules" ICCV oral, 2021 Sep, DCSR
+  [paper](https://arxiv.org/abs/2109.01349) [code](https://github.com/Tengfei-Wang/DCSR) [note](./2021_09_ICCV_oral_Dual-Camera-Super-Resolution-with-Aligned-Attention-Modules_Note.md)
+
+
+
+- "Reference-based Image Super-Resolution with Deformable Attention Transformer" ECCV, 2022 Jul, DATSR :statue_of_liberty:
+  [paper](https://arxiv.org/abs/2207.11938) [code](https://github.com/caojiezhang/DATSR) [note](./2022_07_ECCV_Reference-based-Image-Super-Resolution-with-Deformable-Attention-Transformer_Note.md)
+
+
+
+- "DARTS: Double Attention Reference-based Transformer for Super-resolution" Arxiv, 2023 Jul
+  [paper](https://arxiv.org/abs/2307.08837) [code](https://github.com/bia006/DARTS)
+
+
+
+- "LMR: A Large-Scale Multi-Reference Dataset for Reference-based Super-Resolution" ICCV, 2023
+  [paper](https://openaccess.thecvf.com/content/ICCV2023/papers/Zhang_LMR_A_Large-Scale_Multi-Reference_Dataset_for_Reference-Based_Super-Resolution_ICCV_2023_paper.pdf)
+
+
 
 
 
