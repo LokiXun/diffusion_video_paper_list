@@ -623,10 +623,33 @@ Dynamic Filter Network 预测退化特征，融入 deblur/SR
 
 
 
+- "Reference-based Video Super-Resolution Using Multi-Camera Video Triplets" CVPR, 2022 Mar, **RefVSR** :statue_of_liberty:
+  [paper](https://arxiv.org/abs/2203.14537) [website](https://junyonglee.me/projects/RefVSR/) [code](https://github.com/codeslake/RefVSR) [pdf](./2022_03_Reference-based-Video -Super-Resolution-Using-Multi-Camera-Video-Triplets.pdf)
+- "RefVSR++: Exploiting Reference Inputs for Reference-based Video Super-resolution" Arxiv, 2023 Jul **RefVSR++**
+  [paper](https://arxiv.org/abs/2307.02897)
+
+
+
+
+
+- "Toward Real-World Super Resolution With Adaptive Self-Similarity Mining" 
+
+
+
+- "Reference-based Burst Super-resolution" ACMM, 2024
+  [paper](https://dl.acm.org/doi/pdf/10.1145/3664647.3681447) [code](https://github.com/SeonggwanKo/RefBSR)
+
+
+
+
+
 ### Image
 
 - "Robust Reference-based Super-Resolution via C2-Matching" CVPR, 2021 Jun, C2-Matching :statue_of_liberty:
   [paper](https://arxiv.org/abs/2106.01863) [code](https://github.com/yumingj/C2-Matching)
+
+- "Reference-Based Image and Video Super-Resolution via C2-Matching" TPAMI, 2023 July 01
+  [paper](https://ieeexplore.ieee.org/abstract/document/9996154)
 
 
 
@@ -650,7 +673,49 @@ Dynamic Filter Network 预测退化特征，融入 deblur/SR
 
 
 
+- "Refine-by-Align: Reference-Guided Artifacts Refinement through Semantic Alignment" 
+  [paper](https://arxiv.org/abs/2412.00306)
 
+
+
+
+
+### Neural Matching
+
+- "Neural Matching Fields: Implicit Representation of Matching Fields for Visual Correspondence" NeurIPS, 2022 Oct
+  [paper](https://arxiv.org/abs/2210.02689) [code](https://github.com/KU-CVLAB/NeMF/) [website](https://ku-cvlab.github.io/NeMF/)
+  [note](./2022_10_NeurIPS_Neural-Matching-Fields--Implicit-Representation-of-Matching-Fields-for-Visual-Correspondence_Note.md)
+
+  > INR 隐式网络用于特征点匹配，SOTA & 推理一张图要 8-9s
+
+
+
+- "DiffMatch: Diffusion Model for Dense Matching" Arxiv, 2023 May :warning:
+  [paper](https://arxiv.org/abs/2305.19094) [website](https://ku-cvlab.github.io/DiffMatch/)
+
+  > Neural Matching Fields 同个组
+
+
+
+- "Knowing Where to Focus: Event-aware Transformer for Video Grounding" Arxiv, 2023 Aug
+
+
+
+- "DreamMatcher: Appearance Matching Self-Attention for Semantically-Consistent Text-to-Image Personalization" 
+  [paper](https://arxiv.org/pdf/2402.09812)
+
+新的 KV memory，用 memory KV 去和新的做 match
+
+
+
+- "Cross-View Completion Models are Zero-shot Correspondence Estimators" 
+  [paper](https://arxiv.org/pdf/2412.09072)
+
+
+
+- "UNIFYING FEATURE AND COST AGGREGATION WITH TRANSFORMERS FOR SEMANTIC AND VISUAL CORRESPONDENCE" ICLR 2024
+
+> joint feature aggregation and cost aggregation, and (b) cross-attention layer with matching distribution
 
 
 
