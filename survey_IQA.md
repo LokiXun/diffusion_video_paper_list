@@ -34,6 +34,15 @@ SRCC and PLCC
 
 ## Full-reference
 
+- "FloLPIPS: A Bespoke Video Quality Metric for Frame Interpoation" Arxiv, 2022 Jul 17 
+  [paper](https://arxiv.org/abs/2207.08119)
+
+> we present a bespoke full reference video quality metric for VFI, FloLPIPS, that builds on the popular perceptual image quality metric, LPIPS, which captures the perceptual degradation in extracted image feature space
+
+
+
+
+
 ### PSNR
 
 > **Peak signal-to-noise ratio** (**PSNR**) is an engineering term for the ratio between the maximum possible power of a [signal](https://en.wikipedia.org/wiki/Signal_(information_theory)) and the power of corrupting [noise](https://en.wikipedia.org/wiki/Noise) that affects the fidelity of its representation.
@@ -179,6 +188,28 @@ def peak_signal_noise_ratio(image_true, image_test, *, data_range=None):
 
 
 
+### LPIPS
+
+> Learned Perceptual Image Patch Similarity (LPIPS) metric
+>
+> [LPIPS Loss producing negative values](https://github.com/richzhang/PerceptualSimilarity/issues/72)
+
+- "The Unreasonable Effectiveness of Deep Features as a Perceptual Metric" CVPR, 2018 Jan 11, `LPIPS`
+  [paper](http://arxiv.org/abs/1801.03924v2) [code](https://github.com/richzhang/PerceptualSimilarity) [pdf](./2018_01_CVPR_The-Unreasonable-Effectiveness-of-Deep-Features-as-a-Perceptual-Metric.pdf) [note](./2018_01_CVPR_The-Unreasonable-Effectiveness-of-Deep-Features-as-a-Perceptual-Metric_Note.md)
+  Authors: Richard Zhang, Phillip Isola, Alexei A. Efros, Eli Shechtman, Oliver Wang
+
+"The Unreasonable Effectiveness of Deep Features as a Perceptual Metric"，更符合人类的感知情况。LPIPS的值越低表示两张图像越相似，反之，则差异越大。` ['alex','vgg','squeeze'] are the base/trunk networks available` 预训练提取初步特征，之后额外的几层 MLP(dropout + Conv) 输出后相加
+
+**将图像归一化到 [-1, 1]，取指定层的特征，计算差值的平方；**
+
+
+
+- Perceptual Loss
+
+取 VGG19，5 层 ConvBlock 的第一层 LayerNorm 出来的特征？（记忆里的，待再次核实）
+
+
+
 
 
 ## No-Reference
@@ -211,6 +242,8 @@ NIQE 先别用了，真实退化上面效果很拉
 - "MUSIQ: Multi-scale Image Quality Transformer" ICCV, 2021 Aug 12
   [paper](http://arxiv.org/abs/2108.05997v1) [code](https://github.com/google-research/google-research/tree/master/musiq) [pdf](./2021_08_ICCV_MUSIQ--Multi-scale-Image-Quality-Transformer.pdf) [note](./2021_08_ICCV_MUSIQ--Multi-scale-Image-Quality-Transformer_Note.md)
   Authors: Junjie Ke, Qifei Wang, Yilin Wang, Peyman Milanfar, Feng Yang
+
+有两种版本，No.1 三种 resolution(native resolution, 224, 384) 一起评估；No2.(native resolution)
 
 
 
@@ -258,28 +291,6 @@ NIQE 先别用了，真实退化上面效果很拉
 Inference 得到的是一个接近于 positive prompt 特征的相似度，范围 [0,1] 越接近 1 越好
 
 
-
-
-
-### LPIPS
-
-> Learned Perceptual Image Patch Similarity (LPIPS) metric
->
-> [LPIPS Loss producing negative values](https://github.com/richzhang/PerceptualSimilarity/issues/72)
-
-- "The Unreasonable Effectiveness of Deep Features as a Perceptual Metric" CVPR, 2018 Jan 11, `LPIPS`
-  [paper](http://arxiv.org/abs/1801.03924v2) [code](https://github.com/richzhang/PerceptualSimilarity) [pdf](./2018_01_CVPR_The-Unreasonable-Effectiveness-of-Deep-Features-as-a-Perceptual-Metric.pdf) [note](./2018_01_CVPR_The-Unreasonable-Effectiveness-of-Deep-Features-as-a-Perceptual-Metric_Note.md)
-  Authors: Richard Zhang, Phillip Isola, Alexei A. Efros, Eli Shechtman, Oliver Wang
-
-"The Unreasonable Effectiveness of Deep Features as a Perceptual Metric"，更符合人类的感知情况。LPIPS的值越低表示两张图像越相似，反之，则差异越大。` ['alex','vgg','squeeze'] are the base/trunk networks available` 预训练提取初步特征，之后额外的几层 MLP(dropout + Conv) 输出后相加
-
-**将图像归一化到 [-1, 1]，取指定层的特征，计算差值的平方；**
-
-
-
-- Perceptual Loss
-
-取 VGG19，5 层 ConvBlock 的第一层 LayerNorm 出来的特征？（记忆里的，待再次核实）
 
 
 

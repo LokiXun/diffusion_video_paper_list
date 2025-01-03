@@ -1,6 +1,9 @@
 # Survey on Video SR & VFI & deblur
 
 > main note [README](./README.md)
+>
+> - https://github.com/liuzhen03/awesome-video-enhancement :star:
+> - https://github.com/orbit253/Awesome-Space-Time-Video-Super-Resolution
 
 - Q：diffusion Venhancer 生成的细节改变了，非 diffusion 方案生成人体形变比 diffusion 更严重
 
@@ -77,9 +80,25 @@
 
 
 
-- ReferenceVSR
 
 
+- Q：BI vs BD degradation 啥区别？
+
+> 参考 RVRT
+>
+>  For video SR, we consider two settings: bicubic (BI) and blur-downsampling (BD) degradation.
+
+因此 BI Degradation 测试
+
+- REDS4 RGB
+- Vimeo90K-T
+- Vid4 (有 BI, BD 两种，差别不大)
+
+BD degradation
+
+- UDM10
+- Vimeo-90K-T
+- Vid4
 
 
 
@@ -101,7 +120,7 @@
   > https://github.com/KAIST-VICLab/FMA-Net/blob/337bb45f56b1e550073eaa0dfaee199395a3606f/utils.py#L351
 
   - LPIPS
-  - DISTS
+  - DISTS :star:
 
 
 
@@ -116,7 +135,7 @@
 
   - CLIP-IQA :+1: :+1: (Upscale-A-Video)
 
-  - DOVER (VQA) :+1: :+1: (Upscale-A-Video)
+  - DOVER (VQA) :+1: :+1: (Upscale-A-Video) 无 GT 视频的时序指标
 
     > "Exploring Video Quality Assessment on User Generated Contents from Aesthetic and Technical Perspectives" ICCV2023, `DOVER`
     > [paper](https://arxiv.org/pdf/2211.04894) [code](https://github.com/VQAssessment/FAST-VQA-and-FasterVQA?tab=readme-ov-file)
@@ -148,19 +167,46 @@
 
 
 
-REDS4
+#### **REDS4 VSR+DB** (val_blur_bicubic)
 
-|                                                | Params(M) | time(s/f) | PSNR(RGB) | PSNR(Y) | SSIM↑   | LPIPS ↓ | FID  | DISTS↓ | toF↓   | WE↓  |
-| ---------------------------------------------- | --------- | --------- | --------- | ------- | ------- | ------- | ---- | ------ | ------ | ---- |
-| BasicVSR++(CVPR2022)                           |           |           |           |         |         |         |      |        |        |      |
-| RealBasicVSR(CVPR2022)                         |           |           |           |         |         |         |      |        |        |      |
-| RVRT(NIPS2022)                                 |           |           |           |         |         |         |      |        |        |      |
-| PSRT(NIPS2022)                                 |           |           |           |         |         |         |      |        |        |      |
-| MGLD-VSR(ECCV2024)                             |           |           |           |         |         |         |      |        |        |      |
-| Upscale-A-Video(CVPR2024)                      |           |           |           |         |         |         |      |        |        |      |
-| FAM-Net(CVPR2024) <br />:warning: 没生成首尾帧 | 9.766503  |           | 28.87683  | 30.2705 | 0.83172 |         |      |        | 1.9148 |      |
+|                                                | Params(M) | time(s/f) | PSNR(RGB) | PSNR(Y) | SSIM↑    | LPIPS ↓ | FID  | DISTS↓ | toF↓   | WE↓  | BRISQUE |
+| ---------------------------------------------- | --------- | --------- | --------- | ------- | -------- | ------- | ---- | ------ | ------ | ---- | ------- |
+| BasicVSR++(CVPR2022)                           |           |           |           |         |          |         |      |        |        |      |         |
+| RealBasicVSR(CVPR2022)                         |           |           |           |         |          |         |      |        |        |      |         |
+| VRT(Arxiv2022 -> TIP2024)                      |           |           |           |         |          |         |      |        |        |      |         |
+| RVRT(NIPS2022)                                 |           |           |           |         |          |         |      |        |        |      |         |
+| PSRT(NIPS2022)                                 |           |           |           |         |          |         |      |        |        |      |         |
+| MGLD-VSR(ECCV2024)                             |           |           |           |         |          |         |      |        |        |      |         |
+| Upscale-A-Video(CVPR2024)                      |           |           |           |         |          |         |      |        |        |      |         |
+| `MIA-VSR` (CVPR2024)                           | 16.596719 |           | 24.920246 |         | 0.731834 |         |      |        |        |      |         |
+| FAM-Net(CVPR2024) <br />:warning: 没生成首尾帧 | 9.766503  |           | 28.87683  | 30.2705 | 0.83172  | 0.2466  |      |        | 1.9148 |      | 45.0958 |
 
-- Q：DISTS 会把 min_side rescale 到 256?
+
+
+#### REDS4 VSR (val_sharp_bicubic)
+
+|                                                | Params(M) | time(s/f) | PSNR(RGB) | PSNR(Y)  | SSIM↑    | LPIPS ↓ | FID  | DISTS↓ | toF↓    | WE↓  | QualiCLIP | MUSIQ | DOVER | BRISQUE |
+| ---------------------------------------------- | --------- | --------- | --------- | -------- | -------- | ------- | ---- | ------ | ------- | ---- | --------- | ----- | ----- | ------- |
+| BasicVSR++(CVPR2022)                           |           |           |           |          |          |         |      |        |         |      |           |       |       |         |
+| RealBasicVSR(CVPR2022)                         |           |           |           |          |          |         |      |        |         |      |           |       |       |         |
+| RVRT(NIPS2022)                                 |           |           |           |          |          |         |      |        |         |      |           |       |       |         |
+| PSRT(NIPS2022)                                 |           |           |           |          |          |         |      |        |         |      |           |       |       |         |
+| MGLD-VSR(ECCV2024)                             |           |           |           |          |          |         |      |        |         |      |           |       |       |         |
+| Upscale-A-Video(CVPR2024)                      |           |           |           |          |          |         |      |        |         |      |           |       |       |         |
+| `MIA-VSR` (CVPR2024)                           | 16.596719 |           | 32.790506 |          | 0.911523 |         |      |        |         |      |           |       |       |         |
+| FAM-Net(CVPR2024) <br />:warning: 没生成首尾帧 | 9.766503  |           | 26.377029 | 27.73774 | 0.800012 | 0.2722  |      |        | 2.19973 |      |           |       |       | 46.3111 |
+
+
+
+
+
+#### Vid4 BI-Degradation VSR
+
+#### Vid4 BD-Degradation VSR
+
+#### Vimeo-90K-T BI-Degradation VSR
+
+#### UDM10 VSR
 
 
 
@@ -194,6 +240,8 @@ REDS4
 
   ```
   /ailab-train/cv/shirunhua/Upscale-A-Video
+  # result
+  /ailab-train/cv/xunrongji/video_enhance/Upscale-A-Video-master/results/frame
   ```
 
 - MGLD-VSR https://github.com/IanYeung/MGLD-VSR?tab=readme-ov-file#testing
@@ -280,8 +328,20 @@ render bokeh effect 光圈虚化效果，需要给定 disparity 图（类似深�
 
 
 
+- "VRT: A Video Restoration Transformer" TIP, 2022 Jan 28
+  [paper](http://arxiv.org/abs/2201.12288v2) [code](https://github.com/JingyunLiang/VRT) [pdf](./2022_01_TIP_VRT--A-Video-Restoration-Transformer.pdf) [note](./2022_01_TIP_VRT--A-Video-Restoration-Transformer_Note.md)
+  Authors: Jingyun Liang, Jiezhang Cao, Yuchen Fan, Kai Zhang, Rakesh Ranjan, Yawei Li, Radu Timofte, Luc Van Gool (ETH + Meta)
+
+![fig2](docs/2022_01_TIP_VRT--A-Video-Restoration-Transformer_Note/fig2.png)
+
+整理好了 testset 数据集 :+1:
+
+
+
+
+
 - "Recurrent Video Restoration Transformer with Guided Deformable Attention" NeurlPS, 2022 June, **RVRT** :statue_of_liberty:
-  [paper](https://arxiv.org/abs/2206.02146) [code](https://github.com/JingyunLiang/RVRT) [note](./2022_06_NeurIPS_RVRT_Recurrent-Video-Restoration-Transformer-with-Guided-Deformable-Attention_Note.md)
+  [paper](https://arxiv.org/abs/2206.02146) [code](https://github.com/JingyunLiang/RVRT?utm_source=catalyzex.com) [pdf](./2022_06_NeurIPS_RVRT_Recurrent-Video-Restoration-Transformer-with-Guided-Deformable-Attention.pdf) [note](./2022_06_NeurIPS_RVRT_Recurrent-Video-Restoration-Transformer-with-Guided-Deformable-Attention_Note.md)
 
 ![RVRT_Framework.png](docs/2022_06_NeurIPS_RVRT_Recurrent-Video-Restoration-Transformer-with-Guided-Deformable-Attention_Note/RVRT_Framework.png)
 
@@ -314,6 +374,9 @@ Deformable Transformer 用到 video 上面，逐帧搞 deformable
   [paper](https://arxiv.org/abs/2305.02660)
 
 
+
+- "Learning Spatial-Temporal Implicit Neural Representations for Event-Guided Video Super-Resolution" CVPR-2023, 2023 Mar 24 
+  [paper](https://arxiv.org/pdf/2303.13767)
 
 
 
@@ -383,8 +446,8 @@ Deformable Transformer 用到 video 上面，逐帧搞 deformable
 
 
 
-- "Video Super-Resolution Transformer with Masked Inter&Intra-Frame Attention" CVPR, 2024 Jan 12
-  [paper](http://arxiv.org/abs/2401.06312v4) [code](https://github.com/LabShuHangGU/MIA-VSR.) [pdf](./2024_01_CVPR_Video-Super-Resolution-Transformer-with-Masked-Inter&Intra-Frame-Attention.pdf) [note](./2024_01_CVPR_Video-Super-Resolution-Transformer-with-Masked-Inter&Intra-Frame-Attention_Note.md)
+- "Video Super-Resolution Transformer with Masked Inter&Intra-Frame Attention" CVPR-2024, 2024 Jan 12,`MIA-VSR` 
+  [paper](http://arxiv.org/abs/2401.06312v4) [code](https://github.com/LabShuHangGU/MIA-VSR) [pdf](./2024_01_CVPR_Video-Super-Resolution-Transformer-with-Masked-Inter&Intra-Frame-Attention.pdf) [note](./2024_01_CVPR_Video-Super-Resolution-Transformer-with-Masked-Inter&Intra-Frame-Attention_Note.md)
   Authors: Xingyu Zhou, Leheng Zhang, Xiaorui Zhao, Keze Wang, Leida Li, Shuhang Gu
 
 
@@ -399,7 +462,7 @@ Deformable Transformer 用到 video 上面，逐帧搞 deformable
 
 
 
-- "Learning Spatial Adaptation and Temporal Coherence in Diffusion Models for Video Super-Resolution" CVPR, 2024 Mar 25
+- "Learning Spatial Adaptation and Temporal Coherence in Diffusion Models for Video Super-Resolution" CVPR-2024, 2024 Mar 25
   [paper](http://arxiv.org/abs/2403.17000v1) [code]() [pdf](./2024_03_CVPR_Learning-Spatial-Adaptation-and-Temporal-Coherence-in-Diffusion-Models-for-Video-Super-Resolution.pdf) [note](./2024_03_CVPR_Learning-Spatial-Adaptation-and-Temporal-Coherence-in-Diffusion-Models-for-Video-Super-Resolution_Note.md)
   Authors: Zhikai Chen, Fuchen Long, Zhaofan Qiu, Ting Yao, Wengang Zhou, Jiebo Luo, Tao Mei
 
@@ -489,10 +552,17 @@ Deformable Transformer 用到 video 上面，逐帧搞 deformable
 
 
 
-### Device Efficiency
+###  Compression
 
-- "Towards High-Quality and Efficient Video Super-Resolution via Spatial-Temporal Data Overfitting" CVPR_highlight, 2023 Mar
+- "Compression-Aware Video Super-Resolution" CVPR-2023 
+  [paper](https://openaccess.thecvf.com/content/CVPR2023/papers/Wang_Compression-Aware_Video_Super-Resolution_CVPR_2023_paper.pdf)
+
+  
+
+- "Towards High-Quality and Efficient Video Super-Resolution via Spatial-Temporal Data Overfitting" CVPR_highlight-2024, 2023 Mar
   [paper](http://arxiv.org/abs/2303.08331v2) [code](https://github.com/coulsonlee/STDO-CVPR2023.git) [note](./2023_03_CVPR_highlight_Towards-High-Quality-and-Efficient-Video-Super-Resolution-via-Spatial-Temporal-Data-Overfitting_Note.md)
+
+
 
 
 
@@ -572,7 +642,9 @@ Dynamic Filter Network 预测退化特征，融入 deblur/SR
 
 
 
-## Reference-VSR
+
+
+## Reference-VSR :book:
 
 - "TDAN: Temporally Deformable Alignment Network for Video Super-Resolution" CVPR, 2018 Dec
   [paper](https://arxiv.org/abs/1812.02898)
@@ -589,6 +661,8 @@ Dynamic Filter Network 预测退化特征，融入 deblur/SR
 
 
 
+
+
 - "NeuriCam: Key-Frame Video Super-Resolution and Colorization for IoT Cameras" MobiCom-2023,
   [paper](https://arxiv.org/abs/2207.12496)
 
@@ -601,6 +675,14 @@ Dynamic Filter Network 预测退化特征，融入 deblur/SR
 
 - "Efficient Reference-based Video Super-Resolution (ERVSR): Single Reference Image Is All You Need" WACV, 2023
   [paper](https://openaccess.thecvf.com/content/WACV2023/papers/Kim_Efficient_Reference-Based_Video_Super-Resolution_ERVSR_Single_Reference_Image_Is_All_WACV_2023_paper.pdf) [code](https://github.com/haewonc/ERVSR)
+
+
+
+- "Reference-based Restoration of Digitized Analog Videotapes" WACV, 2023 Oct, TAPE
+  [paper](http://arxiv.org/abs/2310.14926v2) [code](https://github.com/miccunifi/TAPE) [note](./2023_10_WACV_Reference-based-Restoration-of-Digitized-Analog-Videotapes_Note.md)
+  Authors: Lorenzo Agnolucci, Leonardo Galteri, Marco Bertini, Alberto Del Bimbo
+
+![fig3](docs/2023_10_WACV_Reference-based-Restoration-of-Digitized-Analog-Videotapes_Note/fig3.png)
 
 
 
@@ -636,10 +718,9 @@ Dynamic Filter Network 预测退化特征，融入 deblur/SR
 
 
 
-- "Reference-based Burst Super-resolution" ACMM, 2024
-  [paper](https://dl.acm.org/doi/pdf/10.1145/3664647.3681447) [code](https://github.com/SeonggwanKo/RefBSR)
-
-
+- "Reference-based Burst Super-resolution" ACM-MM, 2024 Oct 28
+  [paper](https://dl.acm.org/doi/pdf/10.1145/3664647.3681447) [code](https://github.com/SeonggwanKo/RefBSR) [pdf](./2024_10_ACM-MM_Reference-based-Burst-Super-resolution.pdf) [note](./2024_10_ACM-MM_Reference-based-Burst-Super-resolution_Note.md)
+  Authors: Seonggwan Ko, Yeong Jun Koh, Donghyeon Cho
 
 
 
@@ -669,7 +750,7 @@ Dynamic Filter Network 预测退化特征，融入 deblur/SR
 
 
 - "LMR: A Large-Scale Multi-Reference Dataset for Reference-based Super-Resolution" ICCV, 2023
-  [paper](https://openaccess.thecvf.com/content/ICCV2023/papers/Zhang_LMR_A_Large-Scale_Multi-Reference_Dataset_for_Reference-Based_Super-Resolution_ICCV_2023_paper.pdf)
+  [paper](https://openaccess.thecvf.com/content/ICCV2023/papers/Zhang_LMR_A_Large-Scale_Multi-Reference_Dataset_for_Reference-Based_Super-Resolution_ICCV_2023_paper.pdf) [code](https://github.com/wdmwhh/MRefSR)
 
 
 
@@ -678,13 +759,57 @@ Dynamic Filter Network 预测退化特征，融入 deblur/SR
 
 
 
+###  dense correspondence :spider_web:
+
+> - [researcher: Prune Truong](https://prunetruong.com/)
+
+- "Learning Video Representations from Correspondence Proposals" CVPR, 2019 May 20 
+  [paper](https://arxiv.org/abs/1905.07853)
 
 
-### Neural Matching
 
-- "Neural Matching Fields: Implicit Representation of Matching Fields for Visual Correspondence" NeurIPS, 2022 Oct
-  [paper](https://arxiv.org/abs/2210.02689) [code](https://github.com/KU-CVLAB/NeMF/) [website](https://ku-cvlab.github.io/NeMF/)
-  [note](./2022_10_NeurIPS_Neural-Matching-Fields--Implicit-Representation-of-Matching-Fields-for-Visual-Correspondence_Note.md)
+- "Rethinking Self-supervised Correspondence Learning: A Video Frame-level Similarity Perspective" WACV, 2021 Mar 31 
+  [paper](https://arxiv.org/abs/2103.17263)
+
+
+
+- "Comparing Correspondences: Video Prediction with Correspondence-wise Losses" CVPR, 2021 Apr 
+  [paper](https://arxiv.org/abs/2104.09498)
+
+
+
+- "PDC-Net+: Enhanced Probabilistic Dense Correspondence Network" TPAMI, 2021 Sep 28,
+  [paper](https://arxiv.org/abs/2109.13912)
+
+
+
+- "Modelling Neighbor Relation in Joint Space-Time Graph for Video Correspondence Learning" ICCV-2021, 2021 Sep 28 
+  [paper](https://arxiv.org/abs/2109.13499)
+
+
+
+- "Warp Consistency for Unsupervised Learning of Dense Correspondences" ICCV-2021-oral, 2021 Apr 7
+  [paper](https://arxiv.org/abs/2104.03308)
+
+
+
+- "Locality-Aware Inter-and Intra-Video Reconstruction for Self-Supervised Correspondence Learning" CVPR-2022, 2022 Mar 
+  [paper](https://arxiv.org/abs/2203.14333)
+
+
+
+- "Probabilistic Warp Consistency for Weakly-Supervised Semantic Correspondences" CVPR-2022, 2022 Mar
+  [paper](https://browse.arxiv.org/abs/2203.04279) [code](https://github.com/PruneTruong/DenseMatching)
+
+
+
+- "Correspondence Matters for Video Referring Expression Comprehension" ACMM-2022, 2022 Jul 
+  [paper](https://arxiv.org/pdf/2207.10400)
+
+
+
+- "Neural Matching Fields: Implicit Representation of Matching Fields for Visual Correspondence" NeurIPS, 2022 Oct 6
+  [paper](https://arxiv.org/abs/2210.02689) [code](https://github.com/KU-CVLAB/NeMF/) [website](https://ku-cvlab.github.io/NeMF/) [note](./2022_10_NeurIPS_Neural-Matching-Fields--Implicit-Representation-of-Matching-Fields-for-Visual-Correspondence_Note.md)
 
   > INR 隐式网络用于特征点匹配，SOTA & 推理一张图要 8-9s
 
@@ -697,25 +822,52 @@ Dynamic Filter Network 预测退化特征，融入 deblur/SR
 
 
 
-- "Knowing Where to Focus: Event-aware Transformer for Video Grounding" Arxiv, 2023 Aug
+- "Emergent Correspondence from Image Diffusion" NIPS, 2023 Jun 6
+  [paper](http://arxiv.org/abs/2306.03881v2) [code](https://diffusionfeatures.github.io) [pdf](./2023_06_NIPS_Emergent-Correspondence-from-Image-Diffusion.pdf) [note](./2023_06_NIPS_Emergent-Correspondence-from-Image-Diffusion_Note.md)
+  Authors: Luming Tang, Menglin Jia, Qianqian Wang, Cheng Perng Phoo, Bharath Hariharan
 
 
 
-- "DreamMatcher: Appearance Matching Self-Attention for Semantically-Consistent Text-to-Image Personalization" 
+- "Match me if you can: Semi-Supervised Semantic Correspondence Learning with Unpaired Images" ACCV, 2023 Nov 30
+  [paper](https://arxiv.org/abs/2311.18540v2)
+
+
+
+- "Unifying Feature and Cost Aggregation with Transformers for Semantic and Visual Correspondence" ICLR, 2024 Mar 17 
+  [paper](https://arxiv.org/abs/2403.11120)
+
+
+
+- "DreamMatcher: Appearance Matching Self-Attention for Semantically-Consistent Text-to-Image Personalization" 2024 Feb
   [paper](https://arxiv.org/pdf/2402.09812)
 
 新的 KV memory，用 memory KV 去和新的做 match
 
 
 
-- "Cross-View Completion Models are Zero-shot Correspondence Estimators" 
+- "CONDA: Condensed Deep Association Learning for Co-Salient Object Detection" Arxiv, 2024 Oct 10 
+  [paper](https://arxiv.org/pdf/2409.01021)
+
+
+
+- "Cross-View Completion Models are Zero-shot Correspondence Estimators" 2024 Dec
   [paper](https://arxiv.org/pdf/2412.09072)
 
 
 
-- "UNIFYING FEATURE AND COST AGGREGATION WITH TRANSFORMERS FOR SEMANTIC AND VISUAL CORRESPONDENCE" ICLR 2024
 
-> joint feature aggregation and cost aggregation, and (b) cross-attention layer with matching distribution
+
+### video grounding
+
+- "Knowing Where to Focus: Event-aware Transformer for Video Grounding" ICCV-2023, 2023 Aug 14 
+  [paper](https://arxiv.org/abs/2308.06947)
+
+
+
+- "OmniViD: A Generative Framework for Universal Video Understanding" CVPR-2024
+  [paper](https://openaccess.thecvf.com/content/CVPR2024/papers/Wang_OmniViD_A_Generative_Framework_for_Universal_Video_Understanding_CVPR_2024_paper.pdf)
+
+
 
 
 
@@ -736,6 +888,11 @@ https://github.com/yuezijie/STINet-Space-time-Video-Super-resolution?tab=readme-
 
 - "RSTT: Real-time Spatial Temporal Transformer for Space-Time Video Super-Resolution" CVPR 2022
   [paper](https://openaccess.thecvf.com/content/CVPR2022/papers/Geng_RSTT_Real-Time_Spatial_Temporal_Transformer_for_Space-Time_Video_Super-Resolution_CVPR_2022_paper.pdf)
+
+
+
+- "MoTIF: Learning Motion Trajectories with Local Implicit Neural Functions for Continuous Space-Time Video Super-Resolution" ICCV-2023, 2023 Jul 16 
+  [paper](https://arxiv.org/abs/2307.07988) [code](https://github.com/sichun233746/MoTIF)
 
 
 
@@ -829,7 +986,7 @@ We use [Vimeo90k](http://toflow.csail.mit.edu/) for training, and use [SNU-FILM]
 
 
 
-## AnyResolution(THW)
+## AnyScale
 
 - "Lumina-T2X: Transforming Text into Any Modality, Resolution, and Duration via Flow-based Large Diffusion Transformers" Arxiv, 2024 May 9
   [paper](http://arxiv.org/abs/2405.05945v3) [code]() [pdf](./2024_05_Arxiv_Lumina-T2X--Transforming-Text-into-Any-Modality--Resolution--and-Duration-via-Flow-based-Large-Diffusion-Transformers.pdf) [note](./2024_05_Arxiv_Lumina-T2X--Transforming-Text-into-Any-Modality--Resolution--and-Duration-via-Flow-based-Large-Diffusion-Transformers_Note.md)
