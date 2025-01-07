@@ -165,7 +165,7 @@ BD degradation
 
 
 
-
+### synthetic data
 
 #### **REDS4 VSR+DB** (val_blur_bicubic)
 
@@ -174,27 +174,26 @@ BD degradation
 | BasicVSR++(CVPR2022)                           |           |           |           |         |          |         |      |        |        |      |         |
 | RealBasicVSR(CVPR2022)                         |           |           |           |         |          |         |      |        |        |      |         |
 | VRT(Arxiv2022 -> TIP2024)                      |           |           |           |         |          |         |      |        |        |      |         |
-| RVRT(NIPS2022)                                 |           |           |           |         |          |         |      |        |        |      |         |
+| RVRT(NIPS2022) <br />30frames                  |           |           |           |         |          |         |      |        |        |      |         |
 | PSRT(NIPS2022)                                 |           |           |           |         |          |         |      |        |        |      |         |
 | MGLD-VSR(ECCV2024)                             |           |           |           |         |          |         |      |        |        |      |         |
-| Upscale-A-Video(CVPR2024)                      |           |           |           |         |          |         |      |        |        |      |         |
+| Upscale-A-Video(CVPR2024)                      |           | ok        |           |         |          |         |      |        |        |      |         |
 | `MIA-VSR` (CVPR2024)                           | 16.596719 |           | 24.920246 |         | 0.731834 |         |      |        |        |      |         |
 | FAM-Net(CVPR2024) <br />:warning: 没生成首尾帧 | 9.766503  |           | 28.87683  | 30.2705 | 0.83172  | 0.2466  |      |        | 1.9148 |      | 45.0958 |
 
-
-
 #### REDS4 VSR (val_sharp_bicubic)
 
-|                                                | Params(M) | time(s/f) | PSNR(RGB) | PSNR(Y)  | SSIM↑    | LPIPS ↓ | FID  | DISTS↓ | toF↓    | WE↓  | QualiCLIP | MUSIQ | DOVER | BRISQUE |
-| ---------------------------------------------- | --------- | --------- | --------- | -------- | -------- | ------- | ---- | ------ | ------- | ---- | --------- | ----- | ----- | ------- |
-| BasicVSR++(CVPR2022)                           |           |           |           |          |          |         |      |        |         |      |           |       |       |         |
-| RealBasicVSR(CVPR2022)                         |           |           |           |          |          |         |      |        |         |      |           |       |       |         |
-| RVRT(NIPS2022)                                 |           |           |           |          |          |         |      |        |         |      |           |       |       |         |
-| PSRT(NIPS2022)                                 |           |           |           |          |          |         |      |        |         |      |           |       |       |         |
-| MGLD-VSR(ECCV2024)                             |           |           |           |          |          |         |      |        |         |      |           |       |       |         |
-| Upscale-A-Video(CVPR2024)                      |           |           |           |          |          |         |      |        |         |      |           |       |       |         |
-| `MIA-VSR` (CVPR2024)                           | 16.596719 |           | 32.790506 |          | 0.911523 |         |      |        |         |      |           |       |       |         |
-| FAM-Net(CVPR2024) <br />:warning: 没生成首尾帧 | 9.766503  |           | 26.377029 | 27.73774 | 0.800012 | 0.2722  |      |        | 2.19973 |      |           |       |       | 46.3111 |
+|                                                | Params(M)  | time(s/f)        | PSNR(RGB) | PSNR(Y)  | SSIM↑    | LPIPS ↓   | FID  | DISTS↓ | toF↓    | WE↓  | QualiCLIP | MUSIQ | DOVER | BRISQUE  |
+| ---------------------------------------------- | ---------- | ---------------- | --------- | -------- | -------- | --------- | ---- | ------ | ------- | ---- | --------- | ----- | ----- | -------- |
+| BasicVSR++(CVPR2022)                           |            |                  |           |          |          |           |      |        |         |      |           |       |       |          |
+| RealBasicVSR(CVPR2022)                         |            |                  |           |          |          |           |      |        |         |      |           |       |       |          |
+| VRT(Arxiv2022 -> TIP2024)<br />16 frames       |            | ok               |           |          |          |           |      |        |         |      |           |       |       |          |
+| RVRT(NIPS2022) <br />30 frames                 |            | ok               |           |          |          |           |      |        |         |      |           |       |       |          |
+| PSRT(NIPS2022)                                 |            | ok? 提供的没说明 |           |          |          |           |      |        |         |      |           |       |       |          |
+| MGLD-VSR(ECCV2024)                             |            |                  |           |          |          |           |      |        |         |      |           |       |       |          |
+| Upscale-A-Video(CVPR2024)                      | 691.036436 |                  | 24.46673  | 25.96335 | 0.64472  | 0.3248732 |      |        | 3.82121 |      |           |       |       | 21.46043 |
+| `MIA-VSR` (CVPR2024)                           | 16.596719  |                  | 32.790506 |          | 0.911523 |           |      |        |         |      |           |       |       |          |
+| FAM-Net(CVPR2024) <br />:warning: 没生成首尾帧 | 9.766503   |                  | 26.377029 | 27.73774 | 0.800012 | 0.2722    |      |        | 2.19973 |      |           |       |       | 46.3111  |
 
 
 
@@ -202,13 +201,92 @@ BD degradation
 
 #### Vid4 BI-Degradation VSR
 
+|                                                | Params(M)  | time(s/f) | PSNR(RGB) | PSNR(Y) | SSIM↑ | LPIPS ↓ | FID  | DISTS↓ | toF↓ | WE↓  | QualiCLIP | MUSIQ | DOVER | BRISQUE |
+| ---------------------------------------------- | ---------- | --------- | --------- | ------- | ----- | ------- | ---- | ------ | ---- | ---- | --------- | ----- | ----- | ------- |
+| BasicVSR++(CVPR2022)                           |            |           |           |         |       |         |      |        |      |      |           |       |       |         |
+| RealBasicVSR(CVPR2022)                         |            |           |           |         |       |         |      |        |      |      |           |       |       |         |
+| RVRT(NIPS2022)<br />14 frames                  |            | ok        |           |         |       |         |      |        |      |      |           |       |       |         |
+| PSRT(NIPS2022)                                 |            |           |           |         |       |         |      |        |      |      |           |       |       |         |
+| MGLD-VSR(ECCV2024)                             |            |           |           |         |       |         |      |        |      |      |           |       |       |         |
+| Upscale-A-Video(CVPR2024)                      | 691.036436 | ok        |           |         |       |         |      |        |      |      |           |       |       |         |
+| `MIA-VSR` (CVPR2024)                           | 16.596719  |           |           |         |       |         |      |        |      |      |           |       |       |         |
+| FAM-Net(CVPR2024) <br />:warning: 没生成首尾帧 | 9.766503   |           |           |         |       |         |      |        |      |      |           |       |       |         |
+
 #### Vid4 BD-Degradation VSR
+
+|                                                | Params(M)  | time(s/f) | PSNR(RGB) | PSNR(Y) | SSIM↑ | LPIPS ↓ | FID  | DISTS↓ | toF↓ | WE↓  | QualiCLIP | MUSIQ | DOVER | BRISQUE |
+| ---------------------------------------------- | ---------- | --------- | --------- | ------- | ----- | ------- | ---- | ------ | ---- | ---- | --------- | ----- | ----- | ------- |
+| BasicVSR++(CVPR2022)                           |            |           |           |         |       |         |      |        |      |      |           |       |       |         |
+| RealBasicVSR(CVPR2022)                         |            |           |           |         |       |         |      |        |      |      |           |       |       |         |
+| RVRT(NIPS2022)<br />14frames                   |            | ok        |           |         |       |         |      |        |      |      |           |       |       |         |
+| PSRT(NIPS2022)                                 |            |           |           |         |       |         |      |        |      |      |           |       |       |         |
+| MGLD-VSR(ECCV2024)                             |            |           |           |         |       |         |      |        |      |      |           |       |       |         |
+| Upscale-A-Video(CVPR2024)                      | 691.036436 | ok        |           |         |       |         |      |        |      |      |           |       |       |         |
+| `MIA-VSR` (CVPR2024)                           | 16.596719  |           |           |         |       |         |      |        |      |      |           |       |       |         |
+| FAM-Net(CVPR2024) <br />:warning: 没生成首尾帧 | 9.766503   |           |           |         |       |         |      |        |      |      |           |       |       |         |
+
+
+
+
+
+#### UDM10 BD x4 VSR
+
+|                                                | Params(M)  | time(s/f) | PSNR(RGB) | PSNR(Y) | SSIM↑ | LPIPS ↓ | FID  | DISTS↓ | toF↓ | WE↓  | QualiCLIP | MUSIQ | DOVER | BRISQUE |
+| ---------------------------------------------- | ---------- | --------- | --------- | ------- | ----- | ------- | ---- | ------ | ---- | ---- | --------- | ----- | ----- | ------- |
+| BasicVSR++(CVPR2022)                           |            |           |           |         |       |         |      |        |      |      |           |       |       |         |
+| RealBasicVSR(CVPR2022)                         |            |           |           |         |       |         |      |        |      |      |           |       |       |         |
+| RVRT(NIPS2022)<br />14 frames                  |            |           |           |         |       |         |      |        |      |      |           |       |       |         |
+| PSRT(NIPS2022)                                 |            |           |           |         |       |         |      |        |      |      |           |       |       |         |
+| MGLD-VSR(ECCV2024)                             |            |           |           |         |       |         |      |        |      |      |           |       |       |         |
+| Upscale-A-Video(CVPR2024)                      | 691.036436 | ok        |           |         |       |         |      |        |      |      |           |       |       |         |
+| `MIA-VSR` (CVPR2024)                           | 16.596719  |           |           |         |       |         |      |        |      |      |           |       |       |         |
+| FAM-Net(CVPR2024) <br />:warning: 没生成首尾帧 | 9.766503   |           |           |         |       |         |      |        |      |      |           |       |       |         |
+
+
+
+
 
 #### Vimeo-90K-T BI-Degradation VSR
 
-#### UDM10 VSR
+|                                                | Params(M)  | time(s/f) | PSNR(RGB) | PSNR(Y) | SSIM↑ | LPIPS ↓ | FID  | DISTS↓ | toF↓ | WE↓  | QualiCLIP | MUSIQ | DOVER | BRISQUE |
+| ---------------------------------------------- | ---------- | --------- | --------- | ------- | ----- | ------- | ---- | ------ | ---- | ---- | --------- | ----- | ----- | ------- |
+| BasicVSR++(CVPR2022)                           |            |           |           |         |       |         |      |        |      |      |           |       |       |         |
+| RealBasicVSR(CVPR2022)                         |            |           |           |         |       |         |      |        |      |      |           |       |       |         |
+| RVRT(NIPS2022) <br />14 frames                 |            | ok        |           |         |       |         |      |        |      |      |           |       |       |         |
+| PSRT(NIPS2022)                                 |            |           |           |         |       |         |      |        |      |      |           |       |       |         |
+| MGLD-VSR(ECCV2024)                             |            |           |           |         |       |         |      |        |      |      |           |       |       |         |
+| Upscale-A-Video(CVPR2024)                      | 691.036436 | ok        |           |         |       |         |      |        |      |      |           |       |       |         |
+| `MIA-VSR` (CVPR2024)                           | 16.596719  |           |           |         |       |         |      |        |      |      |           |       |       |         |
+| FAM-Net(CVPR2024) <br />:warning: 没生成首尾帧 | 9.766503   |           |           |         |       |         |      |        |      |      |           |       |       |         |
+
+#### Vimeo-90K-T BD-Degradation VSR
+
+|                                                | Params(M)  | time(s/f) | PSNR(RGB) | PSNR(Y) | SSIM↑ | LPIPS ↓ | FID  | DISTS↓ | toF↓ | WE↓  | QualiCLIP | MUSIQ | DOVER | BRISQUE |
+| ---------------------------------------------- | ---------- | --------- | --------- | ------- | ----- | ------- | ---- | ------ | ---- | ---- | --------- | ----- | ----- | ------- |
+| BasicVSR++(CVPR2022)                           |            |           |           |         |       |         |      |        |      |      |           |       |       |         |
+| RealBasicVSR(CVPR2022)                         |            |           |           |         |       |         |      |        |      |      |           |       |       |         |
+| RVRT(NIPS2022) <br />14 frames                 |            | ok        |           |         |       |         |      |        |      |      |           |       |       |         |
+| PSRT(NIPS2022)                                 |            |           |           |         |       |         |      |        |      |      |           |       |       |         |
+| MGLD-VSR(ECCV2024)                             |            |           |           |         |       |         |      |        |      |      |           |       |       |         |
+| Upscale-A-Video(CVPR2024)                      | 691.036436 | ok        |           |         |       |         |      |        |      |      |           |       |       |         |
+| `MIA-VSR` (CVPR2024)                           | 16.596719  |           |           |         |       |         |      |        |      |      |           |       |       |         |
+| FAM-Net(CVPR2024) <br />:warning: 没生成首尾帧 | 9.766503   |           |           |         |       |         |      |        |      |      |           |       |       |         |
 
 
+
+
+
+### realworld data
+
+#### VideoLQ
+
+TODO
+
+
+
+#### Movie Data
+
+TODO
 
 
 
@@ -333,6 +411,8 @@ render bokeh effect 光圈虚化效果，需要给定 disparity 图（类似深�
   Authors: Jingyun Liang, Jiezhang Cao, Yuchen Fan, Kai Zhang, Rakesh Ranjan, Yawei Li, Radu Timofte, Luc Van Gool (ETH + Meta)
 
 ![fig2](docs/2022_01_TIP_VRT--A-Video-Restoration-Transformer_Note/fig2.png)
+
+UNet 结构，提出的 TMSA 里面就是一个 clip （两帧1个clip）拆开两帧，一个 source 一个 ref（互换顺序）做 cross-attn
 
 整理好了 testset 数据集 :+1:
 
@@ -603,6 +683,8 @@ Dynamic Filter Network 预测退化特征，融入 deblur/SR
 
 
 
+
+
 - "High-resolution optical flow and frame-recurrent network for video super-resolution and deblurring" NeuralComputing, 2022 Jun 7, `HOFFR`
   [paper](https://www.sciencedirect.com/science/article/pii/S0925231222002363) [code]() [pdf](./2022_06_NeuralComputing_High-resolution-optical-flow-and-frame-recurrent-network-for-video-super-resolution-and-deblurring.pdf) [note](./2022_06_NeuralComputing_High-resolution-optical-flow-and-frame-recurrent-network-for-video-super-resolution-and-deblurring_Note.md)
   Authors: Ning Fang, Zongqian Zhan
@@ -612,6 +694,10 @@ Dynamic Filter Network 预测退化特征，融入 deblur/SR
 ![fig1](docs/2022_06_NeuralComputing_High-resolution-optical-flow-and-frame-recurrent-network-for-video-super-resolution-and-deblurring_Note/fig1.png)
 
 
+
+- "Rethinking Fast Fourier Convolution in Image Inpainting" ICCV, 2023 Oct 1, `UFFC`
+  [paper](https://openaccess.thecvf.com/content/ICCV2023/papers/Chu_Rethinking_Fast_Fourier_Convolution_in_Image_Inpainting_ICCV_2023_paper.pdf) [code](https://github.com/1911cty/Unbiased-Fast-Fourier-Convolution) [pdf](./2023_10_ICCV_Rethinking-Fast-Fourier-Convolution-in-Image-Inpainting.pdf) [note](./2023_10_ICCV_Rethinking-Fast-Fourier-Convolution-in-Image-Inpainting_Note.md)
+  Authors: Tianyi Chu, Jiafu Chen, Jiakai Sun, Shuobin Lian, Zhizhong Wang, Zhiwen Zuo
 
 
 

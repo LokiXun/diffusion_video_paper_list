@@ -23,7 +23,7 @@
 使用 StableSR 逐帧做各帧差异太大，为了保持时序一致性：
 
 1. 提出 motion-guided loss 约束 diffusion denoise 过程
-2.  在 UNet 和 Decoder 中加入 temporal conv，并提出 2 个 loss 进行训练
+2. 在 UNet 和 Decoder 中加入 temporal conv，并提出 2 个 loss 进行训练
 
 > we propose an effective real-world VSR algorithm by leveraging the strength of **pre-trained latent diffusion models**
 
@@ -370,7 +370,7 @@ condition 模块参考 StableSR 中的 Encoder 和 SFT-layer；`batchsize=24, fr
 
 
 
-
+#### data
 
 **training data**
 
@@ -378,43 +378,54 @@ condition 模块参考 StableSR 中的 Encoder 和 SFT-layer；`batchsize=24, fr
 
 - "Investigating tradeoffs in real-world video super-resolution"
 
-> we merge the training set and validation set of REDS [32] in training and leave 4 sequences for testing
+> As in previous works [7, 45, 48], we merge the training set and validation set of REDS [32] in training and leave 4 sequences for test ing (REDS4). 
 
 退化合成用 RealBasicVSR 合成退化的方法
+
+> We follow the degradation pipeline of Re alBasicVSR [7] to synthesize the training sequence pairs, which involves blur, noise, downsampling and compression degradations.
+
+
 
 
 
 **testing data**
 
-**退化合成**用 RealBasicVSR 合成退化的方法
+- Synthetic Data
 
-- REDS4, 4 video sequences, each having 100 frames
-- UDM10,10 sequences, each having 32 frames
-- SPMCS, 30 sequences, each having 31 frames.
+  - REDS4, 4 video sequences, each having 100 frames
 
-真实数据（无GT）
+  - UDM10,10 sequences, each having 32 frames
 
-- VideoLQ, contains 50 real-world sequences with complex degradations.
+  - SPMCS, 30 sequences, each having 31 frames.
+
+> We evaluate our method on both synthetic and real-world datasets. To synthesize LR-HR testing sequence pairs, we apply the RealBasicVSR degradation pipeline on several widely used VSR datasets, including REDS4 [32], UDM10 [53] and SPMCS [41]. REDS4 contains 4 video sequences, each having 100 frames. UDM10 consists of 10 sequences, each having 32 frames. SPMCS has 30 se quences, each having 31 frames.
 
 
 
-#### **metrics**
+- RealWorld
+  - VideoLQ
 
-合成数据（有 GT）使用 full-reference metrics
+> For real-world dataset, we adopt VideoLQ[7]for testing, which contains 50 real-world sequences with complex degradations.
 
-- perceptual quality 主观感知
 
-  LPIPS, DISTS 越小越好
 
-  "Deep Image Structure and Texture Similarity (DISTS) Metric"
+#### metrics
 
-- Fidelity-oriented metrics
+- LPIPS
+- DISTS
+- PSNR
+- SSIM
+- NIQE
+- BRISQUE
+- MUSIQ
 
-  PSNR, SSIM
+> while we per form evaluation on all frames in this work.
 
-真实数据，无 GT
+- warping error
 
-- BRISQUE, NIQE, MUSIQ
+> averagewarpingerror (WE)[9,22]ofthesequencetoquantitativelymeasurethe temporalconsistency:
+
+
 
 
 
@@ -422,7 +433,7 @@ condition 模块参考 StableSR 中的 Encoder 和 SFT-layer；`batchsize=24, fr
 
 - average warping error (WE) 指标越低越好
 
-<img src="docs/2023_12_Arxiv_Motion-Guided-Latent-Diffusion-for-Temporally-Consistent-Real-world-Video-Super-resolution_Note/image-20240223030537848.png" alt="image-20240223030537848" style="zoom:67%;" />
+![eq9](docs/2023_12_Arxiv_Motion-Guided-Latent-Diffusion-for-Temporally-Consistent-Real-world-Video-Super-resolution_Note/eq9.png)
 
 - 选一条线，看多帧拼出来的图和 GT 对比看效果
 
@@ -465,11 +476,9 @@ condition 模块参考 StableSR 中的 Encoder 和 SFT-layer；`batchsize=24, fr
 
 PSNR SSIM 在合成数据上不准（主观好，指标差）
 
-![image-20240223030312418](docs/2023_12_Arxiv_Motion-Guided-Latent-Diffusion-for-Temporally-Consistent-Real-world-Video-Super-resolution_Note/image-20240223030312418.png)
+![tb1](docs/2023_12_Arxiv_Motion-Guided-Latent-Diffusion-for-Temporally-Consistent-Real-world-Video-Super-resolution_Note/tb1.png)
 
-average warping error (WE) 指标不准，**当视频很模糊，会导致 WE 指标很好，但主观效果并不好；**
 
-![image-20240223031006627](docs/2023_12_Arxiv_Motion-Guided-Latent-Diffusion-for-Temporally-Consistent-Real-world-Video-Super-resolution_Note/image-20240223031006627.png)
 
 ![image-20240223031036640](docs/2023_12_Arxiv_Motion-Guided-Latent-Diffusion-for-Temporally-Consistent-Real-world-Video-Super-resolution_Note/image-20240223031036640.png)
 
@@ -478,6 +487,10 @@ average warping error (WE) 指标不准，**当视频很模糊，会导致 WE �
 看一条线上的变化，发现提出的方法还是会生成很多不存在的东西
 
 ![image-20240223031344911](docs/2023_12_Arxiv_Motion-Guided-Latent-Diffusion-for-Temporally-Consistent-Real-world-Video-Super-resolution_Note/image-20240223031344911.png)
+
+![tb2](docs/2023_12_Arxiv_Motion-Guided-Latent-Diffusion-for-Temporally-Consistent-Real-world-Video-Super-resolution_Note/tb2.png)
+
+
 
 
 
