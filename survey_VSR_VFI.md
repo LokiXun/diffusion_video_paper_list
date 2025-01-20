@@ -11,6 +11,10 @@
 
 - Reference based? 强调一致性
 - 跨越 clip
+- 频率纹理
+- 相机位姿
+
+
 
 
 
@@ -182,6 +186,7 @@ BD degradation
 | Upscale-A-Video(CVPR2024)                      | 691.036436                       |           | 22.82469   | 24.27972   | 0.60125   | 0.430240 |      |        | 6.05114 |      | 26.398020 |
 | `MIA-VSR` (CVPR2024)                           | 16.596719                        |           | 24.920246  |            | 0.731834  |          |      |        |         |      |           |
 | FAM-Net(CVPR2024) <br />:warning: 没生成首尾帧 | 9.766503                         |           | 28.87683   | 30.2705    | 0.83172   | 0.2466   |      |        | 1.9148  |      | 45.0958   |
+| FMA-Net train ourselves (30wit find best)      |                                  |           | 26.37702   | 27.7377    | 0.8000    | 0.27220  |      |        | 2.1997  |      | 46.31119  |
 
 #### REDS4 BI
 
@@ -281,25 +286,20 @@ BD degradation
 
 
 
-
-
 ### realworld data
-
-#### VideoLQ
-
-
-
-
-
-
-
-TODO
-
-
 
 #### Movie Data
 
-TODO
+
+
+### RefVSR
+
+|                  | Params(M) | time(s/f) | PSNR(RGB) | PSNR(Y) | SSIM↑ | LPIPS ↓ | FID  | DISTS↓ | toF↓ | WE↓  | QualiCLIP | MUSIQ | DOVER | BRISQUE |
+| ---------------- | --------- | --------- | --------- | ------- | ----- | ------- | ---- | ------ | ---- | ---- | --------- | ----- | ----- | ------- |
+| RefVSR(CVPR2022) |           |           |           |         |       |         |      |        |      |      |           |       |       |         |
+| ERVSR(WACV2023)  |           |           |           |         |       |         |      |        |      |      |           |       |       |         |
+
+
 
 
 
@@ -659,6 +659,33 @@ Deformable Transformer 用到 video 上面，逐帧搞 deformable
 
 
 
+- "CLIP-SR: Collaborative Linguistic and Image Processing for Super-Resolution" Arxiv, 2024 Dec 
+  [paper](https://arxiv.org/pdf/2412.11609)
+
+text-guided SR，人脸效果贼垃圾
+
+
+
+
+
+- "SVFR: A Unified Framework for Generalized Video Face Restoration" Arxiv, 2025 Jan 2
+  [paper](http://arxiv.org/abs/2501.01235v2) [code](https://github.com/wangzhiyaoo/SVFR.git) [pdf](./2025_01_Arxiv_SVFR--A-Unified-Framework-for-Generalized-Video-Face-Restoration.pdf) [note](./2025_01_Arxiv_SVFR--A-Unified-Framework-for-Generalized-Video-Face-Restoration_Note.md)
+  Authors: Zhiyao Wang, Xu Chen, Chengming Xu, Junwei Zhu, Xiaobin Hu, Jiangning Zhang, Chengjie Wang, Yuqi Liu, Yiyi Zhou, Rongrong Ji
+
+SVD 同时做人脸视频修复 + inpaint + deblur 多种任务；学习一个 embedding 去选择任务
+
+
+
+
+
+- "SeedVR: Seeding Infinity in Diffusion Transformer Towards Generic Video Restoration" Arxiv, 2025 Jan 2
+  [paper](http://arxiv.org/abs/2501.01320v2) [code]() [web](https://iceclear.github.io/projects/seedvr/) [pdf](./2025_01_Arxiv_SeedVR--Seeding-Infinity-in-Diffusion-Transformer-Towards-Generic-Video-Restoration.pdf) [note](./2025_01_Arxiv_SeedVR--Seeding-Infinity-in-Diffusion-Transformer-Towards-Generic-Video-Restoration_Note.md)
+  Authors: Jianyi Wang, Zhijie Lin, Meng Wei, Yang Zhao, Ceyuan Yang, Chen Change Loy, Lu Jiang
+
+SD3 + Swin3d 方式做 temporal
+
+
+
 
 
 ### cartoon
@@ -696,6 +723,11 @@ Deformable Transformer 用到 video 上面，逐帧搞 deformable
 
 ### 3D SR :bear:
 
+- "RefSR-NeRF: Towards High Fidelity and Super Resolution View Synthesis" CVPR-2023 
+  [paper](https://openaccess.thecvf.com/content/CVPR2023/papers/Huang_RefSR-NeRF_Towards_High_Fidelity_and_Super_Resolution_View_Synthesis_CVPR_2023_paper.pdf)
+
+
+
 - "SuperGaussian: Repurposing Video Models for 3D Super Resolution" ECCV, 2024 Jun 2
   [paper](http://arxiv.org/abs/2406.00609v4) [code](https://github.com/adobe-research/SuperGaussian) [pdf](./2024_06_ECCV_SuperGaussian--Repurposing-Video-Models-for-3D-Super-Resolution.pdf) [note](./2024_06_ECCV_SuperGaussian--Repurposing-Video-Models-for-3D-Super-Resolution_Note.md)
   Authors: Yuan Shen, Duygu Ceylan, Paul Guerrero, Zexiang Xu, Niloy J. Mitra, Shenlong Wang, Anna Frühstück
@@ -705,6 +737,16 @@ Deformable Transformer 用到 video 上面，逐帧搞 deformable
 - "Sequence Matters: Harnessing Video Models in 3D Super-Resolution" AAAI, 2024 Dec 16
   [paper](http://arxiv.org/abs/2412.11525v3) [code](https://ko-lani.github.io/Sequence-Matters) [pdf](./2024_12_AAAI_Sequence-Matters--Harnessing-Video-Models-in-3D-Super-Resolution.pdf) [note](./2024_12_AAAI_Sequence-Matters--Harnessing-Video-Models-in-3D-Super-Resolution_Note.md)
   Authors: Hyun-kyu Ko, Dongheok Park, Youngin Park, Byeonghyeon Lee, Juhee Han, Eunbyung Park
+
+
+
+### Image
+
+- "LocalSR: Image Super-Resolution in Local Region" Arxiv
+
+  https://arxiv.org/pdf/2412.04314
+
+
 
 
 
@@ -770,6 +812,8 @@ Dynamic Filter Network 预测退化特征，融入 deblur/SR
 
 ## Reference-VSR :book:
 
+
+
 - "TDAN: Temporally Deformable Alignment Network for Video Super-Resolution" CVPR, 2018 Dec
   [paper](https://arxiv.org/abs/1812.02898)
 
@@ -785,8 +829,6 @@ Dynamic Filter Network 预测退化特征，融入 deblur/SR
 
 
 
-
-
 - "NeuriCam: Key-Frame Video Super-Resolution and Colorization for IoT Cameras" MobiCom-2023,
   [paper](https://arxiv.org/abs/2207.12496)
 
@@ -799,6 +841,14 @@ Dynamic Filter Network 预测退化特征，融入 deblur/SR
 
 - "Efficient Reference-based Video Super-Resolution (ERVSR): Single Reference Image Is All You Need" WACV, 2023
   [paper](https://openaccess.thecvf.com/content/WACV2023/papers/Kim_Efficient_Reference-Based_Video_Super-Resolution_ERVSR_Single_Reference_Image_Is_All_WACV_2023_paper.pdf) [code](https://github.com/haewonc/ERVSR)
+
+
+
+- "Reference-based Video Super-Resolution Using Multi-Camera Video Triplets" CVPR, 2022 Mar 28, `RefVSR`
+  [paper](http://arxiv.org/abs/2203.14537v1) [web](https://junyonglee.me/projects/RefVSR/) [code](https://github.com/codeslake/RefVSR) [pdf](./2022_03_CVPR_Reference-based-Video-Super-Resolution-Using-Multi-Camera-Video-Triplets.pdf) [note](./2022_03_CVPR_Reference-based-Video-Super-Resolution-Using-Multi-Camera-Video-Triplets_Note.md)
+  Authors: Junyong Lee, Myeonghee Lee, Sunghyun Cho, Seungyong Lee
+- "RefVSR++: Exploiting Reference Inputs for Reference-based Video Super-resolution" Arxiv, 2023 Jul **RefVSR++**
+  [paper](https://arxiv.org/abs/2307.02897)
 
 
 
@@ -819,20 +869,10 @@ Dynamic Filter Network 预测退化特征，融入 deblur/SR
 
 
 
-- "Reference-based Burst Super-resolution" ACMM 
-  [paper](https://dl.acm.org/doi/pdf/10.1145/3664647.3681447) [code](https://github.com/SeonggwanKo/RefBSR)
-
 
 
 - "PERSONALIZED REPRESENTATION FROM PERSONALIZED GENERATION" 
   [paper](https://arxiv.org/pdf/2412.16156v1) 
-
-
-
-- "Reference-based Video Super-Resolution Using Multi-Camera Video Triplets" CVPR, 2022 Mar, **RefVSR** :statue_of_liberty:
-  [paper](https://arxiv.org/abs/2203.14537) [website](https://junyonglee.me/projects/RefVSR/) [code](https://github.com/codeslake/RefVSR) [pdf](./2022_03_Reference-based-Video -Super-Resolution-Using-Multi-Camera-Video-Triplets.pdf)
-- "RefVSR++: Exploiting Reference Inputs for Reference-based Video Super-resolution" Arxiv, 2023 Jul **RefVSR++**
-  [paper](https://arxiv.org/abs/2307.02897)
 
 
 
@@ -848,17 +888,37 @@ Dynamic Filter Network 预测退化特征，融入 deblur/SR
 
 
 
+
+
+
+
 ### Image
 
-- "Robust Reference-based Super-Resolution via C2-Matching" CVPR, 2021 Jun, C2-Matching :statue_of_liberty:
+- "Robust Reference-based Super-Resolution via C2-Matching" CVPR, 2021 Jun 3, C2-Matching :statue_of_liberty:
   [paper](https://arxiv.org/abs/2106.01863) [code](https://github.com/yumingj/C2-Matching)
+
+
+
+- "Reference-based Image Super-Resolution with Deformable Attention Transformer" ECCV, 2022 Jul, DATSR :statue_of_liberty:
+  [paper](https://arxiv.org/abs/2207.11938) [code](https://github.com/caojiezhang/DATSR) [note](./2022_07_ECCV_Reference-based-Image-Super-Resolution-with-Deformable-Attention-Transformer_Note.md)
+
+
 
 - "Reference-Based Image and Video Super-Resolution via C2-Matching" TPAMI, 2023 July 01
   [paper](https://ieeexplore.ieee.org/abstract/document/9996154)
 
 
 
-- "Dual-Camera Super-Resolution with Aligned Attention Modules" ICCV oral, 2021 Sep, DCSR
+- "Learning Texture Transformer Network for Image Super-Resolution" `TTSR` :star:
+
+
+
+- "Self-supervised Reference-Based Image Super-Resolution with Conditional Diffusion Model" ACMM-2025 
+  [paper](https://link.springer.com/chapter/10.1007/978-981-96-2064-7_32)
+
+
+
+- "Dual-Camera Super-Resolution with Aligned Attention Modules" ICCV oral, 2021 Sep, DCSR :star:
   [paper](https://arxiv.org/abs/2109.01349) [code](https://github.com/Tengfei-Wang/DCSR) [note](./2021_09_ICCV_oral_Dual-Camera-Super-Resolution-with-Aligned-Attention-Modules_Note.md)
 
 
@@ -878,8 +938,34 @@ Dynamic Filter Network 预测退化特征，融入 deblur/SR
 
 
 
+- "KeDuSR: Real-World Dual-Lens Super-Resolution via Kernel-Free Matching" AAAI-2023, 2023 Dec 28 
+  [paper](https://arxiv.org/abs/2312.17050)
+
+
+
 - "Refine-by-Align: Reference-Guided Artifacts Refinement through Semantic Alignment" 
   [paper](https://arxiv.org/abs/2412.00306)
+
+
+
+- "INSTANTIR: BLIND IMAGE RESTORATION WITH INSTANT GENERATIVE REFERENCE" 
+
+  https://arxiv.org/pdf/2410.06551
+
+
+
+- "ReFIR: Grounding Large Restoration Models with Retrieval Augmentation" :star:
+
+  https://arxiv.org/pdf/2410.05601
+
+Reference Image Retrieval
+
+
+
+- "Blind Super Resolution with Reference Images and Implicit Degradation Representation" ACCV2024 
+  https://openaccess.thecvf.com/content/ACCV2024/papers/Do_Blind_Super_Resolution_with_Reference_Images_and_Implicit_Degradation_Representation_ACCV_2024_paper.pdf
+
+
 
 
 
@@ -979,9 +1065,48 @@ Dynamic Filter Network 预测退化特征，融入 deblur/SR
 
 
 
+- "MINIMA: Modality Invariant Image Matching" 
+  [paper](https://arxiv.org/pdf/2412.19412v1)
+
+用 DM 生成多个模态的数据，一起用来做 correspondence
+
+
+
+### restore
+
+- "SVFR: A Unified Framework for Generalized Video Face Restoration" Arxiv, 2025 Jan 2
+  [paper](http://arxiv.org/abs/2501.01235v2) [code](https://github.com/wangzhiyaoo/SVFR.git) [pdf](./2025_01_Arxiv_SVFR--A-Unified-Framework-for-Generalized-Video-Face-Restoration.pdf) [note](./2025_01_Arxiv_SVFR--A-Unified-Framework-for-Generalized-Video-Face-Restoration_Note.md)
+  Authors: Zhiyao Wang, Xu Chen, Chengming Xu, Junwei Zhu, Xiaobin Hu, Jiangning Zhang, Chengjie Wang, Yuqi Liu, Yiyi Zhou, Rongrong Ji
+
+![fig2](docs/2025_01_Arxiv_SVFR--A-Unified-Framework-for-Generalized-Video-Face-Restoration_Note/fig2.png)
+
+- ID prior Loss 有点作用
+- 多任务一起学->更加丰富的 DA
+- Reference 图像提取 VAE 加噪作为初始噪声。。。看效果只有颜色一致性有点作用。。。
+
+
+
+
+
+- "FramePainter: Endowing Interactive Image Editing with Video Diffusion Priors" Arxiv, 2025 Jan 14
+  [paper](http://arxiv.org/abs/2501.08225v1) [code](https://github.com/YBYBZhang/FramePainter) [pdf](./2025_01_Arxiv_FramePainter--Endowing-Interactive-Image-Editing-with-Video-Diffusion-Priors.pdf) [note](./2025_01_Arxiv_FramePainter--Endowing-Interactive-Image-Editing-with-Video-Diffusion-Priors_Note.md)
+  Authors: Yabo Zhang, Xinpeng Zhou, Yihan Zeng, Hang Xu, Hui Li, Wangmeng Zuo
+
+SVD 做图像编辑；**想用 dense correspondence 方式做，搞了一个 cross-attn map loss还是用 cross-attn 自己去学。。。**但是呢，在训练时候加了一个 correspondence loss 去约束 Cross-attn map ；对比 Cross-Frame， 在它基础上加 matching attention 会咋样，SSIM 高了0.03 只能是说还有点用
+
+![eq5](docs/2025_01_Arxiv_FramePainter--Endowing-Interactive-Image-Editing-with-Video-Diffusion-Priors_Note/eq5.png)
+
+
+
 
 
 ### video grounding
+
+- "Spectrum-guided Multi-granularity Referring Video Object Segmentation"  2023 Jul
+
+  https://arxiv.org/pdf/2307.13537v1
+
+
 
 - "Knowing Where to Focus: Event-aware Transformer for Video Grounding" ICCV-2023, 2023 Aug 14 
   [paper](https://arxiv.org/abs/2308.06947)
@@ -990,6 +1115,13 @@ Dynamic Filter Network 预测退化特征，融入 deblur/SR
 
 - "OmniViD: A Generative Framework for Universal Video Understanding" CVPR-2024
   [paper](https://openaccess.thecvf.com/content/CVPR2024/papers/Wang_OmniViD_A_Generative_Framework_for_Universal_Video_Understanding_CVPR_2024_paper.pdf)
+
+
+
+- "Sa2VA: Marrying SAM2 with LLaVA for Dense Grounded Understanding of Images and Videos" 
+  https://arxiv.org/pdf/2501.04001v1  https://lxtgh.github.io/project/sa2va/
+
+Video Object Segmentation
 
 
 

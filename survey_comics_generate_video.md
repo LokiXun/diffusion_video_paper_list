@@ -228,7 +228,7 @@ diffusion 每次推理不同随机种子随机性太大，用预训练的 dense 
 
 
 
-### reference
+## reference-based :star:
 
 - "Paint by Example: Exemplar-based Image Editing with Diffusion Models" CVPR, 2022 Nov
   [paper](http://arxiv.org/abs/2211.13227v1) [code](https://github.com/Fantasy-Studio/Paint-by-Example) [pdf](./2022_11_CVPR_Paint-by-Example--Exemplar-based-Image-Editing-with-Diffusion-Models.pdf) [note](./2022_11_CVPR_Paint-by-Example--Exemplar-based-Image-Editing-with-Diffusion-Models_Note.md)
@@ -299,6 +299,140 @@ diffusion 每次推理不同随机种子随机性太大，用预训练的 dense 
 <img src="docs/2024_06_Arxiv_Zero-shot-Image-Editing-with-Reference-Imitation_Note/mimicbrush_overview.png" alt="mimicbrush_overview.png" style="zoom: 67%;" />
 
 
+
+
+
+- "StableAnimator: High-Quality Identity-Preserving Human Image Animation" Arxiv, 2024 Nov 26
+  [paper](http://arxiv.org/abs/2411.17697v2) [code]() [pdf](./2024_11_Arxiv_StableAnimator--High-Quality-Identity-Preserving-Human-Image-Animation.pdf) [note](./2024_11_Arxiv_StableAnimator--High-Quality-Identity-Preserving-Human-Image-Animation_Note.md)
+  Authors: Shuyuan Tu, Zhen Xing, Xintong Han, Zhi-Qi Cheng, Qi Dai, Chong Luo, Zuxuan Wu (MSRA + Fudan)
+
+1. 保持分布一致，加入 ID 特征，**避免 temporal layer 干扰 ID 一致性**
+2. 提出 HJB **在推理过程中，保持 ID 一致性** :star:
+
+![fig2](docs/2024_11_Arxiv_StableAnimator--High-Quality-Identity-Preserving-Human-Image-Animation_Note/fig2.png)
+
+
+
+
+
+- "Identity-Preserving Text-to-Video Generation by Frequency Decomposition" Arxiv, 2024 Nov 26
+  [paper](http://arxiv.org/abs/2411.17440v1) [code](https://github.com/PKU-YuanGroup/ConsisID) [web](https://pku-yuangroup.github.io/ConsisID/) [pdf](./2024_11_Arxiv_Identity-Preserving-Text-to-Video-Generation-by-Frequency-Decomposition.pdf) [note](./2024_11_Arxiv_Identity-Preserving-Text-to-Video-Generation-by-Frequency-Decomposition_Note.md)
+  Authors: Shenghai Yuan, Jinfa Huang, Xianyi He, Yunyuan Ge, Yujun Shi, Liuhan Chen, Jiebo Luo, Li Yuan
+
+![fig2](docs/2024_11_Arxiv_Identity-Preserving-Text-to-Video-Generation-by-Frequency-Decomposition_Note/fig2.png)
+
+自己定义人脸高频特征 ArcFace + CLIP Image Embedding.... 额外加入人脸关键点作为低频特征去强调一下
+
+
+
+- "Magic Mirror: ID-Preserved Video Generation in Video Diffusion Transformers" 
+  https://arxiv.org/pdf/2501.03931v1
+
+人脸图像 ID 特征优化 img_condition & text_condition，输入 CogVideoX 的 cross-atten 模块
+
+
+
+
+
+### cross-attn loss
+
+- "GLIGEN: Open-Set Grounded Text-to-Image Generation" CVPR, 2023 Jan 17
+  [paper](http://arxiv.org/abs/2301.07093v2) [code](https://github.com/gligen/GLIGEN) [pdf](./2023_01_CVPR_GLIGEN--Open-Set-Grounded-Text-to-Image-Generation.pdf) [note](./2023_01_CVPR_GLIGEN--Open-Set-Grounded-Text-to-Image-Generation_Note.md)
+  Authors: Yuheng Li, Haotian Liu, Qingyang Wu, Fangzhou Mu, Jianwei Yang, Jianfeng Gao, Chunyuan Li, Yong Jae Lee
+
+<img src="docs/2023_01_CVPR_GLIGEN--Open-Set-Grounded-Text-to-Image-Generation_Note/fig3.png" alt="fig3" style="zoom:50%;" />
+
+![IMAGE ALT TEXT HERE](https://github.com/gligen/GLIGEN/raw/master/figures/teaser_v4.png)
+
+
+
+- "FastComposer: Tuning-Free Multi-Subject Image Generation with Localized Attention" Arxiv, 2023 May 17 :star:
+  [paper](http://arxiv.org/abs/2305.10431v2) [code](https://github.com/mit-han-lab/fastcomposer) [pdf](./2023_05_Arxiv_FastComposer--Tuning-Free-Multi-Subject-Image-Generation-with-Localized-Attention.pdf) [note](./2023_05_Arxiv_FastComposer--Tuning-Free-Multi-Subject-Image-Generation-with-Localized-Attention_Note.md)
+  Authors: Guangxuan Xiao, Tianwei Yin, William T. Freeman, Frédo Durand, Song Han (MIT)
+
+![fig3](docs/2023_05_Arxiv_FastComposer--Tuning-Free-Multi-Subject-Image-Generation-with-Localized-Attention_Note/fig3.png)
+
+
+
+- "Subject-Diffusion:Open Domain Personalized Text-to-Image Generation without Test-time Fine-tuning" SIGGRAPH, 2023 Jul 21 :star: 
+  [paper](http://arxiv.org/abs/2307.11410v2) [code](https://oppo-mente-lab.github.io/subject_diffusion/) [pdf](./2023_07_SIGGRAPH_Subject-Diffusion-Open-Domain-Personalized-Text-to-Image-Generation-without-Test-time-Fine-tuning.pdf) [note](./2023_07_SIGGRAPH_Subject-Diffusion-Open-Domain-Personalized-Text-to-Image-Generation-without-Test-time-Fine-tuning_Note.md) 
+  Authors: Jian Ma, Junhao Liang, Chen Chen, Haonan Lu (OPPO-AI)
+
+利用丰富的辅助信息：SegMap + Location + Text + CLIP-image
+
+![fig3](docs/2023_07_Arxiv_Subject-Diffusion-Open-Domain-Personalized-Text-to-Image-Generation-without-Test-time-Fine-tuning_Note/fig3.png)
+
+
+
+- "MM-Diff: High-Fidelity Image Personalization via Multi-Modal Condition Integration" Arxiv, 2024 Mar 22
+  [paper](http://arxiv.org/abs/2403.15059v1) [code](https://github.com/alibaba/mm-diff) [pdf](./2024_03_Arxiv_MM-Diff--High-Fidelity-Image-Personalization-via-Multi-Modal-Condition-Integration.pdf) [note](./2024_03_Arxiv_MM-Diff--High-Fidelity-Image-Personalization-via-Multi-Modal-Condition-Integration_Note.md)
+  Authors: Zhichao Wei, Qingkun Su, Long Qin, Weizhi Wang
+
+![fig2](docs/2024_03_Arxiv_MM-Diff--High-Fidelity-Image-Personalization-via-Multi-Modal-Condition-Integration_Note/fig2.png)
+
+
+
+- "StoryMaker: Towards Holistic Consistent Characters in Text-to-image Generation" Arxiv, 2024 Sep 19
+  [paper](http://arxiv.org/abs/2409.12576v1) [code](https://github.com/RedAIGC/StoryMaker.) [pdf](./2024_09_Arxiv_StoryMaker--Towards-Holistic-Consistent-Characters-in-Text-to-image-Generation.pdf) [note](./2024_09_Arxiv_StoryMaker--Towards-Holistic-Consistent-Characters-in-Text-to-image-Generation_Note.md)
+  Authors: Zhengguang Zhou, Jing Li, Huaxia Li, Nemo Chen, Xu Tang
+
+![fig2](docs/2024_09_Arxiv_StoryMaker--Towards-Holistic-Consistent-Characters-in-Text-to-image-Generation_Note/fig2.png)
+
+
+
+
+
+- "DreamMix: Decoupling Object Attributes for Enhanced Editability in Customized Image Inpainting" Arxiv, 2024 Nov 26
+  [paper](http://arxiv.org/abs/2411.17223v1) [code](https://github.com/mycfhs/DreamMix.) [pdf](./2024_11_Arxiv_DreamMix--Decoupling-Object-Attributes-for-Enhanced-Editability-in-Customized-Image-Inpainting.pdf) [note](./2024_11_Arxiv_DreamMix--Decoupling-Object-Attributes-for-Enhanced-Editability-in-Customized-Image-Inpainting_Note.md)
+  Authors: Yicheng Yang, Pengxiang Li, Lu Zhang, Liqian Ma, Ping Hu, Siyu Du, Yunzhi Zhuge, Xu Jia, Huchuan Lu
+
+![fig2](docs/2024_11_Arxiv_DreamMix--Decoupling-Object-Attributes-for-Enhanced-Editability-in-Customized-Image-Inpainting_Note/fig2.png)
+
+训练 DreamBooth，只要 20min；**在推理阶段**，提出局部优化 + 全局优化，把指定区域 VAE 替换掉，和新的图像特征加权
+
+
+
+### correspondence
+
+> **dataset**
+>
+> - SPair-71k，最难的语义匹配数据集，12234 张图像，18个类别
+> - PF-Willow 900 个图像对，PASCAL VOC 数据的子集
+> - 14 different splits of CUB (each containing 25 images)
+>
+> > SPair-71k [55], PF-WILLOW [27] and CUB-200-2011 [89]. SPair-71k is the most challenging semantic correspondence dataset, containing diverse variations in viewpoint and scale with 12,234 image pairs on 18 categories for testing. PF-Willow is a subset of PASCAL VOC dataset [20] with 900 image pairs for testing. For CUB, following [58], we evaluate 14 different splits of CUB (each containing 25 images) and report the average performance across all splits.
+>
+> **metrics**
+>
+> percentage of correct keypoints (PCK)，给一个距离 & 阈值，在范围内部算 ok
+>
+> - PCK per point，数据集中所有的预测点 -> `预测的所有点中 ok 的个数 / 预测所有点的个数`
+>
+>   > use the total number of correctly-predicted points in the whole dataset (or each category split) divided
+>
+> - PCK per image，以单张图像去统计点的 PCK，数据集每张图的 PCK 取平均
+
+
+
+- "Emergent Correspondence from Image Diffusion" NIPS, 2023 Jun 6
+  [paper](http://arxiv.org/abs/2306.03881v2) [code](https://diffusionfeatures.github.io) [pdf](./2023_06_NIPS_Emergent-Correspondence-from-Image-Diffusion.pdf) [note](./2023_06_NIPS_Emergent-Correspondence-from-Image-Diffusion_Note.md)
+  Authors: Luming Tang, Menglin Jia, Qianqian Wang, Cheng Perng Phoo, Bharath Hariharan
+
+发现 SD 自带 correspondence 能力；提出**一种抽取 SD UNet decoder 特征做匹配的简单方式**，对于 match point 做插值提取特征（类似 deformable cnn），计算特征之间距离做匹配；**挑了几个**认为 "challenge" 的图看看结果，**至少说明部分场景 SD 有能力做 reference 理解**；右边那张椅子都不行。。。猜测不同视角物体占据图像的比例 & 姿态差异太大效果会显著降低?
+
+![fig14](docs/2023_06_NIPS_Emergent-Correspondence-from-Image-Diffusion_Note/fig14.png)
+
+
+
+
+
+- "Edicho: Consistent Image Editing in the Wild" Arxiv, 2024 Dec 30
+  [paper](http://arxiv.org/abs/2412.21079v2) [code]() [web](https://ezioby.github.io/edicho/) [pdf](./2024_12_Arxiv_Edicho--Consistent-Image-Editing-in-the-Wild.pdf) [note](./2024_12_Arxiv_Edicho--Consistent-Image-Editing-in-the-Wild_Note.md)
+  Authors: Qingyan Bai, Hao Ouyang, Yinghao Xu, Qiuyu Wang, Ceyuan Yang, Ka Leong Cheng, Yujun Shen, Qifeng Chen
+
+![fig3](docs/2024_12_Arxiv_Edicho--Consistent-Image-Editing-in-the-Wild_Note/fig3.png)
+
+用 2023 NIPS 的一篇 diffusion 做匹配点的方法提取显示的匹配点，用来去 warp query 特征，做到对齐；再用 cross-attention 学习 reference 特征
 
 
 
@@ -407,6 +541,31 @@ Appendix D 部分, **换到 image2video 进行微调**；不使用文本，**把
 
 
 
+
+
+- "StableAnimator: High-Quality Identity-Preserving Human Image Animation" Arxiv, 2024 Nov 26
+  [paper](http://arxiv.org/abs/2411.17697v2) [code]() [pdf](./2024_11_Arxiv_StableAnimator--High-Quality-Identity-Preserving-Human-Image-Animation.pdf) [note](./2024_11_Arxiv_StableAnimator--High-Quality-Identity-Preserving-Human-Image-Animation_Note.md)
+  Authors: Shuyuan Tu, Zhen Xing, Xintong Han, Zhi-Qi Cheng, Qi Dai, Chong Luo, Zuxuan Wu (MSRA + Fudan)
+
+1. 保持分布一致，加入 ID 特征，**避免 temporal layer 干扰 ID 一致性**
+2. 提出 HJB **在推理过程中，保持 ID 一致性** :star:
+
+![fig2](docs/2024_11_Arxiv_StableAnimator--High-Quality-Identity-Preserving-Human-Image-Animation_Note/fig2.png)
+
+
+
+
+
+- "FramePainter: Endowing Interactive Image Editing with Video Diffusion Priors" Arxiv, 2025 Jan 14
+  [paper](http://arxiv.org/abs/2501.08225v1) [code](https://github.com/YBYBZhang/FramePainter) [pdf](./2025_01_Arxiv_FramePainter--Endowing-Interactive-Image-Editing-with-Video-Diffusion-Priors.pdf) [note](./2025_01_Arxiv_FramePainter--Endowing-Interactive-Image-Editing-with-Video-Diffusion-Priors_Note.md)
+  Authors: Yabo Zhang, Xinpeng Zhou, Yihan Zeng, Hang Xu, Hui Li, Wangmeng Zuo
+
+![fig2](docs/2025_01_Arxiv_FramePainter--Endowing-Interactive-Image-Editing-with-Video-Diffusion-Priors_Note/fig2.png)
+
+
+
+
+
 ## Pose
 
 使用场景：部分肢体出现，补充肢体 && 让手部动起来
@@ -476,6 +635,16 @@ We employ DWPose[52] to extract the pose sequence of characters in the video, in
 - "Evolving Storytelling: Benchmarks and Methods for New Character Customization with Diffusion Models" Arxiv, 2024 May 20
   [paper](http://arxiv.org/abs/2405.11852v1) [code]() [pdf](./2024_05_Arxiv_Evolving-Storytelling--Benchmarks-and-Methods-for-New-Character-Customization-with-Diffusion-Models.pdf) [note](./2024_05_Arxiv_Evolving-Storytelling--Benchmarks-and-Methods-for-New-Character-Customization-with-Diffusion-Models_Note.md)
   Authors: Xiyu Wang, Yufei Wang, Satoshi Tsutsui, Weisi Lin, Bihan Wen, Alex C. Kot
+
+
+
+
+
+## talking head
+
+- "Make Your Actor Talk: Generalizable and High-Fidelity Lip Sync with Motion and Appearance Disentanglement" Arxiv, 2024 Jun 12
+  [paper](http://arxiv.org/abs/2406.08096v1) [code](https://Ingrid789.github.io/MyTalk/) [pdf](./2024_06_Arxiv_Make-Your-Actor-Talk--Generalizable-and-High-Fidelity-Lip-Sync-with-Motion-and-Appearance-Disentanglement.pdf) [note](./2024_06_Arxiv_Make-Your-Actor-Talk--Generalizable-and-High-Fidelity-Lip-Sync-with-Motion-and-Appearance-Disentanglement_Note.md)
+  Authors: Runyi Yu, Tianyu He, Ailing Zeng, Yuchi Wang, Junliang Guo, Xu Tan, Chang Liu, Jie Chen, Jiang Bian
 
 
 
