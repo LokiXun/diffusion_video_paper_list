@@ -839,6 +839,9 @@ Framework
 
 
 
+- "Boosting Latent Diffusion with Perceptual Objectives" 
+  
+
 
 
 ### edit
@@ -2222,6 +2225,18 @@ DoubleDIP 把各种 low-level 任务看作**图层分解任务**，**将图像�
 
 
 
+- "Revisiting VAE for Unsupervised Time Series Anomaly Detection: A Frequency Perspective" WWW-2024, 2024 Feb 5
+  [paper](http://arxiv.org/abs/2402.02820v1) [code](https://github.com/CSTCloudOps/FCVAE) [pdf](./2024_02_Arxiv_Revisiting-VAE-for-Unsupervised-Time-Series-Anomaly-Detection--A-Frequency-Perspective.pdf) [note](./2024_02_Arxiv_Revisiting-VAE-for-Unsupervised-Time-Series-Anomaly-Detection--A-Frequency-Perspective_Note.md)
+  Authors: Zexin Wang, Changhua Pei, Minghua Ma, Xin Wang, Zhihan Li, Dan Pei, Saravan Rajmohan, Dongmei Zhang, Qingwei Lin, Haiming Zhang, Jianhui Li, Gaogang Xie
+
+![fig4](docs/2024_02_Arxiv_Revisiting-VAE-for-Unsupervised-Time-Series-Anomaly-Detection--A-Frequency-Perspective_Note/fig4.png)
+
+VAE 1D 数据重建，设计 Global&local Frequency
+
+
+
+
+
 - "When Fast Fourier Transform Meets Transformer for Image Restoration" ECCV, 2024 Mar 1 :star: 
   [paper](https://www.ecva.net/papers/eccv_2024/papers_ECCV/papers/06190.pdf) [code](https://github.com/deng-ai-lab/SFHformer) [pdf](./2024_03_ECCV_When-Fast-Fourier-Transform-Meets-Transformer-for-Image-Restoration.pdf) [note](./2024_03_ECCV_When-Fast-Fourier-Transform-Meets-Transformer-for-Image-Restoration_Note.md)
   Authors: Xingyu Jiang, Xiuhui Zhang, Ning Gao, Yue Deng
@@ -2253,6 +2268,20 @@ DoubleDIP 把各种 low-level 任务看作**图层分解任务**，**将图像�
 去噪到 z0 加一个 Wavelet Attention Blocks (Attn +FFN)
 
 ![fig2](docs/2024_08_ECCV_Rethinking-Video-Deblurring-with-Wavelet-Aware-Dynamic-Transformer-and-Diffusion-Model_Note/fig2.png)
+
+
+
+
+
+- "Improving Virtual Try-On with Garment-focused Diffusion Models" Arxiv, 2024 Sep 12
+  [paper](http://arxiv.org/abs/2409.08258v1) [code](https://github.com/siqi0905/GarDiff/tree/master) [pdf](./2024_09_Arxiv_Improving-Virtual-Try-On-with-Garment-focused-Diffusion-Models.pdf) [note](./2024_09_Arxiv_Improving-Virtual-Try-On-with-Garment-focused-Diffusion-Models_Note.md)
+  Authors: Siqi Wan, Yehao Li, Jingwen Chen, Yingwei Pan, Ting Yao, Yang Cao, Tao Mei
+
+![fig2](docs/2024_09_Arxiv_Improving-Virtual-Try-On-with-Garment-focused-Diffusion-Models_Note/fig2.png)
+
+把 Unet 预测的 noise 一步去噪 -> 过 VAE 转为 RGB 和 mask 一起，加了一个纹理的 loss：DISTS 指标 + 高频（提取边缘）的 loss
+
+
 
 
 

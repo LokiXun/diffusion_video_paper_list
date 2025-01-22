@@ -1,5 +1,69 @@
 # survey_old_film_restoration
 
+## data & ckpt & metrics
+
+> https://github.com/xiaobai1217/Awesome-Video-Datasets
+
+### **synthetic dataset**
+
+合成数据不用测太多，选2个细化为不同退化程度；可以参考 VSR 数据集
+
+- **DAVIS30**
+- **REDS**
+  - REDS4 test 集合，合成数据
+  - REDS30
+- Vid4
+- YouHQ :+1:
+- Videvo
+
+
+
+- Q：如何衡量合成的退化程度？
+
+PSNR 区间，进行细化
+
+
+
+
+
+### Real-old FIlm
+
+> [C:\Users\Loki\workspace\Tongji_CV_group\VHS_video_restoration\dataset\shanghai_film_technology_plant/old-films-collections.md](C:\Users\Loki\workspace\Tongji_CV_group\VHS_video_restoration\dataset\shanghai_film_technology_plant/old-films-collections.md)
+
+按类型，镜头分类
+
+- 动漫
+- sanmao，黑白
+- bihaihongbo，RGB
+- 不动的竖线 constant line
+- 快速移动，火焰 flickering
+
+
+
+
+
+真实电影，人工修复
+
+- 手工（GT）修复 1-2 个
+
+
+
+
+
+上色：REDS（TODO）
+
+
+
+### metrics
+
+- FLOPS(G), Runtime(s/frame)
+- PSNR, SSIM, LPIPS
+- FID(Fréchet InceptionDistance)
+- NIQE
+- CDC(ColorDistributionConsistency) 上色指标
+
+
+
 
 
 
@@ -64,19 +128,25 @@ RealOld 200个老照片，**有 Expert 修复过的 GT！**
 
 ## Old film restoration :star:
 
-- Q：补充哪些数据集？
-
-TODO
-
-
-
 - Q：测试哪些方法？
 
 算法
 
 ```
-DeOldify, DeepRemaster(SIGGRAPH2019), [BasicVSR++(CVPR2021),] RTN(CVPR2022), RVRT(NIPS2022), TAPE(WACV2023), RRTN(WACV2024), 
+Input
+DeOldify(OpenSource),
+DeepRemaster(SIGGRAPH2019),
+[BasicVSR++(CVPR2021),]
+RVRT(NIPS2022), 
+RTN(CVPR2022),
+[TAPE(WACV2023)],
+RRTN(WACV2024), 测试灰度图
 DeepEnhancer(ICMR2024) 测试灰度图
+
+(Commercial)
+MTI (RIFE + Camera Pose Prediction)
+DiaMANT
+[Professionals restore by hand]
 ```
 
 商用软件自动修复
@@ -131,7 +201,8 @@ TODO: 联系袁哥
 
 
 - "Reference-based Restoration of Digitized Analog Videotapes" WACV, 2023 Oct, TAPE  :star:
-  [paper](http://arxiv.org/abs/2310.14926v2) [code](https://github.com/miccunifi/TAPE) [note](./2023_10_WACV_Reference-based-Restoration-of-Digitized-Analog-Videotapes_Note.md) Authors: Lorenzo Agnolucci, Leonardo Galteri, Marco Bertini, Alberto Del Bimbo
+  [paper](http://arxiv.org/abs/2310.14926v2) [code](https://github.com/miccunifi/TAPE) [note](./2023_10_WACV_Reference-based-Restoration-of-Digitized-Analog-Videotapes_Note.md) 
+  Authors: Lorenzo Agnolucci, Leonardo Galteri, Marco Bertini, Alberto Del Bimbo
 
 VHS 修复，可训练
 
@@ -161,13 +232,30 @@ VHS 修复，可训练
 
 
 
-- "DeepEnhancer: Temporally Consistent Focal Transformer for Comprehensive Video Enhancement" ICMR, 2024 Jun 07
-
-[paper](https://dl.acm.org/doi/pdf/10.1145/3652583.3658031) [code](https://github.com/jiangqin567/DeepEnhancer/issues/1) [pdf](./2024_ICMR_DeepEnhancer.pdf)
+- "DeepEnhancer: Temporally Consistent Focal Transformer for Comprehensive Video Enhancement" ICMR, 2024 Jun 7
+  [paper](https://dl.acm.org/doi/pdf/10.1145/3652583.3658031) [code](https://github.com/jiangqin567/DeepEnhancer) [pdf](./2024_06_ICMR_DeepEnhancer--Temporally-Consistent-Focal-Transformer-for-Comprehensive-Video-Enhancement.pdf) [note](./2024_06_ICMR_DeepEnhancer--Temporally-Consistent-Focal-Transformer-for-Comprehensive-Video-Enhancement_Note.md)
+  Authors: Qin Jiang, Qinglin Wang, Lihua Chi, Wentao Ma, Feng Li, Jie Liu
 
 参考本文的 related work 做实验！ :star: 无训练 code，但有灰度修复的模型！
 
 ![DeepEnhancer](docs/survey_old_film_restoration/DeepEnhancer.png)
+
+
+
+
+
+- "Research on the Digital Restoration of Female Hero Images in Shandong Red Films" 2024, ECNCT
+  [paper](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10704335)
+
+> we trained the model on the YouTube-VOS dataset and compared it with RVRT [10] and the method "Bring old films to life." [11]
+
+无代码
+
+
+
+- "SVFR: A Unified Framework for Generalized Video Face Restoration" Arxiv, 2025 Jan 2
+  [paper](http://arxiv.org/abs/2501.01235v2) [code](https://github.com/wangzhiyaoo/SVFR.git) [pdf](./2025_01_Arxiv_SVFR--A-Unified-Framework-for-Generalized-Video-Face-Restoration.pdf) [note](./2025_01_Arxiv_SVFR--A-Unified-Framework-for-Generalized-Video-Face-Restoration_Note.md)
+  Authors: Zhiyao Wang, Xu Chen, Chengming Xu, Junwei Zhu, Xiaobin Hu, Jiangning Zhang, Chengjie Wang, Yuqi Liu, Yiyi Zhou, Rongrong Ji
 
 
 
@@ -202,6 +290,12 @@ https://arxiv.org/pdf/2404.06251
 
 
 
+- "OmniFusion: Exemplar-based Video Colorization Using OmniMotion and Diffusion Priors"
+
+  [paper](https://openaccess.thecvf.com/content/ACCV2024/papers/Fang_OmniFusion_Exemplar-based_Video_Colorization_Using_OmniMotion_and_Diffusion_Priors_ACCV_2024_paper.pdf)
+
+
+
 
 
 ### flickering
@@ -222,11 +316,20 @@ https://arxiv.org/pdf/2404.06251
 
 
 
+
+
 ### metrics
 
 > [survey_IQA.md](./survey_IQA.md)
 
 - Q：展示哪些 metrics?
+
+1. 看最新 film-restoration & video restoration 用哪些指标；
+2. VBench 看一下是怎么做的
+
+
+
+
 
 reference
 
@@ -237,7 +340,7 @@ PSNR↑ SSIM↑ LPIPS  DISTS
 No-reference
 
 ```
-BRISQUE↓ NIQE
+BRISQUE↓ NIQE  CDC FID
 ```
 
 video temporal consistency
@@ -409,6 +512,24 @@ albedo，metallic，roughness
 
 
 
+- Commercial Old films 
+  https://www.britishpathe.com/ 老电影商店 75英镑下载一个。。
+
+
+
+- Youtube [Denis Shiryaev](https://www.youtube.com/@DenisShiryaev) Youtuber permit other to use the video for research in his video comment. 有给出 source video Youtube url
+
+  [[4k, 60 fps] A Trip Through New York City in 1911](https://www.youtube.com/watch?v=hZ1OgQL9_Cw&t=12s) already restore by several algorithms :warning:
+  [[4k, 60 fps] San Francisco, a Trip down Market Street, April 14, 1906](https://www.youtube.com/watch?v=VO_1AdYRGW8) >> tell what methods used to restore
+
+
+
+- [Youtube GHWTVideos](https://www.youtube.com/@GHWTVideos/videos)
+
+
+
+
+
 
 
 ## Old VHS video
@@ -556,6 +677,43 @@ albedo，metallic，roughness
 - 细节被算法处理过，过于平滑丢失了细节
 
 还有就是有些难点，人工没办法解决，算法也没有办法比人工做的更好，比如有一根划痕，一直处于画面的一个地方10几秒
+
+
+
+# Commercial
+
+## MTI
+
+- blocking?? structure distortion seems micro change
+- Frame limit -> move scratch from over frames to this one
+- pretty advanced, so many options for amateur 。。。。
+  - have to select so many scratches。。。
+
+![image-20241217015257786](docs/survey_old_film_restoration/image-20241217015257786.png)
+
+- Frame Cache? once 6 frame?
+
+![image-20241217014938236](docs/survey_old_film_restoration/image-20241217014938236.png)
+
+- Q：what this used for?
+
+![waveform](docs/survey_old_film_restoration/waveform.png)
+
+
+
+
+
+### tutorial
+
+> - download https://forum.mtifilm.com/t/drs-nova-6-0-release/3238
+>
+> - manual https://drive.google.com/file/d/1Bj-8vmiR4HouzRvKyHmTZG8iLWOKW5S4/view
+>
+> - tutorial video 
+>
+>   https://drive.google.com/file/d/1yVcIyaoMeTk3opPSXBvRlLdAwXVCDcJ2/view
+
+
 
 
 
