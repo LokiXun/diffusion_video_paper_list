@@ -212,7 +212,7 @@ HOFER 第一个 VSRDB 方法，参数量才 3M
 ## setting
 
 - mini-batch size of 8
-- initial learning rate is set to 2 × 10−4 , and reduced by half at 70%, 85%, and 95% of total 300K iterations in each training stage
+- initial learning rate is set to 2 × 10−4 , and reduced by half at 70%, 85%, and 95% of **total 300K iterations in each training stage**
 
 - 64x64 patch 训练，9 帧一起训练
 

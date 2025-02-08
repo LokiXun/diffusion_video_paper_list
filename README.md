@@ -253,6 +253,20 @@ strong baseline in multi papers :+1:
 
 
 
+- "RestoreNet: a deep learning framework for image restoration in optical synthetic aperture imaging system" OpticsandLasers, 2021 Apr 1
+  [paper](https://ieeexplore.ieee.org/document/10704335) [code]() [pdf](./2021_04_OpticsandLasers_RestoreNet--a-deep-learning-framework-for-image-restoration-in-optical-synthetic-aperture-imaging-system.pdf) [note](./2021_04_OpticsandLasers_RestoreNet--a-deep-learning-framework-for-image-restoration-in-optical-synthetic-aperture-imaging-system_Note.md)
+  Authors: Ju Tang, Kaiqiang Wang, Zhenbo Ren, Wei Zhang, Xiaoyan Wu, Jianglei Di, Guodong Liu, Jianlin Zhao
+
+![fig3](docs/2021_04_OpticsandLasers_RestoreNet--a-deep-learning-framework-for-image-restoration-in-optical-synthetic-aperture-imaging-system_Note/fig3.png)
+
+
+
+- "RestoreNet-Plus: Image restoration via deep learning in optical synthetic aperture imaging system" OpticsandLasers, 2021 Nov 1
+  [paper](https://www.sciencedirect.com/science/article/pii/S0143816621001779) [code]() [pdf](./2021_11_OpticsandLasers_RestoreNet-Plus--Image-restoration-via-deep-learning-in-optical-synthetic-aperture-imaging-system.pdf) [note](./2021_11_OpticsandLasers_RestoreNet-Plus--Image-restoration-via-deep-learning-in-optical-synthetic-aperture-imaging-system_Note.md)
+  Authors: Ju Tang, Ji Wu, Kaiqiang Wang, Zhenbo Ren, Xiaoyan Wu, Liusen Hu, Jianglei Di, Guodong Liu, Jianlin Zhao
+
+
+
 
 
 ### Analog Video Restoration :fire:
@@ -294,10 +308,6 @@ strong baseline in multi papers :+1:
 ### Image2Video & reference
 
 - [survey_comics_generate_video.md](./survey_comics_generate_video.md)
-
-
-
-
 
 
 
@@ -717,7 +727,9 @@ Framework
 
 
 
-
+- "Stable Flow: Vital Layers for Training-Free Image Editing" Arxiv, 2024 Nov 21
+  [paper](http://arxiv.org/abs/2411.14430v1) [code](https://omriavrahami.com/stable-flow) [pdf](./2024_11_Arxiv_Stable-Flow--Vital-Layers-for-Training-Free-Image-Editing.pdf) [note](./2024_11_Arxiv_Stable-Flow--Vital-Layers-for-Training-Free-Image-Editing_Note.md)
+  Authors: Omri Avrahami, Or Patashnik, Ohad Fried, Egor Nemchinov, Kfir Aberman, Dani Lischinski, Daniel Cohen-Or
 
 
 
@@ -1099,7 +1111,7 @@ Authors: Chris Careaga, Yağız Aksoy
 
 
 
-## Video SR :mag:
+## Video SR/Deblur:mag:
 
 > [mmedit model-zoo](https://github.com/open-mmlab/mmagic#-model-zoo)
 > [paper with code: VSR](https://paperswithcode.com/sota/video-super-resolution-on-vid4-4x-upscaling-1)
@@ -1286,9 +1298,14 @@ Authors: Chris Careaga, Yağız Aksoy
 
 
 
-#### block-artifact :meat_on_bone:
+### block-artifact :meat_on_bone:
 
 > https://github.com/GuoLanqing/Awesome-High-Resolution-Diffusion
+>
+> - https://arxiv.org/pdf/2403.12963
+> - https://arxiv.org/pdf/2406.18459?
+> - https://arxiv.org/pdf/2409.02097?
+> - https://arxiv.org/pdf/2412.02099
 
 - "Mixture of Diffusers for scene composition and high resolution image generation" Arxiv, 2023 Feb 5 :star:
   [paper](http://arxiv.org/abs/2302.02412v1) [code](https://github.com/albarji/mixture-of-diffusers) [pdf](./2023_02_Arxiv_Mixture-of-Diffusers-for-scene-composition-and-high-resolution-image-generation.pdf) [note](./2023_02_Arxiv_Mixture-of-Diffusers-for-scene-composition-and-high-resolution-image-generation_Note.md)
@@ -1308,11 +1325,27 @@ Authors: Chris Careaga, Yağız Aksoy
   [paper](http://arxiv.org/abs/2304.12526v2) [code](https://github.com/Zhendong-Wang/Patch-Diffusion.) [pdf](./2023_04_NIPS_Patch-Diffusion--Faster-and-More-Data-Efficient-Training-of-Diffusion-Models.pdf) [note](./2023_04_NIPS_Patch-Diffusion--Faster-and-More-Data-Efficient-Training-of-Diffusion-Models_Note.md)
   Authors: Zhendong Wang, Yifan Jiang, Huangjie Zheng, Peihao Wang, Pengcheng He, Zhangyang Wang, Weizhu Chen, Mingyuan Zhou
 
+![fig1](docs/2023_04_NIPS_Patch-Diffusion--Faster-and-More-Data-Efficient-Training-of-Diffusion-Models_Note/fig1.png)
+
+
+
 
 
 - "Exploiting Diffusion Prior for Real-World Image Super-Resolution" IJCV, 2023 May, **StableSR**
   [paper](https://arxiv.org/abs/2305.07015) [website](https://iceclear.github.io/projects/stablesr/?utm_source=catalyzex.com) [code](https://github.com/IceClear/StableSR) [pdf](./2023_05_Arxiv_Exploiting-Diffusion-Prior-for-Real-World-Image-Super-Resolution.pdf) [note](./2023_05_Arxiv_Exploiting-Diffusion-Prior-for-Real-World-Image-Super-Resolution_Note.md) 
   Authors: [Jianyi Wang](https://arxiv.org/search/cs?searchtype=author&query=Wang,+J), [Zongsheng Yue](https://arxiv.org/search/cs?searchtype=author&query=Yue,+Z), [Shangchen Zhou](https://arxiv.org/search/cs?searchtype=author&query=Zhou,+S), [Kelvin C.K. Chan](https://arxiv.org/search/cs?searchtype=author&query=Chan,+K+C), [Chen Change Loy](https://arxiv.org/search/cs?searchtype=author&query=Loy,+C+C)
+
+![fig4](docs/2023_05_Arxiv_Exploiting-Diffusion-Prior-for-Real-World-Image-Super-Resolution_Note/fig4.png)
+
+
+
+
+
+- "SyncDiffusion: Coherent Montage via Synchronized Joint Diffusions" NIPS, 2023 Jun 8
+  [paper](http://arxiv.org/abs/2306.05178v3) [code](https://syncdiffusion.github.io.) [pdf](./2023_06_NIPS_SyncDiffusion--Coherent-Montage-via-Synchronized-Joint-Diffusions.pdf) [note](./2023_06_NIPS_SyncDiffusion--Coherent-Montage-via-Synchronized-Joint-Diffusions_Note.md)
+  Authors: Yuseung Lee, Kunho Kim, Hyunjin Kim, Minhyuk Sung
+
+![fig3](docs/2023_06_NIPS_SyncDiffusion--Coherent-Montage-via-Synchronized-Joint-Diffusions_Note/fig3.png)
 
 
 
@@ -1322,14 +1355,66 @@ Authors: Chris Careaga, Yağız Aksoy
   [paper](http://arxiv.org/abs/2306.13384v2) [code](https://github.com/marcoaversa/diffinfinite) [pdf](./2023_06_NIPS_DiffInfinite--Large-Mask-Image-Synthesis-via-Parallel-Random-Patch-Diffusion-in-Histopathology.pdf) [note](./2023_06_NIPS_DiffInfinite--Large-Mask-Image-Synthesis-via-Parallel-Random-Patch-Diffusion-in-Histopathology_Note.md)
   Authors: Marco Aversa, Gabriel Nobis, Miriam Hägele, Kai Standvoss, Mihaela Chirica, Roderick Murray-Smith, Ahmed Alaa, Lukas Ruff, Daniela Ivanova, Wojciech Samek, Frederick Klauschen, Bruno Sanguinetti, Luis Oala
 
+![fig2](docs/2023_06_NIPS_DiffInfinite--Large-Mask-Image-Synthesis-via-Parallel-Random-Patch-Diffusion-in-Histopathology_Note/fig2.png)
+
 病理图像生成 + SR，overlap 区域重复再次加噪，一致性不是很好。。
+
+
+
+
+
+- "ScaleCrafter: Tuning-free Higher-Resolution Visual Generation with Diffusion Models" ICLR, 2023 Oct 11
+  [paper](http://arxiv.org/abs/2310.07702v1) [code]() [pdf](./2023_10_ICLR_ScaleCrafter--Tuning-free-Higher-Resolution-Visual-Generation-with-Diffusion-Models.pdf) [note](./2023_10_ICLR_ScaleCrafter--Tuning-free-Higher-Resolution-Visual-Generation-with-Diffusion-Models_Note.md)
+  Authors: Yingqing He, Shaoshu Yang, Haoxin Chen, Xiaodong Cun, Menghan Xia, Yong Zhang, Xintao Wang, Ran He, Qifeng Chen, Ying Shan
+
+![fig3](docs/2023_10_ICLR_ScaleCrafter--Tuning-free-Higher-Resolution-Visual-Generation-with-Diffusion-Models_Note/fig3.png)
+
+提出 dilated 卷积处理 block artifact
+
+
 
 
 
 - "Orthogonal Adaptation for Modular Customization of Diffusion Models" CVPR, 2023 Dec 
   [paper](https://arxiv.org/abs/2312.02432)
-- "Zero-Painter: Training-Free Layout Control for Text-to-Image Synthesis" CVPR, 2023 Unknown
+- "Zero-Painter: Training-Free Layout Control for Text-to-Image Synthesis" CVPR, 2024 Jun 6
   [paper](https://arxiv.org/abs/2406.04032)
+
+
+
+
+
+- "DemoFusion: Democratising High-Resolution Image Generation With No" CVPR, 2023 Nov 24 :star:
+  [paper](http://arxiv.org/abs/2311.16973v2) [code](https://github.com/PRIS-CV/DemoFusion) [web](https://ruoyidu.github.io/demofusion/demofusion.html) [pdf](./2023_11_CVPR_DemoFusion--Democratising-High-Resolution-Image-Generation-With-No.pdf) [note](./2023_11_CVPR_DemoFusion--Democratising-High-Resolution-Image-Generation-With-No_Note.md)
+  Authors: Ruoyi Du, Dongliang Chang, Timothy Hospedales, Yi-Zhe Song, Zhanyu Ma
+
+![fig3](docs/2023_11_CVPR_DemoFusion--Democratising-High-Resolution-Image-Generation-With-No_Note/fig3.png)
+
+
+
+
+
+- "DistriFusion: Distributed Parallel Inference for High-Resolution Diffusion Models" CVPR, 2024 Feb 29
+  [paper](http://arxiv.org/abs/2402.19481v4) [code](https://github.com/mit-han-lab/distrifuser.) [pdf](./2024_02_CVPR_DistriFusion--Distributed-Parallel-Inference-for-High-Resolution-Diffusion-Models.pdf) [note](./2024_02_CVPR_DistriFusion--Distributed-Parallel-Inference-for-High-Resolution-Diffusion-Models_Note.md)
+  Authors: Muyang Li, Tianle Cai, Jiaxin Cao, Qinsheng Zhang, Han Cai, Junjie Bai, Yangqing Jia, Ming-Yu Liu, Kai Li, Song Han
+
+多卡同时推理同一张图，实现加速 & 保持图像质量几乎不下降
+
+![fig3](docs/2024_02_CVPR_DistriFusion--Distributed-Parallel-Inference-for-High-Resolution-Diffusion-Models_Note/fig3.png)
+
+
+
+
+
+- "FouriScale: A Frequency Perspective on Training-Free High-Resolution Image Synthesis" ECCV, 2024 Mar 19
+  [paper](http://arxiv.org/abs/2403.12963v1) [code](https://github.com/LeonHLJ/FouriScale.) [pdf](./2024_03_ECCV_FouriScale--A-Frequency-Perspective-on-Training-Free-High-Resolution-Image-Synthesis.pdf) [note](./2024_03_ECCV_FouriScale--A-Frequency-Perspective-on-Training-Free-High-Resolution-Image-Synthesis_Note.md)
+  Authors: Linjiang Huang, Rongyao Fang, Aiping Zhang, Guanglu Song, Si Liu, Yu Liu, Hongsheng Li
+
+![fig2](docs/2024_03_ECCV_FouriScale--A-Frequency-Perspective-on-Training-Free-High-Resolution-Image-Synthesis_Note/fig2.png)
+
+把 UNet 的 Conv Kernel 变成 dilated，去和 Low-frequency 特征相乘
+
+
 
 
 
@@ -1358,16 +1443,6 @@ Authors: Chris Careaga, Yağız Aksoy
 
 
 
-- "DemoFusion: Democratising High-Resolution Image Generation With No" CVPR, 2023 Nov 24 :star:
-  [paper](http://arxiv.org/abs/2311.16973v2) [code](https://github.com/PRIS-CV/DemoFusion) [web](https://ruoyidu.github.io/demofusion/demofusion.html) [pdf](./2023_11_CVPR_DemoFusion--Democratising-High-Resolution-Image-Generation-With-No.pdf) [note](./2023_11_CVPR_DemoFusion--Democratising-High-Resolution-Image-Generation-With-No_Note.md)
-  Authors: Ruoyi Du, Dongliang Chang, Timothy Hospedales, Yi-Zhe Song, Zhanyu Ma
-
-![fig3](docs/2023_11_CVPR_DemoFusion--Democratising-High-Resolution-Image-Generation-With-No_Note/fig3.png)
-
-
-
-
-
 - "Is One GPU Enough? Pushing Image Generation at Higher-Resolutions with Foundation Models" NIPS, 2024 Jun 11
   [paper](http://arxiv.org/abs/2406.07251v3) [code](https://github.com/Thanos-DB/Pixelsmith) [pdf](./2024_06_NIPS_Is-One-GPU-Enough--Pushing-Image-Generation-at-Higher-Resolutions-with-Foundation-Models.pdf) [note](./2024_06_NIPS_Is-One-GPU-Enough--Pushing-Image-Generation-at-Higher-Resolutions-with-Foundation-Models_Note.md)
   Authors: Athanasios Tragakis, Marco Aversa, Chaitanya Kaul, Roderick Murray-Smith, Daniele Faccio
@@ -1386,6 +1461,8 @@ Authors: Chris Careaga, Yağız Aksoy
 - "AccDiffusion: An Accurate Method for Higher-Resolution Image Generation" ECCV, 2024 Jul 15
   [paper](http://arxiv.org/abs/2407.10738v2) [code](https://github.com/lzhxmu/AccDiffusion) [web](https://lzhxmu.github.io/accdiffusion/accdiffusion.html) [pdf](./2024_07_ECCV_AccDiffusion--An-Accurate-Method-for-Higher-Resolution-Image-Generation.pdf) [note](./2024_07_ECCV_AccDiffusion--An-Accurate-Method-for-Higher-Resolution-Image-Generation_Note.md)
   Authors: Zhihang Lin, Mingbao Lin, Meng Zhao, Rongrong Ji
+
+![fig2](docs/2024_07_ECCV_AccDiffusion--An-Accurate-Method-for-Higher-Resolution-Image-Generation_Note/fig2.png)
 
 
 
@@ -1425,29 +1502,11 @@ Authors: Chris Careaga, Yağız Aksoy
 
 
 
-- "DistriFusion: Distributed Parallel Inference for High-Resolution Diffusion Models" CVPR, 2024 Feb 29
-  [paper](http://arxiv.org/abs/2402.19481v4) [code](https://github.com/mit-han-lab/distrifuser.) [pdf](./2024_02_CVPR_DistriFusion--Distributed-Parallel-Inference-for-High-Resolution-Diffusion-Models.pdf) [note](./2024_02_CVPR_DistriFusion--Distributed-Parallel-Inference-for-High-Resolution-Diffusion-Models_Note.md)
-  Authors: Muyang Li, Tianle Cai, Jiaxin Cao, Qinsheng Zhang, Han Cai, Junjie Bai, Yangqing Jia, Ming-Yu Liu, Kai Li, Song Han
-
-多卡同时推理同一张图，实现加速 & 保持图像质量几乎不下降
-
-![fig3](docs/2024_02_CVPR_DistriFusion--Distributed-Parallel-Inference-for-High-Resolution-Diffusion-Models_Note/fig3.png)
-
-
-
 - "WF-VAE: Enhancing Video VAE by Wavelet-Driven Energy Flow for Latent Video Diffusion Model" Arxiv, 2024 Nov 26
   [paper](http://arxiv.org/abs/2411.17459v2) [code](https://github.com/PKU-YuanGroup/WF-VAE.) [pdf](./2024_11_Arxiv_WF-VAE--Enhancing-Video-VAE-by-Wavelet-Driven-Energy-Flow-for-Latent-Video-Diffusion-Model.pdf) [note](./2024_11_Arxiv_WF-VAE--Enhancing-Video-VAE-by-Wavelet-Driven-Energy-Flow-for-Latent-Video-Diffusion-Model_Note.md)
   Authors: Zongjian Li, Bin Lin, Yang Ye, Liuhan Chen, Xinhua Cheng, Shenghai Yuan, Li Yuan
 
 
-
-
-
-- "FouriScale: A Frequency Perspective on Training-Free High-Resolution Image Synthesis" ECCV, 2024 Mar 19
-  [paper](http://arxiv.org/abs/2403.12963v1) [code](https://github.com/LeonHLJ/FouriScale.) [pdf](./2024_03_ECCV_FouriScale--A-Frequency-Perspective-on-Training-Free-High-Resolution-Image-Synthesis.pdf) [note](./2024_03_ECCV_FouriScale--A-Frequency-Perspective-on-Training-Free-High-Resolution-Image-Synthesis_Note.md)
-  Authors: Linjiang Huang, Rongyao Fang, Aiping Zhang, Guanglu Song, Si Liu, Yu Liu, Hongsheng Li
-
-![fig2](docs/2024_03_ECCV_FouriScale--A-Frequency-Perspective-on-Training-Free-High-Resolution-Image-Synthesis_Note/fig2.png)
 
 
 
@@ -1461,11 +1520,78 @@ Authors: Chris Careaga, Yağız Aksoy
 
 
 
+- "AccDiffusion v2: Towards More Accurate Higher-Resolution Diffusion Extrapolation" Arxiv, 2024 Dec 3
+  [paper](http://arxiv.org/abs/2412.02099v1) [code](https://github.com/lzhxmu/AccDiffusion_v2) [pdf](./2024_12_Arxiv_AccDiffusion-v2--Towards-More-Accurate-Higher-Resolution-Diffusion-Extrapolation.pdf) [note](./2024_12_Arxiv_AccDiffusion-v2--Towards-More-Accurate-Higher-Resolution-Diffusion-Extrapolation_Note.md)
+  Authors: Zhihang Lin, Mingbao Lin, Wengyi Zhan, Rongrong Ji
+
+![fig3](docs/2024_12_Arxiv_AccDiffusion-v2--Towards-More-Accurate-Higher-Resolution-Diffusion-Extrapolation_Note/fig3.png)
 
 
 
 
-#### RealSR
+
+- "ComposeAnyone: Controllable Layout-to-Human Generation with Decoupled Multimodal Conditions" Arxiv, 2025 Jan 21
+  [paper](http://arxiv.org/abs/2501.12173v1) [code]() [pdf](./2025_01_Arxiv_ComposeAnyone--Controllable-Layout-to-Human-Generation-with-Decoupled-Multimodal-Conditions.pdf) [note](./2025_01_Arxiv_ComposeAnyone--Controllable-Layout-to-Human-Generation-with-Decoupled-Multimodal-Conditions_Note.md)
+  Authors: Shiyue Zhang, Zheng Chong, Xi Lu, Wenqing Zhang, Haoxiang Li, Xujie Zhang, Jiehui Huang, Xiao Dong, Xiaodan Liang
+
+![fig2](docs/2025_01_Arxiv_ComposeAnyone--Controllable-Layout-to-Human-Generation-with-Decoupled-Multimodal-Conditions_Note/fig2.png)
+
+搞了多个组件，用 Cross-attn map loss 类似方式优化了一下文本（感觉像凑得创新点）；在 SD 输入 concat 每个组件的 VAE 特征，去训练
+
+- **把参考图的 VAE 特征在 UNet 输入的 noise 地方进行 concat**，去训练 UNet，就是在 Unet 输入 concat 参考图特征
+- 多个参考图特征直接 concat 就可以了
+
+
+
+
+
+#### video
+
+- https://arxiv.org/pdf/2410.13832
+- https://arxiv.org/pdf/2406.13527
+- "Fine-Tuning Image-Conditional Diffusion Models is Easier than You Think" Arxiv, 2024 Sep 17
+  [paper](http://arxiv.org/abs/2409.11355v1) [code]() [pdf](./2024_09_Arxiv_Fine-Tuning-Image-Conditional-Diffusion-Models-is-Easier-than-You-Think.pdf) [note](./2024_09_Arxiv_Fine-Tuning-Image-Conditional-Diffusion-Models-is-Easier-than-You-Think_Note.md)
+  Authors: Gonzalo Martin Garcia, Karim Abou Zeid, Christian Schmidt, Daan de Geus, Alexander Hermans, Bastian Leibe
+
+使用 Multidiffusion 方式融合
+
+
+
+- "Hierarchical Patch Diffusion Models for High-Resolution Video Generation" CVPR, 2024 Jun 12
+  [paper](http://arxiv.org/abs/2406.07792v1) [code](https://snap-research.github.io/hpdm.) [pdf](./2024_06_CVPR_Hierarchical-Patch-Diffusion-Models-for-High-Resolution-Video-Generation.pdf) [note](./2024_06_CVPR_Hierarchical-Patch-Diffusion-Models-for-High-Resolution-Video-Generation_Note.md)
+  Authors: Ivan Skorokhodov, Willi Menapace, Aliaksandr Siarohin, Sergey Tulyakov
+
+1. **训练 framework**，只用一个 patch 去训练模型，会 rescale 多个 patch 一起去噪，然后 LR stage 提取特征融合到后面 stage
+2. 生成高清细节，比生成低分辨率结构更简单。**因此对于高分辨率的 patch 不想用这么多资源**
+
+![fig2](docs/2024_06_CVPR_Hierarchical-Patch-Diffusion-Models-for-High-Resolution-Video-Generation_Note/fig2.png)
+
+
+
+
+
+
+
+#### layout
+
+- "ComposeAnyone: Controllable Layout-to-Human Generation with Decoupled Multimodal Conditions" Arxiv, 2025 Jan 21
+  [paper](http://arxiv.org/abs/2501.12173v1) [code]() [pdf](./2025_01_Arxiv_ComposeAnyone--Controllable-Layout-to-Human-Generation-with-Decoupled-Multimodal-Conditions.pdf) [note](./2025_01_Arxiv_ComposeAnyone--Controllable-Layout-to-Human-Generation-with-Decoupled-Multimodal-Conditions_Note.md)
+  Authors: Shiyue Zhang, Zheng Chong, Xi Lu, Wenqing Zhang, Haoxiang Li, Xujie Zhang, Jiehui Huang, Xiao Dong, Xiaodan Liang
+
+![fig2](docs/2025_01_Arxiv_ComposeAnyone--Controllable-Layout-to-Human-Generation-with-Decoupled-Multimodal-Conditions_Note/fig2.png)
+
+搞了多个组件，用 Cross-attn map loss 类似方式优化了一下文本（感觉像凑得创新点）；在 SD 输入 concat 每个组件的 VAE 特征，去训练
+
+- **把参考图的 VAE 特征在 UNet 输入的 noise 地方进行 concat**，去训练 UNet，就是在 Unet 输入 concat 参考图特征
+- 多个参考图特征直接 concat 就可以了
+
+
+
+- https://arxiv.org/pdf/2501.05131
+
+
+
+### RealSR
 
 - "Scaling up GANs for Text-to-Image Synthesis" CVPR, 2023 Mar 9,`GigaGAN`
   [paper](http://arxiv.org/abs/2303.05511v2) [code](https://github.com/lucidrains/gigagan-pytorch) [pdf](./2023_03_CVPR_Scaling-up-GANs-for-Text-to-Image-Synthesis.pdf) [note](./2023_03_CVPR_Scaling-up-GANs-for-Text-to-Image-Synthesis_Note.md)
@@ -1755,6 +1881,10 @@ render bokeh effect 光圈虚化效果，需要给定 disparity 图（类似深�
   Authors: Hoon Kim, Minje Jang, Wonjun Yoon, Jisoo Lee, Donghyun Na, Sanghyun Woo
 
 
+
+
+
+- https://arxiv.org/pdf/2501.12202v2
 
 
 
@@ -2404,6 +2534,16 @@ Low-Light 暗部区域细节不清晰，类似的问题 :star:
 
 
 
+- https://arxiv.org/pdf/2501.05484
+
+维持时序一致性
+
+> GLCD consists of global and local denoising paths to maintain overall content consistency and enhance local temporal coherence. 
+
+
+
+
+
 ##### selective frequency
 
 - "Efficient Frequency Domain-based Transformers for High-Quality Image Deblurring" CVPR, 2022 Nov 22, `FFTformer`
@@ -3039,6 +3179,26 @@ Self-atten QKV 特征都单独过 SE 空间注意力 + Deformable 偏移（自�
 - [ ] "Pix2Video: Video Editing using Image Diffusion" Arxiv, 2023 Mar :warning:
   [paper](https://arxiv.org/abs/2303.12688) [code]() [website](https://duyguceylan.github.io/pix2video.github.io/)
 
+
+
+- "FateZero: Fusing Attentions for Zero-shot Text-based Video Editing" ICCV-2023, 2023 Mar 16
+  [paper](http://arxiv.org/abs/2303.09535v3) [code]() [pdf](./2023_03_ICCV_FateZero--Fusing-Attentions-for-Zero-shot-Text-based-Video-Editing.pdf) [note](./2023_03_ICCV_FateZero--Fusing-Attentions-for-Zero-shot-Text-based-Video-Editing_Note.md)
+  Authors: Chenyang Qi, Xiaodong Cun, Yong Zhang, Chenyang Lei, Xintao Wang, Ying Shan, Qifeng Chen
+
+
+
+- "Multimodal Garment Designer: Human-Centric Latent Diffusion Models for Fashion Image Editing" ICCV-2023, 2023 Apr 4
+  [paper](http://arxiv.org/abs/2304.02051v2) [code](https://github.com/aimagelab/multimodal-garment-designer.) [pdf](./2023_04_ICCV_Multimodal-Garment-Designer--Human-Centric-Latent-Diffusion-Models-for-Fashion-Image-Editing.pdf) [note](./2023_04_ICCV_Multimodal-Garment-Designer--Human-Centric-Latent-Diffusion-Models-for-Fashion-Image-Editing_Note.md)
+  Authors: Alberto Baldrati, Davide Morelli, Giuseppe Cartella, Marcella Cornia, Marco Bertini, Rita Cucchiara
+
+![fig2](docs/2023_04_ICCV_Multimodal-Garment-Designer--Human-Centric-Latent-Diffusion-Models-for-Fashion-Image-Editing_Note/fig2.png)
+
+Diffusion 多个模态 try-on; 提出一个细粒度（衣服标注）的训练数据集
+
+
+
+
+
 - [ ] "ControlVideo: Adding Conditional Control for One Shot Text-to-Video Editing" Arxiv, 2023 May
   [paper](https://arxiv.org/abs/2305.17098) [code](https://github.com/thu-ml/controlvideo) [website](https://ml.cs.tsinghua.edu.cn/controlvideo/)
 
@@ -3052,17 +3212,17 @@ Self-atten QKV 特征都单独过 SE 空间注意力 + Deformable 偏移（自�
   > 使用 video atlas
 
   
-  
+
 - [ ] "StableVideo: Text-driven Consistency-aware Diffusion Video Editing" ICCV. 2023 Aug
   [paper](https://arxiv.org/abs/2308.09592) [code](https://github.com/rese1f/StableVideo)
 
 - [ ] "CoDeF: Content Deformation Fields for Temporally Consistent Video Processing" Arxiv, 2023 Aug :star:
   [paper](https://arxiv.org/abs/2308.07926) [code](https://github.com/qiuyu96/codef) [website](https://qiuyu96.github.io/CoDeF/) [![Star](https://camo.githubusercontent.com/d2dd0fe7649113630ad8a2aff29ee15fe78f6d2dd4a19385121ee2b26fc6cc7c/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f73746172732f716975797539362f436f4465462e7376673f7374796c653d736f6369616c266c6162656c3d53746172)](https://github.com/qiuyu96/CoDeF)
   [note](./2023_08_Arxiv_CoDeF--Content-Deformation-Fields-for-Temporally-Consistent-Video-Processing_Note.md)
-  
+
   > 视频一致性编辑，效果非常好！
   > as a new type of video representation, which consists of a **canonical content field**
-  
+
 - [ ] "Generative Image Dynamics" Arxiv, 2023 Sep
   [paper](https://arxiv.org/abs/2309.07906) [website](https://generative-dynamics.github.io/)
 
@@ -3129,6 +3289,15 @@ Self-atten QKV 特征都单独过 SE 空间注意力 + Deformable 偏移（自�
   >    对于不同帧的 mask 区域存在细节区域不一致，使用 Contextual loss 约束:star:
   >
   > 2. 对于只 inpainting 部分区域的问题，提出 online residue removal method
+
+
+
+- "DiffuEraser: A Diffusion Model for Video Inpainting" 
+  https://github.com/lixiaowen-xw/DiffuEraser
+
+
+
+
 
 
 

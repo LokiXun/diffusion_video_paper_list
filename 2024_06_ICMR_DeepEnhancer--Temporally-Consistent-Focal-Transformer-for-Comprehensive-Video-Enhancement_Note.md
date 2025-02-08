@@ -16,6 +16,22 @@
 
 ## methods
 
+![fig1](docs/2024_06_ICMR_DeepEnhancer--Temporally-Consistent-Focal-Transformer-for-Comprehensive-Video-Enhancement_Note/fig1.png)
+
+
+
+CTAM 模块
+
+![fig2](docs/2024_06_ICMR_DeepEnhancer--Temporally-Consistent-Focal-Transformer-for-Comprehensive-Video-Enhancement_Note/fig2.png)
+
+
+
+Focal Transformer 多尺度 -> E2FGVI
+
+![fig3](docs/2024_06_ICMR_DeepEnhancer--Temporally-Consistent-Focal-Transformer-for-Comprehensive-Video-Enhancement_Note/fig3.png)
+
+
+
 ## setting
 
 - .WeimplementourmodelsusingthePyTorch frameworkandperformthetrainingonfourNVIDIAV100GPUs
@@ -65,6 +81,14 @@
 ## Experiment
 
 > ablation study 看那个模块有效，总结一下
+
+![tb1](docs/2024_06_ICMR_DeepEnhancer--Temporally-Consistent-Focal-Transformer-for-Comprehensive-Video-Enhancement_Note/tb1.png)
+
+
+
+![tb3](docs/2024_06_ICMR_DeepEnhancer--Temporally-Consistent-Focal-Transformer-for-Comprehensive-Video-Enhancement_Note/tb3.png)
+
+
 
 ## Limitations
 

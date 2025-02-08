@@ -1,6 +1,8 @@
 # survey_comics_generate_video
 
 > https://github.com/zengyh1900/Awesome-Image-Inpainting
+>
+> - [README.md](./README.md)
 
 - 需求：给定一张动漫图像（漫画中的一格），进行 fidelity 的补图
 
@@ -302,6 +304,20 @@ diffusion 每次推理不同随机种子随机性太大，用预训练的 dense 
 
 
 
+- "Improving Virtual Try-On with Garment-focused Diffusion Models" Arxiv, 2024 Sep 12
+  [paper](http://arxiv.org/abs/2409.08258v1) [code](https://github.com/siqi0905/GarDiff/tree/master) [pdf](./2024_09_Arxiv_Improving-Virtual-Try-On-with-Garment-focused-Diffusion-Models.pdf) [note](./2024_09_Arxiv_Improving-Virtual-Try-On-with-Garment-focused-Diffusion-Models_Note.md)
+  Authors: Siqi Wan, Yehao Li, Jingwen Chen, Yingwei Pan, Ting Yao, Yang Cao, Tao Mei
+
+![fig2](docs/2024_09_Arxiv_Improving-Virtual-Try-On-with-Garment-focused-Diffusion-Models_Note/fig2.png)
+
+![eq7](docs/2024_09_Arxiv_Improving-Virtual-Try-On-with-Garment-focused-Diffusion-Models_Note/eq7.png)
+
+UNet 预测噪声 -> 一步去噪 -> **过 VAE 转为 RGB 图像**，增加 reference loss
+
+
+
+
+
 - "StableAnimator: High-Quality Identity-Preserving Human Image Animation" Arxiv, 2024 Nov 26
   [paper](http://arxiv.org/abs/2411.17697v2) [code]() [pdf](./2024_11_Arxiv_StableAnimator--High-Quality-Identity-Preserving-Human-Image-Animation.pdf) [note](./2024_11_Arxiv_StableAnimator--High-Quality-Identity-Preserving-Human-Image-Animation_Note.md)
   Authors: Shuyuan Tu, Zhen Xing, Xintong Han, Zhi-Qi Cheng, Qi Dai, Chong Luo, Zuxuan Wu (MSRA + Fudan)
@@ -325,10 +341,21 @@ diffusion 每次推理不同随机种子随机性太大，用预训练的 dense 
 
 
 
-- "Magic Mirror: ID-Preserved Video Generation in Video Diffusion Transformers" 
-  https://arxiv.org/pdf/2501.03931v1
+- "Magic Mirror: ID-Preserved Video Generation in Video Diffusion Transformers" Arxiv, 2025 Jan 7
+  [paper](http://arxiv.org/abs/2501.03931v1) [code](https://github.com/dvlab-research/MagicMirror/) [pdf](./2025_01_Arxiv_Magic-Mirror--ID-Preserved-Video-Generation-in-Video-Diffusion-Transformers.pdf) [note](./2025_01_Arxiv_Magic-Mirror--ID-Preserved-Video-Generation-in-Video-Diffusion-Transformers_Note.md)
+  Authors: Yuechen Zhang, Yaoyang Liu, Bin Xia, Bohao Peng, Zexin Yan, Eric Lo, Jiaya Jia
+
+![fig3](docs/2025_01_Arxiv_Magic-Mirror--ID-Preserved-Video-Generation-in-Video-Diffusion-Transformers_Note/fig3.png)
 
 人脸图像 ID 特征优化 img_condition & text_condition，输入 CogVideoX 的 cross-atten 模块
+
+
+
+- "VideoAnydoor: High-fidelity Video Object Insertion with Precise Motion Control" Arxiv, 2025 Jan 2 :star:
+  [paper](http://arxiv.org/abs/2501.01427v3) [code]() [pdf](./2025_01_Arxiv_VideoAnydoor--High-fidelity-Video-Object-Insertion-with-Precise-Motion-Control.pdf) [note](./2025_01_Arxiv_VideoAnydoor--High-fidelity-Video-Object-Insertion-with-Precise-Motion-Control_Note.md)
+  Authors: Yuanpeng Tu, Hao Luo, Xi Chen, Sihui Ji, Xiang Bai, Hengshuang Zhao
+
+
 
 
 
@@ -442,6 +469,16 @@ diffusion 每次推理不同随机种子随机性太大，用预训练的 dense 
 
 > - Q: SVD 框架图？
 > - Q: 光流如何去 warp 特征？
+
+- "Simulating Fluids in Real-World Still Images" ICCV-2023, 2022 Apr 24
+  [paper](http://arxiv.org/abs/2204.11335v1) [code]() [pdf](./2022_04_ICCV_Simulating-Fluids-in-Real-World-Still-Images.pdf) [note](./2022_04_ICCV_Simulating-Fluids-in-Real-World-Still-Images_Note.md)
+  Authors: Siming Fan, Jingtan Piao, Chen Qian, Kwan-Yee Lin, Hongsheng Li
+
+![fig1](docs/2022_04_ICCV_Simulating-Fluids-in-Real-World-Still-Images_Note/fig1.png)
+
+静止图像生成流动水流的视频；预测水流的 RGBA 图层，分割背景 & 水流，看效果还可以啊；构造 3D mesh，加上 NS 仿真水流移动轨迹，去优化水流轨迹
+
+
 
 - "Control-A-Video: Controllable Text-to-Video Generation with Diffusion Models" Arxiv, 2023 May :star:
   [paper](https://arxiv.org/abs/2305.13840) [code](https://github.com/Weifeng-Chen/control-a-video) [website](https://controlavideo.github.io /) [note](../2023_05_Arxiv_Control-A-Video--Controllable-Text-to-Video-Generation-with-Diffusion-Model_Note.md)
@@ -640,6 +677,16 @@ We employ DWPose[52] to extract the pose sequence of characters in the video, in
 
 
 
+## loss
+
+- "Boosting Latent Diffusion with Perceptual Objectives" Meta
+
+  https://arxiv.org/pdf/2411.04873
+
+
+
+
+
 ## talking head
 
 - "Make Your Actor Talk: Generalizable and High-Fidelity Lip Sync with Motion and Appearance Disentanglement" Arxiv, 2024 Jun 12
@@ -662,6 +709,20 @@ We employ DWPose[52] to extract the pose sequence of characters in the video, in
   Authors: Fu-Yun Wang, Xiaoshi Wu, Zhaoyang Huang, Xiaoyu Shi, Dazhong Shen, Guanglu Song, Yu Liu, Hongsheng Li
 
 ![image-20240430165425344](docs/2024_03_Arxiv_Be-Your-Outpainter--Mastering-Video-Outpainting-through-Input-Specific-Adaptation_Note/image-20240430165425344.png)
+
+
+
+
+
+## Find reference
+
+**one-shot img-cls**
+
+- "One-Shot Image Classification by Learning to Restore Prototypes" Arxiv, 2020 May 4
+  [paper](http://arxiv.org/abs/2005.01234v1) [code](https://github.com/xuewanqi/RestoreNet) [pdf](./2020_05_Arxiv_One-Shot-Image-Classification-by-Learning-to-Restore-Prototypes.pdf) [note](./2020_05_Arxiv_One-Shot-Image-Classification-by-Learning-to-Restore-Prototypes_Note.md)
+  Authors: Wanqi Xue, Wei Wang
+
+学习一个类别无关的特征，**优化图像在特征空间位置** restore 后更靠近中心；可以用来找参考图！:star:
 
 
 
