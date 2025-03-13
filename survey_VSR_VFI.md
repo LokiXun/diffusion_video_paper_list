@@ -382,28 +382,6 @@ BD degradation
 
 
 
-
-
-## all-in-focus
-
-- "Foreground-background separation and deblurring super-resolution method[☆](https://www.sciencedirect.com/science/article/pii/S0143816624006079#aep-article-footnote-id1)"
-
-- "BokehMe: When Neural Rendering Meets Classical Rendering" CVPR-oral, 2022 Jun 25
-  [paper](http://arxiv.org/abs/2206.12614v1) [code]() [pdf](./2022_06_CVPR-oral_BokehMe--When-Neural-Rendering-Meets-Classical-Rendering.pdf) [note](./2022_06_CVPR-oral_BokehMe--When-Neural-Rendering-Meets-Classical-Rendering_Note.md)
-  Authors: Juewen Peng, Zhiguo Cao, Xianrui Luo, Hao Lu, Ke Xian, Jianming Zhang
-
-![fig12](docs/2022_06_CVPR-oral_BokehMe--When-Neural-Rendering-Meets-Classical-Rendering_Note/fig12.png)
-
-render bokeh effect 光圈虚化效果，需要给定 disparity 图（类似深度图）
-
-
-
-- "BokehMe++: Harmonious Fusion of Classical and Neural Rendering for Versatile Bokeh Creation"
-
-
-
-
-
 ## Video SR
 
 - "EDVR: Video Restoration with Enhanced Deformable Convolutional Networks" CVPR NTIRE 1st, 2019 May
@@ -672,6 +650,8 @@ text-guided SR，人脸效果贼垃圾
   [paper](http://arxiv.org/abs/2501.01235v2) [code](https://github.com/wangzhiyaoo/SVFR.git) [pdf](./2025_01_Arxiv_SVFR--A-Unified-Framework-for-Generalized-Video-Face-Restoration.pdf) [note](./2025_01_Arxiv_SVFR--A-Unified-Framework-for-Generalized-Video-Face-Restoration_Note.md)
   Authors: Zhiyao Wang, Xu Chen, Chengming Xu, Junwei Zhu, Xiaobin Hu, Jiangning Zhang, Chengjie Wang, Yuqi Liu, Yiyi Zhou, Rongrong Ji
 
+![fig2](docs/2025_01_Arxiv_SVFR--A-Unified-Framework-for-Generalized-Video-Face-Restoration_Note/fig2.png)
+
 SVD 同时做人脸视频修复 + inpaint + deblur 多种任务；学习一个 embedding 去选择任务
 
 
@@ -683,6 +663,14 @@ SVD 同时做人脸视频修复 + inpaint + deblur 多种任务；学习一个 e
   Authors: Jianyi Wang, Zhijie Lin, Meng Wei, Yang Zhao, Ceyuan Yang, Chen Change Loy, Lu Jiang
 
 SD3 + Swin3d 方式做 temporal
+
+
+
+- "DC-VSR: Spatially and Temporally Consistent Video Super-Resolution with Video Diffusion Prior" Arxiv, 2025 Feb 5
+  [paper](http://arxiv.org/abs/2502.03502v1) [code]() [pdf](./2025_02_Arxiv_DC-VSR--Spatially-and-Temporally-Consistent-Video-Super-Resolution-with-Video-Diffusion-Prior.pdf) [note](./2025_02_Arxiv_DC-VSR--Spatially-and-Temporally-Consistent-Video-Super-Resolution-with-Video-Diffusion-Prior_Note.md)
+  Authors: Janghyeok Han, Gyujin Sim, Geonung Kim, Hyunseung Lee, Kyuha Choi, Youngseok Han, Sunghyun Cho
+
+在 VAE 打成 3D 块，对 Spatial 和 Temporal 的 self-attn 设计一个策略 concat KV memory 维持 patch 之间一致性；
 
 
 
@@ -772,6 +760,12 @@ Dynamic Filter Network 预测退化特征，融入 deblur/SR
 双分支，一个搞 SR，一个 Deblur 最后 channel attention 合起来；一开始预测一个光流
 
 ![fig1](docs/2022_06_NeuralComputing_High-resolution-optical-flow-and-frame-recurrent-network-for-video-super-resolution-and-deblurring_Note/fig1.png)
+
+
+
+- "Self-supervised Learning to Bring Dual Reversed Rolling Shutter Images Alive" ICCV-2023, 2023 May 31
+  [paper](http://arxiv.org/abs/2305.19862v3) [code](https://github.com/shangwei5/SelfDRSC.) [pdf](./2023_05_ICCV_Self-supervised-Learning-to-Bring-Dual-Reversed-Rolling-Shutter-Images-Alive.pdf) [note](./2023_05_ICCV_Self-supervised-Learning-to-Bring-Dual-Reversed-Rolling-Shutter-Images-Alive_Note.md)
+  Authors: Wei Shang, Dongwei Ren, Chaoyu Feng, Xiaotao Wang, Lei Lei, Wangmeng Zuo
 
 
 
@@ -1125,6 +1119,16 @@ Video Object Segmentation
 
 
 
+### Prior Loss
+
+- "SVFR: A Unified Framework for Generalized Video Face Restoration" Arxiv, 2025 Jan 2
+  [paper](http://arxiv.org/abs/2501.01235v2) [code](https://github.com/wangzhiyaoo/SVFR.git) [pdf](./2025_01_Arxiv_SVFR--A-Unified-Framework-for-Generalized-Video-Face-Restoration.pdf) [note](./2025_01_Arxiv_SVFR--A-Unified-Framework-for-Generalized-Video-Face-Restoration_Note.md)
+  Authors: Zhiyao Wang, Xu Chen, Chengming Xu, Junwei Zhu, Xiaobin Hu, Jiangning Zhang, Chengjie Wang, Yuqi Liu, Yiyi Zhou, Rongrong Ji
+
+SVD UNet midblocks
+
+
+
 
 
 ## Space-Time VSR
@@ -1247,6 +1251,38 @@ We use [Vimeo90k](http://toflow.csail.mit.edu/) for training, and use [SNU-FILM]
 - "Lumina-T2X: Transforming Text into Any Modality, Resolution, and Duration via Flow-based Large Diffusion Transformers" Arxiv, 2024 May 9
   [paper](http://arxiv.org/abs/2405.05945v3) [code]() [pdf](./2024_05_Arxiv_Lumina-T2X--Transforming-Text-into-Any-Modality--Resolution--and-Duration-via-Flow-based-Large-Diffusion-Transformers.pdf) [note](./2024_05_Arxiv_Lumina-T2X--Transforming-Text-into-Any-Modality--Resolution--and-Duration-via-Flow-based-Large-Diffusion-Transformers_Note.md)
   Authors: Peng Gao, Le Zhuo, Dongyang Liu, Ruoyi Du, Xu Luo, Longtian Qiu, Yuhang Zhang, Chen Lin, Rongjie Huang, Shijie Geng, Renrui Zhang, Junlin Xi, Wenqi Shao, Zhengkai Jiang, Tianshuo Yang, Weicai Ye, He Tong, Jingwen He, Yu Qiao, Hongsheng Li
+
+
+
+## minority direction :spider_web:
+
+### all-in-focus
+
+- "Foreground-background separation and deblurring super-resolution method[☆](https://www.sciencedirect.com/science/article/pii/S0143816624006079#aep-article-footnote-id1)"
+
+- "BokehMe: When Neural Rendering Meets Classical Rendering" CVPR-oral, 2022 Jun 25
+  [paper](http://arxiv.org/abs/2206.12614v1) [code]() [pdf](./2022_06_CVPR-oral_BokehMe--When-Neural-Rendering-Meets-Classical-Rendering.pdf) [note](./2022_06_CVPR-oral_BokehMe--When-Neural-Rendering-Meets-Classical-Rendering_Note.md)
+  Authors: Juewen Peng, Zhiguo Cao, Xianrui Luo, Hao Lu, Ke Xian, Jianming Zhang
+
+![fig12](docs/2022_06_CVPR-oral_BokehMe--When-Neural-Rendering-Meets-Classical-Rendering_Note/fig12.png)
+
+render bokeh effect 光圈虚化效果，需要给定 disparity 图（类似深度图）
+
+
+
+- "BokehMe++: Harmonious Fusion of Classical and Neural Rendering for Versatile Bokeh Creation"
+
+
+
+
+
+### rolling-shutter
+
+- "Self-supervised Learning to Bring Dual Reversed Rolling Shutter Images Alive" ICCV-2023, 2023 May 31
+  [paper](http://arxiv.org/abs/2305.19862v3) [code](https://github.com/shangwei5/SelfDRSC) [pdf](./2023_05_ICCV_Self-supervised-Learning-to-Bring-Dual-Reversed-Rolling-Shutter-Images-Alive.pdf) [note](./2023_05_ICCV_Self-supervised-Learning-to-Bring-Dual-Reversed-Rolling-Shutter-Images-Alive_Note.md)
+  Authors: Wei Shang, Dongwei Ren, Chaoyu Feng, Xiaotao Wang, Lei Lei, Wangmeng Zuo
+
+方向很冷门
 
 
 

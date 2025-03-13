@@ -309,6 +309,10 @@ strong baseline in multi papers :+1:
 
 - [survey_comics_generate_video.md](./survey_comics_generate_video.md)
 
+- "FlashVideo:Flowing Fidelity to Detail for Efficient High-Resolution Video Generation" Arxiv, 2025 Feb 7
+  [paper](http://arxiv.org/abs/2502.05179v1) [code](https://github.com/FoundationVision/FlashVideo) [pdf](./2025_02_Arxiv_FlashVideo-Flowing-Fidelity-to-Detail-for-Efficient-High-Resolution-Video-Generation.pdf) [note](./2025_02_Arxiv_FlashVideo-Flowing-Fidelity-to-Detail-for-Efficient-High-Resolution-Video-Generation_Note.md)
+  Authors: Shilong Zhang, Wenbo Li, Shoufa Chen, Chongjian Ge, Peize Sun, Yida Zhang, Yi Jiang, Zehuan Yuan, Binyue Peng, Ping Luo
+
 
 
 
@@ -596,6 +600,22 @@ T2I 训练优化，只需要 8卡 H100 训练 2.6 days, FID 指标接近 SDv1.5
 
 
 
+
+
+### interactive
+
+- "Can We Generate Images with CoT? Let's Verify and Reinforce Image Generation Step by Step" Arxiv, 2025 Jan 23
+  [paper](http://arxiv.org/abs/2501.13926v1) [code](https://github.com/ZiyuGuo99/Image-Generation-CoT) [pdf](./2025_01_Arxiv_Can-We-Generate-Images-with-CoT--Let's-Verify-and-Reinforce-Image-Generation-Step-by-Step.pdf) [note](./2025_01_Arxiv_Can-We-Generate-Images-with-CoT--Let's-Verify-and-Reinforce-Image-Generation-Step-by-Step_Note.md)
+  Authors: Ziyu Guo, Renrui Zhang, Chengzhuo Tong, Zhizheng Zhao, Peng Gao, Hongsheng Li, Pheng-Ann Heng
+
+![fig6](docs/2025_01_Arxiv_Can-We-Generate-Images-with-CoT--Let's-Verify-and-Reinforce-Image-Generation-Step-by-Step_Note/fig6.png)
+
+CoT 去优化生成过程
+
+
+
+
+
 ### findings :star2:
 
 - [x] "DigGAN: Discriminator gradIent Gap Regularization for GAN Training with Limited Data" NeurIPS, 2022 Nov :star:
@@ -695,17 +715,18 @@ Framework
   [paper](http://arxiv.org/abs/2404.02733v2) [code](https://github.com/InstantStyle/InstantStyle.) [pdf](./2024_04_Arxiv_InstantStyle--Free-Lunch-towards-Style-Preserving-in-Text-to-Image-Generation.pdf) [note](./2024_04_Arxiv_InstantStyle--Free-Lunch-towards-Style-Preserving-in-Text-to-Image-Generation_Note.md)
   Authors: Haofan Wang, Matteo Spinelli, Qixun Wang, Xu Bai, Zekui Qin, Anthony Chen
 
-- **DDIM inversion 会出现细节丢失的问题 :star:，对 style 的保留倒是很好**
 
-  > For real world image (left), DDIM inversion reconstruction (right) is inadequate to retain fine-grained details, which can be necessary for styles.
+**DDIM inversion 会出现细节丢失的问题 :star:，对 style 的保留倒是很好**
 
-  ![fig3](docs/2024_04_Arxiv_InstantStyle--Free-Lunch-towards-Style-Preserving-in-Text-to-Image-Generation_Note/fig3.png)
+> For real world image (left), DDIM inversion reconstruction (right) is inadequate to retain fine-grained details, which can be necessary for styles.
 
-- 发现 UNet 有 2 个 block 对于 layout 的生成作用很显著
+![fig3](docs/2024_04_Arxiv_InstantStyle--Free-Lunch-towards-Style-Preserving-in-Text-to-Image-Generation_Note/fig3.png)
 
-  > We are surprised to find that `up blocks.0.attentions.1` and `down blocks.2.attentions.1` are the most representative layers, controlling style and spatial layout respectively. 
+发现 UNet 有 2 个 block 对于 layout 的生成作用很显著
 
-  ![fig7](docs/2024_04_Arxiv_InstantStyle--Free-Lunch-towards-Style-Preserving-in-Text-to-Image-Generation_Note/fig7.png)
+> We are surprised to find that `up blocks.0.attentions.1` and `down blocks.2.attentions.1` are the most representative layers, controlling style and spatial layout respectively. 
+
+![fig7](docs/2024_04_Arxiv_InstantStyle--Free-Lunch-towards-Style-Preserving-in-Text-to-Image-Generation_Note/fig7.png)
 
 
 
@@ -727,9 +748,17 @@ Framework
 
 
 
+
+
 - "Stable Flow: Vital Layers for Training-Free Image Editing" Arxiv, 2024 Nov 21
   [paper](http://arxiv.org/abs/2411.14430v1) [code](https://omriavrahami.com/stable-flow) [pdf](./2024_11_Arxiv_Stable-Flow--Vital-Layers-for-Training-Free-Image-Editing.pdf) [note](./2024_11_Arxiv_Stable-Flow--Vital-Layers-for-Training-Free-Image-Editing_Note.md)
   Authors: Omri Avrahami, Or Patashnik, Ohad Fried, Egor Nemchinov, Kfir Aberman, Dani Lischinski, Daniel Cohen-Or
+
+![fig3](docs/2024_11_Arxiv_Stable-Flow--Vital-Layers-for-Training-Free-Image-Editing_Note/fig3.png)
+
+
+
+
 
 
 
@@ -862,12 +891,11 @@ Framework
   [paper](https://arxiv.org/abs/2210.05559) [code](https://huggingface.co/papers/2210.05559)
   
 - [ ] "Localizing Object-level Shape Variations with Text-to-Image Diffusion Models" Arxiv, 2023 Mar
-  [paper](http://arxiv.org/abs/2303.11306v2) [code](https://github.com/orpatashnik/local-prompt-mixing) 
-  [note](./2023_03_Arxiv_Localizing-Object-level-Shape-Variations-with-Text-to-Image-Diffusion-Models_Note.md) [pdf](./2023_03_Arxiv_Localizing-Object-level-Shape-Variations-with-Text-to-Image-Diffusion-Models.pdf)
+  [paper](http://arxiv.org/abs/2303.11306v2) [code](https://github.com/orpatashnik/local-prompt-mixing) [note](./2023_03_Arxiv_Localizing-Object-level-Shape-Variations-with-Text-to-Image-Diffusion-Models_Note.md) [pdf](./2023_03_Arxiv_Localizing-Object-level-Shape-Variations-with-Text-to-Image-Diffusion-Models.pdf)
   Authors: Or Patashnik, Daniel Garibi, Idan Azuri, Hadar Averbuch-Elor, Daniel Cohen-Or
-
+  
   > 通过调整去噪步数，实现指定物体的编辑，同时不改变其余物体
-
+  
 - [x] "Diffusion in the Dark: A Diffusion Model for Low-Light Text Recognition" WACV, 2023 Mar
   [paper](http://arxiv.org/abs/2303.04291v2) [code](https://ccnguyen.github.io/diffusion-in-the-dark/) 
   [note](./2023_03_WACV_Diffusion-in-the-Dark--A-Diffusion-Model-for-Low-Light-Text-Recognition_Note.md)
@@ -1384,11 +1412,23 @@ Authors: Chris Careaga, Yağız Aksoy
 
 
 
-- "DemoFusion: Democratising High-Resolution Image Generation With No" CVPR, 2023 Nov 24 :star:
+- "DemoFusion: DemocraScaleCraftertising High-Resolution Image Generation With No" CVPR, 2023 Nov 24 :star:
   [paper](http://arxiv.org/abs/2311.16973v2) [code](https://github.com/PRIS-CV/DemoFusion) [web](https://ruoyidu.github.io/demofusion/demofusion.html) [pdf](./2023_11_CVPR_DemoFusion--Democratising-High-Resolution-Image-Generation-With-No.pdf) [note](./2023_11_CVPR_DemoFusion--Democratising-High-Resolution-Image-Generation-With-No_Note.md)
   Authors: Ruoyi Du, Dongliang Chang, Timothy Hospedales, Yi-Zhe Song, Zhanyu Ma
 
 ![fig3](docs/2023_11_CVPR_DemoFusion--Democratising-High-Resolution-Image-Generation-With-No_Note/fig3.png)
+
+
+
+
+
+- "Make a Cheap Scaling: A Self-Cascade Diffusion Model for Higher-Resolution Adaptation" Arxiv, 2024 Feb 16 :star:
+  [paper](http://arxiv.org/abs/2402.10491v2) [code]() [web](https://guolanqing.github.io/Self-Cascade/) [pdf](./2024_02_Arxiv_Make-a-Cheap-Scaling--A-Self-Cascade-Diffusion-Model-for-Higher-Resolution-Adaptation.pdf) [note](./2024_02_Arxiv_Make-a-Cheap-Scaling--A-Self-Cascade-Diffusion-Model-for-Higher-Resolution-Adaptation_Note.md)
+  Authors: Lanqing Guo, Yingqing He, Haoxin Chen, Menghan Xia, Xiaodong Cun, Yufei Wang, Siyu Huang, Yong Zhang, Xintao Wang, Qifeng Chen, Ying Shan, Bihan Wen
+
+微调了一个 0.002M 参数量得 upsample 模块，做 x4 SR
+
+![fig2](docs/2024_02_Arxiv_Make-a-Cheap-Scaling--A-Self-Cascade-Diffusion-Model-for-Higher-Resolution-Adaptation_Note/fig2.png)
 
 
 
@@ -1540,6 +1580,28 @@ Authors: Chris Careaga, Yağız Aksoy
 
 - **把参考图的 VAE 特征在 UNet 输入的 noise 地方进行 concat**，去训练 UNet，就是在 Unet 输入 concat 参考图特征
 - 多个参考图特征直接 concat 就可以了
+
+
+
+
+
+- "FreeScale: Unleashing the Resolution of Diffusion Models via Tuning-Free Scale Fusion" Arxiv, 2024 Dec 12
+  [paper](http://arxiv.org/abs/2412.09626v1) [code]() [pdf](./2024_12_Arxiv_FreeScale--Unleashing-the-Resolution-of-Diffusion-Models-via-Tuning-Free-Scale-Fusion.pdf) [note](./2024_12_Arxiv_FreeScale--Unleashing-the-Resolution-of-Diffusion-Models-via-Tuning-Free-Scale-Fusion_Note.md)
+  Authors: Haonan Qiu, Shiwei Zhang, Yujie Wei, Ruihang Chu, Hangjie Yuan, Xiang Wang, Yingya Zhang, Ziwei Liu
+
+
+
+
+
+- "Fractal Generative Models" Arxiv, 2025 Feb 24
+  [paper](http://arxiv.org/abs/2502.17437v1) [code](https://github.com/LTH14/fractalgen.) [pdf](./2025_02_Arxiv_Fractal-Generative-Models.pdf) [note](./2025_02_Arxiv_Fractal-Generative-Models_Note.md)
+  Authors: Tianhong Li, Qinyi Sun, Lijie Fan, Kaiming He
+
+- "Is Noise Conditioning Necessary for Denoising Generative Models?" 
+
+  https://arxiv.org/pdf/2502.13129
+
+
 
 
 
@@ -2283,6 +2345,10 @@ DoubleDIP 把各种 low-level 任务看作**图层分解任务**，**将图像�
 
 
 
+- https://arxiv.org/pdf/2408.08189v2
+
+
+
 #### frequency domain :radio:
 
 > - Q：diffusion VAE 融合多个 patch，画面糊掉了？
@@ -2557,6 +2623,16 @@ Low-Light 暗部区域细节不清晰，类似的问题 :star:
   Authors: Subhajit Paul, Sahil Kumawat, Ashutosh Gupta, Deepak Mishra
 
 ![fig3](docs/2024_09_Arxiv_F2former--When-Fractional-Fourier-Meets-Deep-Wiener-Deconvolution-and-Selective-Frequency-Transformer-for-Image-Deblurring_Note/fig3.png)
+
+
+
+
+
+### NTIRE :construction_worker:
+
+- https://github.com/happycaoyue/NTIRE20_raw_image_denoising_winner_MWRCANet
+
+
 
 
 
@@ -3052,8 +3128,7 @@ Self-atten QKV 特征都单独过 SE 空间注意力 + Deformable 偏移（自�
   [paper](https://arxiv.org/abs/1711.11585) [website](https://tcwang0509.github.io/pix2pixHD/)
 
 - [x] "Free-Form Image Inpainting with Gated Convolution" ICCV, 2018 Jun
-  [paper](http://arxiv.org/abs/1806.03589v2) [code](https://github.com/JiahuiYu/generative_inpainting) 
-  [note](./2018_06_ICCV_Free-Form-Image-Inpainting-with-Gated-Convolution_Note.md)
+  [paper](http://arxiv.org/abs/1806.03589v2) [code](https://github.com/JiahuiYu/generative_inpainting) [note](./2018_06_ICCV_Free-Form-Image-Inpainting-with-Gated-Convolution_Note.md)
   
 - [x] "Semantic Image Synthesis with Spatially-Adaptive Normalization" CVPR, 2019 Mar, **SPADE**  :statue_of_liberty: :baby_chick:
   [paper](https://arxiv.org/abs/1903.07291) [code](https://github.com/NVlabs/SPADE?utm_source=catalyzex.com)
