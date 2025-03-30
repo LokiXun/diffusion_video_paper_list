@@ -60,8 +60,6 @@
 
 
 
-### code
-
 ```shell
 python accdiffusion_plus.py --experiment_name="AccDiffusionv2" \
     --model_ckpt="stabilityai/stable-diffusion-xl-base-1.0" \ # your sdxl model ckpt path
@@ -78,7 +76,7 @@ python accdiffusion_plus.py --experiment_name="AccDiffusionv2" \
 
 
 
-**preparation**
+### **preparation**
 
 预训练的 canny controlnet
 
@@ -104,7 +102,7 @@ controller 获取 atten map
 
 
 
-#### init LR img
+**init LR img**
 
 > https://github.com/lzhxmu/AccDiffusion_v2/blob/9b8e2f8a955e360bf243e43ec69a9d6465b75ea7/accdiffusion_plus.py#L1238
 
@@ -225,17 +223,40 @@ noise inverse 重新加噪，获取每个 timestep 的全局残差
 
 
 
-#### denoise
+
+
+每个 timestep 的流程，**使用 multi-diffusion 的局部特征 & dilated_sampling  的全局特征，加权相加更新整张图的 value**
+
+1. 当前 timetep 开始的 latent，先按 t 搞一个权重加上全局残差 vae，更新 latent。即**加上全局残差的 latent 作为后续 multi-diffusion 和 window-interation 的输入**
+   - **设计全局残差的权重 c1**，t 越大，用全局残差越多。
+   - t=T **用 resized vae 全局残差作为 latent 开始** :star:
+2. **multi-diffusion 认为是局部特征处理 value_local**，类似 RVRT，把加上全局残差的 latent 分 patch 过 unet，再拼起来，多了一个一开始 pad 的操作，更新 value
+   - value_local * 权重 `1-c2` 加到整张图的 value 上，t 越大，`1-c2` 越小
+   - t=T 等于不用 multi-diffusion 更新的 value_local
+3. **dilated_sampling 认为是全局特征 value_global**；把最初加上全局残差的 latent，用一个 gaussian 卷积核平滑一下，然后对 patch 打乱顺序送入 unet 计算 noise，把 noise再还原位置更新 vae
+   - value_global * 权重 `c2` 加到整张图的 value 上，t 越大，`c2` 越大
+   - t=T 只用 dilated sampling 的特征
 
 > https://github.com/lzhxmu/AccDiffusion_v2/blob/9b8e2f8a955e360bf243e43ec69a9d6465b75ea7/accdiffusion_plus.py#L1405
 
-全局残差搞了一个权重
+### global residual
+
+把小图 vae resize 到目标尺寸后，逐个 t 加噪，存为全局残差。
+
+搞了一个 cosine_factor 权重融合当前 unet 输出的 vae & 全局残差。
+$$
+\text{cosine factor} = (\frac{1}{2} (1 + cos(\frac{T - t}{T} \pi))) ^ {3}
+$$
+
+1. $t=T \to c1=1$， 完全使用全局残差
+2. $t=0 \to c1=0$，完全用 unet 的结果
 
 ```python
-                    cosine_factor = 0.5 * (1 + torch.cos(torch.pi * (self.scheduler.config.num_train_timesteps - t) / self.scheduler.config.num_train_timesteps)).cpu()
-                    if use_skip_residual:
-                        c1 = cosine_factor ** cosine_scale_1
-                        latents = latents * (1 - c1) + noise_latents[i] * c1
+	cosine_scale_1 = 3
+    cosine_factor = 0.5 * (1 + torch.cos(torch.pi * (self.scheduler.config.num_train_timesteps - t) / self.scheduler.config.num_train_timesteps)).cpu()
+    if use_skip_residual:
+        c1 = cosine_factor ** cosine_scale_1
+        latents = latents * (1 - c1) + noise_latents[i] * c1
 ```
 
 这里 denoise 结束把 LR VAE 特征的均值和方差拿过来，归一化一下 :star:
@@ -256,11 +277,15 @@ noise inverse 重新加噪，获取每个 timestep 的全局残差
 
 > `use_multidiffusion=True; use_dilated_sampling=True`
 
-##### multidiffusion :star:
+### multidiffusion :star:
 
-**每个 window 过 Unet**
+先把 latent pad 一下，分 patch 过 vae 拼起来，得到整张图的 value_local 作为局部特征。再 decrop 一下，**和 RVRT 分 patch 处理差不多，只是 pad 了一下。**
 
-获取多个 views，就是每个 window 的 bbox 四点坐标
+注意这里 value_local 认为是局部特征，乘以一个权重加到整张图的 vae value 上
+
+
+
+**每个 window 过 Unet**，获取多个 views，就是每个 window 的 bbox 四点坐标
 
 > https://github.com/lzhxmu/AccDiffusion_v2/blob/9b8e2f8a955e360bf243e43ec69a9d6465b75ea7/accdiffusion_plus.py#L1443
 
@@ -287,9 +312,7 @@ noise inverse 重新加噪，获取每个 timestep 的全局残差
 
 
 
-
-
-这里把 noise step 一下得到每个 window 的 VAE 特征，准备**拼起来搞成一个大的 VAE 特征**
+每个 window 单独去噪，全部 window 的 VAE 特征得到后，**拼起来搞成一个大的 VAE 特征** -> value_local
 
 > https://github.com/lzhxmu/AccDiffusion_v2/blob/9b8e2f8a955e360bf243e43ec69a9d6465b75ea7/accdiffusion_plus.py#L1585
 
@@ -310,9 +333,6 @@ noise inverse 重新加噪，获取每个 timestep 的全局残差
                                 noise_index = i + 1
                             else:
                                 noise_index = i
-
-                            value_local = torch.where(count_local == 0, noise_latents[noise_index], value_local)
-                            count_local = torch.where(count_local == 0, torch.ones_like(count_local), count_local)
 ```
 
 > 注意这里 random_jitter, 实际 `jitter_range=0`
@@ -327,22 +347,31 @@ noise inverse 重新加噪，获取每个 timestep 的全局残差
 >                             latents_ = latents
 > ```
 
+
+
+
+
 关注一下怎么拼起来 :star: :star:
 
 > https://github.com/lzhxmu/AccDiffusion_v2/blob/9b8e2f8a955e360bf243e43ec69a9d6465b75ea7/accdiffusion_plus.py#L1602
 
+因为 jitter 了，**推理到的 patches 重叠就用 denoise 的取平均**；**没推理到的区域，就用全局残差的 vae**；
+
+还要乘一个权重 $c2$，$t=T\to 0$  ，$c2= 0\to 1$。**后面还要 dilated smaple 继续更新 value**
+
 ```python
+                        value_local = torch.where(count_local == 0, noise_latents[noise_index], value_local)
+                        count_local = torch.where(count_local == 0, torch.ones_like(count_local), count_local)
                         if use_dilated_sampling:
-                            c2 = cosine_factor ** cosine_scale_2  # cosine_scale_2 = 1
+                            c2 = cosine_factor ** cosine_scale_2
                             value += value_local / count_local * (1 - c2)
                             count += torch.ones_like(value_local) * (1 - c2)
                         else:
-                            # average bad...
                             value += value_local / count_local
                             count += torch.ones_like(value_local) 
 ```
 
-这里 value 是每个 timestep 开头初始化的一个大的 VAE 特征
+ 这里 value 是每个 timestep 开头初始化的一个大的 VAE 特征
 
 ```python
             ############################################# denoise #############################################
@@ -359,18 +388,37 @@ noise inverse 重新加噪，获取每个 timestep 的全局残差
 
 
 
-##### dilated_sampling
+### dilated_sampling
 
-> https://github.com/lzhxmu/AccDiffusion_v2/blob/9b8e2f8a955e360bf243e43ec69a9d6465b75ea7/accdiffusion_plus.py#L1610C24-L1610C44
+> https://github.com/lzhxmu/AccDiffusion_v2/blob/9b8e2f8a955e360bf243e43ec69a9d6465b75ea7/accdiffusion_plus.py#L1610
+
+1. 最初加上全局残差的 latent，用一个 gaussian 卷积核平滑一下，multidiffusion 没有更新 latent 哦，用15x15 卷积核平滑一下
+2. window interaction，把平滑的 latent 分 patch 打乱顺序过 unet，再还原位置，**得到 value_global 特征认为是全局特征，乘以权重 c2 加到 value 上**
+
+
+
+#### filter
+
+latents 为 multidiffusion 里面分 patch 再合并的 vae。**先 pad 一下**
 
 > `current_scale_num=8` 为一边 SR 的倍数；`window_size=self.unet.config.sample_size=64` `latents_` 是当前 timestep 初始加上全局残差的大的 VAE 特征
 
-搞了一个 15x15 的高斯卷积核卷一下，**得到一个平滑的 VAE 特征**，然后标准化一下；
+```
+                        h_pad = (current_scale_num - (latents.size(2) % current_scale_num)) % current_scale_num
+                        w_pad = (current_scale_num - (latents.size(3) % current_scale_num)) % current_scale_num
+                        latents_ = F.pad(latents, (w_pad, 0, h_pad, 0), 'constant', 0)
+                        
+                        count_global = torch.zeros_like(latents_)
+                        value_global = torch.zeros_like(latents_)
+```
 
-用平滑的 VAE 更新一下方差，均值不动。
-**大 VAE 特征的均值，还是用加了全局残差的那个 VAE 特征。颜色信息（低频）依靠 resized LR VAE 的低频，所以色差不那么明显**
+**搞了一个 15x15 的高斯卷积核卷一下，得到一个平滑的 VAE 特征，然后用原来的 latent 的均值和方差，标准化一下**；
 
 > https://github.com/lzhxmu/AccDiffusion_v2/blob/9b8e2f8a955e360bf243e43ec69a9d6465b75ea7/accdiffusion_plus.py#L1622
+
+`latents_gaussian` 的均值，还是用加了全局残差的那个 VAE 特征。颜色信息（低频）依靠 resized LR VAE 的低频，所以色差不那么明显
+
+$t = T\to0 ; c3= 1\to 0$。`use_guassian=True`
 
 ```python
                         if use_guassian:
@@ -381,6 +429,8 @@ noise inverse 重新加噪，获取每个 timestep 的全局残差
                         else:
                             latents_gaussian = latents_
 ```
+
+卷积核的实现
 
 ```python
 def gaussian_kernel(kernel_size=3, sigma=1.0, channels=3):
@@ -401,11 +451,15 @@ def gaussian_filter(latents, kernel_size=3, sigma=1.0):
 
 
 
-**window interation**
+#### window interation
+
+> https://vscode.dev/github/lzhxmu/AccDiffusion_v2/blob/main/accdiffusion_plus.py#L1646
+
+把 timestep 开始加上全局残差的 latent，用 filter 平滑后，在这里打乱，**给 Unet 得到 noise，先还原位置，再转为 vae** ，按 patch 存入 value_global
 
 ![fig7](docs/2024_12_Arxiv_AccDiffusion-v2--Towards-More-Accurate-Higher-Resolution-Diffusion-Extrapolation_Note/fig7.png)
 
-按步长取特征点
+随机取 window，先按步长取特征点，在打乱
 
 ```python
                         for j, batch_view in enumerate(views_batch):
@@ -424,8 +478,6 @@ def gaussian_filter(latents, kernel_size=3, sigma=1.0):
                                 ]
                             )
 ```
-
-**window interaction 得到一个新的 window 过 Unet**
 
 > https://github.com/lzhxmu/AccDiffusion_v2/blob/9b8e2f8a955e360bf243e43ec69a9d6465b75ea7/accdiffusion_plus.py#L1646
 >
@@ -452,7 +504,7 @@ def gaussian_filter(latents, kernel_size=3, sigma=1.0):
 
 
 
-**把 latents_for_view_gaussian 过 Unet**，还原到原来像素位置。然后再用 gaussian 方式平均一下 patch 特征
+**把 latents_for_view_gaussian 过 Unet，还原到原来像素位置**。这里 vae 认为是 global 的 vae
 
 > https://github.com/lzhxmu/AccDiffusion_v2/blob/9b8e2f8a955e360bf243e43ec69a9d6465b75ea7/accdiffusion_plus.py#L1692
 
@@ -473,6 +525,16 @@ def gaussian_filter(latents, kernel_size=3, sigma=1.0):
                                 count_global[:, :, h::current_scale_num, w::current_scale_num] += 1
 
                         value_global = value_global[: ,:, h_pad:, w_pad:]
+```
+
+
+
+c2 权重随着 t 减小，c2 从 1 -> 0，更新 value；
+
+至此，整张图的 vae value 已经加上了 multidiffusion 里面每个 patch 的 vae （c1 = c2 ** 3)，和当前 dilated sampled 的 vae (c2)
+
+```python
+                        value_global = value_global[: ,:, h_pad:, w_pad:]
 
                         if use_multidiffusion:
                             c2 = cosine_factor ** cosine_scale_2
@@ -481,15 +543,11 @@ def gaussian_filter(latents, kernel_size=3, sigma=1.0):
                         else:
                             value += value_global
                             count += torch.ones_like(value_global)
+                                
+                    latents = torch.where(count > 0, value / count, value)
 ```
 
-这里 value 和 count 一开始已经加上了 multidiffusion 每个 window 的特征，这里再加一次 window interaction(对 gaussian 平滑过的 vae) 的特征；最后再取平均
 
-```
-latents = torch.where(count > 0, value / count, value)
-```
-
-这里就完成了一个 timestep 的去噪
 
 
 

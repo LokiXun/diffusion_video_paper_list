@@ -15,6 +15,8 @@
 >    short discription(optional)
 >    ```
 >
+>    Here is Code to generate Empty Paper Note and paper-info above. >> [create_paper_note.py](./create_paper_note.py)  :gun:
+>
 > 2. If only the paper website is listed, it denotes the paper link and code link could be found in the website page.
 >
 > 3. The priority order of papers in each category is based on paper importance(based on our task) and then paper-release time.
@@ -28,6 +30,8 @@
 > - [CCF Rec. Conference Deadlines](https://ccfddl.github.io/)
 > - [get stamp for github stars](https://shields.io/)
 > - https://papers.cool/arxiv/cs.CV
+
+
 
 
 
@@ -1508,6 +1512,14 @@ Authors: Chris Careaga, Yağız Aksoy
 
 
 
+- "DiffuseHigh: Training-free Progressive High-Resolution Image Synthesis through Structure Guidance" Arxiv, 2024 Jun 26
+  [paper](http://arxiv.org/abs/2406.18459v5) [code](https://yhyun225.github.io/DiffuseHigh/) [pdf](./2024_06_Arxiv_DiffuseHigh--Training-free-Progressive-High-Resolution-Image-Synthesis-through-Structure-Guidance.pdf) [note](./2024_06_Arxiv_DiffuseHigh--Training-free-Progressive-High-Resolution-Image-Synthesis-through-Structure-Guidance_Note.md)
+  Authors: Younghyun Kim, Geunmin Hwang, Junyu Zhang, Eunbyung Park
+
+
+
+
+
 - "Breaking reCAPTCHAv2" COMPSAC, 2024 Sep 13
   [paper](http://arxiv.org/abs/2409.08831v1) [code](https://github.com/aplesner/Breaking-reCAPTCHAv2) [pdf](./2024_09_COMPSAC_Breaking-reCAPTCHAv2.pdf) [note](./2024_09_COMPSAC_Breaking-reCAPTCHAv2_Note.md)
   Authors: Andreas Plesner, Tobias Vontobel, Roger Wattenhofer (ETH)
@@ -1593,15 +1605,40 @@ Authors: Chris Careaga, Yağız Aksoy
 
 
 
+- "ASGDiffusion: Parallel High-Resolution Generation with Asynchronous Structure Guidance" Arxiv, 2024 Dec 9
+  [paper](http://arxiv.org/abs/2412.06163v1) [code]() [pdf](./2024_12_Arxiv_ASGDiffusion--Parallel-High-Resolution-Generation-with-Asynchronous-Structure-Guidance.pdf) [note](./2024_12_Arxiv_ASGDiffusion--Parallel-High-Resolution-Generation-with-Asynchronous-Structure-Guidance_Note.md)
+  Authors: Yuming Li, Peidong Jia, Daiwei Hong, Yueru Jia, Qi She, Rui Zhao, Ming Lu, Shanghang Zhang (Peking University)
+
++全局 vae 残差发现背景模糊（物体也不行啊。。），**实验 cross-attn map 作为全局残差相加的权重，优化每个 patch 自己的权重，有点效果，但对于物体信息少的情况（extreme close-up）cross-attn map 信息很烂，出现 x16 SR 直接一些细节崩掉的情况，没有 DemoFusion 稳定。**把多个 patch 打到不同卡上处理，再回收的一个工程操作作为一个创新点。。。
+
+![fig3](docs/2024_12_Arxiv_ASGDiffusion--Parallel-High-Resolution-Generation-with-Asynchronous-Structure-Guidance_Note/fig3.png)
+
+
+
+
+
 - "Fractal Generative Models" Arxiv, 2025 Feb 24
   [paper](http://arxiv.org/abs/2502.17437v1) [code](https://github.com/LTH14/fractalgen.) [pdf](./2025_02_Arxiv_Fractal-Generative-Models.pdf) [note](./2025_02_Arxiv_Fractal-Generative-Models_Note.md)
   Authors: Tianhong Li, Qinyi Sun, Lijie Fan, Kaiming He
+
+
+
+
 
 - "Is Noise Conditioning Necessary for Denoising Generative Models?" 
 
   https://arxiv.org/pdf/2502.13129
 
 
+
+
+
+- "Ultra-Resolution Adaptation with Ease" Arxiv, 2025 Mar 20
+  [paper](http://arxiv.org/abs/2503.16322v1) [code](https://github.com/Huage001/URAE) [pdf](./2025_03_Arxiv_Ultra-Resolution-Adaptation-with-Ease.pdf) [note](./2025_03_Arxiv_Ultra-Resolution-Adaptation-with-Ease_Note.md)
+  Authors: Ruonan Yu, Songhua Liu, Zhenxiong Tan, Xinchao Wang	(NUS)
+
+2个 H100 微调 FLUX 去直接生成 2K/4K 分辨率图像，没对比 DemoFusion；
+**探索了训练方式**：不用 CFG；用 FLUX 合成数据比 LAION 真实数据效果好，但不稳定；Lora 只微调最小 singular value 就可以有效果
 
 
 
