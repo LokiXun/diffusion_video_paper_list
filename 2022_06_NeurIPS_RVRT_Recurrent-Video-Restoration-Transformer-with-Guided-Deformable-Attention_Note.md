@@ -1,8 +1,7 @@
 # RVRT
 
 > "Recurrent Video Restoration Transformer with Guided Deformable Attention" NeurlPS, 2022 June, **RVRT** :statue_of_liberty:
-> [paper](https://arxiv.org/abs/2206.02146) [code](https://github.com/JingyunLiang/RVRT?utm_source=catalyzex.com)
-> [pdf](./2022_06_NeurIPS_RVRT_Recurrent-Video-Restoration-Transformer-with-Guided-Deformable-Attention.pdf) [note](./2022_06_NeurIPS_RVRT_Recurrent-Video-Restoration-Transformer-with-Guided-Deformable-Attention_Note.md)
+> [paper](https://arxiv.org/abs/2206.02146) [code](https://github.com/JingyunLiang/RVRT?utm_source=catalyzex.com) [pdf](./2022_06_NeurIPS_RVRT_Recurrent-Video-Restoration-Transformer-with-Guided-Deformable-Attention.pdf) [note](./2022_06_NeurIPS_RVRT_Recurrent-Video-Restoration-Transformer-with-Guided-Deformable-Attention_Note.md)
 
 ## **Key-point**
 
@@ -109,6 +108,68 @@ training set of DAVIS [31], test on DAVIS-test-set & Set8
 
 
 
+## 
+
+## Setting
+
+### Data
+
+- VSR
+  - REDS
+  - Vimeo90K
+  - Vid4
+  - UMD10
+- deblur
+  - GoPro
+  - DVD
+
+- denoise
+  - davis
+
+>  In training, we randomly crop 256 256 HQ patches and use different video lengths for different datasets: 30 frames for REDS [53], 14 frames for Vimeo-90K [87], and 16 frames for DVD [63], GoPro [54] as well as DAVIS [31]
+
+#### VSR
+
+测试两种退化 bicubic (BI) and blur-downsampling (BD) degradation.
+
+> For video SR, we consider two settings: bicubic (BI) and blur-downsampling (BD) degradation. 
+
+**bicubic (BI)**
+
+- REDS4
+- Vimeo-90K-T
+- Vid4
+
+> For BI degradation, we train the model on two different datasets: REDS [53] and Vimeo-90K [87] and then test the model on their corresponding testsets: REDS4 and Vimeo-90K-T. We additionally test Vid4 [46] along with Vimeo-90K
+
+**BD degradation**
+
+- Vimeo-90K-T
+- Vid4
+- UDM10
+
+> For BD degradation, we train it on Vimeo-90K and test it on Vimeo-90K-T, Vid4, and UDM10 [89]. 
+
+
+
+#### Video Deblurring
+
+- DVD
+- GoPro
+
+> For video deblurring, the model is trained and tested on two different datasets, DVD [63] and GoPro [54], with their official training/testing splits
+
+
+
+#### Video Denoising
+
+- Davis
+- Set8
+
+> training set of DAVIS [31] and test it on its corre sponding testset and Set8 [70]
+
+
+
 
 
 **Limitations**
@@ -116,3 +177,5 @@ training set of DAVIS [31], test on DAVIS-test-set & Set8
 ## **Summary :star2:**
 
 > learn what & how to apply to our task
+
+![tb5](docs/2022_06_NeurIPS_RVRT_Recurrent-Video-Restoration-Transformer-with-Guided-Deformable-Attention_Note/tb5.png)

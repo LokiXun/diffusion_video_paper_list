@@ -377,6 +377,18 @@ TODO
 
 
 
+### train Code
+
+> https://github.com/MyNiuuu/MOFA-Video/blob/main/Training/train_stage2.py
+
+使用 fp16 训练
+
+> https://github.com/MyNiuuu/MOFA-Video/blob/main/Training/train_stage2.sh  
+
+
+
+
+
 ## Setting
 
 The trajectory-based model

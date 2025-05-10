@@ -18,7 +18,7 @@
 
   > We propose AccDiffusion, an accurate method for patch-wise higher-resolution image generation without training.
 
-- 分析 multi-diffusion 小物体出现重复生成的原因
+- 分析 multi-diffusion 小物体出现重复生成的原因：PatchPrompt 存在混淆 & noise residual 的使用
 
   > An in-depth analysis in this paper reveals an identical text prompt for different patches causes repeated object generation, while no prompt compromises the image details
 

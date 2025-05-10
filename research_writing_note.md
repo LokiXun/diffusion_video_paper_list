@@ -402,6 +402,8 @@ https://lucide.dev/icons/rotate-ccw
 
 https://www.jyshare.com/more/svgeditor/
 
+https://www.iconfont.cn/ :star:
+
 - 插入 SVG url
 
 https://www.drawio.com/doc/faq/arrange-insert-menu

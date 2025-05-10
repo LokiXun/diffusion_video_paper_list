@@ -247,7 +247,7 @@ strong baseline in multi papers :+1:
   > VHS 类似的噪声合成数据 :warning:
 
 - [x] "Restoring Degraded Old Films with Recursive Recurrent Transformer Networks" WACV, 2024, `RRTN`
-  [paper](https://openaccess.thecvf.com/content/WACV2024/papers/Lin_Restoring_Degraded_Old_Films_With_Recursive_Recurrent_Transformer_Networks_WACV_2024_paper.pdf) [code](https://github.com/mountln/RRTN-old-film-restoration) [pdf](2024_01_WACV_Restoring_Degraded_Old_Films_With_Recursive_Recurrent_Transformer_Networks.pdf)
+  [paper](https://openaccess.thecvf.com/content/WACV2024/papers/Lin_Restoring_Degraded_Old_Films_With_Recursive_Recurrent_Transformer_Networks_WACV_2024_paper.pdf) [code](https://github.com/mountln/RRTN-old-film-restoration) [pdf](./2024_01_WACV_Restoring-Degraded-Old-Films-With-Recursive-Recurrent-Transformer-Networks.pdf)
 
 - [ ] "Unsupervised Model-based Learning for Simultaneous Video Deflickering and Deblotching" WACV, 2024 
   [paper](https://openaccess.thecvf.com/content/WACV2024/papers/Fulari_Unsupervised_Model-Based_Learning_for_Simultaneous_Video_Deflickering_and_Deblotching_WACV_2024_paper.pdf) [pdf](2024_01_WACV_Unsupervised_Model-Based_Learning_for_Simultaneous_Video_Deflickering_and_Deblotching.pdf)
@@ -295,6 +295,26 @@ strong baseline in multi papers :+1:
 
 
 
+### frame interpolation
+
+MTI 基于 RIFE 加上相机控制做的，在慢动作数据上效果阔以的。尝试从插帧的方式做
+
+- "Real-time intermediate flow estimation for video frame interpolation" ECCV 2022
+
+  https://arxiv.org/abs/2011.06294  https://github.com/hzwer/ECCV2022-RIFE
+
+
+
+- "Real-time Video Prediction With Fast Video Interpolation Model and Prediction Training" https://arxiv.org/pdf/2503.23185
+
+
+
+- "Hierarchical Flow Diffusion for Efficient Frame Interpolation" https://arxiv.org/pdf/2504.00380
+
+
+
+
+
 ## Video Diffusion :star2:
 
 >[paper with code searching 'diffusion video'](https://paperswithcode.com/search?q_meta=&q_type=&q=diffusion+video) :+1:
@@ -312,12 +332,17 @@ strong baseline in multi papers :+1:
 ### Image2Video & reference
 
 - [survey_comics_generate_video.md](./survey_comics_generate_video.md)
-
 - "FlashVideo:Flowing Fidelity to Detail for Efficient High-Resolution Video Generation" Arxiv, 2025 Feb 7
   [paper](http://arxiv.org/abs/2502.05179v1) [code](https://github.com/FoundationVision/FlashVideo) [pdf](./2025_02_Arxiv_FlashVideo-Flowing-Fidelity-to-Detail-for-Efficient-High-Resolution-Video-Generation.pdf) [note](./2025_02_Arxiv_FlashVideo-Flowing-Fidelity-to-Detail-for-Efficient-High-Resolution-Video-Generation_Note.md)
   Authors: Shilong Zhang, Wenbo Li, Shoufa Chen, Chongjian Ge, Peize Sun, Yida Zhang, Yi Jiang, Zehuan Yuan, Binyue Peng, Ping Luo
+- "LTX-Video: Realtime Video Latent Diffusion" Arxiv, 2024 Dec 30
+  [paper](http://arxiv.org/abs/2501.00103v1) [code]() [pdf](./2024_12_Arxiv_LTX-Video--Realtime-Video-Latent-Diffusion.pdf) [note](./2024_12_Arxiv_LTX-Video--Realtime-Video-Latent-Diffusion_Note.md)
+  Authors: Yoav HaCohen, Nisan Chiprut, Benny Brazowski, Daniel Shalem, Dudu Moshe, Eitan Richardson, Eran Levin, Guy Shiran, Nir Zabari, Ori Gordon, Poriya Panet, Sapir Weissbuch, Victor Kulikov, Yaki Bitterman, Zeev Melumian, Ofir Bibi
 
+VideoVAE F32x32x8C128, 高压缩比，1xH100 GPu 2s 生成 5sfps24 视频。
+学习一下这个改进的 GAN Loss
 
+![fig5](docs/2024_12_Arxiv_LTX-Video--Realtime-Video-Latent-Diffusion_Note/fig5.png)
 
 
 
@@ -1112,11 +1137,17 @@ Authors: Chris Careaga, Yağız Aksoy
 
 
 
-### VAE
+### VAE :gem:
 
-- "Deep Compression Autoencoder for Efficient High-Resolution Diffusion Models" Arxiv, 2024 Oct 14, `DC-AE`
+- "Deep Compression Autoencoder for Efficient High-Resolution Diffusion Models" ICLR-2025, 2024 Oct 14, `DC-AE`
   [paper](http://arxiv.org/abs/2410.10733v1) [code](https://github.com/mit-han-lab/efficientvit) [pdf](./2024_10_Arxiv_Deep-Compression-Autoencoder-for-Efficient-High-Resolution-Diffusion-Models.pdf) [note](./2024_10_Arxiv_Deep-Compression-Autoencoder-for-Efficient-High-Resolution-Diffusion-Models_Note.md)
   Authors: Junyu Chen, Han Cai, Junsong Chen, Enze Xie, Shang Yang, Haotian Tang, Muyang Li, Yao Lu, Song Han (MIT)
+
+更高压缩比的 VAE，学习的 diffusion 用更少的空间，生成速度更快 & 节省显存！实验发现 F8C4 确实不行。。**要提升 VAE latent 通道数**
+
+![fig4](docs/README/fig4.png)
+
+
 
 
 
@@ -1130,16 +1161,107 @@ Authors: Chris Careaga, Yağız Aksoy
   [paper](http://arxiv.org/abs/2411.17459v2) [code](https://github.com/PKU-YuanGroup/WF-VAE.) [pdf](./2024_11_Arxiv_WF-VAE--Enhancing-Video-VAE-by-Wavelet-Driven-Energy-Flow-for-Latent-Video-Diffusion-Model.pdf) [note](./2024_11_Arxiv_WF-VAE--Enhancing-Video-VAE-by-Wavelet-Driven-Energy-Flow-for-Latent-Video-Diffusion-Model_Note.md)
   Authors: Zongjian Li, Bin Lin, Yang Ye, Liuhan Chen, Xinhua Cheng, Shenghai Yuan, Li Yuan
 
-效果和 SOTA `CogVideoX-VAE` 接近
+效果和 SOTA `CogVideoX-VAE` 接近，SD的VAE重建损失太多了
 
 ![tb1](docs/2024_11_Arxiv_WF-VAE--Enhancing-Video-VAE-by-Wavelet-Driven-Energy-Flow-for-Latent-Video-Diffusion-Model_Note/tb1.png)
 
 
 
-- "Reconstruction *vs.* Generation:Taming Optimization Dilemma in Latent Diffusion Models" 
-  [paper](https://arxiv.org/pdf/2501.01423v2) https://github.com/hustvl/LightningDiT
 
 
+- "Reconstruction vs. Generation: Taming Optimization Dilemma in Latent Diffusion Models" CVPR, 2025 Jan 2
+  [paper](http://arxiv.org/abs/2501.01423v3) [code](https://github.com/hustvl/LightningDiT) [pdf](./2025_01_CVPR_Reconstruction-vs--Generation--Taming-Optimization-Dilemma-in-Latent-Diffusion-Models.pdf) [note](./2025_01_CVPR_Reconstruction-vs--Generation--Taming-Optimization-Dilemma-in-Latent-Diffusion-Models_Note.md)
+  Authors: Jingfeng Yao, Bin Yang, Xinggang Wang
+
+
+
+
+
+- "Alias-Free Latent Diffusion Models:Improving Fractional Shift Equivariance of Diffusion Latent Space" Arxiv, 2025 Mar 12
+  [paper](http://arxiv.org/abs/2503.09419v1) [code](https://github.com/SingleZombie/AFLDM) [pdf](./2025_03_Arxiv_Alias-Free-Latent-Diffusion-Models-Improving-Fractional-Shift-Equivariance-of-Diffusion-Latent-Space.pdf) [note](./2025_03_Arxiv_Alias-Free-Latent-Diffusion-Models-Improving-Fractional-Shift-Equivariance-of-Diffusion-Latent-Space_Note.md)
+  Authors: Yifan Zhou, Zeqi Xiao, Shuai Yang, Xingang Pan
+
+
+
+
+
+- "LeanVAE: An Ultra-Efficient Reconstruction VAE for Video Diffusion Models" Arxiv, 2025 Mar 18
+  [paper](http://arxiv.org/abs/2503.14325v1) [code](https://github.com/westlake-repl/LeanVAE) [pdf](./2025_03_Arxiv_LeanVAE--An-Ultra-Efficient-Reconstruction-VAE-for-Video-Diffusion-Models.pdf) [note](./2025_03_Arxiv_LeanVAE--An-Ultra-Efficient-Reconstruction-VAE-for-Video-Diffusion-Models_Note.md)
+  Authors: Yu Cheng, Fajie Yuan(西湖大学)
+
+Video Reconstruction SOTA，降低显存！但是逐帧看细节，细节直接没了，没法用。。。不过有训练代码可以参考 https://github.com/westlake-repl/LeanVAE/blob/master/leanvae_train.py
+
+
+
+
+
+- "Representation Alignment for Generation: Training Diffusion Transformers Is Easier Than You Think" ICLR, 2024 Oct 9, `REPA`
+  [paper](http://arxiv.org/abs/2410.06940v3) [code]() [pdf](./2024_10_Arxiv_Representation-Alignment-for-Generation--Training-Diffusion-Transformers-Is-Easier-Than-You-Think.pdf) [note](./2024_10_Arxiv_Representation-Alignment-for-Generation--Training-Diffusion-Transformers-Is-Easier-Than-You-Think_Note.md)
+  Authors: Sihyun Yu, Sangkyung Kwak, Huiwon Jang, Jongheon Jeong, Jonathan Huang, Jinwoo Shin, Saining Xie
+
+提出 **Rep**resentation **A**lignment (REPA) 使用预训练的 visual 特征去训练 diffusion model，增强 latent 特征的表征意义，发现**训练可以加速 17x**
+
+![fig1](docs/2024_10_Arxiv_Representation-Alignment-for-Generation--Training-Diffusion-Transformers-Is-Easier-Than-You-Think_Note/fig1.png)
+
+
+
+- "REPA-E: Unlocking VAE for End-to-End Tuning with Latent Diffusion Transformers" Arxiv, 2025 Apr 14
+  [paper](http://arxiv.org/abs/2504.10483v1) [code](https://end2end-diffusion.github.io.) [pdf](./2025_04_Arxiv_REPA-E--Unlocking-VAE-for-End-to-End-Tuning-with-Latent-Diffusion-Transformers.pdf) [note](./2025_04_Arxiv_REPA-E--Unlocking-VAE-for-End-to-End-Tuning-with-Latent-Diffusion-Transformers_Note.md)
+  Authors: Xingjian Leng, Jaskirat Singh, Yunzhong Hou, Zhenchang Xing, Saining Xie, Liang Zheng
+
+
+
+
+
+#### lose texture?
+
+- "Exploiting Diffusion Prior for Real-World Image Super-Resolution" IJCV, 2023 May->**2024 Jun,** **StableSR**
+  [paper](https://arxiv.org/abs/2305.07015) [web](https://iceclear.github.io/projects/stablesr/?utm_source=catalyzex.com) [code](https://github.com/IceClear/StableSR) [pdf](./2023_05_IJCV_Exploiting-Diffusion-Prior-for-Real-World-Image-Super-Resolution.pdf) [note](./2023_05_Arxiv_Exploiting-Diffusion-Prior-for-Real-World-Image-Super-Resolution_Note.md) 
+  Authors: [Jianyi Wang](https://arxiv.org/search/cs?searchtype=author&query=Wang,+J), [Zongsheng Yue](https://arxiv.org/search/cs?searchtype=author&query=Yue,+Z), [Shangchen Zhou](https://arxiv.org/search/cs?searchtype=author&query=Zhou,+S), [Kelvin C.K. Chan](https://arxiv.org/search/cs?searchtype=author&query=Chan,+K+C), [Chen Change Loy](https://arxiv.org/search/cs?searchtype=author&query=Loy,+C+C)
+
+用原始 VAE Encoder，在残差的位置更新了一下特征
+
+![fig1](docs/2023_05_Arxiv_Exploiting-Diffusion-Prior-for-Real-World-Image-Super-Resolution_Note/fig1.png)
+
+
+
+
+
+- "Emu: Enhancing Image Generation Models Using Photogenic Needles in a Haystack" Arxiv, 2023 Sep 27
+  [paper](http://arxiv.org/abs/2309.15807v1) [code]() [pdf](./2023_09_Arxiv_Emu--Enhancing-Image-Generation-Models-Using-Photogenic-Needles-in-a-Haystack.pdf) [note](./2023_09_Arxiv_Emu--Enhancing-Image-Generation-Models-Using-Photogenic-Needles-in-a-Haystack_Note.md)
+  Authors: Xiaoliang Dai, Ji Hou, Chih-Yao Ma, Sam Tsai, Jialiang Wang, Rui Wang, Peizhao Zhang, Simon Vandenhende, Xiaofang Wang, Abhimanyu Dubey, Matthew Yu, Abhishek Kadian, Filip Radenovic, Dhruv Mahajan, Kunpeng Li, Yue Zhao, Vladan Petrovic, Mitesh Kumar Singh, Simran Motwani, Yi Wen, Yiwen Song, Roshan Sumbaly, Vignesh Ramanathan, Zijian He, Peter Vajda, Devi Parikh (Meta)
+
+发现 C=4 VAE 无法生成精细细节的图，选择提升 VAE 通道数 C=16。提出 EMU，**人工筛选 1kg 高质量图像去微调预训练模型 SDXL**
+
+<img src="docs/2023_09_Arxiv_Emu--Enhancing-Image-Generation-Models-Using-Photogenic-Needles-in-a-Haystack_Note/fig3.png" alt="fig3" style="zoom:67%;" />
+
+
+
+- "Photorealistic Video Generation with Diffusion Models" ECCV, 2023 Dec 11
+  [paper](http://arxiv.org/abs/2312.06662v1) [code]() [pdf](./2023_12_ECCV_Photorealistic-Video-Generation-with-Diffusion-Models.pdf) [note](./2023_12_ECCV_Photorealistic-Video-Generation-with-Diffusion-Models_Note.md)
+  Authors: Agrim Gupta, Lijun Yu, Kihyuk Sohn, Xiuye Gu, Meera Hahn, Li Fei-Fei, Irfan Essa, Lu Jiang, José Lezama
+
+
+
+
+
+- "ZipIR: Latent Pyramid Diffusion Transformer for High-Resolution Image Restoration" Arxiv, 2025 Apr 11
+  [paper](http://arxiv.org/abs/2504.08591v1) [code]() [pdf](./2025_04_Arxiv_ZipIR--Latent-Pyramid-Diffusion-Transformer-for-High-Resolution-Image-Restoration.pdf) [note](./2025_04_Arxiv_ZipIR--Latent-Pyramid-Diffusion-Transformer-for-High-Resolution-Image-Restoration_Note.md)
+  Authors: Yongsheng Yu, Haitian Zheng, Zhifei Zhang, Jianming Zhang, Yuqian Zhou, Connelly Barnes, Yuchen Liu, Wei Xiong, Zhe Lin, Jiebo Luo
+
+直接拿 LQ 提取特征，给 VAE Decoder，需要一起训练。原始 VAE encoder 不动，保持 VAE space 一致
+
+![fig8](docs/2025_04_Arxiv_ZipIR--Latent-Pyramid-Diffusion-Transformer-for-High-Resolution-Image-Restoration_Note/fig8.png)
+
+
+
+- "Bridging Knowledge Gap Between Image Inpainting and Large-Area Visible Watermark Removal" Arxiv, 2025 Apr 7
+  [paper](http://arxiv.org/abs/2504.04687v1) [code]() [pdf](./2025_04_Arxiv_Bridging-Knowledge-Gap-Between-Image-Inpainting-and-Large-Area-Visible-Watermark-Removal.pdf) [note](./2025_04_Arxiv_Bridging-Knowledge-Gap-Between-Image-Inpainting-and-Large-Area-Visible-Watermark-Removal_Note.md)
+  Authors: Yicheng Leng, Chaowei Fang, Junye Chen, Yixiang Fang, Sheng Li, Guanbin Li
+
+多个 stage，先用粗糙 mask 划一下噪声位置，输出背景区域（不包含水印的图）。stage2: 把前面输出的背景图 & 含有水印的图 & 粗糙 mask 合在一起提取背景特征（水印遮住内容的特征），stage3 输入给 image inpaint 模型
+
+![fig3](docs/2025_04_Arxiv_Bridging-Knowledge-Gap-Between-Image-Inpainting-and-Large-Area-Visible-Watermark-Removal_Note/fig3.png)
 
 
 
@@ -1327,6 +1449,12 @@ Authors: Chris Careaga, Yağız Aksoy
 
 - [ ] "Dual Aggregation Transformer for Image Super-Resolution" ICCV, 2023 Aug
   [paper](https://arxiv.org/abs/2308.03364) [code](https://github.com/zhengchen1999/dat)
+
+
+
+- "Adversarial Diffusion Compression for Real-World Image Super-Resolution" CVPR-2025, 2024 Nov 20
+  [paper](http://arxiv.org/abs/2411.13383v1) [code](https://github.com/Guaishou74851/AdcSR) [pdf](./2024_11_Arxiv_Adversarial-Diffusion-Compression-for-Real-World-Image-Super-Resolution.pdf) [note](./2024_11_Arxiv_Adversarial-Diffusion-Compression-for-Real-World-Image-Super-Resolution_Note.md)
+  Authors: Bin Chen, Gehui Li, Rongyuan Wu, Xindong Zhang, Jie Chen, Jian Zhang, Lei Zhang
 
 
 
@@ -2645,6 +2773,17 @@ Low-Light 暗部区域细节不清晰，类似的问题 :star:
 
 
 
+- "FASR-Net: Unsupervised Shadow Removal Leveraging Inherent Frequency Priors" Arxiv, 2025 Apr 8
+  [paper](http://arxiv.org/abs/2504.05779v1) [code]() [pdf](./2025_04_Arxiv_FASR-Net--Unsupervised-Shadow-Removal-Leveraging-Inherent-Frequency-Priors.pdf) [note](./2025_04_Arxiv_FASR-Net--Unsupervised-Shadow-Removal-Leveraging-Inherent-Frequency-Priors_Note.md)
+  Authors: Tao Lin, Qingwang Wang, Qiwei Liang, Minghua Tang, Yuxuan Sun
+
+影子去除，提出一个频率模块 + haar-wavelt & FocalFrequency loss 提升纹理，放大看还是不行。。。用处不多但有点用？exp做的太少了，图片分析太少，看不出来明显细节的一致，看起来像论文还没写完。**可以参考频率 loss :star:**
+
+![fig2](docs/2025_04_Arxiv_FASR-Net--Unsupervised-Shadow-Removal-Leveraging-Inherent-Frequency-Priors_Note/fig2.png)
+
+
+
+
 
 
 ##### selective frequency
@@ -2681,6 +2820,10 @@ Low-Light 暗部区域细节不清晰，类似的问题 :star:
   [paper](https://www.ipol.im/pub/art/2022/403/article.pdf)
 - [ ] "DDColor: Towards Photo-Realistic Image Colorization via Dual Decoders" ICCV, 2022 Dec, `DDColor`
   [paper](https://arxiv.org/pdf/2212.11613v5.pdf) [code](https://github.com/piddnad/ddcolor) [note](./2022_12_ICCV_DDColor--Towards-Photo-Realistic-Image-Colorization-via-Dual-Decoders_Note.md)
+
+
+
+- https://zhuang2002.github.io/Cobra/ https://arxiv.org/html/2504.12240v1
 
 
 

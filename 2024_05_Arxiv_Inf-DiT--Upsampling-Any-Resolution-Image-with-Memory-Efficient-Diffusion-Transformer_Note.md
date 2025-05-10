@@ -96,11 +96,20 @@ LDM 使用 VAE 转换到 latent 处理，但**过高的压缩比导致信息丢�
 
 ###  block-based generation methods
 
-- "Multidiffusion: Fusing diffusion paths for controlled image generation"
 - "Mixture of diffusers for scene composition and high resolution image generation"
 - "Exploiting diffusion prior for real-world image super-resolution"
 
 
+
+Multi DIffusion
+
+- "Multidiffusion: Fusing diffusion paths for controlled image generation"
+- "DemoFusion: Democratising High-Resolution Image Generation With No" CVPR, 2023 Nov 24
+  [paper](http://arxiv.org/abs/2311.16973v2) [code](https://github.com/PRIS-CV/DemoFusion) [web](https://ruoyidu.github.io/demofusion/demofusion.html) [pdf](./2023_11_CVPR_DemoFusion--Democratising-High-Resolution-Image-Generation-With-No.pdf) [note](./2023_11_CVPR_DemoFusion--Democratising-High-Resolution-Image-Generation-With-No_Note.md)
+  Authors: Ruoyi Du, Dongliang Chang, Timothy Hospedales, Yi-Zhe Song, Zhanyu Ma
+- "AccDiffusion: An Accurate Method for Higher-Resolution Image Generation" ECCV, 2024 Jul 15
+  [paper](http://arxiv.org/abs/2407.10738v2) [code](https://github.com/lzhxmu/AccDiffusion) [web](https://lzhxmu.github.io/accdiffusion/accdiffusion.html) [pdf](./2024_07_ECCV_AccDiffusion--An-Accurate-Method-for-Higher-Resolution-Image-Generation.pdf) [note](./2024_07_ECCV_AccDiffusion--An-Accurate-Method-for-Higher-Resolution-Image-Generation_Note.md)
+  Authors: Zhihang Lin, Mingbao Lin, Meng Zhao, Rongrong Ji
 
 
 
@@ -1020,7 +1029,7 @@ images = torch.cat((images, concat_lr_imgs), dim=1)  # [1, 6, 4h 4w]
 
 - Q：`rope_position_ids >> [1, 32*32, 2]` 取 `vit_block_size=32` ？？`tmp_images >> [1, 6, 128, 128]` 取 `block_size=128` 啥关系？
 
-concat x4 LR 图像，取 block=128 像素，以 patch=4 拆开, 就是 32 个 patch；
+concat x4 LR 图像，设定一个 patch 单边 128 像素，设置 4 像素正方形 block 为最小单位, 就是一个 patch 单边由 32 个 block 组成；
 
 rope_position_ids  是在 x4 LR 上**以 patch=4** 算的，大小和 LR 一样。取 vit_block_size=32 和上面 x4 LR 图像取得 block 对应
 
@@ -1061,21 +1070,106 @@ Self-attn 里面对 QK 加上 RotaryPositionEmbedding
 
 
 
+- 推理时候分 patch，外部调用 :star:
+
+> https://vscode.dev/github/THUDM/Inf-DiT/blob/main/dit/model.py#L638
+
+```python
+            if self.random_direction and sample_step is not None and sample_step % 2 == 1:
+                range_i = range(block_h - 1, -1, -1)
+                range_j = range(block_w - 1, -1, -1)
+            else:
+                range_i = range(block_h)
+                range_j = range(block_w)
+            for i in range_i:
+                previous = None
+                sample_row = []
+                for j in range_j:
+                    tmp_images = images[:, :, i*block_size:(i+1)*block_size, j*block_size:(j+1)*block_size]  # [1, 6, 128, 128]
+                    tmp_position_ids = rope_position_ids[:, i*vit_block_size:(i+1)*vit_block_size, j*vit_block_size:(j+1)*vit_block_size].contiguous().view(-1, vit_block_size * vit_block_size, 2)  # [1, 1024, 2]
+                    kwargs["images"] = tmp_images * c_in
+                    kwargs["sigmas"] = c_noise.reshape(-1)
+                    kwargs["rope_position_ids"] = tmp_position_ids
+                    mems = []
+                    if cached[j] is not None:  # upper
+                        mems.append(cached[j])
+                    if j != 0:
+                        if cached[j-1] is not None:  # left
+                            mems.append(cached[j-1])
+                        mems.append(previous)
+                    lr_id = i * block_w + j
+                    output, *output_per_layers = self.model_forward(*args, hw=[vit_block_size, vit_block_size], mems=mems, inference=1, lr_imgs=lr_imgs[lr_id:lr_id+1], **kwargs)
+                    output = output * c_out + tmp_images[:, :self.out_channels] * c_skip
+                    if j != 0:
+                        cached[j-1] = previous
+                    if j == block_w - 1:
+                        cached[j] = output_per_layers
+                    else:
+                        previous = output_per_layers
+                    sample_row.append(output)
+
+                sample_row = torch.cat(sample_row, dim=3)
+                samples.append(sample_row)
+            samples = torch.cat(samples, dim=2)
+```
 
 
-**输入层提取特征**
 
-- embedding part >> `class ImagePatchEmbeddingMixin(BaseMixin):` 
 
-> https://vscode.dev/github/THUDM/Inf-DiT/blob/main/dit/embeddings.py#L127
+
+#### **`BaseTransformerLayer `**
+
+> https://vscode.dev/github/THUDM/Inf-DiT/blob/main/sat/model/transformer.py#L314
+>
+> 整体结构可以参考 SD3 [pdf](./2024_03_Arxiv_Scaling-Rectified-Flow-Transformers-for-High-Resolution-Image-Synthesis.pdf)
+>
+> `layer_forward`  https://vscode.dev/github/THUDM/Inf-DiT/blob/main/dit/model.py#L383
+
+BasicTransformer 的 forward 在 `sat` 那个包里
+
+> https://vscode.dev/github/THUDM/Inf-DiT/blob/main/sat/model/transformer.py#L596
+
+
+
+- 提取 visual embedding 作为 `hidden_states`
+
+将 `images = torch.cat((images, concat_lr_imgs), dim=1)` 转为 `[1, 1280, 32, 32]`，`kernel_size==patch_size==4` ！
+
+```python
+        # embedding part
+        if 'word_embedding_forward' in self.hooks:
+            hidden_states = self.hooks['word_embedding_forward'](input_ids, output_cross_layer=output_cross_layer, **kw_args)  # [1, 32*32, 1280]
+        else:  # default
+            hidden_states = HOOKS_DEFAULT['word_embedding_forward'](self, input_ids, output_cross_layer=output_cross_layer,**kw_args)
+
+```
+
+针对具体模型设置 hook 指定用哪个 embedding 函数
+
+> https://vscode.dev/github/THUDM/Inf-DiT/blob/main/dit/embeddings.py#L127 
+>
+> `class ImagePatchEmbeddingMixin(BaseMixin):` 
 
 对 resized-LR one-block 图像 128x128，按 4x4 patch 提取特征，转为 `(b h*w c)`
 
 ```python
+class ImagePatchEmbeddingMixin(BaseMixin):
+    def __init__(self, in_channels, hidden_size, patch_size, bias=True, append_emb=False, add_emb=False, reg_token_num=0):
+        super().__init__()
+        self.proj = nn.Conv2d(in_channels, hidden_size, kernel_size=patch_size, stride=patch_size, bias=bias)
+        self.append_emb = append_emb
+        self.add_emb = add_emb
+
+        self.reg_token_num  = reg_token_num
+        if reg_token_num > 0:
+            self.register_parameter('reg_token_emb', nn.Parameter(torch.zeros(reg_token_num, hidden_size)))
+            nn.init.normal_(self.reg_token_emb, mean=0., std=0.02)
+
+    
     def word_embedding_forward(self, input_ids, **kwargs):
-        images = kwargs["images"]  # [1, 6, 128, 128] one block in resized-LR
+        images = kwargs["images"]  # [1, 6, 128, 128] one block in resized-LR  >> images = torch.cat((images, concat_lr_imgs), dim=1)
         emb = self.proj(images)  # [1, 1280, 32, 32]
-        emb = emb.flatten(2).transpose(1, 2)  # ([1, 1024, 1280]
+        emb = emb.flatten(2).transpose(1, 2)  # ([1, 1024, 1280], (b, (h w), c)
         if self.append_emb:
             emb = torch.cat((kwargs["emb"][:, None, :], emb), dim=1)
         if self.reg_token_num > 0:
@@ -1085,20 +1179,121 @@ Self-attn 里面对 QK 加上 RotaryPositionEmbedding
         return emb
 ```
 
-- position_embeddings=None
-- dropout(0)
+
+
+- position_embedding=None
+
+hook
+
+```python
+# handle position embedding
+        if 'position_embedding_forward' in self.hooks:
+            position_embeddings = self.hooks['position_embedding_forward'](position_ids, output_cross_layer=output_cross_layer, **kw_args)  # None
+        else:
+            assert len(position_ids.shape) <= 2
+            assert position_ids.shape[-1] == hidden_states.shape[1], (position_ids.shape, hidden_states.shape)
+            position_embeddings = HOOKS_DEFAULT['position_embedding_forward'](self, position_ids, output_cross_layer=output_cross_layer, **kw_args)
+        if position_embeddings is not None:
+            hidden_states = hidden_states + position_embeddings
+        hidden_states = self.embedding_dropout(hidden_states)  # no dropout
+```
+
+实际
+
+```
+def position_embedding_forward(self, position_ids, **kwargs):
+        return None
+```
 
 
 
 
 
-**`BaseTransformerLayer `**
+- 28 层 DiT Block (包含 self & cross attn)
 
-> https://vscode.dev/github/THUDM/Inf-DiT/blob/main/sat/model/transformer.py#L314
->
-> 结构可以参考 SD3 [pdf](./2024_03_Arxiv_Scaling-Rectified-Flow-Transformers-for-High-Resolution-Image-Synthesis.pdf)
->
-> `layer_forward`  https://vscode.dev/github/THUDM/Inf-DiT/blob/main/dit/model.py#L383
+hook
+
+```python
+            output_this_layer = []
+            for i, layer in enumerate(self.layers):  # BaseTransformerLayer 28 layers
+                args = [hidden_states, attention_mask]  # [1, h*w=1024, c=1280]; attention_mask -> tensor([[1.]], device='cuda:0', dtype=torch.bfloat16)
+
+                output_this_layer_obj, output_cross_layer_obj = {}, {}
+
+                if 'layer_forward' in self.hooks: # customized layer_forward
+                    layer_ret = self.hooks['layer_forward'](*args,
+                        layer_id=torch.tensor(i),
+                        **kw_args,
+                        position_ids=position_ids,
+                        **output_cross_layer,
+                        output_this_layer=output_this_layer_obj, output_cross_layer=output_cross_layer_obj
+                    )
+                else:
+                    layer_ret = layer(*args, layer_id=torch.tensor(i), **kw_args, position_ids=position_ids, **output_cross_layer,
+                        output_this_layer=output_this_layer_obj, output_cross_layer=output_cross_layer_obj)
+                if isinstance(layer_ret, tuple):
+                    layer_ret = layer_ret[0] # for legacy API
+                hidden_states, output_this_layer, output_cross_layer = layer_ret, output_this_layer_obj, output_cross_layer_obj
+
+                if output_hidden_states:
+                    output_this_layer['hidden_states'] = hidden_states
+                output_per_layers.append(output_this_layer)
+```
+
+- 这里注意后面 self-attn，cross-attn 出来的特征，**通过修改字典 -> 相同内存 ID 的方式保存到外面** `output_this_layer_obj, output_cross_layer_obj = {}, {}` :star: :star:
+
+> 后面要回来看这个 memory KV 咋来的
+
+剧透一下后面 self-attn 保存 memory KV
+
+```
+kw_args['output_this_layer']['mem_kv'] = [key_layer, value_layer]
+```
+
+`output_cross_layer`  没有！
+
+
+
+
+
+layer_forward hook 调用的 AdaMixIn 中的方法
+
+> https://vscode.dev/github/THUDM/Inf-DiT/blob/main/dit/model.py#L383
+
+- timestep 特征 `emb` 计算 AdaIN 调制参数
+
+`kwargs['emb']` 为 timestep embedding，在代码里还加上了 CLIP image embedding
+
+```python
+    def layer_forward(self, hidden_states, mask, do_concat=True, *args, **kwargs):
+        layer_id = kwargs['layer_id']
+        layer = self.transformer.layers[kwargs['layer_id']]
+        adaLN_modulation = self.adaLN_modulations[kwargs['layer_id']]
+        if self.nogate and self.cross_adaln:  # False
+            shift_msa, scale_msa, shift_cross, scale_cross, shift_mlp, scale_mlp = adaLN_modulation(kwargs['emb']).chunk(6, dim=1)
+            gate_msa = gate_cross = gate_mlp = 1
+        elif self.nogate and not self.cross_adaln:  # True
+            shift_msa, scale_msa, shift_mlp, scale_mlp = adaLN_modulation(kwargs['emb']).chunk(4, dim=1)  # [1, 1280] -> [1, 4*1280] -> chunk
+            gate_msa = gate_mlp = 1
+```
+
+28 层都是一样的，可以对应到 SD3 结构中，右上角的 y 的那个地方 :star:
+
+```shell
+(Pdb) p self.adaLN_modulations
+ModuleList(
+  (0-27): 28 x Sequential(
+    (0): SiLU()
+    (1): Linear(in_features=1280, out_features=5120, bias=True)
+  )
+)
+```
+
+> ![fig2](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/fig2-17290157868311.png)
+
+接下来就是 Self-Attn 了！
+
+
 
 #### **Self-Attn** (memory-concat)
 
@@ -1106,41 +1301,96 @@ DiT 结构如图，在这里 KV concat 起来之前的 memory
 
 ![fig2](docs/2024_03_Arxiv_Scaling-Rectified-Flow-Transformers-for-High-Resolution-Image-Synthesis_Note/fig2.png)
 
-- timestep 特征 `emb` 计算 AdaIN 调制参数
+- xT 做 layerNorm + 调制，**对应上图 X 的地方！**
 
 ```python
-self.adaLN_modulations = nn.ModuleList([
-            nn.Sequential(
-                nn.SiLU(),
-                nn.Linear(hidden_size, out_times * hidden_size)  # 1280 -> 4*1280
-            ) for _ in range(num_layers)
-            ])
-
-
-# ...
-pass
-elif self.nogate and not self.cross_adaln:
-    shift_msa, scale_msa, shift_mlp, scale_mlp = adaLN_modulation(kwargs['emb']).chunk(4, dim=1)  # [1, 4*1280] -> chunk
-    gate_msa = gate_mlp = 1
-```
-
-- xT 做 layerNorm + 调制
-
-```python
-def modulate(x, shift, scale):
-    return x * (1 + scale.unsqueeze(1)) + shift.unsqueeze(1)
-
 attention_input = layer.input_layernorm(hidden_states)
 attention_input = modulate(attention_input, shift_msa, scale_msa)  # [1, 1024, 1280]
 ```
 
+调制公式，乘上 scale 加上 shift，得到 `attention_input`
+
+```python
+def modulate(x, shift, scale):
+    return x * (1 + scale.unsqueeze(1)) + shift.unsqueeze(1)
+```
+
+
+
+
+
+开始 self-attn !
+
+```python
+attention_output = layer.attention(attention_input, mask, do_concat=do_concat, **kwargs)  # [1, 1024, 1280]
+```
+
+> 这里进去还是 hook！https://vscode.dev/github/THUDM/Inf-DiT/blob/main/sat/model/transformer.py#L109-L113
+
+```python
+    def forward(self, hidden_states, mask, *args, **kw_args):
+        if 'attention_forward' in self.hooks:
+            return self.hooks['attention_forward'](hidden_states, mask, **kw_args)
+        else:
+            return HOOKS_DEFAULT['attention_forward'](self, hidden_states, mask, **kw_args)
+```
+
 实际 `attention_forward` 位置
 
-> https://vscode.dev/github/THUDM/Inf-DiT/blob/main/dit/model.py#L196 运行的 forward，但好多模块都用的是 对 https://vscode.dev/github/THUDM/Inf-DiT/blob/main/sat/model/transformer.py#L34
+> https://vscode.dev/github/THUDM/Inf-DiT/blob/main/dit/model.py#L196 
+>
+> 运行的 forward，但好多模块都用的是 Self-attn 中通用的，写在 sat 包里了 https://vscode.dev/github/THUDM/Inf-DiT/blob/main/sat/model/transformer.py#L34
 
-MLP + 拆为 QKV
+```python
+    def attention_forward(self, hidden_states, mask, rope_position_ids, inference=0, direction="lt", mems=None, do_concat=True, **kw_args):
+        origin = self
+        self = self.transformer.layers[kw_args['layer_id']].attention
+```
+
+这里的 attention 属性，是 `BaseTransformerLayer` 中的；对应 https://vscode.dev/github/THUDM/Inf-DiT/blob/main/sat/model/transformer.py#L363
+
+```python
+self.attention = SelfAttention(...)
+#(Pdb) p type(self)
+#<class 'dit.model.AdaLNMixin'>
+```
+
+把 self 换成对应到 SelfAttention 实例；origin 为 AdaLNMixin 实例
+
+
+
+
+
+将图像特征 hidden_states, 通过 Linear MLP + 拆为 QKV
 
 > 用 cuda 算子并行 https://vscode.dev/github/THUDM/Inf-DiT/blob/main/sat/mpu/layers.py#L232
+>
+> The linear layer is defined as Y = XA + b. A is parallelized along its second dimension as A = [A_1, ..., A_p].
+>
+> https://www.cnblogs.com/rossiXYZ/p/15871062.html#0x03-columnparallellinear  :star:
+>
+> ```python
+> class ColumnParallelLinear(torch.nn.Module):
+> ```
+
+```python
+mixed_raw_layer = self.query_key_value(hidden_states)  # [1, 1024, 1280]
+(query_layer,
+key_layer,
+value_layer) = split_tensor_along_last_dim(mixed_raw_layer, 3)
+```
+
+- Q：Self-attn 一开始的 MLP 为什么要用 ColumnParallelLinear？
+
+> https://www.cnblogs.com/rossiXYZ/p/15871062.html#0x03-columnparallellinear  :star:
+>
+> 在论文篇之中，我们了解到，因为模型越来越大，其尺寸远远超过了处理器的内存限制，因此产生了诸如激活检查点（activation checkpointing）这样的内存管理技术。而模型并行则通过**对模型进行各种分片来克服单个处理器内存限制**，这样模型权重和其关联的优化器状态就可以分散到多个设备之上。
+
+降低显存！
+
+
+
+
 
 - 对 QK 做 LayerNorm
 
@@ -1152,30 +1402,113 @@ if origin.qk_ln:
     key_layer = key_layernorm(key_layer)
 ```
 
+LayerNorm 实例
+
+```python
+        if qk_ln:
+            print("--------use qk_ln--------")
+            self.q_layer_norm = nn.ModuleList([
+                nn.LayerNorm(hidden_size_head, eps=1e-6)
+                for _ in range(num_layers)
+            ])
+            self.k_layer_norm = nn.ModuleList([
+                nn.LayerNorm(hidden_size_head, eps=1e-6)
+                for _ in range(num_layers)
+            ])
+```
+
+
+
+
+
+##### RoPE
+
 - QK 加上 RotaryPositionEmbedding :star:
 
-加上 patch 的相对位置信息
+> https://vscode.dev/github/THUDM/Inf-DiT/blob/main/dit/model.py#L226
+>
+> :warning: `rope_position_ids -> [1, 1024, 2]` 要和特征 (`Seqlen=1024`) 一样大哦！
 
-> https://vscode.dev/github/THUDM/Inf-DiT/blob/main/dit/embeddings.py#L433
+```python
+            if origin.rope:
+                query_layer = origin.rope(query_layer, rope_position_ids=rope_position_ids)
+                key_layer = origin.rope(key_layer, rope_position_ids=rope_position_ids)  # [1, 1024, 16, 80] [1, 1024, 2] -> [1, 1024, 16, 80]
+
+```
+
+1. 注意这里是在 `AdaLNMixin ` 的实例里面给 RoPE 实例化，**意味着同一尺度公用一个 RoPE 实例！**:star: 可能解释了为什么前面self-attn 一开始，把 self 换成对应到 SelfAttention 实例；origin 为 AdaLNMixin 实例
+2. **训练时候支持 random_position！直接把 num_patches 增大 8 倍就行，否则默认增大 2 倍**
+
+```python
+        if random_position:
+            self.rope = RotaryPositionEmbedding(pix2struct=True, num_patches=image_size * 8, hidden_size=hidden_size, hidden_size_head=hidden_size//num_head)
+        else:
+            self.rope = RotaryPositionEmbedding(pix2struct=True, num_patches=image_size * 2, hidden_size=hidden_size,
+                                                hidden_size_head=hidden_size // num_head)
+```
+
+`class RotaryPositionEmbedding(nn.Module):` :star:
+
+> https://vscode.dev/github/THUDM/Inf-DiT/blob/main/dit/embeddings.py#L327
 
 ```python
     def forward(self, t, **kwargs):
         if self.pix2struct:
-            x_coords = kwargs['rope_position_ids'][:, :, 0]  # [1, 1024]
+            x_coords = kwargs['rope_position_ids'][:, :, 0]  # kwargs['rope_position_ids'] -> [1, 1024, 2]
             y_coords = kwargs['rope_position_ids'][:, :, 1]
-            freqs_cos = self.freqs_cos[x_coords, y_coords].unsqueeze(2)
+            freqs_cos = self.freqs_cos[x_coords, y_coords].unsqueeze(2)  # [1, 1024, 1, 80]
             freqs_sin = self.freqs_sin[x_coords, y_coords].unsqueeze(2)
         else:
             freqs_cos = self.freqs_cos
             freqs_sin = self.freqs_sin
-        return t * freqs_cos + rotate_half(t) * freqs_sin
-
-if origin.rope:
-    query_layer = origin.rope(query_layer, rope_position_ids=rope_position_ids)  # [1, 1024, 16, 80]
-    key_layer = origin.rope(key_layer, rope_position_ids=rope_position_ids)  # [1, 1024, 16, 80]
+        return t * freqs_cos + rotate_half(t) * freqs_sin  # t -> [1, 1024, 16, 80];
 ```
 
-- 和 memory 保存的 K, V concat 起来，这里的 KV 已经加上了 RotaryPositionEmbedding :star:
+- Q：这里的 `self.freqs_cos` 是啥？
+
+```sh
+(Pdb) p self.freqs_cos.shape
+torch.Size([1024, 1024, 80])
+```
+
+- Q：RoPE 输入的 `pos_id` 要和特征一样大？
+
+是的，因为最后要乘起来
+
+```python
+return t * freqs_cos + rotate_half(t) * freqs_sin
+```
+
+做 CLIP Full-res Cross-attn 时候 RoPE 就不适用了。。。**得上 Grounding 形式搞个 bbox**
+
+
+
+
+
+- 按 4x4 的 unit 拆开，把 qkv reshape 一下
+
+> https://vscode.dev/github/THUDM/Inf-DiT/blob/main/dit/model.py#L270
+
+```python
+            def transform(x):
+                x = rearrange(x, 'b (n m) h d -> b n m h d', n=h, m=w)  # h=w=block_size=32
+                x = rearrange(x, 'b (x l) (y w) h d -> b x y (l w) h d', l=block_size, w=block_size)
+                return x
+            
+            query_layer = transform(query_layer)  # [1, 1024, 16, 80] -> [1, 1, 1, 1024, 16, 80], using 4x4patch as unit
+            key_layer = transform(key_layer)
+            value_layer = transform(value_layer)
+```
+
+到这里 qkv 的特征就做好了，KV 可以存起来作为 memory 了！
+
+注意这里的 memory KV 已经加上了 RotaryPositionEmbedding ！后面一起加进来的 KV 特征，已经涵盖了对应 patch 的位置信息:star:
+
+
+
+
+
+- 和 memory 保存的 K, V **在 C 维度 concat 起来**
 
 ```python
             elif inference == 1:
@@ -1189,15 +1522,76 @@ if origin.rope:
                 value_layer = torch.cat(v_stack, dim=3)
 ```
 
-- Q：训练时候咋办？
+注意这里 mem_kv 还有 `layer_id` 是因为是逐层保存的！在 BasicTransformer forward 里面每层出来的 KV 都推入了一个列表
+
+> https://vscode.dev/github/THUDM/Inf-DiT/blob/main/sat/model/transformer.py#L728
+
+```python
+output_per_layers = [] 
+
+# ...
+
+if isinstance(layer_ret, tuple):
+	layer_ret = layer_ret[0] # for legacy API
+hidden_states, output_this_layer, output_cross_layer = layer_ret, output_this_layer_obj, output_cross_layer_obj
+
+if output_hidden_states:
+	output_this_layer['hidden_states'] = hidden_states
+output_per_layers.append(output_this_layer)
+```
+
+- Q：这里每个大 patch 推理一波，都要有 28层 的 KV！看一下要占据多少显存？
+
+> https://discuss.pytorch.org/t/how-to-know-the-memory-allocated-for-a-tensor-on-gpu/28537 	查看 tensor 占据显存 
+>
+> For each tensor, you have a method **`element_size()` that will give you the size of one element in byte.** And a function **`nelement()` that returns the number of elements.**
+> So the size of a tensor `a` in memory (cpu memory for a cpu tensor and gpu memory for a gpu tensor) is `a.element_size() * a.nelement()`.
+>
+> All objects are store in cpu memory. **The only thing that can be using GPU memory are tensors** (from all pytorch objects). So the gpu memory used by whatever object is the memory used by the tensors on the gpu that it contains.
+
+```python
+(Pdb) p key_layer.shape
+torch.Size([1, 1, 1, 1024, 16, 80])
+(Pdb) p key_layer.element_size() * key_layer.nelement() / (2**20)
+2.5 # MB
+```
+
+一个 Key tensor 要占据 2.5MB 显存，28 层，K&V tensor 保存一次要占据 `2.5MB * 2 * 28=140.0 MB`
+
+- Q：如果是所有 diffusion timestep 都过完，保存所有 timestep 的 KV，对下一个 patch 做 cross再拿出来？
+
+设置推理 25 steps，`2.5MB *2*28*25 /1024 = 3.41796875 GB` 。。。**如果当前 patch 推理所有 steps 再用于下个 patch 的融合，那么每个 patch 会产生 memory K&V 占据 3.5 GB 的显存。。。** **还是逐个 timesteps 融合把，这样只占据 140 MB 显存**
+
+
+
+
+
+- Q：训练时候 memory 咋办？
 
 不用 memory
 
 
 
-- K 加上 re_position ?? 论文里面的 P
+
+
+##### 可学习 P
+
+- QKV 转为 (b L C)，**再加上可学习位置参数，再调整下相对位置编码**！
 
 ![eq1](docs/2024_05_Arxiv_Inf-DiT--Upsampling-Any-Resolution-Image-with-Memory-Efficient-Diffusion-Transformer_Note/eq1.png)
+
+论文里面的 P，只对 K 加上 re_position  
+
+- 这个可学习的 P 原始 C=4 直接复制到现在 K 的 C=2048=1024*2 :star:
+
+```python
+
+            if origin.re_position and do_concat:
+                re_pos_embed = origin.re_pos_embed[kw_args['layer_id']].repeat_interleave(key_layer.shape[1] // origin.re_pos_embed.shape[1], dim=0).unsqueeze(0)  # [1, 2048, 16, 80]
+                key_layer = key_layer + re_pos_embed  # [1, 2048, 16, 80]
+```
+
+可学习 P 的实例
 
 ```python
 if re_position:
@@ -1208,20 +1602,47 @@ if origin.re_position and do_concat:
     key_layer = key_layer + re_pos_embed  # [1, 2048, 16, 80]
 ```
 
-- FFN: MLP 输出 `attention_output`
-- 在外面加上 residual
+
+
+- Linear: MLP 输出 `attention_output`
+
+对应到 SD3 图做完 attn 后面的 Linear
+
+```python
+        self.dense = RowParallelLinear(
+            self.inner_hidden_size,
+            hidden_size,
+            input_is_parallel=True,
+            init_method=output_layer_init_method,
+            bias=bias,
+            params_dtype=params_dtype,
+            module=self,
+            name="dense",
+            skip_init=skip_init,
+            device=device,
+            final_bias=row_parallel_linear_final_bias
+        )
+```
+
+- Q：Self-attn 一开始的 MLP 为什么要用 ColumnParallelLinear, RowParallelLinear？降低显存！
+
+> https://www.cnblogs.com/rossiXYZ/p/15871062.html#0x03-columnparallellinear  :star:
+
+![fig2](docs/2024_03_Arxiv_Scaling-Rectified-Flow-Transformers-for-High-Resolution-Image-Synthesis_Note/fig2.png)
+
+
+
+- attn 模块出来，乘上 gate 加上残差
 
 ```python
 hidden_states = hidden_states + gate_msa * attention_output  # gate_msa = 1
 ```
 
+这里要判断是否用 Cross-LR！
 
+**先看下如果不用 CrossLR**，就是 SD3 下面 LayerNorm,
 
-
-
-#### cross-LR :star:
-
-在 28 个 LayerForward block 里面，**只有第 0 个 block用 Cross-attn!** 其他 block 只做 layernorm :warning:
+- 在 28 个 LayerForward block 里面，**只有第 0 个 block用 Cross-attn!** 其他 block 只做 layernorm :warning:
 
 ```python
         if layer_id == 0 and self.cross_lr:
@@ -1236,34 +1657,72 @@ hidden_states = hidden_states + gate_msa * attention_output  # gate_msa = 1
             mlp_input = layer.post_attention_layernorm(hidden_states)
 ```
 
+如果就是单纯 Self-attn 做完 LayerNorm，进行调制，**做下 FeedForward**
 
+> **这里残差是 attn 出来的那个特征，**只不过这里调制过，SD3 那个图是 cross-attn 的有点差异！
+
+```python
+        mlp_input = modulate(mlp_input, shift_mlp, scale_mlp)
+        mlp_output = layer.mlp(mlp_input, **kwargs)
+        if self.transformer.layernorm_order == 'sandwich':
+            mlp_output = layer.fourth_layernorm(mlp_output)
+        hidden_states = hidden_states + gate_mlp * mlp_output
+        return hidden_states
+```
+
+
+
+
+
+#### cross-LR :star:
 
 对于每个 block 想只用大一圈的 LR 图像，不用全图（看 code 里面 TODO 写了降低显存）；
 因此LR 图像先用一层卷积转为特征，再用**ViT 方式划分 patch，作为 LR-image feature**
 
 > https://vscode.dev/github/THUDM/Inf-DiT/blob/main/dit/model.py#L325
 
-- Conv2d 提取特征，转为 c=1280，h/2, w/2
+```python
+    def process_lr(self, lr_imgs):
+        lr_imgs = self.proj_lr(lr_imgs)  # Conv2d(3, 1280, kernel_size=(2, 2), stride=(2, 2)) [1, 3, 480, 832] -> [1, 1280, 240, 416]
+        lr_hidden_size = lr_imgs.shape[1]  # 1280
+
+        unFold = torch.nn.Unfold(kernel_size=3 * self.lr_block_size, stride=self.lr_block_size,  # Unfold(kernel_size=48, dilation=1, padding=16, stride=16)
+                                 padding=self.lr_block_size)
+        lr_imgs = unFold(lr_imgs)  # [1, 1280, 240, 416] -> [1, 2949120=1280*48*48, 390=((240 + 32 - 48) / 16 + 1) * (416 + 32 - 48) / 16 + 1]
+
+        lr_imgs = lr_imgs.view(lr_imgs.shape[0], lr_hidden_size, self.lr_block_size * 3, self.lr_block_size * 3, -1)
+        lr_imgs = lr_imgs.permute(0, 4, 2, 3, 1).contiguous()  # b n h w c [1, 390, 48, 48, 1280]
+        lr_imgs = lr_imgs.view(lr_imgs.shape[0] * lr_imgs.shape[1], -1, lr_imgs.shape[-1])  # [390, 2304, 1280]
+        return lr_imgs
+```
+
+
+
+- 在 LR 图上选取**比对应 resized LR 当前 patch 感受野大 3 倍的区域**，作为大图，获取 'global info'
+
+Conv2d 提取特征，转为 c=1280，h/2, w/2
 
 ```python
 lr_imgs = self.proj_lr(lr_imgs)  # Conv2d(3, 1280, kernel_size=(2, 2), stride=(2, 2)) [1, 3, 480, 832] -> [1, 1280, 240, 416]
 ```
 
-- Unfold
+Unfold
 
 > https://blog.csdn.net/ViatorSun/article/details/119940759
-
-**resized LR 上面取 128x128 区域**，sr=4, 相当于原始 LR 32x32 区域，由于 LR image 用了 stride = 2 的 conv，感受野相当于原始的 LR 图像中 **16x16 区域** :star: :star:
-
-后面 LR-image **取包括当前 resized block 的局部图时候**，stride 设置为 16x16 能够保证每个 LR-image-block 能包括当前 resized-block :star:
 
 ```python
 self.block_size = 32  # 32 patches
 self.sr_scale = 4
 self.patch_size = 4
 self.lr_patch_size = 2  # using stride=2 conv
-self.lr_block_size = self.block_size * self.patch_size // self.sr_scale // self.lr_patch_size
+self.lr_block_size = self.block_size * self.patch_size // self.sr_scale // self.lr_patch_size # 16
 ```
+
+- 这里 `lr_block_size=16` 是因为前面对 LR 做了 stride=2 的 conv，感受野增加了一倍！**对应原始 LR 32x32 像素区域，和 resized LR 一个大 patch 32x32 unit 一样了**（一个 unit 4x4 由于已经 scale=4，对应到 LR 就是 1x1）
+- unfold  `kernel_size=3 * self.lr_block_size ` 意味着**感受野是当前 resized LR patch 的 3 倍了**  :star:
+- unfold stride 参数：后面 LR-image **取包括当前 resized block 的局部图时候**，stride 设置为 16x16 能够保证每个 LR-image-block 能包括当前 resized-block :star:
+
+
 
 
 
@@ -1279,7 +1738,7 @@ lr_imgs = lr_imgs.permute(0, 4, 2, 3, 1).contiguous()  # b n h w c [1, 390, 48, 
 lr_imgs = lr_imgs.view(lr_imgs.shape[0] * lr_imgs.shape[1], -1, lr_imgs.shape[-1])  # [390, 2304, 1280]
 ```
 
-**Block =48x48 区域提取的特征，patch 为 4x4 像素区域，所以每个 block 有 3x3 个 patch (Fig3 图里面也画得是这样，后面有些不一致，但在 Cross-LR 是这样的）**
+**Block=48x48 区域提取的特征，patch 为 4x4 像素区域，所以每个 block 有 3x3 个 patch (Fig3 图里面也画得是这样，后面有些不一致，但在 Cross-LR 是这样的）**
 
 1. 以 patch=4个基本单元（像素or特征点） 为最小的 patch
 
@@ -1305,23 +1764,35 @@ lr_imgs = lr_imgs.view(lr_imgs.shape[0] * lr_imgs.shape[1], -1, lr_imgs.shape[-1
 > https://vscode.dev/github/THUDM/Inf-DiT/blob/main/dit/model.py#L338
 >
 > init https://vscode.dev/github/THUDM/Inf-DiT/blob/main/sat/model/transformer.py
-
-这里的 `lr_imgs` 是包含当前 32x32 block 信息在 LR 中一个大 3 倍的 block;
+>
+> 这里的 `lr_imgs` 是包含当前 32x32 block 信息在 LR 中一个大 3 倍的 block;
 
 - MLP 分为 QKV，LayerNorm
-- 加 `lr_query_position_embedding`
+- 加 `lr_query_position_embedding`，就是一个可学习参数
 
 ```python
-self.lr_query_position_embedding = nn.Parameter(torch.zeros(1, self.block_size ** 2, head, hidden_size_per_attention_head))  # [1, 1024, 16, 80]
-self.lr_key_position_embedding = nn.Parameter(torch.zeros(1, (self.lr_block_size * 3) ** 2, head, hidden_size_per_attention_head))  # [1, 2304, 16, 80]
-
-query_layer = query_layer + origin.lr_query_position_embedding
-key_layer = key_layer + origin.lr_key_position_embedding
+        query_layer = query_layer + origin.lr_query_position_embedding  # [1, 1024, 16, 80]
+        key_layer = key_layer + origin.lr_key_position_embedding  # [1, 2304, 16, 80]
 ```
 
-- attn + MLP
+实例化
 
+```python
+self.lr_query_position_embedding = nn.Parameter(torch.zeros(1, self.block_size ** 2, head, hidden_size_per_attention_head))
+self.lr_block_size = self.block_size * self.patch_size // self.sr_scale // self.lr_patch_size
+self.lr_key_position_embedding = nn.Parameter(torch.zeros(1, (self.lr_block_size * 3) ** 2, head, hidden_size_per_attention_head))
+```
+
+
+
+
+
+之后和前面 self-attn 差不多了
+
+- attn + MLP
 - 在外面和输入相加 + LayerNorm
+
+> :warning: 这里 cross-attn 只设置了 1 层所以看起来只有一个 cross-attn 用的 LayerNorm
 
 ```python
 cross_attention_output = self.cross_attention_forward(cross_attention_input, **kwargs)
@@ -1333,19 +1804,15 @@ mlp_input = modulate(mlp_input, shift_mlp, scale_mlp)
 mlp_output = layer.mlp(mlp_input, **kwargs)
 ```
 
-- FFN：Cross attention 模型的结果再要过一次 MLP，再和 self-attn 出来的特征相加
 
-```
-if self.transformer.layernorm_order == 'sandwich':
-	mlp_output = layer.fourth_layernorm(mlp_output)
-hidden_states = hidden_states + gate_mlp * mlp_output
-```
 
 
 
 #### Final-Forward
 
 > https://vscode.dev/github/THUDM/Inf-DiT/blob/main/dit/model.py#L73
+
+对应 SD3 fig2 **a 图中最后面那个 Linear**
 
 ![fig2](docs/2024_03_Arxiv_Scaling-Rectified-Flow-Transformers-for-High-Resolution-Image-Synthesis_Note/fig2.png)
 
@@ -1452,6 +1919,8 @@ class EDMPrecond:
 
 ### training
 
+- data https://github.com/webdataset/webdataset
+
 **Loss**
 
 > https://vscode.dev/github/THUDM/Inf-DiT/blob/main/dit/loss.py#L74
@@ -1480,7 +1949,7 @@ class EDMPrecond:
 
 > https://vscode.dev/github/THUDM/Inf-DiT/blob/main/dit/model.py#L731
 
-直接把一个图（单个patch）去优化，没有用 memory
+直接把一大图输入，**在 attention 内部分 block_size**，就没有用 memory
 
 ```python
 images = torch.cat((images, concat_lr_imgs), dim=1)
@@ -1508,6 +1977,22 @@ if self.random_direction and torch.rand(1) > 0.5 and not inference:
             # output = output.to(in_type)
             return 1. / self.scale_factor * output
 ```
+
+对比下 inference 的输入，先把 patch 直接分好再输入，attention 内部分 patch 就只有 1 个了。。
+
+```python
+            for i in range_i:
+                previous = None
+                sample_row = []
+                for j in range_j:
+                    tmp_images = images[:, :, i*block_size:(i+1)*block_size, j*block_size:(j+1)*block_size]  # [1, 6, 128, 128]
+                    tmp_position_ids = rope_position_ids[:, i*vit_block_size:(i+1)*vit_block_size, j*vit_block_size:(j+1)*vit_block_size].contiguous().view(-1, vit_block_size * vit_block_size, 2)  # [1, 1024, 2]
+                    kwargs["images"] = tmp_images * c_in
+                    kwargs["sigmas"] = c_noise.reshape(-1)
+                    kwargs["rope_position_ids"] = tmp_position_ids
+```
+
+
 
 
 
@@ -1573,4 +2058,12 @@ if self.random_direction and torch.rand(1) > 0.5 and not inference:
 
 
 ![fig2](docs/2024_03_Arxiv_Scaling-Rectified-Flow-Transformers-for-High-Resolution-Image-Synthesis_Note/fig2.png)
+
+- Q：Self-attn 一开始的 MLP 为什么要用 ColumnParallelLinear？
+
+> https://www.cnblogs.com/rossiXYZ/p/15871062.html#0x03-columnparallellinear  :star:
+>
+> 在论文篇之中，我们了解到，因为模型越来越大，其尺寸远远超过了处理器的内存限制，因此产生了诸如激活检查点（activation checkpointing）这样的内存管理技术。而模型并行则通过**对模型进行各种分片来克服单个处理器内存限制**，这样模型权重和其关联的优化器状态就可以分散到多个设备之上。
+
+降低显存！
 

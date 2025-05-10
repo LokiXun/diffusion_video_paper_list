@@ -79,7 +79,9 @@
 
 根据发现的误差累计情况，**选择去 clean input sequence 对噪声图预处理来缓解误差累计的问题**
 
-![image-20231114180533361](docs/2021_11_CVPR_Investigating-Tradeoffs-in-Real-World-Video-Super-Resolution_Note/image-20231114180533361.png)
+![fig3](docs/2021_11_CVPR_Investigating-Tradeoffs-in-Real-World-Video-Super-Resolution_Note/fig3.png)
+
+
 
 #### **cleaning module**
 

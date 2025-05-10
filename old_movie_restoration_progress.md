@@ -8,7 +8,7 @@ We try to employ Video Diffusion Models & Mamba to solve the old film restoratio
 
 Currently, only support Gray Video Input and still working on some issues, like texture mismatch in each patch, train video model on limited 24 GPU memory, etc.
 
-
+$$
 
 ## results
 
@@ -35,6 +35,22 @@ Here we posts some current results.
     <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">
       <div style="font-weight: bold; margin-bottom: 8px;">DAVIS-swan</div>
       <img src="docs/old_movie_restoration_progress/pred_blackswan_it44000.gif" style="width:100%">
+    </td>
+   </tr>
+</table>
+
+
+- add text
+
+<table style="width: 100%; border-collapse: collapse;">
+  <tr>
+     <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">
+      <div style="font-weight: bold; margin-bottom: 8px;">add-text(CogVLM2)</div>
+      <img src="docs/old_movie_restoration_progress/add_text_pred_bear_it25000.gif" style="width:100%">
+    </td>
+    <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">
+      <div style="font-weight: bold; margin-bottom: 8px;">no text: DAVIS-bear</div>
+      <img src="docs/old_movie_restoration_progress/pred_bear_it44000.gif" style="width:100%">
     </td>
    </tr>
 </table>
@@ -238,6 +254,23 @@ reference PASD, without PASD-module; add Temporal-Layer From `AnimateDiff`
 
 
 ## datasets
+
+### DPX->PNG
+
+check out the code in here
+
+```shell
+# core/data/old_video_data.py -> def create_degradation_RGB_DPX_File():
+# modify the path in code!
+
+# # ============= Generate Degradation Images. Turn DPX into PNG
+CUDA_DEVICE_ORDER="PCI_BUS_ID" CUDA_VISIBLE_DEVICES="6" \
+python -m core.data.old_video_data
+```
+
+
+
+
 
 ### **training dataset**
 

@@ -328,6 +328,8 @@ $ d^2 = ||mu_1 - mu_2||^2 + Tr(C_1 + C_2 - 2*sqrt(C_1*C_2)).$
 - "No-Reference Image Quality Assessment in the Spatial Domain" TIP, 2012 Dec, `BRISQUE`
   [paper](https://www.live.ece.utexas.edu/publications/2012/TIP%20BRISQUE.pdf)
 
+越低越好；提取 18 个手工特征，先对大部分图像进行了分布统计，对于一开始没统计到的特殊图像有点不准？
+
 
 
 ```python

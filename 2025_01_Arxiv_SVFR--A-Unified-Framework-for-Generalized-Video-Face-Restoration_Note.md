@@ -46,17 +46,113 @@
 
 
 
-### SVD v2v
+### SVD 
 
 逐帧 Decode
 
 > Given a video x ∈ R N×3×H×W , we first encode each frame into the latent space, represented as z = E(x). In this latent space, we perform forward and reverse processes. The final generated video, x, is then obtained by decoding from this latent representation
+
+训练代码参考 MOFA， SVD + ControlNet
+
+> - "MOFA-Video: Controllable Image Animation via Generative Motion Field Adaptions in Frozen Image-to-Video Diffusion Model" ECCV, 2024 May 30
+>   [paper](http://arxiv.org/abs/2405.20222v2) [code](https://myniuuu.github.io/MOFA_Video/) [pdf](./2024_05_Arxiv_MOFA-Video--Controllable-Image-Animation-via-Generative-Motion-Field-Adaptions-in-Frozen-Image-to-Video-Diffusion-Model.pdf) [note](./2024_05_Arxiv_MOFA-Video--Controllable-Image-Animation-via-Generative-Motion-Field-Adaptions-in-Frozen-Image-to-Video-Diffusion-Model_Note.md)
+>   Authors: Muyao Niu, Xiaodong Cun, Xintao Wang, Yong Zhang, Ying Shan, Yinqiang Zheng
+> - https://github.com/pixeli99/SVD_Xtend/blob/main/train_svd.py
+> - https://huggingface.co/stabilityai/stable-video-diffusion-img2vid-xt/tree/main
+
+
+
+
+
+- "" https://arxiv.org/pdf/2406.05630 
+
+SVD + ControlNet
+
+
+
+
+
+#### image2video
+
+> diffuser SVD https://github.com/huggingface/diffusers/blob/main/docs/source/en/using-diffusers/svd.md
+
+```python
+import torch
+
+from diffusers import StableVideoDiffusionPipeline
+from diffusers.utils import load_image, export_to_video
+
+pipe = StableVideoDiffusionPipeline.from_pretrained(
+  "stabilityai/stable-video-diffusion-img2vid-xt", torch_dtype=torch.float16, variant="fp16"
+)
+pipe.enable_model_cpu_offload()
+
+# Load the conditioning image
+image = load_image("https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/diffusers/svd/rocket.png")
+image = image.resize((1024, 576))
+
+generator = torch.manual_seed(42)
+frames = pipe(image, decode_chunk_size=1, generator=generator, motion_bucket_id=180, noise_aug_strength=0.1).frames[0]
+export_to_video(frames, "generated.mp4", fps=7)
+```
+
+> config https://huggingface.co/stabilityai/stable-video-diffusion-img2vid-xt/tree/main
+
+```
+"num_frames": 25,
+```
+
+
+
+
+
+- Q：image 如何引导？
+
+提取图像 vae 特征，重复 N 张图
+
+```python
+        image_latents = self._encode_vae_image(image, device, num_videos_per_prompt, self.do_classifier_free_guidance)
+        image_latents = image_latents.to(image_embeddings.dtype)
+
+        # cast back to fp16 if needed
+        if needs_upcasting:
+            self.vae.to(dtype=torch.float16)
+
+        # Repeat the image latents for each frame so we can concatenate them with the noise
+        # image_latents [batch, channels, height, width] ->[batch, num_frames, channels, height, width]
+        image_latents = image_latents.unsqueeze(1).repeat(1, num_frames, 1, 1, 1)
+```
+
+搞一个 randn_tensor，再和 image concat 起来输入 UNet
+
+```python
+# Concatenate image_latents over channels dimention
+latent_model_input = torch.cat([latent_model_input, image_latents], dim=2)
+```
+
+
+
+#### Clip
+
+- Q：SVD 预训练 CLIP 提供了 fp16, 但 huggingface 里面只有默认的 float32 的？
+
+```
+laion-CLIP-ViT-H-14-laion2B-s32B-b79K
+```
+
+
+
+
 
 
 
 ## methods
 
 ![fig2](docs/2025_01_Arxiv_SVFR--A-Unified-Framework-for-Generalized-Video-Face-Restoration_Note/fig2.png)
+
+>  To leverage multiple tasks to mutually enhance the performance, we present a unified framework Stable Video Face Restoration (SVFR) as depicted in Fig. 2. Formally, for each task, the model is provided with **a contaminated source video Vd** (i.e., low-quality video for BFR, masked video for inpainting, and gray-scale video for colorization)
+
+
 
 
 
@@ -117,6 +213,10 @@ LQ 直接过 VAE 提取 latent 和 noise concat -> finetune UNet `conv_in` layer
 
 ![eq4](docs/2025_01_Arxiv_SVFR--A-Unified-Framework-for-Generalized-Video-Face-Restoration_Note/eq4.png)
 
+> Effectiveness of Unified Latent Regularization. We conduct ablation studies on Unified Latent Regularization (ULR) with λ1 = 0.01, 
+>
+> Effectiveness of facial prior learning. As shown in Tab. 3 with λ2 = 0.1, Lprior
+
 
 
 ### self-refine
@@ -143,9 +243,11 @@ LQ 直接过 VAE 提取 latent 和 noise concat -> finetune UNet `conv_in` layer
 
 
 
+
+
 ## setting
 
-- SVD
+- SVD-xt 25 frames
 
 - We selected VoxCeleb2 [11], CelebV-Text [47], and VFHQ [39] as our training datasets
 
@@ -204,6 +306,6 @@ LQ 直接过 VAE 提取 latent 和 noise concat -> finetune UNet `conv_in` layer
 ### how to apply to our task
 
 - Q：SVD 怎么 video2video?
-- Q：condition 怎么引入？
+- Q：condition mask怎么引入？如何实现可有可无？
 - 数据集
 

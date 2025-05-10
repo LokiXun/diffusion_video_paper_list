@@ -62,7 +62,7 @@ we dub Large Video Dataset (LVD), consists of 580M annotated video clip pairs, f
 
 **训练的三个阶段**：文生图预训练、视频预训练、高质量视频微调
 
-- Stage I: image pretraining, i.e. a 2D text-to-image diffusion model [13, 64, 71]. 
+- Stage I: image pretraining, i.e. a 2D text-to-image diffusion model [13, 64, 71]. 
 
   先不加 temporal layer 在图像数据上训练
 

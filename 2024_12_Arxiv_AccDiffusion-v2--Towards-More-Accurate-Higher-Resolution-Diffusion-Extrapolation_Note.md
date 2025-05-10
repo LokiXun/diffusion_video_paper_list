@@ -223,11 +223,9 @@ noise inverse 重新加噪，获取每个 timestep 的全局残差
 
 
 
-
-
 每个 timestep 的流程，**使用 multi-diffusion 的局部特征 & dilated_sampling  的全局特征，加权相加更新整张图的 value**
 
-1. 当前 timetep 开始的 latent，先按 t 搞一个权重加上全局残差 vae，更新 latent。即**加上全局残差的 latent 作为后续 multi-diffusion 和 window-interation 的输入**
+1. 当前 timetep 开始的 latent，先按 t 搞一个权重加上全局残差 vae，更新 latent，**作为后续 multi-diffusion 和 window-interation 的输入**
    - **设计全局残差的权重 c1**，t 越大，用全局残差越多。
    - t=T **用 resized vae 全局残差作为 latent 开始** :star:
 2. **multi-diffusion 认为是局部特征处理 value_local**，类似 RVRT，把加上全局残差的 latent 分 patch 过 unet，再拼起来，多了一个一开始 pad 的操作，更新 value
@@ -236,6 +234,7 @@ noise inverse 重新加噪，获取每个 timestep 的全局残差
 3. **dilated_sampling 认为是全局特征 value_global**；把最初加上全局残差的 latent，用一个 gaussian 卷积核平滑一下，然后对 patch 打乱顺序送入 unet 计算 noise，把 noise再还原位置更新 vae
    - value_global * 权重 `c2` 加到整张图的 value 上，t 越大，`c2` 越大
    - t=T 只用 dilated sampling 的特征
+4. 在做完所有去噪之后，最后用小图的均值方差，更新一波 SR vae 的均值+方差 :star:
 
 > https://github.com/lzhxmu/AccDiffusion_v2/blob/9b8e2f8a955e360bf243e43ec69a9d6465b75ea7/accdiffusion_plus.py#L1405
 
@@ -548,6 +547,221 @@ c2 权重随着 t 减小，c2 从 1 -> 0，更新 value；
 ```
 
 
+
+### rechange mean&var
+
+在一开始生成完小图之后，保存了一个 mean var
+
+> https://vscode.dev/github/lzhxmu/AccDiffusion_v2/blob/main/accdiffusion_plus.py#L1305
+
+```
+        else:
+            print("### Encoding Real Image ###")
+            latents = self.vae.encode(image_lr)
+            latents = latents.latent_dist.sample() * self.vae.config.scaling_factor
+
+        anchor_mean = latents.mean()
+        anchor_std = latents.std()
+```
+
+在做完所有去噪之后，最后用小图的均值方差，更新一波 SR vae 的均值+方差
+
+> https://vscode.dev/github/lzhxmu/AccDiffusion_v2/blob/main/accdiffusion_plus.py#L1728
+
+```
+                latents = (latents - latents.mean()) / latents.std() * anchor_std + anchor_mean
+                if self.lowvram:
+                    latents = latents.cpu()
+                    torch.cuda.empty_cache()
+```
+
+
+
+### VAE Tiled Decode
+
+> `model/video_diffusion/autoencoder_kl.py`
+>
+> config
+>
+> ```json
+> {
+>   "_class_name": "UNet2DConditionModel",
+>   "_diffusers_version": "0.6.0",
+>   "act_fn": "silu",
+>   "attention_head_dim": 8,
+>   "block_out_channels": [
+>     320,
+>     640,
+>     1280,
+>     1280
+>   ],
+>   "center_input_sample": false,
+>   "cross_attention_dim": 768,
+>   "down_block_types": [
+>     "CrossAttnDownBlock2D",
+>     "CrossAttnDownBlock2D",
+>     "CrossAttnDownBlock2D",
+>     "DownBlock2D"
+>   ],
+>   "downsample_padding": 1,
+>   "flip_sin_to_cos": true,
+>   "freq_shift": 0,
+>   "in_channels": 4,
+>   "layers_per_block": 2,
+>   "mid_block_scale_factor": 1,
+>   "norm_eps": 1e-05,
+>   "norm_num_groups": 32,
+>   "out_channels": 4,
+>   "sample_size": 64,
+>   "up_block_types": [
+>     "UpBlock2D",
+>     "CrossAttnUpBlock2D",
+>     "CrossAttnUpBlock2D",
+>     "CrossAttnUpBlock2D"
+>   ]
+> }
+> 
+> ```
+>
+> 
+>
+> ```yaml
+> model:
+>   base_learning_rate: 1.0e-04
+>   target: ldm.models.diffusion.ddpm.LatentDiffusion
+>   params:
+>     linear_start: 0.00085
+>     linear_end: 0.0120
+>     num_timesteps_cond: 1
+>     log_every_t: 200
+>     timesteps: 1000
+>     first_stage_key: "jpg"
+>     cond_stage_key: "txt"
+>     image_size: 64
+>     channels: 4
+>     cond_stage_trainable: false   # Note: different from the one we trained before
+>     conditioning_key: crossattn
+>     monitor: val/loss_simple_ema
+>     scale_factor: 0.18215
+>     use_ema: False
+> 
+>     scheduler_config: # 10000 warmup steps
+>       target: ldm.lr_scheduler.LambdaLinearScheduler
+>       params:
+>         warm_up_steps: [ 10000 ]
+>         cycle_lengths: [ 10000000000000 ] # incredibly large number to prevent corner cases
+>         f_start: [ 1.e-6 ]
+>         f_max: [ 1. ]
+>         f_min: [ 1. ]
+> 
+>     unet_config:
+>       target: ldm.modules.diffusionmodules.openaimodel.UNetModel
+>       params:
+>         image_size: 32 # unused
+>         in_channels: 4
+>         out_channels: 4
+>         model_channels: 320
+>         attention_resolutions: [ 4, 2, 1 ]
+>         num_res_blocks: 2
+>         channel_mult: [ 1, 2, 4, 4 ]
+>         num_heads: 8
+>         use_spatial_transformer: True
+>         transformer_depth: 1
+>         context_dim: 768
+>         use_checkpoint: True
+>         legacy: False
+> 
+>     first_stage_config:
+>       target: ldm.models.autoencoder.AutoencoderKL
+>       params:
+>         embed_dim: 4
+>         monitor: val/rec_loss
+>         ddconfig:
+>           double_z: true
+>           z_channels: 4
+>           resolution: 256
+>           in_channels: 3
+>           out_ch: 3
+>           ch: 128
+>           ch_mult:
+>           - 1
+>           - 2
+>           - 4
+>           - 4
+>           num_res_blocks: 2
+>           attn_resolutions: []
+>           dropout: 0.0
+>         lossconfig:
+>           target: torch.nn.Identity
+> 
+>     cond_stage_config:
+>       target: ldm.modules.encoders.modules.FrozenCLIPEmbedder
+> ```
+
+直接在 VAE 上，相邻 patch 例如重叠 2 个位置。**重叠区域分一半，等于切一刀，舍弃了各自 patch 最外面一圈**，第一个给左边，剩下一半给右边
+
+```python
+    def tiled_decode(self, z: torch.FloatTensor, return_dict: bool = True) -> Union[DecoderOutput, torch.FloatTensor]:
+        r"""
+        Decode a batch of images using a tiled decoder.
+
+        Args:
+            z (`torch.FloatTensor`): Input batch of latent vectors.
+            return_dict (`bool`, *optional*, defaults to `True`):
+                Whether or not to return a [`~models.vae.DecoderOutput`] instead of a plain tuple.
+
+        Returns:
+            [`~models.vae.DecoderOutput`] or `tuple`:
+                If return_dict is True, a [`~models.vae.DecoderOutput`] is returned, otherwise a plain `tuple` is
+                returned.
+        """
+        overlap_size = int(self.tile_latent_min_size * (1 - self.tile_overlap_factor))  # 64 * 0.75 == 48
+        blend_extent = int(self.tile_sample_min_size * self.tile_overlap_factor)  # 64 / 8 * 0.25  == 2
+        row_limit = self.tile_sample_min_size - blend_extent
+
+        # Split z into overlapping 64x64 tiles and decode them separately.
+        # The tiles have an overlap to avoid seams between tiles.
+        rows = []
+        for i in range(0, z.shape[2], overlap_size):
+            row = []
+            for j in range(0, z.shape[3], overlap_size):
+                tile = z[:, :, i : i + self.tile_latent_min_size, j : j + self.tile_latent_min_size]
+                tile = self.post_quant_conv(tile)
+                decoded, _ = self.decoder(tile)  # WARNING
+                row.append(decoded)
+            rows.append(row)
+        
+        result_rows = []
+        for i, row in enumerate(rows):
+            result_row = []
+            for j, tile in enumerate(row):
+                # blend the above tile and the left tile
+                # to the current tile and add the current tile to the result row
+                if i > 0:
+                    tile = self.blend_v(rows[i - 1][j], tile, blend_extent)
+                if j > 0:
+                    tile = self.blend_h(row[j - 1], tile, blend_extent)
+                result_row.append(tile[:, :, :row_limit, :row_limit])
+            result_rows.append(torch.cat(result_row, dim=3))
+
+        dec = torch.cat(result_rows, dim=2)
+        if not return_dict:
+            return (dec,)
+
+        return DecoderOutput(sample=dec, vae_mid_feas=[])
+```
+
+- Q：看下相邻 patch vae 怎么融合
+
+相邻 patch vae 重叠 2 个位置。
+
+```
+    def blend_v(self, a, b, blend_extent):
+        blend_extent = min(a.shape[2], b.shape[2], blend_extent)
+        for y in range(blend_extent):
+            b[:, :, y, :] = a[:, :, -blend_extent + y, :] * (1 - y / blend_extent) + b[:, :, y, :] * (y / blend_extent)
+        return b
+```
 
 
 

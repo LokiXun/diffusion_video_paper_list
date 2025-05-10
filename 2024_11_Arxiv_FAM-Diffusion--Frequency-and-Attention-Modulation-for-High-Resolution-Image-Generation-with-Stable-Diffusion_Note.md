@@ -100,6 +100,12 @@
 
 
 
+### FFT
+
+- "FreeInit: Bridging Initialization Gap in Video Diffusion Models" ECCV, 2023 Dec 12
+  [paper](http://arxiv.org/abs/2312.07537v2) [code](https://github.com/TianxingWu/FreeInit/blob/master/freeinit_utils.py#L98) [pdf](./2023_12_ECCV_FreeInit--Bridging-Initialization-Gap-in-Video-Diffusion-Models.pdf) [note](./2023_12_ECCV_FreeInit--Bridging-Initialization-Gap-in-Video-Diffusion-Models_Note.md)
+  Authors: Tianxing Wu, Chenyang Si, Yuming Jiang, Ziqi Huang, Ziwei Liu
+
 
 
 ## methods
@@ -276,6 +282,10 @@
 > 逐帧做 FFT
 >
 > - https://github.com/slhck/video-fft/blob/d7b9631b144d6136426d272bc52a81445107e97e/video_fft/video_fft_calculator.py#L218
+>
+> 
+>
+> - https://pytorch.org/blog/the-torch.fft-module-accelerated-fast-fourier-transforms-with-autograd-in-pyTorch/
 
 ![imge_fft_compare](docs/2024_11_Arxiv_FAM-Diffusion--Frequency-and-Attention-Modulation-for-High-Resolution-Image-Generation-with-Stable-Diffusion_Note/imge_fft_compare.png)
 
@@ -284,6 +294,10 @@
 > https://login.mathworks.com/embedded-login/v2/status/redirect?origin=https%3A%2F%2Fww2.mathworks.cn&forward=https%3A%2F%2Fww2.mathworks.cn%2Fmatlabcentral%2Fanswers%2F1660985-how-to-obtain-the-fft-of-a-4d-image
 
 
+
+- "FreeInit: Bridging Initialization Gap in Video Diffusion Models" ECCV, 2023 Dec 12
+  [paper](http://arxiv.org/abs/2312.07537v2) [code](https://github.com/TianxingWu/FreeInit/blob/master/freeinit_utils.py#L98) [pdf](./2023_12_ECCV_FreeInit--Bridging-Initialization-Gap-in-Video-Diffusion-Models.pdf) [note](./2023_12_ECCV_FreeInit--Bridging-Initialization-Gap-in-Video-Diffusion-Models_Note.md)
+  Authors: Tianxing Wu, Chenyang Si, Yuming Jiang, Ziqi Huang, Ziwei Liu
 
 
 

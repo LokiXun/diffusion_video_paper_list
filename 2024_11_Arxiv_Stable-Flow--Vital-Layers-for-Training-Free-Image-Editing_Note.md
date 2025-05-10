@@ -169,7 +169,8 @@ DiT 结构 SOTA 去掉了 Convlayer
 
 
 
-一致性挑了几个看下确实可以啊，地板纹理不看 difference 看不太出来。。。但不知道物体整体偏移的问题存不存在
+- 不知道物体整体偏移的问题存不存在
+- 存在色偏
 
 ![fig8](docs/2024_11_Arxiv_Stable-Flow--Vital-Layers-for-Training-Free-Image-Editing_Note/fig8.png)
 
@@ -188,6 +189,10 @@ DiT 结构 SOTA 去掉了 Convlayer
 
 
 ## Limitations
+
+前面的图都是挑出来好的。。。
+
+![fig10](docs/2024_11_Arxiv_Stable-Flow--Vital-Layers-for-Training-Free-Image-Editing_Note/fig10.png)
 
 
 

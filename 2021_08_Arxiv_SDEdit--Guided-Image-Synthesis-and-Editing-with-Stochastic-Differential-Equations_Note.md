@@ -1,49 +1,44 @@
 # SDEdit: Guided Image Synthesis and Editing with Stochastic Differential Equations
 
-> "SDEdit: Guided Image Synthesis and Editing with Stochastic Differential Equations" Arxiv, 2021 Aug
-> [paper](http://arxiv.org/abs/2108.01073v2) [code](https://github.com/ermongroup/SDEdit) 
-> [pdf](./2021_08_Arxiv_SDEdit--Guided-Image-Synthesis-and-Editing-with-Stochastic-Differential-Equations.pdf)
+> "SDEdit: Guided Image Synthesis and Editing with Stochastic Differential Equations" Arxiv, 2021 Aug 2
+> [paper](http://arxiv.org/abs/2108.01073v2) [code](https://github.com/ermongroup/SDEdit) [pdf](./2021_08_Arxiv_SDEdit--Guided-Image-Synthesis-and-Editing-with-Stochastic-Differential-Equations.pdf) [note](./2021_08_Arxiv_SDEdit--Guided-Image-Synthesis-and-Editing-with-Stochastic-Differential-Equations_Note.md)
 > Authors: Chenlin Meng, Yutong He, Yang Song, Jiaming Song, Jiajun Wu, Jun-Yan Zhu, Stefano Ermon
 
 ## Key-point
 
 - Task
-- Background
+- Problems
 - :label: Label:
-
-Stochastic Differential Editing (SDEdit):  diffusion model generative prior, synthesizes realistic images by iteratively denoising through a stochastic differential equation (SDE)
 
 ## Contributions
 
-
-
-## Related Work
-
-
+## Introduction
 
 ## methods
 
-"hijack" the reverse stochastic process of SDE-based generative models, as illustrated in the figure below. Given an input image for editing, such as a stroke painting or an image with color strokes, we can add a suitable amount of noise to make its artifacts undetectable, while still preserving the overall structure of the image. We then initialize the reverse SDE with this noisy input, and simulate the reverse process to obtain a denoised image of high quality. The final output is realistic while resembling the overall image structure of the input.
+noise Inversion æ–¹å¼ï¼šåœ¨ condition è¿›è¡ŒåŠ å™ªå¾—åˆ°å™ªå£°ï¼ˆä¿ç•™ç»“æž„ä¸»ä½“ï¼‰ï¼Œ**åœ¨ä¼˜åŒ–çš„å™ªå£°ï¼ˆä»£æ›¿éšæœºé«˜æ–¯å™ªå£°ï¼‰åŸºç¡€ä¸ŠåŽ»å™ª**
 
-![](https://github.com/ermongroup/SDEdit/raw/main/images/sde_stroke_generation.jpg)
+> "hijack" the reverse stochastic process of SDE-based generative models, as illustrated in the figure below. Given an input image for editing, such as a stroke painting or an image with color strokes, we can **add a suitable amount of noise to make its artifacts undetectable,** while still preserving the overall structure of the image. We then initialize the reverse SDE with this noisy input, and simulate the reverse process to obtain a denoised image of high quality. The final output is realistic while resembling the overall image structure of the input.
 
-> when we add more Gaussian noise and run the SDE for longer, the synthesized images are more realistic but less faithful >> ÉèÖÃÒ»¸ö²ÎÊý $s\in [0,1]$ ÕÒµ½ realism ºÍ faithfulness Æ½ºâ
+![fig2](docs/2021_08_Arxiv_SDEdit--Guided-Image-Synthesis-and-Editing-with-Stochastic-Differential-Equations_Note/fig2.png)
 
-¶ÔÓÚÆ½ºâÕæÊµ¶È£¨ÊÇ·ñ×ÔÈ»£©ºÍ¿ÉÐÅ¶È£¨½Ó½üÊäÈëÍ¼Ïñ£©
+> when we add more Gaussian noise and run the SDE for longer, the synthesized images are more realistic but less faithful >> è®¾ç½®ä¸€ä¸ªå‚æ•° $s\in [0,1]$ æ‰¾åˆ° realism å’Œ faithfulness å¹³è¡¡
 
-![image-20231103030631690](docs/2021_08_Arxiv_SDEdit--Guided-Image-Synthesis-and-Editing-with-Stochastic-Differential-Equations_Note/image-20231103030631690.png)
+å¯¹äºŽå¹³è¡¡çœŸå®žåº¦ï¼ˆæ˜¯å¦è‡ªç„¶ï¼‰å’Œå¯ä¿¡åº¦ï¼ˆæŽ¥è¿‘è¾“å…¥å›¾åƒï¼‰
 
+![fig3](docs/2021_08_Arxiv_SDEdit--Guided-Image-Synthesis-and-Editing-with-Stochastic-Differential-Equations_Note/fig3.png)
 
-
-
+## setting
 
 ## Experiment
 
-> ablation study ¿´ÄÇ¸öÄ£¿éÓÐÐ§£¬×Ü½áÒ»ÏÂ
+> ablation study çœ‹é‚£ä¸ªæ¨¡å—æœ‰æ•ˆï¼Œæ€»ç»“ä¸€ä¸‹
 
 ## Limitations
 
 ## Summary :star2:
 
-> learn what & how to apply to our task
+> learn what
+
+### how to apply to our task
 

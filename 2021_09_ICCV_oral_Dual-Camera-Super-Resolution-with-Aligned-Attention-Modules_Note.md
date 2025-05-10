@@ -1,10 +1,7 @@
-# Dual-Camera Super-Resolution with Aligned Attention Modules :star:
+# Dual-Camera Super-Resolution with Aligned Attention Modules
 
 > "Dual-Camera Super-Resolution with Aligned Attention Modules" ICCV oral, 2021 Sep, DCSR
-> [paper](https://arxiv.org/abs/2109.01349) [code](https://github.com/Tengfei-Wang/DCSR) [website](https://tengfei-wang.github.io/Dual-Camera-SR/index.html)
-> [paper local pdf](./2021_09_ICCV_oral_Dual-Camera-Super-Resolution-with-Aligned-Attention-Modules.pdf)
->
-> 关注特征融合 && 特征对齐
+> [paper](https://arxiv.org/abs/2109.01349) [code](https://github.com/Tengfei-Wang/DCSR) [web](https://tengfei-wang.github.io/Dual-Camera-SR/index.html) [pdf](./2021_09_ICCV_oral_Dual-Camera-Super-Resolution-with-Aligned-Attention-Modules.pdf) [note](./2021_09_ICCV_oral_Dual-Camera-Super-Resolution-with-Aligned-Attention-Modules_Note.md)
 
 ## **Key-point**
 
@@ -39,6 +36,10 @@
 
 ## **methods**
 
+![fig2](docs/2021_09_ICCV_oral_Dual-Camera-Super-Resolution-with-Aligned-Attention-Modules_Note/fig2.png)
+
+
+
 ### Adaptive Feature Fusion
 
 > "Learning Texture Transformer Network for Image Super-Resolution"
@@ -46,7 +47,7 @@
 >
 > Soft-Fusion methods 效果和本文提出的 adaptive fusion 效果差不多
 
-
+![fig3](docs/2021_09_ICCV_oral_Dual-Camera-Super-Resolution-with-Aligned-Attention-Modules_Note/fig3.png)
 
 
 
@@ -123,7 +124,7 @@
 
 ## **Limitations**
 
-- 要求数据。。
+
 
 
 

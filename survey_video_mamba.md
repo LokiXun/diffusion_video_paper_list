@@ -8,7 +8,7 @@ collects mamba-related papers in video processing!
 
 **paper list**
 
-- [Awesome-Mamba](https://github.com/yeruoforever/Awesome-Mamba)
+- [Awesome-Vision-Mamba-Models](https://github.com/Ruixxxx/Awesome-Vision-Mamba-Models)
 - [Awesome-Mamba-Papers](https://github.com/yyyujintang/Awesome-Mamba-Papers)
 
 
@@ -75,6 +75,13 @@ Video Mamba 大致 code 流程看下面文章的笔记
 Mamba-2's core SSD layer is more efficient, scalable, and powerful than Mamba. it's also much simpler (~30 LoC)
 
 
+
+> 如何评价 Mamba2
+>
+> https://sustcsonglin.github.io/ >> 导师 https://people.csail.mit.edu/yoonkim/
+
+- "Parallelizing Linear Transformers with the Delta Rule over Sequence Length"
+  [paper](https://arxiv.org/pdf/2406.06484) 
 
 
 
@@ -160,6 +167,11 @@ tri-orientated Mamba moudle
 
 
 
+- "Mamba-R: Vision Mamba ALSO Needs Registers" 
+  [paper](https://arxiv.org/abs/2405.14858)
+
+
+
 ### restoration
 
 - "MambaIR: A Simple Baseline for Image Restoration with State-Space Model" Arxiv, 2024 Feb
@@ -202,6 +214,15 @@ tri-orientated Mamba moudle
 VideoMamba Block 参考 Vim 使用双向 SSM
 
 ![Vim_framework.png](docs/survey_video_mamba/Vim_framework.png)
+
+
+
+
+
+- "VFlMamba: Video Frame Interpolation with State Space Models"
+  [paper](https://arxiv.org/abs/2407.02315)
+
+
 
 
 

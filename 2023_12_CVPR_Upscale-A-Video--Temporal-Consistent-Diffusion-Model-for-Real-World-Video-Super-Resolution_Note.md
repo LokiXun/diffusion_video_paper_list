@@ -1,7 +1,7 @@
 # Upscale-A-Video: Temporal-Consistent Diffusion Model for Real-Wrld Video Super-Resolution
 
-> "Upscale-A-Video: Temporal-Consistent Diffusion Model for Real-World Video Super-Resolution" Arxiv, 2023 Dec, `Upscale-A-Video`
-> [paper](http://arxiv.org/abs/2312.06640v1) [code](https://github.com/sczhou/Upscale-A-Video) [website](https://shangchenzhou.com/projects/upscale-a-video/) [pdf](./2023_12_CVPR_Upscale-A-Video--Temporal-Consistent-Diffusion-Model-for-Real-World-Video-Super-Resolution.pdf)
+> "Upscale-A-Video: Temporal-Consistent Diffusion Model for Real-World Video Super-Resolution" CVPR, 2023 Dec, `Upscale-A-Video`
+> [paper](http://arxiv.org/abs/2312.06640v1) [code](https://github.com/sczhou/Upscale-A-Video) [website](https://shangchenzhou.com/projects/upscale-a-video/) [pdf](./2023_12_CVPR_Upscale-A-Video--Temporal-Consistent-Diffusion-Model-for-Real-World-Video-Super-Resolution.pdf) [note](./2023_12_CVPR_Upscale-A-Video--Temporal-Consistent-Diffusion-Model-for-Real-World-Video-Super-Resolution_Note.md)
 > Authors: Shangchen Zhou, Peiqing Yang, Jianyi Wang, Yihang Luo, Chen Change Loy
 
 ## Key-point
@@ -126,11 +126,11 @@ Video2Video 框架，对 LDM 的 UNet 改为时序的：2D inflate 为 3D（时�
 >   class InflatedConv3d(nn.Conv2d):
 >       def forward(self, x):
 >           video_length = x.shape[2]
->               
+>                     
 >           x = rearrange(x, "b c f h w -> (b f) c h w")
 >           x = super().forward(x)
 >           x = rearrange(x, "(b f) c h w -> b c f h w", f=video_length)
->               
+>                     
 >           return x
 >   ```
 
@@ -543,52 +543,82 @@ also adopt **Classifier-Free Guidance (CFG)** [24] during inference, which can s
 
   L1 loss, LPIPS perceptual loss [87], and an adversarial loss
 
-- Metrics
-
-  PSNR, SSIM, LPIPS; flow warping error [36] $E^∗_{warp}$
-
-  无 GT 的视频，使用 CLIP-IQA， MUSIQ，DOVER
 
 
+#### Metrics
 
-**Dataset**
+- PSNR, SSIM, LPIPS; 
+- flow warping error [36] $E^∗_{warp}$
+- No-reference
+  - CLIP-IQA
+  - MUSIQ
+  - DOVER
+
+
+
+#### Data
 
 **training data**
 
-1. The subset of WebVid10M, 335K 个视频, 336×596, which is commonly used in training video diffusion models :star:
+Low Quality Training Data
 
-   [VideoCrafter1](https://github.com/AILab-CVC/VideoCrafter)
+- WebVid10M
+- YouHQ(1920x1080)
 
-2. YouHQ dataset (1080 × 1920), 37K video clips with diverse scenarios, i.e., street view, landscape, animal, human face, static object, underwater, and nighttime scene.
+> The subset of WebVid10M, 335K 个视频, 336×596, which is commonly used in training video diffusion models :star:
+>
+> [VideoCrafter1](https://github.com/AILab-CVC/VideoCrafter)
 
-    Due to the lack of high-quality video data for training, we additionally collect a large-scale high-definition (1080×1920) dataset from YouTube, containing around 37K video clips with diverse scenarios
+HQ data
 
-3. 合成 LR-HR pair 训练，直接 follow RealBasicVSR
+- YouTube 收集 37K video clips
+
+> Due to the lack of high-quality video data for training, we additionally collect a large-scale high-definition (1080×1920) dataset from YouTube, containing around 37K video clips with diverse scenarios
+
+
+
+参考 RealBasicVSR 合成 LQ 数据训练
+
+> Following thedegradationpipelineofRealBasicVSR[10],wegener atetheLQ-HQvideopairsfortraining.
+
+
 
 **test_data**
 
-1.  synthetic
-   we construct four synthetic datasets (i.e., SPMCS [82], UDM10 [58], REDS30 [46], and YouHQ40),
+Synthetic
 
-    split the **YouHQ40（作者自己收集的）** test set from the proposed YouHQ dataset, containing 40 videos.
+- SPMCS
 
-2. real-world dataset
+  > - "Progressive fusion video super-resolution net work via exploiting non-local spatio-temporal correlations" ICCV, 2019, `PNFL` 
+  >   [code](https://github.com/psychopa4/PFNL)
 
-   1. VideoLQ [RealBasicVSR github](https://github.com/ckkelvinchan/RealBasicVSR) 提出的数据集
+- UDM10
 
-   2. AIGC dataset: collects 30 AI-generated videos by popular text-to-video generation models
+- REDS30
 
-      从下面几个网站调接口得到的
+- YouHQ40
 
-      https://www.pika.art/
+> Wesplit theYouHQ40testset from theproposedYouHQdataset,containing40videos.
 
-      [anotherjesse/zeroscope-v2-xl – Run with an API on Replicate](https://replicate.com/anotherjesse/zeroscope-v2-xl)
+
+
+real-world dataset
+
+- VideoLQ [RealBasicVSR github](https://github.com/ckkelvinchan/RealBasicVSR) 提出的数据集
+
+- AIGC dataset: collects 30 AI-generated videos by popular text-to-video generation models
+
+> 从下面几个网站调接口得到的
+>
+> https://www.pika.art/
+>
+> [anotherjesse/zeroscope-v2-xl – Run with an API on Replicate](https://replicate.com/anotherjesse/zeroscope-v2-xl)
 
 
 
 ### Training Details
 
-For GPU, Our Upscale-A-Video is trained on 32 NVIDIA A100-80G GPUs with a batch size of 384
+For GPU, Our Upscale-A-Video is trained on **32 NVIDIA A100-80G GPUs** with a batch size of 384
 
 `370000 / 384 == 963.5` iterations, 如果是 x4 SR，输入 `[1080,1920,336, 596] -> [270.0, 480.0, 84.0, 149.0]`
 

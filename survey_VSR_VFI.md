@@ -854,10 +854,11 @@ Dynamic Filter Network 预测退化特征，融入 deblur/SR
 
 
 
-
-
 - "Self-Supervised Learning for Real-World Super-Resolution from Dual Zoomed Observations" ECCV, 2022 Mar, 
   [paper](https://arxiv.org/abs/2203.01325)
+
+
+
 - "Self-Supervised Learning for Real-World Super-Resolution from Dual and Multiple Zoomed Observations" TPAMI, 2024 May, :star:
   [paper](https://arxiv.org/pdf/2405.02171) [code](https://github.com/cszhilu1998/SelfDZSR_PlusPlus)
 
@@ -879,8 +880,6 @@ Dynamic Filter Network 预测退化特征，融入 deblur/SR
 - "Reference-based Burst Super-resolution" ACM-MM, 2024 Oct 28
   [paper](https://dl.acm.org/doi/pdf/10.1145/3664647.3681447) [code](https://github.com/SeonggwanKo/RefBSR) [pdf](./2024_10_ACM-MM_Reference-based-Burst-Super-resolution.pdf) [note](./2024_10_ACM-MM_Reference-based-Burst-Super-resolution_Note.md)
   Authors: Seonggwan Ko, Yeong Jun Koh, Donghyeon Cho
-
-
 
 
 
@@ -1063,6 +1062,60 @@ Reference Image Retrieval
   [paper](https://arxiv.org/pdf/2412.19412v1)
 
 用 DM 生成多个模态的数据，一起用来做 correspondence
+
+
+
+
+
+- "SuperPoint: Self-Supervised Interest Point Detection and Description" CVPR-workshop, 2017 Dec 20
+  [paper](http://arxiv.org/abs/1712.07629v4) [code](https://github.com/magicleap/SuperPointPretrainedNetwork) [pdf](./2017_12_CVPR-workshop_SuperPoint--Self-Supervised-Interest-Point-Detection-and-Description.pdf) [note](./2017_12_CVPR-workshop_SuperPoint--Self-Supervised-Interest-Point-Detection-and-Description_Note.md)
+  Authors: Daniel DeTone, Tomasz Malisiewicz, Andrew Rabinovich
+
+![fig2](docs/2017_12_CVPR-workshop_SuperPoint--Self-Supervised-Interest-Point-Detection-and-Description_Note/fig2.png)
+
+CNN 提取 visual descriptor 特征，能够有预测 interest point & 作为 descriptor 的能力，支持实时，单个网络 ok；替换传统 SIFT 特征
+
+
+
+
+
+- "SuperGlue: Learning Feature Matching with Graph Neural Networks" CVPR, 2019 Nov 26
+  [paper](http://arxiv.org/abs/1911.11763v2) [code](https://github.com/magicleap/SuperGluePretrainedNetwork.) [pdf](./2019_11_CVPR_SuperGlue--Learning-Feature-Matching-with-Graph-Neural-Networks.pdf) [note](./2019_11_CVPR_SuperGlue--Learning-Feature-Matching-with-Graph-Neural-Networks_Note.md)
+  Authors: Paul-Edouard Sarlin, Daniel DeTone, Tomasz Malisiewicz, Andrew Rabinovich
+
+![fig3](docs/2019_11_CVPR_SuperGlue--Learning-Feature-Matching-with-Graph-Neural-Networks_Note/fig3.png)
+
+对 SuperPoint 提取的 visual descriptor 用 attention (self+Cross) 优化一下
+
+
+
+
+
+- "LoFTR: Detector-Free Local Feature Matching with Transformers" CVPR, 2021 Apr 1
+  [paper](http://arxiv.org/abs/2104.00680v1) [code]() [pdf](./2021_04_CVPR_LoFTR--Detector-Free-Local-Feature-Matching-with-Transformers.pdf) [note](./2021_04_CVPR_LoFTR--Detector-Free-Local-Feature-Matching-with-Transformers_Note.md)
+  Authors: Jiaming Sun, Zehong Shen, Yuang Wang, Hujun Bao, Xiaowei Zhou
+
+![fig2](docs/2021_04_CVPR_LoFTR--Detector-Free-Local-Feature-Matching-with-Transformers_Note/fig2.png)
+
+
+
+
+
+- "LightGlue: Local Feature Matching at Light Speed" ICCV, 2023 Jun :star:
+  [paper](http://arxiv.org/abs/2306.13643v1) [code](https://github.com/cvg/LightGlue) [pdf](./2023_06_ICCV_LightGlue--Local-Feature-Matching-at-Light-Speed.pdf) [note](./2023_06_ICCV_LightGlue--Local-Feature-Matching-at-Light-Speed_Note.md)
+  Authors: Philipp Lindenberger, Paul-Edouard Sarlin, Marc Pollefeys
+
+![fig3](docs/2023_06_ICCV_LightGlue--Local-Feature-Matching-at-Light-Speed_Note/fig3.png)
+
+
+
+
+
+- "MambaGlue: Fast and Robust Local Feature Matching With Mamba" ICRA, 2025 Feb 1
+  [paper](http://arxiv.org/abs/2502.00462v1) [code](https://github.com/url-kaist/MambaGlue) [pdf](./2025_02_ICRA_MambaGlue--Fast-and-Robust-Local-Feature-Matching-With-Mamba.pdf) [note](./2025_02_ICRA_MambaGlue--Fast-and-Robust-Local-Feature-Matching-With-Mamba_Note.md)
+  Authors: Kihwan Ryoo, Hyungtae Lim, Hyun Myung
+
+
 
 
 

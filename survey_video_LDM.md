@@ -5,6 +5,8 @@
 >
 > https://github.com/yzhang2016/video-generation-survey/blob/main/video-generation.md
 >
+> https://github.com/showlab/Awesome-Video-Diffusion
+>
 > 老电影数据：调研 VideoSR 的数据集，补充数据
 
 
@@ -215,7 +217,11 @@ Prior works, such as [SD Image Variations2 ](https://huggingface.co/lambdalabs/s
 
 
 
-### condition design
+- "DreamClear: High-Capacity Real-World Image Restoration with Privacy-Safe Dataset Curation" NIPS, 2024 Oct 24
+  [paper](http://arxiv.org/abs/2410.18666v2) [code](https://github.com/shallowdream204/DreamClear.) [pdf](./2024_10_NIPS_DreamClear--High-Capacity-Real-World-Image-Restoration-with-Privacy-Safe-Dataset-Curation.pdf) [note](./2024_10_NIPS_DreamClear--High-Capacity-Real-World-Image-Restoration-with-Privacy-Safe-Dataset-Curation_Note.md)
+  Authors: Yuang Ai, Xiaoqiang Zhou, Huaibo Huang, Xiaotian Han, Zhengyu Chen, Quanzeng You, Hongxia Yang
+
+
 
 - "Regression Metric Loss: Learning a Semantic Representation Space for Medical Images" MICCAI, 2022 Jul 
   [paper](https://arxiv.org/abs/2207.05231) [note](2022_07_MICCAI_Regression-Metric-Loss--Learning-a-Semantic-Representation-Space-for-Medical-Images_Note.md)
@@ -284,6 +290,10 @@ Prior works, such as [SD Image Variations2 ](https://huggingface.co/lambdalabs/s
 
 
 
+- "Structure and Content-Guided Video Synthesis with Diffusion Models" Arxiv, 2023 Feb, **Gen-1** :fire:
+  Runway Research
+  [paper](https://arxiv.org/abs/2302.03011) [website](https://research.runwayml.com/gen2)
+
 
 
 - "Align your Latents: High-Resolution Video Synthesis with Latent Diffusion Models" CVPR, 2023 Apr, **VideoLDM** :star: :warning:
@@ -331,8 +341,7 @@ It takes approximately 13 seconds and requires a peak GPU memory of 20 GB to ani
 
 
 - "AnimateDiff: Animate your personalized text-to-image diffusion models without specific tuning" CVPR, 2023 Jul :statue_of_liberty:, `AnimateDiff v1`
-  [paper](https://arxiv.org/abs/2307.04725) [code](https://github.com/guoyww/animatediff/) [website](https://animatediff.github.io/) 
-  [note](./2023_07_CVPR_AnimateDiff--Animate-Your-Personalized-Text-to-Image-Diffusion-Models-without-Specific-Tuning_Note.md)
+  [paper](https://arxiv.org/abs/2307.04725) [code](https://github.com/guoyww/animatediff/) [website](https://animatediff.github.io/) [note](./2023_07_CVPR_AnimateDiff--Animate-Your-Personalized-Text-to-Image-Diffusion-Models-without-Specific-Tuning_Note.md)
 
 > Motion Module [download](https://hf-mirror.com/guoyww/animatediff/tree/main)
 > [code](https://github.com/guoyww/AnimateDiff/blob/0e9ad276e714cbed2940a757664469e2107cd775/animatediff/models/motion_module.py#L248)
@@ -606,17 +615,120 @@ high-fidelity video generation from textual descriptions；视频更连贯，更
 
 
 
-### Finetune
+- "Lumiere: A Space-Time Diffusion Model for Video Generation" Arxiv, 2024 Jan 23
+  [paper](http://arxiv.org/abs/2401.12945v2) [code](https://lumiere-video.github.io/) [pdf](./2024_01_Arxiv_Lumiere--A-Space-Time-Diffusion-Model-for-Video-Generation.pdf) [note](./2024_01_Arxiv_Lumiere--A-Space-Time-Diffusion-Model-for-Video-Generation_Note.md)
+  Authors: Omer Bar-Tal, Hila Chefer, Omer Tov, Charles Herrmann, Roni Paiss, Shiran Zada, Ariel Ephrat, Junhwa Hur, Guanghui Liu, Amit Raj, Yuanzhen Li, Michael Rubinstein, Tomer Michaeli, Oliver Wang, Deqing Sun, Tali Dekel, Inbar Mosseri
 
-> - LoRA 是啥？
-> - civitai 上面如何使用 LoRA 模型，为什么模型只 500MB?
+一次生成所有 T 帧，UNet 对 Temporal 和 spatial 都做 downsample 和upsample，加 1D temporal Conv 和 1D attn（只在最小的 scale 做 attn）；只有 user study SOTA 很勉强 & 需要 T 帧一次生成，**显存要求很高（文章没说用啥训的）**
 
-- "Parameter-efficient Tuning of Large-scale Multimodal Foundation Model"
-  [code](https://github.com/WillDreamer/Aurora)
-- "Distribution-Aware Prompt Tuning for Vision-Language Models"
-  [code](https://github.com/mlvlab/DAPT)
-- "Make Pre-trained Model Reversible: From Parameter to Memory Efficient Fine-Tuning"
-  [code](https://github.com/BaohaoLiao/mefts)
+![fig4](docs/2024_01_Arxiv_Lumiere--A-Space-Time-Diffusion-Model-for-Video-Generation_Note/fig4.png)
+
+
+
+- "CogVideoX: Text-to-Video Diffusion Models with An Expert Transformer" Arxiv, 2024 Aug 12
+  [paper](http://arxiv.org/abs/2408.06072v2) [code](https://github.com/THUDM/CogVideo.) [pdf](./2024_08_Arxiv_CogVideoX--Text-to-Video-Diffusion-Models-with-An-Expert-Transformer.pdf) [note](./2024_08_Arxiv_CogVideoX--Text-to-Video-Diffusion-Models-with-An-Expert-Transformer_Note.md)
+  Authors: Zhuoyi Yang, Jiayan Teng, Wendi Zheng, Ming Ding, Shiyu Huang, Jiazheng Xu, Yuanming Yang, Wenyi Hong, Xiaohan Zhang, Guanyu Feng, Da Yin, Xiaotao Gu, Yuxuan Zhang, Weihan Wang, Yean Cheng, Ting Liu, Bin Xu, Yuxiao Dong, Jie Tang
+
+
+
+- "HunyuanVideo: A Systematic Framework For Large Video Generative Models" Arxiv, 2024 Dec 3
+  [paper](http://arxiv.org/abs/2412.03603v2) [code](https://github.com/Tencent/HunyuanVideo.) [pdf](./2024_12_Arxiv_HunyuanVideo--A-Systematic-Framework-For-Large-Video-Generative-Models.pdf) [note](./2024_12_Arxiv_HunyuanVideo--A-Systematic-Framework-For-Large-Video-Generative-Models_Note.md)
+  Authors: Weijie Kong, Qi Tian, Zijian Zhang, Rox Min, Zuozhuo Dai, Jin Zhou, Jiangfeng Xiong, Xin Li, Bo Wu, Jianwei Zhang, Kathrina Wu, Qin Lin, Junkun Yuan, Yanxin Long, Aladdin Wang, Andong Wang, Changlin Li, Duojun Huang, Fang Yang, Hao Tan, Hongmei Wang, Jacob Song, Jiawang Bai, Jianbing Wu, Jinbao Xue, Joey Wang, Kai Wang, Mengyang Liu, Pengyu Li, Shuai Li, Weiyan Wang, Wenqing Yu, Xinchi Deng, Yang Li, Yi Chen, Yutao Cui, Yuanbo Peng, Zhentao Yu, Zhiyu He, Zhiyong Xu, Zixiang Zhou, Zunnan Xu, Yangyu Tao, Qinglin Lu, Songtao Liu, Daquan Zhou, Hongfa Wang, Yong Yang, Di Wang, Yuhong Liu, Jie Jiang, Caesar Zhong (Tencent)
+
+
+
+- "Cosmos World Foundation Model Platform for Physical AI" NVIDIA, 2025 Jan
+  [paper](https://arxiv.org/pdf/2501.03575)
+
+
+
+- "LTX-Video: Realtime Video Latent Diffusion" Arxiv, 2024 Dec 30
+  [paper](http://arxiv.org/abs/2501.00103v1) [code]() [pdf](./2024_12_Arxiv_LTX-Video--Realtime-Video-Latent-Diffusion.pdf) [note](./2024_12_Arxiv_LTX-Video--Realtime-Video-Latent-Diffusion_Note.md)
+  Authors: Yoav HaCohen, Nisan Chiprut, Benny Brazowski, Daniel Shalem, Dudu Moshe, Eitan Richardson, Eran Levin, Guy Shiran, Nir Zabari, Ori Gordon, Poriya Panet, Sapir Weissbuch, Victor Kulikov, Yaki Bitterman, Zeev Melumian, Ofir Bibi
+
+
+
+- "TransPixar: Advancing Text-to-Video Generation with Transparency" Arxiv, 2025 Jan 6
+  [paper](http://arxiv.org/abs/2501.03006v1) [code]() [pdf](./2025_01_Arxiv_TransPixar--Advancing-Text-to-Video-Generation-with-Transparency.pdf) [note](./2025_01_Arxiv_TransPixar--Advancing-Text-to-Video-Generation-with-Transparency_Note.md)
+  Authors: Luozhou Wang, Yijun Li, Zhifei Chen, Jui-Hsien Wang, Zhifei Zhang, He Zhang, Zhe Lin, Yingcong Chen
+
+
+
+### multi-modality
+
+- "Hallo3: Highly Dynamic and Realistic Portrait Image Animation with Diffusion Transformer Networks" 
+  [paper](https://arxiv.org/pdf/2412.00733v3)
+
+img2video 加上语音信号
+
+
+
+
+
+
+
+## Restoration :rescue_worker_helmet:
+
+- "DiffIR2VR-Zero: Zero-Shot Video Restoration with Diffusion-based Image Restoration Models" Arxiv, 2024 Jul 1
+  [paper](http://arxiv.org/abs/2407.01519v3) [web](https://jimmycv07.github.io/DiffIR2VR_web/) [code](https://github.com/jimmycv07/DiffIR2VR-Zero) [pdf](./2024_07_Arxiv_DiffIR2VR-Zero--Zero-Shot-Video-Restoration-with-Diffusion-based-Image-Restoration-Models.pdf) [note](./2024_07_Arxiv_DiffIR2VR-Zero--Zero-Shot-Video-Restoration-with-Diffusion-based-Image-Restoration-Models_Note.md)
+  Authors: Chang-Han Yeh, Chin-Yang Lin, Zhixiang Wang, Chi-Wei Hsiao, Ting-Hsuan Chen, Hau-Shiang Shiu, Yu-Lun Liu
+
+zero-shot 方法；使用 image SD 加上提出基于光流的匹配来用到 video 上，没有和 UpscaleAVideo 对比（说当时没 code）；看show 出来的视频结果，不一致很明显。。。还是很模糊
+
+对各帧的特征用关键点匹配，**发现去噪 step 的增加，匹配点数逐渐增加，来说明特征用光流做匹配还是有点用的**
+
+> 看效果来说，有点用但不多
+
+![fig4-5](docs/2024_07_Arxiv_DiffIR2VR-Zero--Zero-Shot-Video-Restoration-with-Diffusion-based-Image-Restoration-Models_Note/fig4-5.png)
+
+
+
+### VFI
+
+- "LDMVFI: Video Frame Interpolation with Latent Diffusion Models" Arxiv, 2023 Mar :+1: **LDMVFI**
+  [paper](https://arxiv.org/abs/2303.09508) [code](https://github.com/danier97/LDMVFI)
+  [note](./2023_03_Arxiv_LDMVFI--Video-Frame-Interpolation-with-Latent-Diffusion-Models_Note.md)
+
+video Interpolation, first diffusion used in video interpolation
+
+
+
+
+
+### Video Edit
+
+- "Diffusion Video Autoencoders: Toward Temporally Consistent Face Video Editing via Disentangled Video Encoding" CVPR oral, 2022 Dec, **DVA**
+  [paper](https://arxiv.org/abs/2212.02802) [code](https://github.com/man805/Diffusion-Video-Autoencoders) [note](./2023_CVPR_Diffusion-Video-Autoencoders--Toward-Temporally-Consistent-Face-Video-Editing-via-Disentangled-Video-Encoding_Note.md)
+
+
+
+- "StableV2V: Stablizing Shape Consistency in Video-to-Video Editing" Arxiv, 2024 Nov 17
+  [paper](http://arxiv.org/abs/2411.11045v1) [code]() [pdf](./2024_11_Arxiv_StableV2V--Stablizing-Shape-Consistency-in-Video-to-Video-Editing.pdf) [note](./2024_11_Arxiv_StableV2V--Stablizing-Shape-Consistency-in-Video-to-Video-Editing_Note.md)
+  Authors: Chang Liu, Rui Li, Kaidong Zhang, Yunwei Lan, Dong Liu
+
+
+
+
+
+## 3/4D
+
+- "DimensionX: Create Any 3D and 4D Scenes from a Single Image with Controllable Video Diffusion" Arxiv, 2024 Nov 7
+  [paper](http://arxiv.org/abs/2411.04928v1) [code](https://github.com/wenqsun/DimensionX) [pdf](./2024_11_Arxiv_DimensionX--Create-Any-3D-and-4D-Scenes-from-a-Single-Image-with-Controllable-Video-Diffusion.pdf) [note](./2024_11_Arxiv_DimensionX--Create-Any-3D-and-4D-Scenes-from-a-Single-Image-with-Controllable-Video-Diffusion_Note.md)
+  Authors: Wenqiang Sun, Shuo Chen, Fangfu Liu, Zilong Chen, Yueqi Duan, Jun Zhang, Yikai Wang
+
+Vidu 效果很炸裂
+
+
+
+- "ReLoo: Reconstructing Humans Dressed in Loose Garments from Monocular Video in the Wild" ECCV, 2024 Sep 23
+  [paper](http://arxiv.org/abs/2409.15269v2) [code]() [pdf](./2024_09_ECCV_ReLoo--Reconstructing-Humans-Dressed-in-Loose-Garments-from-Monocular-Video-in-the-Wild.pdf) [note](./2024_09_ECCV_ReLoo--Reconstructing-Humans-Dressed-in-Loose-Garments-from-Monocular-Video-in-the-Wild_Note.md)
+  Authors: Chen Guo, Tianjian Jiang, Manuel Kaufmann, Chengwei Zheng, Julien Valentin, Jie Song, Otmar Hilliges
+
+
+
+- "SV4D: Dynamic 3D Content Generation with Multi-Frame and Multi-View Consistency" 
+
+  https://sv4d.github.io/
 
 
 
@@ -669,6 +781,14 @@ SD-Turbo 模型，基于 SDv2.1 使用 ADD 进行蒸馏实现 **1step 出图**
 
 
 
+### Efficiency
+
+- "Fast and Memory-Efficient Video Diffusion Using Streamlined Inference" 
+  [paper](https://arxiv.org/pdf/2411.01171)
+
+- "Adaptive Caching for Faster Video Generation with Diffusion Transformers" 
+  [paper](https://arxiv.org/pdf/2411.02397)
+
 
 
 ## VideoArc
@@ -694,6 +814,18 @@ SD-Turbo 模型，基于 SDv2.1 使用 ADD 进行蒸馏实现 **1step 出图**
 
 - "Open-Sora: Revealing Complete Model Parameters, Training Details, and Everything for Sora-like Video Generation Models"
   [code](https://github.com/hpcaitech/Open-Sora/blob/main/docs/zh_CN/README.md)
+
+
+
+- "How Far is Video Generation from World Model: A Physical Law Perspective" Arxiv, 2024 Nov 4
+  [paper](http://arxiv.org/abs/2411.02385v1) [code](https://phyworld.github.io) [pdf](./2024_11_Arxiv_How-Far-is-Video-Generation-from-World-Model--A-Physical-Law-Perspective.pdf) [note](./2024_11_Arxiv_How-Far-is-Video-Generation-from-World-Model--A-Physical-Law-Perspective_Note.md)
+  Authors: Bingyi Kang, Yang Yue, Rui Lu, Zhijie Lin, Yang Zhao, Kaixin Wang, Gao Huang, Jiashi Feng
+
+验证 DiT 能否学习物理规律，发现只是在拟合训练数据，**类似做了一个检索 & 换了下形状。**
+
+
+
+
 
 
 
@@ -757,23 +889,11 @@ def temporal_random_crop(vframes, num_frames, frame_interval):
 
 
 
-## Auxiliary Info
-
-- 目标：每个区域具体内容 or 细节信息
-
-
-
 ### AutoEncoder
 
 - [SD-AutoEncoderKL](https://github.com/CompVis/latent-diffusion?tab=readme-ov-file#pretrained-autoencoding-models)
 
 
-
-
-
-### SegMap
-
-TODO
 
 
 

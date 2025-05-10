@@ -21,6 +21,12 @@ bilinear 采样有伪影 >> 学习的方式去采样
 
 ## methods
 
+![fig2](docs/2023_04_Arxiv_An-Implicit-Alignment-for-Video-Super-Resolution_Note/fig2.png)
+
+
+
+
+
 ## Experiment
 
 > ablation study 看那个模块有效，总结一下

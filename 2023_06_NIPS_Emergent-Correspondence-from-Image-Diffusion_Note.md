@@ -331,17 +331,151 @@ PL-WILLOW 数据
 
 ### Video Tracking
 
+> https://github.com/Tsingularity/dift/blob/9421eb2034396c5b66f1aff37f03e540c264e52f/eval_davis.py
+
 > We evaluate DIFT on two challenging **video label propagation tasks**: (1) DAVIS-2017 video instance segmentation benchmark [65]; (2) JHMDB keypoint estimation benchmark [40].
 
 ![fig8](docs/2023_06_NIPS_Emergent-Correspondence-from-Image-Diffusion_Note/fig8.png)
 
 
 
+> https://github.com/Tsingularity/dift/blob/9421eb2034396c5b66f1aff37f03e540c264e52f/eval_davis.py#L133
+
+前面2帧 & 当前帧的 DIFT 特征做类似 attention 的操作，然后把 attention score 加权平均下，乘个 mask，再乘到 RGB 图像上面
+
 
 
 ## Code
 
-https://colab.research.google.com/drive/1km6MGafhAvbPOouD3oo64aUXgLlWM6L1?usp=sharing
+DIFT 提取 UNet UpBlocks No1. block 的输出特征，作为 SD feature map :star:
+
+> https://github.com/Tsingularity/dift/blob/9421eb2034396c5b66f1aff37f03e540c264e52f/extract_dift.py#L8C5-L8C39
+
+```python
+def main(args):
+    dift = SDFeaturizer(args.model_id)
+    img = Image.open(args.input_path).convert('RGB')
+    if args.img_size[0] > 0:
+        img = img.resize(args.img_size)
+    img_tensor = (PILToTensor()(img) / 255.0 - 0.5) * 2
+    ft = dift.forward(img_tensor,
+                      prompt=args.prompt,
+                      t=args.t,  # '--t', default=261
+                      up_ft_index=args.up_ft_index, # '--up_ft_index', default=1, type=int, choices=[0, 1, 2 ,3],
+                      ensemble_size=args.ensemble_size)  # '--ensemble_size', default=8, type=int, 
+    ft = torch.save(ft.squeeze(0).cpu(), args.output_path) # save feature in the shape of [c, h, w]
+```
+
+看下 SDFeaturizer 实现 & forward
+
+> https://github.com/Tsingularity/dift/blob/9421eb2034396c5b66f1aff37f03e540c264e52f/src/models/dift_sd.py#L190
+
+`ensemble_size: the number of repeated images used in the batch to extract features` 一次多个 batch，然后取平均
+
+> https://github.com/Tsingularity/dift/blob/9421eb2034396c5b66f1aff37f03e540c264e52f/src/models/dift_sd.py#L243
+
+```
+	    net_ft_all = self.pipe(
+            img_tensor=img_tensor,
+            t=t,
+            up_ft_indices=[up_ft_index],
+            prompt_embeds=prompt_embeds)
+        unet_ft = unet_ft_all['up_ft'][up_ft_index] # ensem, c, h, w
+        unet_ft = unet_ft.mean(0, keepdim=True) # 1,c,h,w
+```
+
+
+
+
+
+看下如何实现一步去噪，`OneStepSDPipeline` 主要特征提取的逻辑 :star:
+
+> https://github.com/Tsingularity/dift/blob/9421eb2034396c5b66f1aff37f03e540c264e52f/src/models/dift_sd.py#L193C24-L193C41
+
+加噪到 t 步 -> UNet
+
+```python
+        latents = self.vae.encode(img_tensor).latent_dist.sample() * self.vae.config.scaling_factor
+        t = torch.tensor(t, dtype=torch.long, device=device)
+        noise = torch.randn_like(latents).to(device)
+        latents_noisy = self.scheduler.add_noise(latents, noise, t)onestep_pipe = OneStepSDPipeline.from_pretrained(sd_id, unet=unet, safety_checker=None)
+        unet_output = self.unet(latents_noisy,
+                               t,
+                               up_ft_indices,
+                               encoder_hidden_states=prompt_embeds,
+                               cross_attention_kwargs=cross_attention_kwargs)
+        return unet_output
+```
+
+
+
+- Q：看下 UNet 里面提取哪些特征？
+
+> https://github.com/Tsingularity/dift/blob/9421eb2034396c5b66f1aff37f03e540c264e52f/src/models/dift_sd.py#L14
+
+把过完每个 upsample block 后的特征存起来，**在 demo 里面只用了 No1(从0开始)的 block 输出特征 :star:**
+
+```python
+        up_ft = {}
+        for i, upsample_block in enumerate(self.up_blocks):
+
+            if i > np.max(up_ft_indices):
+                break
+
+            is_final_block = i == len(self.up_blocks) - 1
+
+            res_samples = down_block_res_samples[-len(upsample_block.resnets) :]
+            down_block_res_samples = down_block_res_samples[: -len(upsample_block.resnets)]
+
+            # if we have not reached the final block and need to forward the
+            # upsample size, we do it here
+            if not is_final_block and forward_upsample_size:
+                upsample_size = down_block_res_samples[-1].shape[2:]
+
+            if hasattr(upsample_block, "has_cross_attention") and upsample_block.has_cross_attention:
+                sample = upsample_block(
+                    hidden_states=sample,
+                    temb=emb,
+                    res_hidden_states_tuple=res_samples,
+                    encoder_hidden_states=encoder_hidden_states,
+                    cross_attention_kwargs=cross_attention_kwargs,
+                    upsample_size=upsample_size,
+                    attention_mask=attention_mask,
+                )
+            else:
+                sample = upsample_block(
+                    hidden_states=sample, temb=emb, res_hidden_states_tuple=res_samples, upsample_size=upsample_size
+                )
+
+            if i in up_ft_indices:
+                up_ft[i] = sample.detach()
+
+        output = {}
+        output['up_ft'] = up_ft
+        return output
+```
+
+
+
+### demo
+
+> https://colab.research.google.com/drive/1km6MGafhAvbPOouD3oo64aUXgLlWM6L1?usp=sharing
+>
+> https://github.com/Tsingularity/dift/blob/9421eb2034396c5b66f1aff37f03e540c264e52f/src/utils/visualization.py#L8
+
+- Q：SD feature 怎么用？
+
+video object tracking
+
+> https://github.com/Tsingularity/dift/blob/9421eb2034396c5b66f1aff37f03e540c264e52f/eval_davis.py#L133
+
+前面2帧 & 当前帧的 DIFT 特征做类似 attention 的操作，然后把 attention score 加权平均下，乘个 mask，再乘到 RGB 图像上面
+
+
+
+两帧做 sparse correspondence，看下 Spair70K eval 代码
+
+> https://github.com/Tsingularity/dift/blob/9421eb2034396c5b66f1aff37f03e540c264e52f/eval_spair.py#L117
 
 
 
@@ -359,6 +493,8 @@ https://colab.research.google.com/drive/1km6MGafhAvbPOouD3oo64aUXgLlWM6L1?usp=sh
   - 使用 SD 做匹配的性能 > ADM diffusion 模型；SD 做匹配的性能和监督方法的 SOTA 稍微差一点
 - **Spair71K 可视化一下几个类别的数据，**发现 SD 特征做匹配很强，在同一类别物体、视角变化、物体相同的场景很好
 - **SD feature map 使用 PCA 得到 3 个主分量，分别代表 RGB 不同通道**；得到物体分割图，去在 PCA feature map 上抠出来，发现能有含义的！！:star:
+  - SD2.1, 有 VAE 的
+  - 把过完每个 upsample block 后的特征存起来，**在 demo 里面只用了 No1(从0开始)的 block 输出特征作为  feature map:star:**
 
 ![fig14](docs/2023_06_NIPS_Emergent-Correspondence-from-Image-Diffusion_Note/fig14.png)
 

@@ -116,7 +116,7 @@ Conditional DPM
 
 使用主干网络 Encoder-Decoder 的主干网络（Restormer），在每个 scale 开头加上 diffusion 的先验特征，当作 KV 融入主干网络（提出的 HIM block）；两阶段训练，stage1 先训练用于 diffusion 的图像编码器 LE Encoder, 不训diffusion 把特征 z 输入主干网络，在图像空间约束；stage2 zT 的编码器不训，训练 condition 的编码器 + diffusion + HIM
 
-![image-20240201224224105](docs/2023_05_NIPS_Hierarchical-Integration-Diffusion-Model-for-Realistic-Image-Deblurring_Note/HI-Diff_framework.png)
+![HI-Diff_framework.png](docs/2023_05_NIPS_Hierarchical-Integration-Diffusion-Model-for-Realistic-Image-Deblurring_Note/HI-Diff_framework.png)
 
 diffusion 是自己训练的 DDPM；因为要在小空间，所以**特征下采样倍数 N=16, C=256** (SD 是 8) ，**去噪步数 T=8** 
 

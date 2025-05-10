@@ -38,7 +38,7 @@ dk 为 Q,K,V 特征的通道数 or 维度 :star: ，用于做 scaling 的，不�
 
 $\sqrt{d_k}$ 是 QK 乘积分布的方差！如果 dk 很大，导致方差很大，**做完 SoftMax 后梯度太小了**
 
-> assume that the components of q and k are independent random variables with mean 0 and variance 1. Then their dot product, q · k = Pdk i=1 qiki, has mean 0 and variance dk output values. These are concatenated and once again projected, resulting in the final values, as depicted in Figure 2
+> **assume that** the components of q and k are independent random variables with **mean 0 and variance 1.** Then their dot product, q · k = Pdk i=1 qiki, has mean 0 and variance dk output values. These are concatenated and once again projected, resulting in the final values, as depicted in Figure 2
 >
 > **To counteract this effect, we scale the dot products by $\frac1{\sqrt{d_k}}$ .**
 

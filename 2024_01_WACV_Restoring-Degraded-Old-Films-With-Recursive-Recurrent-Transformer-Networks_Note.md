@@ -95,6 +95,10 @@ def charbonnier_loss(pred, target, eps=1e-12):
 
 
 
+### Data
+
+![tb1](docs/2024_01_WACV_Restoring-Degraded-Old-Films-With-Recursive-Recurrent-Transformer-Networks_Note/tb1.png)
+
 
 
 ## setting

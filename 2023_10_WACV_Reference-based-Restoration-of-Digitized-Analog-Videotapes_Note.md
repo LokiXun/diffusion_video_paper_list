@@ -145,7 +145,7 @@ thresh = threshold_otsu(image)
 
 ### Swin-UNet
 
-![image-20231116224339204](docs/2023_10_WACV_Reference-based-Restoration-of-Digitized-Analog-Videotapes_Note/image-20231116224339204.png)
+![fig3](docs/2023_10_WACV_Reference-based-Restoration-of-Digitized-Analog-Videotapes_Note/fig3.png)
 
 - Motivation
 

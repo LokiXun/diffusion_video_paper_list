@@ -1,5 +1,9 @@
 # survey_old_film_restoration
 
+> [READMD.md](./READMD.md)
+
+
+
 ## data & ckpt & metrics
 
 > https://github.com/xiaobai1217/Awesome-Video-Datasets
@@ -68,64 +72,6 @@ PSNR 区间，进行细化
 
 
 
-## Old Photo restoration
-
-- "Bringing Old Photos Back to Life" CVPR oral, 2020 Apr :star:
-  [paper(CVPR version)](https://arxiv.org/abs/2004.09484) [paper(TPAMI version)](https://arxiv.org/pdf/2009.07047v1.pdf) [code](https://github.com/microsoft/Bringing-Old-Photos-Back-to-Life) [website](http://raywzy.com/Old_Photo/) [note](./2020_CVPR_Bringing-Old-Photos-Back-to-Life_Note.md)
-
-Pascal VOC 上合成噪声（DA & 噪声模板 collect 62 scratch texture images and 55 paper texture image）；可以参考**消除合成数据和真实数据之间 domain gap 的方法**。
-
-Face Enhancement 模块用 FFHQ 数据
-
-
-
-
-
-- "Pik-Fix: Restoring and Colorizing Old Photo" WACV, 2022 May
-  [paper](https://arxiv.org/abs/2205.01902) [code](https://github.com/DerrickXuNu/Pik-Fix) [pdf](./2022_05_WACV_Pik-Fix-Restoring-and-Colorizing-Old-Photos.pdf)
-
-RealOld 200个老照片，**有 Expert 修复过的 GT！**
-
-
-
-
-
-- "Modernizing Old Photos Using Multiple References via Photorealistic Style Transfer" CVPR, 2023 Apr, `MROPM`
-  [paper](https://arxiv.org/abs/2304.04461) [code](https://github.com/KAIST-VICLab/old-photo-modernization) [website](https://kaist-viclab.github.io/old-photo-modernization/?utm_source=catalyzex.com) [note](./2023_04_CVPR_Modernizing-Old-Photos-Using-Multiple-References-via-Photorealistic-Style-Transfer_Note.md)
-
-
-
-
-
-- "MLRN: A multi-view local reconstruction network for single image restoration" IPM, 2024 May
-  [paper](https://www.sciencedirect.com/science/article/pii/S0306457324000608)
-
-
-
-
-
-### Unsupervised
-
-- "Time-Travel Rephotography" SIGGRAPH, 2020 Dec :star:
-  [paper](https://arxiv.org/abs/2012.12261) [website](https://time-travel-rephotography.github.io/) [code](https://github.com/Time-Travel-Rephotography/Time-Travel-Rephotography.github.io) [pdf](./2020_12_SIGGRAPH_Time-Travel-Rephotography.pdf) [talk](https://www.youtube.com/watch?v=C8IV7xK7-UI) :+1: 
-
-**无监督方式！！将灰度图人脸修复为彩色图 >> Sibling 概念，使用预训练 stylegan 的优良颜色特征**，用 StyleGAN 生成先弄一个类似的人脸（颜色ok，人不像），然后另外训一个 decoder 生成结构和原图相似的人脸，**`Color Transfer`,`contextual loss` 训练**。**无监督方式训练：模拟一个老相机的退化**，将 RGB 转为灰度图，与原图做 reconstruction loss （这里前提是数据集本身的噪声并不多，没有扭曲很多情况下）
-
-
-
-
-
-
-
-### scratch detect
-
-- "Scratch detection of archival films: modeling and trajectory calculation"
-  [paper](https://link.springer.com/content/pdf/10.1186/s40494-023-01119-8.pdf)
-
-
-
-
-
 ## Old film restoration :star:
 
 - Q：测试哪些方法？
@@ -179,13 +125,26 @@ TODO: 联系袁哥
 
 ### related work
 
-- "DeepRemaster: Temporal Source-Reference Attention Networks for Comprehensive Video Enhancement" SIGGRAPH, 2019 Nov :statue_of_liberty:
-  [paper](https://arxiv.org/abs/2009.08692) [website](http://iizuka.cs.tsukuba.ac.jp/projects/remastering/en/index.html) [note](./2019_SIGGRAPH_DeepRemaster-Temporal-Source-Reference-Attention-Networks-for-Comprehensive-Video-Enhancement_Note.md)
+- "DeepRemaster: Temporal Source-Reference Attention Networks for Comprehensive Video Enhancement" SIGGRAPH-ASIA, 2020 Sep 18
+  [paper](http://arxiv.org/abs/2009.08692v1) [web](http://iizuka.cs.tsukuba.ac.jp/projects/remastering/en/index.html) [code](https://github.com/satoshiiizuka/siggraphasia2019_remastering) [pdf](./2019_SIGGRAPH_DeepRemaster-Temporal-Source-Reference-Attention-Networks-for-Comprehensive-Video-Enhancement.pdf) [note](./2020_09_SIGGRAPH-ASIA_DeepRemaster--Temporal-Source-Reference-Attention-Networks-for-Comprehensive-Video-Enhancement_Note.md)
+  Authors: Satoshi Iizuka, Edgar Simo-Serra
+
+![fig4](docs/2020_09_SIGGRAPH-ASIA_DeepRemaster--Temporal-Source-Reference-Attention-Networks-for-Comprehensive-Video-Enhancement_Note/fig4.png)
+
+3D CNN + Reference CrossAttn
+
+
 
 
 
 - "BasicVSR++: Improving video super-resolution with enhanced propagation and alignment" CVPR, 2021 Apr 🗿 
   [paper](https://arxiv.org/abs/2104.13371) [code](https://github.com/open-mmlab/mmagic/blob/main/configs/basicvsr_pp/README.md) [note](./2021_04_CVPR_BasicVSR++--Improving-Video-Super-Resolution-with-Enhanced-Propagation-and-Alignment_Note.md)
+
+![image-20231121170824361](docs/2021_04_CVPR_BasicVSR++--Improving-Video-Super-Resolution-with-Enhanced-Propagation-and-Alignment_Note/image-20231121170824361.png)
+
+bidirectional 传播 second order，Deformable 对齐
+
+
 
 
 
@@ -193,10 +152,20 @@ TODO: 联系袁哥
   [paper](http://arxiv.org/abs/2203.17276v1) [code](https://github.com/raywzy/Bringing-Old-Films-Back-to-Life) [website](http://raywzy.com/Old_Film/) [pdf](./2022_03_CVPR_Bringing-Old-Films-Back-to-Life.pdf) [note](./2022_03_CVPR_Bringing-Old-Films-Back-to-Life_Note.md)
   Authors: Ziyu Wan, Bo Zhang, Dongdong Chen, Jing Liao
 
+![fig3.png](docs/2022_03_CVPR_Bringing-Old-Films-Back-to-Life_Note/fig3.png)
+
+基于 BasicVSR++ 改的 bidirectional，加了个 scratch mask 预测模块，SwinTransformer 输出 + GAN loss；存在伪影
+
+
+
 
 
 - "Recurrent Video Restoration Transformer with Guided Deformable Attention" NeurlPS, 2022 June, **RVRT** :statue_of_liberty:
   [paper](https://arxiv.org/abs/2206.02146) [code](https://github.com/JingyunLiang/RVRT?utm_source=catalyzex.com) [note](./2022_06_NeurIPS_RVRT_Recurrent-Video-Restoration-Transformer-with-Guided-Deformable-Attention_Note.md)
+
+![RVRT_Framework.png](docs/2022_06_NeurIPS_RVRT_Recurrent-Video-Restoration-Transformer-with-Guided-Deformable-Attention_Note/RVRT_Framework.png)
+
+
 
 
 
@@ -204,7 +173,11 @@ TODO: 联系袁哥
   [paper](http://arxiv.org/abs/2310.14926v2) [code](https://github.com/miccunifi/TAPE) [note](./2023_10_WACV_Reference-based-Restoration-of-Digitized-Analog-Videotapes_Note.md) 
   Authors: Lorenzo Agnolucci, Leonardo Galteri, Marco Bertini, Alberto Del Bimbo
 
-VHS 修复，可训练
+![image-20231116171723078](docs/2023_10_WACV_Reference-based-Restoration-of-Digitized-Analog-Videotapes_Note/image-20231116171723078.png)
+
+VHS 修复，可训练；CLIP-score 选较为清晰的一帧，搞了一个 CrossAttn 传入 UNet(Swin3D)
+
+
 
 
 
@@ -212,21 +185,37 @@ VHS 修复，可训练
   [paper](https://openaccess.thecvf.com/content/WACV2024/html/Lin_Restoring_Degraded_Old_Films_With_Recursive_Recurrent_Transformer_Networks_WACV_2024_paper.html) [code](https://github.com/mountln/RRTN-old-film-restoration) [pdf](./2024_01_WACV_Restoring-Degraded-Old-Films-With-Recursive-Recurrent-Transformer-Networks.pdf) [note](./2024_01_WACV_Restoring-Degraded-Old-Films-With-Recursive-Recurrent-Transformer-Networks_Note.md)
   Authors: Shan Lin,  Edgar Simo-Serra
 
-可训练
+![fig2](docs/2024_01_WACV_Restoring-Degraded-Old-Films-With-Recursive-Recurrent-Transformer-Networks_Note/fig2.png)
+
+设计了一个划痕预测模块；&& 参考 BasicVSR++ 加上 Second Order 传播模块 && 加上 deformable 做**两帧的对齐**；训练重复修复两次，提升时序一致性
 
 
 
-- "Unsupervised Model-Based Learning for Simultaneous Video Deflickering and Deblotching" WACV, 2024, `LFISTA`
 
-  [paper](https://openaccess.thecvf.com/content/WACV2024/papers/Fulari_Unsupervised_Model-Based_Learning_for_Simultaneous_Video_Deflickering_and_Deblotching_WACV_2024_paper.pdf) [pdf](2024_01_WACV_Unsupervised_Model-Based_Learning_for_Simultaneous_Video_Deflickering_and_Deblotching.pdf)
 
-无代码
+- "BlazeBVD: Make Scale-Time Equalization Great Again for Blind Video Deflickering" ECCV, 2024 Mar 10
+  [paper](http://arxiv.org/abs/2403.06243v1) [code]() [pdf](./2024_03_Arxiv_BlazeBVD--Make-Scale-Time-Equalization-Great-Again-for-Blind-Video-Deflickering.pdf) [note](./2024_03_Arxiv_BlazeBVD--Make-Scale-Time-Equalization-Great-Again-for-Blind-Video-Deflickering_Note.md)
+  Authors: Xinmin Qiu, Congying Han, Zicheng Zhang, Bonan Li, Tiande Guo, Pingyu Wang, Xuecheng Nie
 
-![LFISTA_overview.png](docs/survey_old_film_restoration/LFISTA_overview.png)
+![fig2](docs/2024_03_Arxiv_BlazeBVD--Make-Scale-Time-Equalization-Great-Again-for-Blind-Video-Deflickering_Note/fig2.png)
 
-整理 SOTA
+Diffusion 做 deflickering 有修复电影
 
-![image-20240311141534367](docs/survey_old_film_restoration/image-20240311141534367.png)
+
+
+
+
+- "Unsupervised Model-Based Learning for Simultaneous Video Deflickering and Deblotching" WACV, 2024 Jan 1
+  [paper](https://openaccess.thecvf.com/content/WACV2024/html/Fulari_Unsupervised_Model-Based_Learning_for_Simultaneous_Video_Deflickering_and_Deblotching_WACV_2024_paper.html) [code]() [video](https://www.youtube.com/watch?v=K5uCcAF7RrA) [pdf](./2024_01_WACV_Unsupervised-Model-Based-Learning-for-Simultaneous-Video-Deflickering-and-Deblotching.pdf) [note](./2024_01_WACV_Unsupervised-Model-Based-Learning-for-Simultaneous-Video-Deflickering-and-Deblotching_Note.md)
+  Authors: Anuj Fulari, Satish Mulleti, Ajit Rajwade (india IIT)
+
+![fig1](docs/2024_01_WACV_Unsupervised-Model-Based-Learning-for-Simultaneous-Video-Deflickering-and-Deblotching_Note/fig1.png)
+
+把凸优化方法 FISTA 改到 video 上面；没代码。。。
+
+对比方法
+
+![fig4](docs/2024_01_WACV_Unsupervised-Model-Based-Learning-for-Simultaneous-Video-Deflickering-and-Deblotching_Note/fig4.png)
 
 
 
@@ -238,18 +227,23 @@ VHS 修复，可训练
 
 参考本文的 related work 做实验！ :star: 无训练 code，但有灰度修复的模型！
 
-![DeepEnhancer](docs/survey_old_film_restoration/DeepEnhancer.png)
+![fig1](docs/survey_old_film_restoration/fig1.png)
 
 
 
 
 
-- "Research on the Digital Restoration of Female Hero Images in Shandong Red Films" 2024, ECNCT
-  [paper](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10704335)
+- "Research on the Digital Restoration of Female Hero Images in Shandong Red Films" ECNCT, 2024 Jul 19
+  [paper](https://ieeexplore.ieee.org/document/10704335) [code]() [pdf](./2024_07_ECNCT_Research-on-the-Digital-Restoration-of-Female-Hero-Images-in-Shandong-Red-Films.pdf) [note](./2024_07_ECNCT_Research-on-the-Digital-Restoration-of-Female-Hero-Images-in-Shandong-Red-Films_Note.md)
+  Authors: Qingshuang Dong, Guangran Zhong, Bing Wu
+
+![tb2](docs/2024_07_ECNCT_Research-on-the-Digital-Restoration-of-Female-Hero-Images-in-Shandong-Red-Films_Note/tb2.png)
 
 > we trained the model on the YouTube-VOS dataset and compared it with RVRT [10] and the method "Bring old films to life." [11]
 
-无代码
+只说了在 YouTubeVOS 上用 RVRT 训练，无代码 + 中文期刊。。。
+
+
 
 
 
@@ -257,22 +251,15 @@ VHS 修复，可训练
   [paper](http://arxiv.org/abs/2501.01235v2) [code](https://github.com/wangzhiyaoo/SVFR.git) [pdf](./2025_01_Arxiv_SVFR--A-Unified-Framework-for-Generalized-Video-Face-Restoration.pdf) [note](./2025_01_Arxiv_SVFR--A-Unified-Framework-for-Generalized-Video-Face-Restoration_Note.md)
   Authors: Zhiyao Wang, Xu Chen, Chengming Xu, Junwei Zhu, Xiaobin Hu, Jiangning Zhang, Chengjie Wang, Yuqi Liu, Yiyi Zhou, Rongrong Ji
 
-
-
-
-
-### commercial software :zap:
-
-- "DeOldify" open-sourced toolbox to restore image and video
-  [code](https://github.com/jantic/DeOldify)
-
-strong baseline in multi papers
+![fig2](docs/2025_01_Arxiv_SVFR--A-Unified-Framework-for-Generalized-Video-Face-Restoration_Note/fig2.png)
 
 
 
 
 
-### Color
+
+
+### Colorization :paintbrush:
 
 - "ColorMNet: A Memory-based Deep Spatial-Temporal Feature Propagation Network for Video Colorization" 2404
 
@@ -298,7 +285,7 @@ https://arxiv.org/pdf/2404.06251
 
 
 
-### flickering
+### deflicker :leaves:
 
 - "Blind Video Deflickering by Neural Filtering with a Flawed Atlas" CVPR, 2023 Mar, `NFFA`,:statue_of_liberty:
   [paper](https://arxiv.org/abs/2303.08120) [code](https://github.com/ChenyangLEI/All-In-One-Deflicker?utm_source=catalyzex.com) [website](https://chenyanglei.github.io/deflicker/) [note](./2023_05_CVPR_Blind-Video-Deflickering-by-Neural-Filtering-with-a-Flawed-Atlas_Note.md)
@@ -310,7 +297,17 @@ https://arxiv.org/pdf/2404.06251
 
 
 
-- [BlazeBVD: Make Scale-Time Equalization Great Again for Blind Video Deflickering](https://arxiv.org/abs/2403.06243)
+
+
+- "BlazeBVD: Make Scale-Time Equalization Great Again for Blind Video Deflickering" ECCV, 2024 Mar 10
+  [paper](http://arxiv.org/abs/2403.06243v1) [code]() [pdf](./2024_03_Arxiv_BlazeBVD--Make-Scale-Time-Equalization-Great-Again-for-Blind-Video-Deflickering.pdf) [note](./2024_03_Arxiv_BlazeBVD--Make-Scale-Time-Equalization-Great-Again-for-Blind-Video-Deflickering_Note.md)
+  Authors: Xinmin Qiu, Congying Han, Zicheng Zhang, Bonan Li, Tiande Guo, Pingyu Wang, Xuecheng Nie
+
+![fig2](docs/2024_03_Arxiv_BlazeBVD--Make-Scale-Time-Equalization-Great-Again-for-Blind-Video-Deflickering_Note/fig2.png)
+
+Diffusion 做 deflickering 有修复电影
+
+
 
 
 
@@ -346,29 +343,18 @@ BRISQUE↓ NIQE  CDC FID
 video temporal consistency
 
 ```
-
+FVD
 ```
 
 
 
 
 
-## Colorization
-
-- "LatentColorization: Latent Diffusion-Based Speaker Video Colorization"
-  [paper](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=10539953)
 
 
-
-
-
-
-
-## VHS
+### VHS :vhs:
 
 > analog video restoration
-
-
 
 - "Memory-Augmented Non-Local Attention for Video Super-Resolution" CVPR, 2021 Aug, **MANA** [paper](https://arxiv.org/abs/2108.11048) [code]()
 - "Multi-Scale Memory-Based Video Deblurring" CVPR, 2022 Apr 
@@ -392,10 +378,13 @@ VHS 类似的噪声合成数据 :warning:
 
 
 
-## VideoSR
 
-- "Semantic Lens: Instance-Centric Semantic Alignment for Video Super-Resolution"
-  [paper](https://arxiv.org/abs/2312.07823)
+
+
+
+### VideoSR :mag:
+
+- [survey_VSR_VFI.md](./survey_VSR_VFI.md)
 
 
 
@@ -445,59 +434,149 @@ Line scratch detection in old films
 
 
 
-
-
-## detail texture :sweat_drops:
-
-- "Concept Sliders: LoRA Adaptors for Precise Control in Diffusion Models" Arxiv, 2023 Nov 20 :star:
-  [paper](http://arxiv.org/abs/2311.12092v2) [web](https://sliders.baulab.info/) [code](https://github.com/rohitgandikota/sliders) [pdf](./2023_11_Arxiv_Concept-Sliders--LoRA-Adaptors-for-Precise-Control-in-Diffusion-Models.pdf) [note](./2023_11_Arxiv_Concept-Sliders--LoRA-Adaptors-for-Precise-Control-in-Diffusion-Models_Note.md)
-  Authors: Rohit Gandikota, Joanna Materzynska, Tingrui Zhou, Antonio Torralba, David Bau
+- "Scratch detection of archival films: modeling and trajectory calculation" Nature, 2024 Jan 02 
+  https://www.nature.com/articles/s40494-023-01119-8
 
 
 
-- "Interpreting the Weight Space of Customized Diffusion Models" Arxiv, 2024 Jun 13
-  [paper](http://arxiv.org/abs/2406.09413v2) [code]() [pdf](./2024_06_Arxiv_Interpreting-the-Weight-Space-of-Customized-Diffusion-Models.pdf) [note](./2024_06_Arxiv_Interpreting-the-Weight-Space-of-Customized-Diffusion-Models_Note.md)
-  Authors: Amil Dravid, Yossi Gandelsman, Kuan-Chieh Wang, Rameen Abdal, Gordon Wetzstein, Alexei A. Efros, Kfir Aberman
+## Old Photo restoration
 
+- "Bringing Old Photos Back to Life" CVPR oral, 2020 Apr :star:
+  [paper(CVPR version)](https://arxiv.org/abs/2004.09484) [paper(TPAMI version)](https://arxiv.org/pdf/2009.07047v1.pdf) [code](https://github.com/microsoft/Bringing-Old-Photos-Back-to-Life) [website](http://raywzy.com/Old_Photo/) [note](./2020_CVPR_Bringing-Old-Photos-Back-to-Life_Note.md)
 
+Pascal VOC 上合成噪声（DA & 噪声模板 collect 62 scratch texture images and 55 paper texture image）；可以参考**消除合成数据和真实数据之间 domain gap 的方法**。
 
-> 参考蒸馏方法搞一个模块，生成纹理提升 PSNR
-
-- "TextureDreamer: Image-guided Texture Synthesis through Geometry-aware Diffusion" CVPR, 2024 Jan 17
-  [paper](http://arxiv.org/abs/2401.09416v1) [code]() [pdf](./2024_01_CVPR_TextureDreamer--Image-guided-Texture-Synthesis-through-Geometry-aware-Diffusion.pdf) [note](./2024_01_CVPR_TextureDreamer--Image-guided-Texture-Synthesis-through-Geometry-aware-Diffusion_Note.md)
-  Authors: Yu-Ying Yeh, Jia-Bin Huang, Changil Kim, Lei Xiao, Thu Nguyen-Phuoc, Numair Khan, Cheng Zhang, Manmohan Chandraker, Carl S Marshall, Zhao Dong, Zhengqin Li
-
-参考 https://texturedreamer.github.io/ 视频，学习一下如何一步步从 baseline 改进一次后，发现还有问题逐步搭建新的模块 :star:
-
-- Q：纹理是啥？
-
-albedo，metallic，roughness
-
-<img src="docs/2024_01_CVPR_TextureDreamer--Image-guided-Texture-Synthesis-through-Geometry-aware-Diffusion_Note/texture_map.png" alt="texture_map" style="zoom:33%;" />
-
-
-
-- "VideoGigaGAN: Towards Detail-rich Video Super-Resolution"
-  [paper](https://arxiv.org/pdf/2404.12388)
+Face Enhancement 模块用 FFHQ 数据
 
 
 
 
 
+- "Pik-Fix: Restoring and Colorizing Old Photo" WACV, 2022 May
+  [paper](https://arxiv.org/abs/2205.01902) [code](https://github.com/DerrickXuNu/Pik-Fix) [pdf](./2022_05_WACV_Pik-Fix-Restoring-and-Colorizing-Old-Photos.pdf)
+
+RealOld 200个老照片，**有 Expert 修复过的 GT！**
 
 
-## frequency domain
 
-- "Exploring Spatial-Temporal Multi-Frequency Analysis for High-Fidelity and Temporal-Consistency Video Prediction"
 
-  https://openaccess.thecvf.com/content_CVPR_2020/papers/Jin_Exploring_Spatial-Temporal_Multi-Frequency_Analysis_for_High-Fidelity_and_Temporal-Consistency_Video_Prediction_CVPR_2020_paper.pdf
 
-- "Turning Frequency to Resolution: Video Super-resolution via Event Cameras"
+- "Modernizing Old Photos Using Multiple References via Photorealistic Style Transfer" CVPR, 2023 Apr, `MROPM`
+  [paper](https://arxiv.org/abs/2304.04461) [code](https://github.com/KAIST-VICLab/old-photo-modernization) [website](https://kaist-viclab.github.io/old-photo-modernization/?utm_source=catalyzex.com) [note](./2023_04_CVPR_Modernizing-Old-Photos-Using-Multiple-References-via-Photorealistic-Style-Transfer_Note.md)
 
-  https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Turning_Frequency_to_Resolution_Video_Super-Resolution_via_Event_Cameras_CVPR_2021_paper.pdf
 
-- "Temporal Wavelet Transform-Based Low-Complexity Perceptual Quality Enhancement of Compressed Video"
-  [paper](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10254565)
+
+
+
+- "MLRN: A multi-view local reconstruction network for single image restoration" IPM, 2024 May
+  [paper](https://www.sciencedirect.com/science/article/pii/S0306457324000608)
+
+
+
+
+
+### Unsupervised
+
+- "Time-Travel Rephotography" SIGGRAPH, 2020 Dec :star:
+  [paper](https://arxiv.org/abs/2012.12261) [website](https://time-travel-rephotography.github.io/) [code](https://github.com/Time-Travel-Rephotography/Time-Travel-Rephotography.github.io) [pdf](./2020_12_SIGGRAPH_Time-Travel-Rephotography.pdf) [talk](https://www.youtube.com/watch?v=C8IV7xK7-UI) :+1: 
+
+**无监督方式！！将灰度图人脸修复为彩色图 >> Sibling 概念，使用预训练 stylegan 的优良颜色特征**，用 StyleGAN 生成先弄一个类似的人脸（颜色ok，人不像），然后另外训一个 decoder 生成结构和原图相似的人脸，**`Color Transfer`,`contextual loss` 训练**。**无监督方式训练：模拟一个老相机的退化**，将 RGB 转为灰度图，与原图做 reconstruction loss （这里前提是数据集本身的噪声并不多，没有扭曲很多情况下）
+
+
+
+
+
+
+
+## Commercial Software :star:
+
+- "DeOldify" open-sourced toolbox to restore image and video
+  [code](https://github.com/jantic/DeOldify)
+
+strong baseline in multi papers
+
+
+
+- [Neat Video - best noise and flicker reduction for digital video](https://www.neatvideo.com/) ?? 也不是电影修复的。。。
+
+
+
+
+
+- MTI https://mtifilm.com/software/drs-nova/  :star:
+
+Cortex, DRS Nova
+
+> 展示的视频仍然有噪声 Watch a full before/after video
+
+
+
+- VIVA pro https://algosoft-tech.com/pro
+
+  ```
+  https://www.youtube.com/watch?v=x4JjFFiCn9I
+  ```
+
+
+
+- DIAMANT
+
+
+
+
+
+### MTI
+
+VP 说用 RIFE + camera pose control 实现对齐+修复。。。方法很老了
+
+
+
+- blocking?? structure distortion seems micro change
+- Frame limit -> move scratch from over frames to this one
+- pretty advanced, so many options for amateur 。。。。
+  - have to select so many scratches。。。
+
+![image-20241217015257786](docs/survey_old_film_restoration/image-20241217015257786.png)
+
+- Frame Cache? once 6 frame?
+
+![image-20241217014938236](docs/survey_old_film_restoration/image-20241217014938236.png)
+
+- Q：what this used for?
+
+![waveform](docs/survey_old_film_restoration/waveform.png)
+
+
+
+
+
+tutorial
+
+> - download https://forum.mtifilm.com/t/drs-nova-6-0-release/3238
+>
+> - manual https://drive.google.com/file/d/1Bj-8vmiR4HouzRvKyHmTZG8iLWOKW5S4/view
+>
+> - tutorial video 
+>
+>   https://drive.google.com/file/d/1yVcIyaoMeTk3opPSXBvRlLdAwXVCDcJ2/view
+
+
+
+### VIAVA-Pro
+
+> https://algosoft-tech.com/restored-films-partners
+>
+> https://algosoft-tech.com/sample-videos-2
+>
+> https://www.youtube.com/@AlgosoftTech
+
+
+
+
+
+### TopazLab SD restore
+
+https://x.com/topazlabs/status/1887497602398073234
 
 
 
@@ -600,7 +679,7 @@ albedo，metallic，roughness
 >
 >   [90s 广告视频](https://www.bilibili.com/video/BV1354y1n7Zm/?spm_id_from=pageDriver&vd_source=eee3c3d2035e37c90bb007ff46c6e881)
 
-#### VHS 录像机
+VHS 录像机
 
 > [b 站录像带机器广告（老录像带！）](https://www.bilibili.com/video/BV1A4411J71A/?p=11&vd_source=eee3c3d2035e37c90bb007ff46c6e881) 
 > [松下NV-J27MC录像机修复笔记](http://www.crystalradio.cn/thread-850100-1-1.html)
@@ -680,66 +759,17 @@ albedo，metallic，roughness
 
 
 
-# Commercial
-
-## MTI
-
-- blocking?? structure distortion seems micro change
-- Frame limit -> move scratch from over frames to this one
-- pretty advanced, so many options for amateur 。。。。
-  - have to select so many scratches。。。
-
-![image-20241217015257786](docs/survey_old_film_restoration/image-20241217015257786.png)
-
-- Frame Cache? once 6 frame?
-
-![image-20241217014938236](docs/survey_old_film_restoration/image-20241217014938236.png)
-
-- Q：what this used for?
-
-![waveform](docs/survey_old_film_restoration/waveform.png)
-
-
-
-
-
-### tutorial
-
-> - download https://forum.mtifilm.com/t/drs-nova-6-0-release/3238
->
-> - manual https://drive.google.com/file/d/1Bj-8vmiR4HouzRvKyHmTZG8iLWOKW5S4/view
->
-> - tutorial video 
->
->   https://drive.google.com/file/d/1yVcIyaoMeTk3opPSXBvRlLdAwXVCDcJ2/view
 
 
 
 
 
 
-
-# Old film Degradation Type
-
-- Target: 构造测试数据集，更好评估方法效果
-
-- 竖线
-
-
-
-## Synthetic Data
-
-TODO
-
-
-
-
-
-## RealData
+## Old film Degradation Type
 
 > 爱奇艺搜集 https://list.iqiyi.com/www/1/----------0-1980_1989--24-1-1-iqiyi--.html
 >
-> - Q：联系爱奇艺合作？https://www.infoq.cn/article/UdH2LorYBOkbV22oPQMO
+> - Q：爱奇艺？https://www.infoq.cn/article/UdH2LorYBOkbV22oPQMO
 >
 >   朱俊敏，爱奇艺技术总监。上海交通大学硕士，拥有 3 篇美国专利， 8 篇中国专利。2015 年加入爱奇艺，负责 AI 产品落地和创新应用开发，先后孵化了 HomeAI（智能语音交互平台）， 奇观（智能识别平台），逗芽（表情生产和分发平台） 等创新应用。
 >
@@ -750,78 +780,6 @@ TODO
 > - Q：Motivation？
 >
 >   爱奇艺上专业修复的太少了只有 30部电影，还有很多没有得到修复！专业修复的机构修复完的还要去电影院才能看，自己想看的电影还不一定有修复
-
-- 洛奇1 开头有划痕
-- 十面埋伏 1989
-
-```
-00:00:20 00:00:31 闪烁细小划痕	公交车内景，背景高曝光，
-00:52:22 00:52:29 
-```
-
-
-
-### Chinese
-
-#### 1940s
-
-- 三毛流浪记 1949（爱奇艺独家修复版本）
-
-> https://www.iqiyi.com/v_19rrmyaa94.html?method=run_app
->
-> 没法下载咋搞？
-
-- Q：如何在 T 上精准加残差？
-
-女人的衣服图案一开始看不清，后面拉近了才更明显，怎么关联到呢？
-
-https://www.bilibili.com/video/BV1ma411T7EZ?t=3390.8
-
-
-
-#### 1960s
-
-- 嘉陵江边
-
-> https://www.iqiyi.com/v_19rrn6m6hc.html?method=run_app
-
-480p；黑白老电影；1960；
-
-退化类型：高频划痕
-
-
-
-
-
-
-
-### Foreigner
-
-TODO
-
-
-
-### comics
-
-- 三毛
-
-  https://www.iqiyi.com/v_19rrmudgwg.html?method=run_app
-
-动画，传统中国风
-
-
-
-### Text
-
-- 三毛流浪记（爱奇艺独家修复版本）
-
-> https://www.iqiyi.com/v_19rrmyaa94.html?method=run_app
->
-> 没法下载咋搞？
-
-<img src="docs/survey_old_film_restoration/2024-06-25 22-12-45.jpg" alt="2024-06-25 22-12-45" style="zoom:25%;" />
-
-
 
 
 
@@ -837,17 +795,3 @@ TODO
 #下载位置：`E:\qycache\download`
 x86_64-pc-windows-msvc-qsv2flv.exe -v shimianmaifu_1989_480P.qsv shimianmaifu_1989_480P.mp4
 ```
-
-
-
-# paper
-
-Old films bear precious memories of multiple generations. However, there are large amount of old films are suffering from various irreversible degradations which cost professionals huge burdens to restore them.
-
-In this paper, we propose a restoration framework, called \textit{Film Reviving Diffusion Model(FRDM)}, to assist professionals to accelerate the restoration process.
-
-We explores video diffusion's generation prior to restore the films' scratches and improve the visual quality.
-Also, we collects an evaluation dataset to help further works evaluate on the same page.
-
-Through qualitative and quantitative evaluations, our approach demonstrates superior performance compared with existing open-sourced methods. 
-The code, dataset and model are available at 

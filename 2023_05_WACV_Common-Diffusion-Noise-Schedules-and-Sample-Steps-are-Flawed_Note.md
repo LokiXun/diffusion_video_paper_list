@@ -331,9 +331,10 @@ t=T SNR=0 理想情况下，**在 t=T 模型会不管输入直接根据 prompt �
 
 > learn what
 
-- 根据公式定义去 pdb 看 schedule 和 noise 是否和公式完全一致
-- offset noise 没有解决本质的训练vs推理不一致的问题，还是有可能出问题，即生成 too bright or too dark。用本文修正训练 vs 推理的问题更好
+- 根据公式定义去 pdb 看 schedule 和 noise 是否和公式完全一致，从本质上解决 SD 生成误差的问题
+  - offset noise 没有解决本质的训练vs推理不一致的问题，还是有可能出问题，即生成 too bright or too dark。用本文修正训练 vs 推理的问题更好
 - 验证一下，直接对同一个 x0 加不同的高斯噪声，看看去噪各个 step 的预测结果，发现确实 t=T 模型预测都一样；**通过本文方法一次修改后 t=T 的噪声没必要。。。和其余步数割裂开了。。。看几个图的不同敏感程度还是取决于加的噪声**
+- 检查 CFG scale, SNR 对于的噪声
 
 
 

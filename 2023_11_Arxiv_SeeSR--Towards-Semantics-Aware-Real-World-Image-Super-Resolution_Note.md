@@ -1,8 +1,7 @@
 # SeeSR: Towards Semantics-Aware Real-World Image Super-Resolution
 
 > "SeeSR: Towards Semantics-Aware Real-World Image Super-Resolution" Arxiv, 2023 Nov
-> [paper](http://arxiv.org/abs/2311.16518v1) [code]() 
-> [pdf](./2023_11_Arxiv_SeeSR--Towards-Semantics-Aware-Real-World-Image-Super-Resolution.pdf)
+> [paper](http://arxiv.org/abs/2311.16518v1) [code]() [pdf](./2023_11_Arxiv_SeeSR--Towards-Semantics-Aware-Real-World-Image-Super-Resolution.pdf) [note](./2023_11_Arxiv_SeeSR--Towards-Semantics-Aware-Real-World-Image-Super-Resolution_Note.md) 
 > Authors: Rongyuan Wu, Tao Yang, Lingchen Sun, Zhengqiang Zhang, Shuai Li, Lei Zhang
 
 ## Key-point

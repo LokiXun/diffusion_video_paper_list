@@ -135,9 +135,7 @@ TODO
 
 3个文本编码器
 
-
-
-
+![fig2](docs/2024_03_Arxiv_Scaling-Rectified-Flow-Transformers-for-High-Resolution-Image-Synthesis_Note/fig2.png)
 
 
 

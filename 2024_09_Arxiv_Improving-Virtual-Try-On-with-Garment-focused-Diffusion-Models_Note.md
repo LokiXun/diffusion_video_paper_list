@@ -14,6 +14,29 @@
 
 ## Introduction
 
+DDPM 加噪去噪公式
+
+- "Denoising Diffusion Probabilistic Models" NIPS-2020,
+   https://arxiv.org/pdf/2006.11239
+
+
+
+![DDPM_eq15](docs/2024_09_Arxiv_Improving-Virtual-Try-On-with-Garment-focused-Diffusion-Models_Note/DDPM_eq15.png)
+
+![DDPM_eq2](docs/2024_09_Arxiv_Improving-Virtual-Try-On-with-Garment-focused-Diffusion-Models_Note/DDPM_eq2.png)
+
+![DDPM_eq4](docs/2024_09_Arxiv_Improving-Virtual-Try-On-with-Garment-focused-Diffusion-Models_Note/DDPM_eq4.png)
+
+根据 eq4 先得到模型预测的噪声 $\hat{x0}$
+
+根据 eq6&7 去噪一步，实现从 $x_t \to x_{t-1}$。
+
+![DDPM_eq6](docs/2024_09_Arxiv_Improving-Virtual-Try-On-with-Garment-focused-Diffusion-Models_Note/DDPM_eq6.png)
+
+
+
+
+
 ## methods
 
 ![fig2](docs/2024_09_Arxiv_Improving-Virtual-Try-On-with-Garment-focused-Diffusion-Models_Note/fig2.png)
